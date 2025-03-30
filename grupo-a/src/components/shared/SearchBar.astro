@@ -1,0 +1,69 @@
+<form class="search-form" action="/search" method="get">
+  <div class="search-container">
+    <input
+      type="search"
+      name="q"
+      placeholder="Buscar..."
+      class="search-input"
+      aria-label="Buscar"
+    />
+    <button type="submit" class="search-button" aria-label="Buscar">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </button>
+  </div>
+</form>
+
+<style>
+  .search-form {
+    position: relative;
+  }
+
+  .search-container {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-gray-100);
+    border-radius: 9999px;
+    padding: 0.5rem;
+  }
+
+  .search-input {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    width: 200px;
+    color: var(--color-text);
+    font-size: 0.875rem;
+  }
+
+  .search-input:focus {
+    outline: none;
+  }
+
+  .search-input::placeholder {
+    color: var(--color-gray-500);
+  }
+
+  .search-button {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: var(--color-gray-500);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .search-button:hover {
+    color: var(--color-gray-700);
+  }
+
+  @media (max-width: 768px) {
+    .search-input {
+      width: 150px;
+    }
+  }
+</style> 

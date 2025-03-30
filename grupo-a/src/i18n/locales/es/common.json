@@ -1,0 +1,20 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Sobre Nosotros",
+    "projects": "Proyectos",
+    "contact": "Contacto"
+  },
+  "home": {
+    "title": "Bienvenidos a Nuestro Portafolio",
+    "description": "Somos un equipo de desarrolladores apasionados por crear experiencias web excepcionales"
+  },
+  "team": {
+    "title": "Nuestro Equipo",
+    "description": "Conoce a los miembros de nuestro equipo"
+  },
+  "projects": {
+    "title": "Nuestros Proyectos",
+    "description": "Explora nuestro trabajo más reciente"
+  }
+}

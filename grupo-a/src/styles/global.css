@@ -1,0 +1,63 @@
+:root {
+  /* Colores */
+  --color-bg: #ffffff;
+  --color-text: #333333;
+  --color-accent: #2d2d2d;
+  --color-surface: #f7f7f7;
+  --color-border: #e0e0e0;
+  
+  /* Tipografía */
+  --font-mono: "Meslo LG", "SF Mono", Menlo, Monaco, Consolas, monospace;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  
+  /* Espaciado */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  
+  /* Otros */
+  --border-radius: 2px;
+  --max-width: 1200px;
+  --transition: 0.2s ease;
+}
+
+body {
+  font-family: var(--font-mono);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin-top: 0;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-sm);
+}
+
+.section {
+  padding: var(--space-lg) 0;
+}
