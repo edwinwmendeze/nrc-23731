@@ -1,0 +1,90 @@
+<div class="newsletter">
+  <h3 class="newsletter-title">Newsletter</h3>
+  <p class="newsletter-description">
+    Suscríbete para recibir actualizaciones sobre nuestros proyectos.
+  </p>
+  <form class="newsletter-form" action="/subscribe" method="post">
+    <div class="newsletter-input-group">
+      <input
+        type="email"
+        name="email"
+        placeholder="Tu email"
+        class="newsletter-input"
+        required
+      />
+      <button type="submit" class="newsletter-button">
+        Suscribirse
+      </button>
+    </div>
+  </form>
+</div>
+
+<style>
+  .newsletter {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .newsletter-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .newsletter-description {
+    color: var(--color-gray-600);
+    line-height: 1.6;
+  }
+
+  .newsletter-form {
+    width: 100%;
+  }
+
+  .newsletter-input-group {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .newsletter-input {
+    flex: 1;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-gray-300);
+    border-radius: 0.5rem;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-size: 0.875rem;
+  }
+
+  .newsletter-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  }
+
+  .newsletter-button {
+    padding: 0.5rem 1rem;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .newsletter-button:hover {
+    background-color: var(--color-primary);
+    opacity: 0.9;
+  }
+
+  @media (max-width: 768px) {
+    .newsletter-input-group {
+      flex-direction: column;
+    }
+
+    .newsletter-button {
+      width: 100%;
+    }
+  }
+</style> 

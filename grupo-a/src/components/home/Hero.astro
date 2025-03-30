@@ -1,0 +1,106 @@
+---
+// src/components/home/Hero.astro
+import Button from '../ui/Button.astro';
+import siteConfig from '../../data/config/site.json'; // Importar la configuración
+
+// Extraer datos relevantes del JSON
+const teamName = siteConfig.team.name;
+const siteDescription = siteConfig.site.description; // Descripción general del sitio/portafolio
+const teamDescription = siteConfig.team.description; // Descripción específica del equipo
+---
+
+<section class="hero" id="inicio"> {/* Añadido id para navegación si es necesario */}
+  <div class="container">
+    <div class="hero-content">
+      <h1 class="title">{ teamName }</h1>
+      {/* Usar la descripción del sitio como subtítulo principal */}
+      <p class="subtitle">{ siteDescription }</p>
+      {/* Añadir la descripción del equipo para un poco más de contexto */}
+      <p class="description">{ teamDescription }</p>
+      <div class="actions">
+        <Button href="#integrantes" variant="primary">Conoce al equipo</Button>
+        <Button href="#proyectos" variant="secondary">Ver Proyectos</Button> {/* Cambiado a secondary para contraste */}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: var(--space-xl) 0; /* Un poco más de espacio vertical */
+    display: flex;
+    align-items: center;
+    min-height: 80vh; /* Ajustar según sea necesario */
+    /* Considera un fondo sutil si quieres diferenciarlo un poco */
+    /* background-color: var(--color-background-alt); */
+  }
+
+  .hero-content {
+    max-width: 800px;
+    /* Centrar el texto si prefieres */
+     text-align: center; 
+     margin: 0 auto; /* Asegura centrado horizontal si text-align está activo */
+  }
+
+  .title {
+    font-size: clamp(2.8rem, 6vw, 4rem); /* Tamaño de fuente responsive */
+    color: var(--color-heading);
+    margin-bottom: var(--space-xs);
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-size: clamp(1.2rem, 3vw, 1.6rem); /* Tamaño de fuente responsive */
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+     opacity: 0.9;
+     max-width: 650px; /* Limitar ancho para legibilidad */
+     margin-left: auto; /* Centrar si text-align no está activo */
+     margin-right: auto; /* Centrar si text-align no está activo */
+  }
+
+   .description { /* Estilo para la nueva descripción del equipo */
+    font-size: var(--font-size-base); /* Tamaño base */
+    color: var(--color-text-muted); /* Un color más suave */
+    margin-bottom: var(--space-lg); /* Espacio antes de los botones */
+     max-width: 600px; /* Limitar ancho */
+     margin-left: auto; 
+     margin-right: auto;
+  }
+
+  .actions {
+    display: flex;
+    gap: var(--space-md); /* Espacio entre botones */
+    justify-content: center; /* Centrar botones horizontalmente */
+    flex-wrap: wrap; /* Permitir que los botones se envuelvan */
+  }
+
+  /* Ajustes para pantallas más pequeñas */
+  @media (max-width: 768px) {
+    .hero {
+      padding: var(--space-lg) 0;
+      min-height: 70vh;
+    }
+    .title {
+      font-size: 2.5rem;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+    }
+     .description {
+       font-size: var(--font-size-sm);
+     }
+  }
+   @media (max-width: 480px) {
+     .actions {
+       flex-direction: column; /* Apilar botones */
+       align-items: center;
+       gap: var(--space-sm);
+     }
+      /* Estilo global para los botones dentro de actions en pantallas pequeñas */
+     .actions :global(.button) { 
+       width: 80%; 
+       max-width: 280px;
+     }
+   }
+</style>
