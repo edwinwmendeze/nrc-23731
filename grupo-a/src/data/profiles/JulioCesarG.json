@@ -1,17 +1,20 @@
 {
     "basics": {
-      "name": "Julio César",
-      "last_name":"Rodriguez Sifuentes",
-      "label": "Desarrollador Frontend",
-      "image": "/images/team/julio.png",
-      "email": "julio@grupoa.com",
+      "name": "Julio",
+      "last_name":"Julio Cesar Guillermo",
+      "label": "Especialista en Redes",
+      "image": {
+        "local": "/images/team/pepe.png",
+        "remote": "https://www.kia.com/content/dam/kwcms/gt/en/images/discover-kia/voice-search/parts-80-1.jpg"
+      },
+      "email": "41925797@continetal.edu.pe",
       "phone": "(51) 123-456-789",
       "url": "https://juliocesar.dev",
-      "summary": "Especialista en interfaces de usuario y experiencia de usuario con enfoque en accesibilidad y rendimiento.",
+      "summary": "Especialista en redes de y experiencia de usuario con enfoque en accesibilidad y rendimiento.",
       "location": {
-        "city": "Arequipa",
+        "city": "Pasco",
         "countryCode": "PE",
-        "region": "Arequipa"
+        "region": "Pasco"
       },
       "profiles": [
         {
@@ -45,7 +48,7 @@
 ],
     "education": [
       {
-        "institution": "Universidad Católica San Pablo",
+        "institution": "Universidad Continental",
         "area": "Ingeniería Informática",
         "studyType": "Licenciatura",
         "startDate": "2015-03-01",
