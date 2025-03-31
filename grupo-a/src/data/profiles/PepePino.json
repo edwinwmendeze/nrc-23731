@@ -1,17 +1,20 @@
 {
     "basics": {
-      "name": "Julio César",
-      "last_name":"Rodriguez Sifuentes",
-      "label": "Desarrollador Frontend",
-      "image": "/images/team/julio.png",
-      "email": "julio@grupoa.com",
+      "name": "Pepe",
+      "last_name":"Pino Huamani",
+      "label": "Desarrollador de Software",
+      "image": {
+        "local": "/images/team/pepe.png",
+        "remote": "https://lh4.googleusercontent.com/-zJzDNcr2eCNUk-nHbExP8MVGoXnI5kxF7Wbyf22mKlnHynNB93Er-nVtHOY4S77KXp4YuNgqz8Km3YzWz-ohjJ2RdX4qTuB_3YfbUWSyrbmDUeCbLlTAy2k9fqrrhUI-A=w1280"
+      },
+      "email": "70520575@continetal.edu.pe",
       "phone": "(51) 123-456-789",
       "url": "https://juliocesar.dev",
       "summary": "Especialista en interfaces de usuario y experiencia de usuario con enfoque en accesibilidad y rendimiento.",
       "location": {
-        "city": "Arequipa",
+        "city": "Cusco",
         "countryCode": "PE",
-        "region": "Arequipa"
+        "region": "Cusco"
       },
       "profiles": [
         {
