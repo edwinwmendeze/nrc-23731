@@ -2,7 +2,7 @@
     "basics": {
       "name": "Pepe",
       "last_name":"Pino Huamani",
-      "label": "Desarrollador Frontend",
+      "label": "Desarrollador de Software",
       "image": {
         "local": "/images/team/pepe.png",
         "remote": "https://lh4.googleusercontent.com/-zJzDNcr2eCNUk-nHbExP8MVGoXnI5kxF7Wbyf22mKlnHynNB93Er-nVtHOY4S77KXp4YuNgqz8Km3YzWz-ohjJ2RdX4qTuB_3YfbUWSyrbmDUeCbLlTAy2k9fqrrhUI-A=w1280"
@@ -14,7 +14,7 @@
       "location": {
         "city": "Cusco",
         "countryCode": "PE",
-        "region": "Arequipa"
+        "region": "Cusco"
       },
       "profiles": [
         {
