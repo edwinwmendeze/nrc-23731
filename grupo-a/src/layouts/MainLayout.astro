@@ -1,0 +1,126 @@
+---
+// src/layouts/MainLayout.astro
+import '../styles/global.css';
+import siteConfig from '../data/config/site.json'; // Importar la configuración
+
+interface Props {
+  title: string; // Mantenemos el título específico de la página
+  description: string; // Mantenemos la descripción específica de la página
+}
+
+const { title: pageTitle, description: pageDescription } = Astro.props;
+
+// Extraer datos globales del sitio/equipo
+const teamName = siteConfig.team.name; // Nombre del equipo para el logo/footer
+const siteDefaultTitle = siteConfig.site.seo.title; // Título por defecto del sitio
+const siteDefaultDescription = siteConfig.site.seo.description; // Descripción por defecto
+
+// Usar título/descripción de la página si se proporcionan, si no, usar los por defecto del JSON
+const finalTitle = pageTitle || siteDefaultTitle;
+const finalDescription = pageDescription || siteDefaultDescription;
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> {/* Considera poner esto en site.json también */}
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={finalDescription} /> {/* Usar descripción final */}
+    <meta name="generator" content={Astro.generator} />
+    {/* Podrías añadir keywords desde site.json si quieres */}
+    {/* <meta name="keywords" content={siteConfig.site.seo.keywords.join(', ')} /> */}
+    <title>{finalTitle}</title> {/* Usar título final */}
+    {/* Cargar fuente Meslo */}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/meslo.min.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <nav class="nav">
+          {/* Usar teamName para el logo */}
+          <a href="/" class="logo">{ teamName }</a> 
+          <div class="nav-links">
+            <a href="#proyectos">Proyectos</a>
+            <a href="#integrantes">Integrantes</a>
+            <a href="#habilidades">Habilidades</a>
+            {/* Podrías añadir un enlace de contacto si está en site.json */}
+            {/* {siteConfig.site.contact?.email && <a href={`mailto:${siteConfig.site.contact.email}`}>Contacto</a>} */}
+          </div>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="footer">
+      <div class="container">
+        {/* Usar teamName en el copyright */}
+        <p>&copy; {new Date().getFullYear()} { teamName }. Todos los derechos reservados.</p> 
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  /* Estilos existentes... asegúrate de que coincidan con tu diseño */
+  :root {
+    /* Asegúrate que tus variables CSS estén definidas globalmente o aquí */
+  }
+  
+  /* ... (resto de tus estilos) ... */
+
+  .header {
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-background); /* Fondo del header */
+    position: sticky; /* Hacer el header pegajoso */
+    top: 0;
+    z-index: 10; /* Asegurar que esté por encima del contenido */
+    backdrop-filter: blur(5px); /* Efecto opcional */
+     -webkit-backdrop-filter: blur(5px); /* Para Safari */
+     background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente si usas blur */
+  }
+  
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    font-weight: bold;
+    font-size: var(--font-size-lg);
+    text-decoration: none;
+    color: var(--color-heading);
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: var(--space-md);
+  }
+
+   .nav-links a {
+     text-decoration: none;
+     color: var(--color-text);
+     transition: color 0.2s ease;
+   }
+
+   .nav-links a:hover,
+   .nav-links a:focus {
+     color: var(--color-primary); /* O el color de acento que prefieras */
+   }
+  
+  .footer {
+    margin-top: var(--space-xl); /* Más espacio antes del footer */
+    padding: var(--space-md) 0;
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+   /* Asegurar que el contenido principal no quede oculto por el header pegajoso */
+   main {
+     padding-top: 80px; /* Ajusta este valor según la altura real de tu header */
+   }
+</style>

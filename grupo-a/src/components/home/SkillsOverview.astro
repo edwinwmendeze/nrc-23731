@@ -1,0 +1,271 @@
+---
+// SkillsOverview.astro
+import type { Profile, Skill } from '../../types';
+import { getProfiles } from '../../services/profileService';
+
+// Obtenemos los perfiles usando el servicio existente
+let profiles: Profile[] = [];
+try {
+  profiles = await getProfiles();
+} catch (error) {
+  console.error('Error al cargar perfiles:', error);
+  // Si hay un error, continuamos con un array vacío para evitar que la aplicación falle
+}
+
+// Función helper para agrupar skills por tipo
+function groupSkillsByType(skills: Skill[] = []) {
+  const hardSkills = skills.filter(skill => skill.type === 'hard');
+  const softSkills = skills.filter(skill => skill.type === 'soft');
+  
+  return { hardSkills, softSkills };
+}
+---
+
+<!-- El resto del componente permanece igual -->
+
+<section id="habilidades" class="skills-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Habilidades</h2>
+      <div class="section-title-underline"></div>
+    </div>
+    
+    {profiles.length > 0 ? (
+      <div class="skills-container">
+        <!-- Tabs para navegación entre perfiles -->
+        <div class="tabs">
+          {profiles.map((profile, index) => (
+            <button 
+              class:list={["tab-button", index === 0 ? "active" : ""]} 
+              data-index={index}
+            >
+              {profile.basics?.name || `Perfil ${index + 1}`}
+            </button>
+          ))}
+        </div>
+        
+        <!-- Contenido de habilidades por perfil -->
+        {profiles.map((profile, index) => {
+          const { hardSkills, softSkills } = groupSkillsByType(profile.skills);
+          
+          return (
+            <div 
+              class:list={["profile-skills", index === 0 ? "active" : ""]} 
+              data-profile={index}
+            >
+              {/* Habilidades técnicas */}
+              <div class="skills-category">
+                <h3>Habilidades Técnicas</h3>
+                {hardSkills.length > 0 ? (
+                  <ul class="skills-list">
+                    {hardSkills.map(skill => (
+                      <li class="skill-item">
+                        <h4 class="skill-name">{skill.name}</h4>
+                        {skill.keywords && skill.keywords.length > 0 && (
+                          <div class="keyword-tags">
+                            {skill.keywords.map(keyword => (
+                              <span class="keyword-tag">{keyword}</span>
+                            ))}
+                          </div>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="no-skills">No se encontraron habilidades técnicas.</p>
+                )}
+              </div>
+              
+              {/* Habilidades blandas */}
+              <div class="skills-category">
+                <h3>Habilidades Blandas</h3>
+                {softSkills.length > 0 ? (
+                  <ul class="skills-list">
+                    {softSkills.map(skill => (
+                      <li class="skill-item">
+                        <h4 class="skill-name">{skill.name}</h4>
+                        {skill.keywords && skill.keywords.length > 0 && (
+                          <div class="keyword-tags">
+                            {skill.keywords
+                              .filter(kw => kw !== 'soft')
+                              .map(keyword => (
+                                <span class="keyword-tag">{keyword}</span>
+                              ))}
+                          </div>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="no-skills">No se encontraron habilidades blandas.</p>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    ) : (
+      <p class="no-profiles">No se encontraron perfiles para mostrar.</p>
+    )}
+  </div>
+</section>
+
+<style>
+  .skills-section {
+    padding: 4rem 0;
+    margin-top: 2rem;
+    background-color: var(--color-bg-alt, #f8fafc);
+  }
+  
+  .container {
+    max-width: var(--container-width, 1200px);
+    margin: 0 auto;
+    padding: 0 var(--space-md, 1.5rem);
+  }
+  
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .section-title {
+    font-size: var(--font-size-2xl, 2rem);
+    color: var(--color-heading, #1a202c);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+  
+  .section-title-underline {
+    height: 3px;
+    width: 60px;
+    background-color: var(--color-accent, #4f46e5);
+    margin: 0 auto;
+  }
+  
+  .skills-container {
+    margin-top: 2rem;
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .tab-button {
+    background-color: transparent;
+    border: 2px solid var(--color-border, #e2e8f0);
+    border-radius: var(--radius-md, 0.5rem);
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    color: var(--color-text, #4a5568);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .tab-button:hover {
+    border-color: var(--color-accent, #4f46e5);
+    color: var(--color-accent, #4f46e5);
+  }
+  
+  .tab-button.active {
+    background-color: var(--color-accent, #4f46e5);
+    border-color: var(--color-accent, #4f46e5);
+    color: var(--color-white, #ffffff);
+  }
+  
+  .profile-skills {
+    display: none;
+  }
+  
+  .profile-skills.active {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  
+  .skills-category h3 {
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border, #e2e8f0);
+    color: var(--color-heading, #1a202c);
+  }
+  
+  .skills-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .skill-item {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed var(--color-border-light, #e2e8f0);
+  }
+  
+  .skill-name {
+    font-weight: 500;
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+  }
+  
+  .keyword-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .keyword-tag {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+    background-color: #f3f3f3;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.25rem;
+    color: #666;
+  }
+  
+  .no-skills,
+  .no-profiles {
+    text-align: center;
+    padding: 2rem;
+    color: var(--color-text-muted, #718096);
+    font-style: italic;
+  }
+  
+  @media (max-width: 768px) {
+    .profile-skills.active {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    
+    .tabs {
+      flex-wrap: wrap;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const profileSkills = document.querySelectorAll('.profile-skills');
+  
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Desactivar todos los elementos
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        profileSkills.forEach(profile => profile.classList.remove('active'));
+        
+        // Activar elementos seleccionados
+        button.classList.add('active');
+        const index = button.getAttribute('data-index');
+        document.querySelector(`.profile-skills[data-profile="${index}"]`)?.classList.add('active');
+      });
+    });
+    
+    // Activar el primer tab por defecto si existe
+    if (tabButtons.length > 0) {
+      (tabButtons[0] as HTMLElement).click();
+    }
+  });
+</script>

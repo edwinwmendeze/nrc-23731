@@ -1,0 +1,372 @@
+---
+// src/components/home/TeamSection.astro
+import { getProfiles } from '../../services/profileService';
+import type { Profile } from '../../types';
+import Button from '../ui/Button.astro';
+import SocialLink from '../ui/SocialLink.astro';
+
+// Obtener perfiles de manera segura con manejo de excepciones
+let profiles: Profile[] = [];
+try {
+  profiles = await getProfiles();
+} catch (error) {
+  console.error('Error al cargar perfiles de equipo:', error);
+  // Continuar con array vacío para evitar fallo de la aplicación
+}
+
+// Funciones auxiliares para procesar imágenes
+function getImageSrc(profile: Profile) {
+  if (!profile.basics?.image) return '';
+  // Verifica si es un objeto y accede a 'local' de forma segura
+  if (typeof profile.basics.image === 'object') {
+    return profile.basics.image?.local || ''; // Añadido ?. aquí
+  }
+  // Si es una cadena (o no es objeto pero existe), devuélvela
+  return profile.basics.image || ''; 
+}
+
+function getImageFallback(profile: Profile) {
+  if (!profile.basics?.image) return '';
+  // Verifica si es un objeto y accede a 'remote' de forma segura
+  if (typeof profile.basics.image === 'object') {
+    return profile.basics.image?.remote || ''; // Añadido ?. aquí
+  }
+  // El fallback solo aplica si la imagen es un objeto con URL remota
+  return '';
+}
+
+// Propiedades de sección (opcional, para reutilización)
+export interface Props {
+  title?: string;
+  subtitle?: string;
+}
+
+const { 
+  title = "Integrantes", 
+  subtitle = "Conozca a los futuros profesionales detrás de este proyecto" 
+} = Astro.props;
+---
+
+<section id="integrantes" class="team-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">{title}</h2>
+      <div class="section-title-underline"></div>
+      <p class="section-description">{subtitle}</p>
+    </div>
+
+    {profiles.length > 0 ? (
+      <div class="team-grid">
+        {profiles.map((profile) => (
+          <div class="team-card">
+                        <div class="team-image-container">
+                          {(() => {
+                const basics = profile.basics;
+                // Check if basics and the image property exist
+                if (basics && basics.image) {
+                  let imageUrl: string | undefined; // Explicitly type imageUrl
+
+                  // Determine the correct image URL string
+                  if (typeof basics.image === 'string') {
+                    imageUrl = basics.image; 
+                  } else if (typeof basics.image === 'object' && (basics.image.remote || basics.image.local)) {
+                    // Prioritize remote URL, fallback to local
+                    imageUrl = basics.image.remote || basics.image.local;
+                  }
+
+                  // Only render the image if we successfully determined a URL
+                  if (imageUrl) {
+                    const fallbackUrl = getImageFallback ? getImageFallback(profile) : '/images/default-avatar.svg'; 
+                    const altText = `Foto de ${basics.name || 'miembro del equipo'}`;
+                    
+                    return (
+                      <img 
+                        src={imageUrl}
+                        alt={altText} 
+                        class="team-image"
+                        data-fallback={fallbackUrl}
+                        onerror={`this.onerror=null; this.src='${fallbackUrl}';`}
+                      />
+                    );
+                  }
+                } 
+                
+                // Render the placeholder if basics, basics.image, or a valid imageUrl is missing
+                return (
+                  <div class="team-no-image">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                  </div>
+                );
+              })()}
+            </div>
+            
+            <div class="team-info">
+              <h3 class="team-name">
+                {profile.basics?.name || 'Sin nombre'} 
+                {profile.basics?.last_name && <span class="team-lastname">{profile.basics.last_name}</span>}
+              </h3>
+              
+              <p class="team-role">{profile.basics?.label || 'Miembro del equipo'}</p>
+              
+              {profile.basics?.location && (
+                <p class="team-location">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  {profile.basics.location.city}, {profile.basics.location.country}
+                </p>
+              )}
+              
+              {profile.basics?.summary && (
+                <p class="team-bio">{profile.basics.summary}</p>
+              )}
+              
+              <div class="team-footer">
+                {profile.basics?.profiles && profile.basics.profiles.length > 0 && (
+                  <div class="team-social">
+                    {profile.basics.profiles.map(social => (
+                      <SocialLink 
+                        network={social.network} 
+                        url={social.url} 
+                        username={social.username} 
+                      />
+                    ))}
+                  </div>
+                )}
+                
+                {profile.basics?.url && (
+                  <div class="portfolio-link">
+                    <Button href={profile.basics.url} size="sm" variant="primary" target="_blank" rel="noopener">
+                      Ver portafolio
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="no-profiles-message">
+        <p>No se encontraron perfiles para mostrar.</p>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .team-section {
+    padding: 4rem 0;
+    background-color: var(--color-background, #ffffff);
+  }
+  
+  .container {
+    max-width: var(--container-width, 1200px);
+    margin: 0 auto;
+    padding: 0 var(--space-md, 1.5rem);
+  }
+  
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .section-title {
+    font-size: var(--font-size-2xl, 2rem);
+    color: var(--color-heading, #1a202c);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+  
+  .section-title-underline {
+    height: 3px;
+    width: 60px;
+    background-color: var(--color-accent, #4f46e5);
+    margin: 0 auto;
+    margin-bottom: 1rem;
+  }
+  
+  .section-description {
+    font-size: var(--font-size-md, 1.125rem);
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--color-text-muted, #718096);
+  }
+  
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .team-card {
+    background-color: var(--color-white, #ffffff);
+    border-radius: var(--radius-lg, 0.75rem);
+    box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06));
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05));
+  }
+  
+  .team-image-container {
+    position: relative;
+    height: 240px;
+    overflow: hidden;
+  }
+  
+  .team-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .team-card:hover .team-image {
+    transform: scale(1.05);
+  }
+  
+  .team-no-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-bg-alt, #f8fafc);
+    color: var(--color-text-muted, #718096);
+  }
+  
+  .team-info {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .team-name {
+    font-size: var(--font-size-lg, 1.25rem);
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+    color: var(--color-heading, #1a202c);
+  }
+  
+  .team-lastname {
+    font-weight: 500;
+    color: var(--color-text, #4a5568);
+  }
+  
+  .team-role {
+    font-size: var(--font-size-sm, 0.875rem);
+    color: var(--color-accent, #4f46e5);
+    margin: 0 0 0.5rem 0;
+    font-weight: 500;
+  }
+  
+  .team-location {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--font-size-sm, 0.875rem);
+    color: var(--color-text-muted, #718096);
+    margin-bottom: 1rem;
+  }
+  
+  .team-bio {
+    font-size: var(--font-size-sm, 0.875rem);
+    color: var(--color-text, #4a5568);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .team-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .team-social {
+    display: flex;
+    gap: 0.75rem;
+  }
+  
+  .no-profiles-message {
+    text-align: center;
+    padding: 3rem;
+    background-color: var(--color-bg-alt, #f8fafc);
+    border-radius: var(--radius-md, 0.5rem);
+    color: var(--color-text-muted, #718096);
+    font-style: italic;
+  }
+  
+  @media (max-width: 768px) {
+    .team-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    .team-image-container {
+      height: 200px;
+    }
+    
+    .team-footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .portfolio-link {
+      width: 100%;
+    }
+    
+    .portfolio-link :global(a) {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  // Script para manejar errores de carga de imágenes
+  document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll<HTMLImageElement>('.team-image');
+    
+    images.forEach(img => {
+      img.addEventListener('error', function(this: HTMLImageElement) {
+        const fallbackUrl = this.getAttribute('data-fallback');
+        if (fallbackUrl) {
+          this.src = fallbackUrl;
+        } else {
+          // Si no hay imagen de respaldo, reemplazamos con un contenedor de "sin imagen"
+          const parent = this.parentNode;
+          if (parent) {
+            const noImage = document.createElement('div');
+            noImage.className = 'team-no-image';
+            noImage.innerHTML = `
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            `;
+            this.remove();
+            parent.appendChild(noImage);
+          }
+        }
+      });
+    });
+  });
+</script>

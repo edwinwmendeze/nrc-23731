@@ -1,0 +1,60 @@
+---
+import Navigation from './Navigation.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import SearchBar from './SearchBar.astro';
+---
+
+<header class="header">
+  <div class="container header-container">
+    <a href="/" class="logo">
+      <img src="/images/logo.svg" alt="Grupo A Logo" width="40" height="40" />
+    </a>
+    
+    <Navigation />
+    
+    <div class="header-actions">
+      <SearchBar />
+      <ThemeToggle />
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-gray-200);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    height: 4rem;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .header-container {
+      padding: 0.5rem;
+    }
+  }
+</style> 

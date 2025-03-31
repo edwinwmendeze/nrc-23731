@@ -1,0 +1,30 @@
+{
+  "site": {
+    "name": "Portafolio Grupal",
+    "description": "Portafolio colaborativo del equipo",
+    "url": "https://portfolio-grupo.com",
+    "logo": "/images/logo.png",
+    "social": {
+      "github": "https://github.com/portfolio-grupo",
+      "linkedin": "https://linkedin.com/company/portfolio-grupo"
+    },
+    "contact": {
+      "email": "contact@portfolio-grupo.com"
+    },
+    "seo": {
+      "title": "Portafolio Grupal - Equipo de Desarrollo",
+      "description": "Portafolio colaborativo que muestra nuestros proyectos y habilidades",
+      "keywords": ["desarrollo", "web", "portfolio", "equipo"]
+    }
+  },
+  "team": {
+    "name": "Grupo A",
+    "description": "Equipo de desarrollo especializado",
+    "members": [],
+    "stats": {
+      "totalMembers": 0,
+      "totalProjects": 0,
+      "totalSkills": 0
+    }
+  }
+}
