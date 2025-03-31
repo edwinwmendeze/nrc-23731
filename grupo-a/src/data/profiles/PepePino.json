@@ -1,0 +1,76 @@
+{
+    "basics": {
+      "name": "Pepe",
+      "last_name":"Pino Huamani",
+      "label": "Desarrollador Frontend",
+      "image": {
+        "local": "/images/team/pepe.png",
+        "remote": "https://lh4.googleusercontent.com/-zJzDNcr2eCNUk-nHbExP8MVGoXnI5kxF7Wbyf22mKlnHynNB93Er-nVtHOY4S77KXp4YuNgqz8Km3YzWz-ohjJ2RdX4qTuB_3YfbUWSyrbmDUeCbLlTAy2k9fqrrhUI-A=w1280"
+      },
+      "email": "70520575@continetal.edu.pe",
+      "phone": "(51) 123-456-789",
+      "url": "https://juliocesar.dev",
+      "summary": "Especialista en interfaces de usuario y experiencia de usuario con enfoque en accesibilidad y rendimiento.",
+      "location": {
+        "city": "Cusco",
+        "countryCode": "PE",
+        "region": "Arequipa"
+      },
+      "profiles": [
+        {
+          "network": "GitHub",
+          "username": "juliocesar",
+          "url": "https://github.com/juliocesar"
+        },
+        {
+          "network": "LinkedIn",
+          "username": "juliocesar",
+          "url": "https://linkedin.com/in/juliocesar"
+        }
+      ]
+    },
+    "skills": [
+  {
+    "name": "Frontend",
+    "keywords": ["React", "Vue", "TypeScript", "CSS"],
+    "type": "hard"
+  },
+  {
+    "name": "Diseño UX",
+    "keywords": ["Figma", "Adobe XD", "Wireframing"],
+    "type": "hard"
+  },
+  {
+    "name": "Trabajo en equipo",
+    "keywords": ["Colaboración", "Resolución de conflictos", "Empatía"],
+    "type": "soft"
+  }
+],
+    "education": [
+      {
+        "institution": "Universidad Católica San Pablo",
+        "area": "Ingeniería Informática",
+        "studyType": "Licenciatura",
+        "startDate": "2015-03-01",
+        "endDate": "2020-07-15"
+      }
+    ],
+    "projects": [
+  {
+    "name": "Sistema de Componentes",
+    "description": "Biblioteca de componentes accesibles y reutilizables para aplicaciones web",
+    "highlights": ["Cumplimiento WCAG 2.1 AA", "Documentación automática con Storybook"],
+    "url": "https://github.com/juliocesar/components",
+    "featured": false,
+    "technologies": ["React", "TypeScript", "Storybook", "Jest"]
+  },
+  {
+    "name": "Dashboard Analítico",
+    "description": "Panel de control para visualización de datos empresariales en tiempo real",
+    "highlights": ["Optimizado para dispositivos móviles", "Gráficos interactivos avanzados"],
+    "url": "https://github.com/juliocesar/dashboard",
+    "featured": true,
+    "technologies": ["Vue.js", "D3.js", "Firebase", "Tailwind CSS"]
+  }
+]
+  }
