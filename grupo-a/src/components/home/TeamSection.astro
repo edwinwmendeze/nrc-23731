@@ -48,7 +48,7 @@ const {
 ---
 
 <section id="integrantes" class="team-section">
-  <div class="container">
+  <div class="team-section-inner">
     <div class="section-header">
       <h2 class="section-title">{title}</h2>
       <div class="section-title-underline"></div>
@@ -111,16 +111,28 @@ const {
                 </h3>
                 
                 <p class="team-role">{profile.basics?.label || 'Miembro del equipo'}</p>
-                
-                {profile.basics?.location && (
-                  <p class="team-location">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                      <circle cx="12" cy="10" r="3"></circle>
+                <div class="team-contact-info">
+                  {profile.basics?.location && (
+                    <p class="team-location">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    {profile.basics.location.city}, {profile.basics.location.country}
+                    {profile.basics.location.city}, {profile.basics.location.region}
                   </p>
                 )}
+                {profile.basics?.email && (
+                  <div class="team-email" data-email={profile.basics.email}>
+                    <a href={`mailto:${profile.basics.email}`} title="Enviar correo">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                      </svg>
+                    </a>
+                  </div>
+                )}
+                </div>
+                
                 
                 {profile.basics?.summary && (
                   <p class="team-bio">{profile.basics.summary}</p>
@@ -171,12 +183,16 @@ const {
   .team-section {
     padding: 4rem 0;
     background-color: var(--color-background, #ffffff);
+    width: 100%;
+    box-sizing: border-box;
   }
   
-  .container {
+  .team-section-inner {
     max-width: var(--container-width, 1200px);
     margin: 0 auto;
     padding: 0 var(--space-md, 1.5rem);
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .section-header {
@@ -316,14 +332,56 @@ const {
     font-weight: 500;
   }
   
-  .team-location {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: var(--font-size-sm, 0.875rem);
-    color: var(--color-text-muted, #718096);
-    margin-bottom: 1rem;
-  }
+  .team-contact-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.team-location {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-text-muted, #718096);
+  margin: 0;
+}
+
+.team-email {
+  position: relative;
+  display: inline-block;
+}
+
+.team-email a {
+  color: var(--color-text-muted, #718096);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-email svg {
+  transition: color 0.2s ease;
+}
+
+.team-email a:hover svg {
+  color: var(--color-accent, #4f46e5);
+}
+
+.team-email:hover::after {
+  content: attr(data-email);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  z-index: 100;
+}
   
   .team-bio {
     font-size: var(--font-size-sm, 0.875rem);
@@ -390,6 +448,7 @@ const {
     background-color: var(--color-text-muted, #718096);
     opacity: 0.5;
     transition: opacity 0.3s ease;
+    cursor: pointer;
   }
   
   .indicator-dot.active {
@@ -411,15 +470,19 @@ const {
   }
   
   @media (max-width: 768px) {
+    .team-section {
+      padding: 3rem 0;
+    }
+    
     .team-grid {
       --cards-per-view: 1; /* 1 tarjeta en móviles */
-      padding: 0 1rem 1.5rem;
+      padding: 0 0 1.5rem;
     }
     
     .team-card {
-      flex: 0 0 calc(100% - 2rem);
-      width: calc(100% - 2rem);
-      margin: 0 1rem; /* Márgenes laterales para evitar cortes */
+      flex: 0 0 100%;
+      width: 100%;
+      margin: 0;
     }
     
     .team-info {
@@ -445,6 +508,7 @@ const {
       flex-direction: column;
       align-items: flex-start;
       gap: 0.8rem;
+      width: 100%;
     }
     
     .portfolio-link {
@@ -465,12 +529,6 @@ const {
   }
   
   @media (max-width: 480px) {
-    .team-card {
-      flex: 0 0 calc(100% - 1.5rem);
-      width: calc(100% - 1.5rem);
-      margin: 0 0.75rem;
-    }
-    
     .team-image-container {
       height: 180px;
     }
