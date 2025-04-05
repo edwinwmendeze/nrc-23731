@@ -1,0 +1,76 @@
+{
+    "basics": {
+      "name": "Jorge Alberto",
+      "last_name":"Baca",
+      "label": "Desarrollador web",
+      "image": {
+        "local": "/images/team/pepe.png",
+        "remote": "https://avatars.githubusercontent.com/u/205255421?v=4&size=64"
+      },
+      "email": "71205979@continetal.edu.pe",
+      "phone": "(51) 910125897",
+      "url": "https://juliocesar.dev",
+      "summary": "Desarrollador web con experiencia proporcionando sitios web agiles para los usuarios .",
+      "location": {
+        "city": "Puerto Maldonado",
+        "countryCode": "PE",
+        "region": "Madre de Dios"
+      },
+      "profiles": [
+        {
+          "network": "GitHub",
+          "username": "jorgealbertobacalipe",
+          "url": "https://github.com/jorgealbertobacalipe"
+        },
+        {
+          "network": "LinkedIn",
+          "username": "jorge alberto baca lipe",
+          "url": "www.linkedin.com/in/jorge-alberto-baca-lipe-00635225a"
+        }
+      ]
+    },
+    "skills": [
+  {
+    "name": "Frontend",
+    "keywords": ["React", "Vue", "TypeScript", "CSS"],
+    "type": "hard"
+  },
+  {
+    "name": "Diseño UX",
+    "keywords": ["Figma", "Adobe XD", "Wireframing"],
+    "type": "hard"
+  },
+  {
+    "name": "Trabajo en equipo",
+    "keywords": ["Colaboración", "Resolución de conflictos", "Empatía"],
+    "type": "soft"
+  }
+],
+    "education": [
+      {
+        "institution": "Universidad Continental",
+        "area": "Ingeniería de Sistemas e Informática",
+        "studyType": "Licenciatura",
+        "startDate": "2022-03-01",
+        "endDate": "2026-12-15"
+      }
+    ],
+    "projects": [
+  {
+    "name": "Sistema de Componentes",
+    "description": "Biblioteca de componentes accesibles y reutilizables para aplicaciones web",
+    "highlights": ["Cumplimiento WCAG 2.1 AA", "Documentación automática con Storybook"],
+    "url": "https://github.com/juliocesar/components",
+    "featured": false,
+    "technologies": ["React", "TypeScript", "Storybook", "Jest"]
+  },
+  {
+    "name": "Dashboard Analítico",
+    "description": "Panel de control para visualización de datos empresariales en tiempo real",
+    "highlights": ["Optimizado para dispositivos móviles", "Gráficos interactivos avanzados"],
+    "url": "https://github.com/juliocesar/dashboard",
+    "featured": true,
+    "technologies": ["Vue.js", "D3.js", "Firebase", "Tailwind CSS"]
+  }
+]
+  }
