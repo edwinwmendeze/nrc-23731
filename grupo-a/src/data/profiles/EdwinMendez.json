@@ -35,7 +35,8 @@
       "keywords": [
         "Python-DRF",
         "PostgreSQL",
-        "Supabase"
+        "Supabase",
+        "Postman"
       ],
       "type": "hard"
     },
@@ -44,7 +45,8 @@
       "keywords": [
         "Vue.js",
         "Nuxt",
-        "Astro"
+        "Astro",
+        "Tailwind CSS"
       ],
       "type": "hard"
     },
@@ -101,20 +103,42 @@
   ],
   "projects": [
     {
-      "name": "Pipeline Automatizado",
-      "description": "Implementación de un sistema CI/CD para automatizar el despliegue de aplicaciones en la nube",
-      "highlights": ["Reducción del tiempo de despliegue en un 70%", "Implementación de pruebas automáticas"],
-      "url": "https://github.com/edwin/pipeline",
+      "name": "Sistema de Automatización SUP",
+      "description": "Herramienta de automatización de tareas repetitivas desarrollada en Python utilizando pyautogui, diseñada para ejecutar acciones automáticamente desde consola.",
+      "highlights": [
+        "Automatización de procesos manuales con precisión",
+        "Interacción con interfaces gráficas mediante control de mouse y teclado",
+        "Facilidad de ejecución desde consola sin interfaz adicional"
+      ],
+      "url": "https://discord.com/channels/1212350323604201502/1212357244063186955/1214221343319662592",
       "featured": true,
-      "technologies": ["Jenkins", "Docker", "Kubernetes", "AWS"]
+      "technologies": ["Python", "pyautogui", "time", "subprocess"]
     },
     {
-      "name": "Monitoreo Inteligente",
-      "description": "Sistema de monitoreo en tiempo real con alertas predictivas basadas en ML",
-      "highlights": ["Detección temprana de incidentes", "Integración con Slack y PagerDuty"],
-      "url": "https://github.com/edwin/monitoring",
+      "name": "Te Comparto",
+      "description": "Plataforma web para compartir archivos de forma segura, con control de acceso mediante códigos, expiración de enlaces y almacenamiento gestionado con Supabase.",
+      "highlights": [
+        "Interfaz intuitiva para subir y gestionar archivos",
+        "Código de acceso y expiración para compartir de forma segura",
+        "Integración con Supabase para autenticación y almacenamiento",
+        "Diseño adaptable con soporte para modo oscuro"
+      ],
+      "url": "https://tecomparto.com",  
       "featured": true,
-      "technologies": ["Python", "TensorFlow", "Grafana", "Prometheus"]
+      "technologies": ["Vue 3", "Nuxt 3", "TypeScript", "Supabase", "Tailwind CSS", "Vitest"]
+    },
+    {
+      "name": "Herramientas SUP",
+      "description": "Suite web de utilidades para procesamiento de archivos institucionales como LIS y PDFs, desarrollada con Astro, Vue y Tailwind CSS.",
+      "highlights": [
+        "Procesamiento de archivos .lis con análisis visual",
+        "Fusión y gestión de archivos PDF",
+        "Interfaz modular con componentes Vue",
+        "Despliegue optimizado en Vercel"
+      ],
+      "url": "https://github.com/edwinwmendez/Herramientas-SUP", 
+      "featured": true,
+      "technologies": ["Astro", "Vue 3", "Tailwind CSS", "TypeScript", "Vercel"]
     }
   ]
 }
