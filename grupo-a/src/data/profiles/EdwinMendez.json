@@ -2,7 +2,7 @@
     "basics": {
       "name": "Edwin Wilson",
       "last_name": "Méndez Echevarría",
-      "label": "Desarrollador Backend",
+      "label": "Desarrollador Backend y especialista en automatización",
       "image": {
         "local": "/images/team/edwin.png",
         "remote": "https://github.com/edwinwmendeze.png"
@@ -10,7 +10,7 @@
       "email": "45088035@continental.edu.pe",
       "phone": "(51) 948-924-822",
       "url": "https://edwinwmendeze.github.io/portfolio-personal/",
-      "summary": "Especialista en infraestructura, automatización y despliegue continuo. Enfocado en seguridad y escalabilidad.",
+      "summary": "Desarrollador backend y especialista en automatización con amplia experiencia en Python (Django, Flask, FastAPI) y frameworks modernos de frontend (Vue.js, Nuxt, Astro). Apasionado por la optimización de procesos mediante DevOps, despliegues continuos y análisis de datos. Orientado a la resolución de problemas complejos, siempre en búsqueda de soluciones escalables y eficientes.",
       "location": {
         "city": "Atalaya",
         "countryCode": "PE",
@@ -20,7 +20,7 @@
         {
           "network": "GitHub",
           "username": "edwin",
-          "url": "https://github.com/edwinwmendez"
+          "url": "https://github.com/edwinwmendeze"
         },
         {
           "network": "LinkedIn",
@@ -30,22 +30,89 @@
       ]
     },
     "skills": [
-        {
-            "name": "DevOps",
-            "keywords": ["CI/CD", "Docker", "Kubernetes", "AWS"],
-            "type": "hard"
-        },
-        {
-            "name": "Backend",
-            "keywords": ["Node.js", "Python", "Go"],
-            "type": "hard"
-        },
-        {
-            "name": "Liderazgo",
-            "keywords": ["Gestión de equipos", "Mentoría", "Comunicación efectiva"],
-            "type": "soft"
-        }
-        ],
+  {
+    "name": "Backend",
+    "keywords": [
+      "Python",
+      "Django",
+      "Django REST Framework",
+      "Flask",
+      "FastAPI",
+      "PostgreSQL",
+      "Supabase",
+      "Redis",
+      "ORM de Django",
+      "Scripting en Python",
+      "Testing con Pytest y unittest"
+    ],
+    "type": "hard"
+  },
+  {
+    "name": "Frontend",
+    "keywords": [
+      "Vue.js",
+      "Nuxt",
+      "Astro",
+      "Typescript",
+      "TailwindCSS",
+      "NuxtUI",
+      "SSR / SSG",
+      "Vuelidate",
+      "Zod",
+      "Axios"
+    ],
+    "type": "hard"
+  },
+  {
+    "name": "DevOps & Cloud",
+    "keywords": [
+      "Docker",
+      "Docker Compose",
+      "Git",
+      "GitHub",
+      "GitHub Actions",
+      "Vercel",
+      "DigitalOcean",
+      "Firebase",
+      "Google APIs",
+      "AWS",
+      "Azure",
+      "Nginx",
+      "Manejo de dominios y DNS"
+    ],
+    "type": "hard"
+  },
+  {
+    "name": "Automatización & AI",
+    "keywords": [
+      "Selenium",
+      "OpenAI API",
+      "Anthropic API",
+      "Pandas",
+      "NumPy",
+      "Openpyxl",
+      "PyAutoGUI",
+      "Reconocimiento de imágenes",
+      "Automatización de tareas administrativas",
+      "Integración con APIs externas"
+    ],
+    "type": "hard"
+  },
+  {
+    "name": "Habilidades Blandas",
+    "keywords": [
+      "Trabajo en equipo",
+      "Trabajo bajo presión",
+      "Análisis profundo",
+      "Resolución de problemas",
+      "Pensamiento crítico",
+      "Adaptabilidad",
+      "Aprendizaje continuo",
+      "Gestión del tiempo"
+    ],
+    "type": "soft"
+  }
+],
     "education": [
       {
         "institution": "Universidad Continental",
@@ -58,8 +125,8 @@
         "institution": "Instituto de Alta Tecnologia - IDAT",
         "area": "Computacion e informatica",
         "studyType": "Tecnica",
-        "startDate": "2016-03-01",
-        "endDate": "2017-12-20"
+        "startDate": "2005-03-01",
+        "endDate": "2007-12-20"
       }
     ],
     "projects": [
