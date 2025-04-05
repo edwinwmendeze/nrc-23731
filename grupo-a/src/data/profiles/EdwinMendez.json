@@ -30,89 +30,76 @@
       ]
     },
     "skills": [
-  {
-    "name": "Backend",
-    "keywords": [
-      "Python",
-      "Django",
-      "Django REST Framework",
-      "Flask",
-      "FastAPI",
-      "PostgreSQL",
-      "Supabase",
-      "Redis",
-      "ORM de Django",
-      "Scripting en Python",
-      "Testing con Pytest y unittest"
+      {
+        "name": "Backend",
+        "keywords": [
+          "Python",
+          "Django",
+          "Django REST Framework",
+          "FastAPI",
+          "Flask",
+          "PostgreSQL",
+          "Supabase",
+          "Redis"
+        ],
+        "type": "hard"
+      },
+      {
+        "name": "Frontend",
+        "keywords": [
+          "Vue.js",
+          "Nuxt",
+          "Astro",
+          "Typescript",
+          "TailwindCSS"
+        ],
+        "type": "hard"
+      },
+      {
+        "name": "DevOps & Cloud",
+        "keywords": [
+          "Docker",
+          "Docker Compose",
+          "Git",
+          "GitHub",
+          "GitHub Actions",
+          "Vercel",
+          "DigitalOcean",
+          "Firebase",
+          "Google Cloud",
+          "AWS",
+          "Azure",
+          "Nginx",
+          "DNS y dominios"
+        ],
+        "type": "hard"
+      },
+      {
+        "name": "Automatización e Inteligencia Artificial",
+        "keywords": [
+          "Selenium",
+          "OpenAI API",
+          "Pandas",
+          "NumPy",
+          "Automatización con Python"
+        ],
+        "type": "hard"
+      },
+      {
+        "name": "Habilidades Blandas",
+        "keywords": [
+          "Trabajo en equipo",
+          "Trabajo bajo presión",
+          "Análisis profundo",
+          "Resolución de problemas",
+          "Pensamiento crítico",
+          "Adaptabilidad",
+          "Aprendizaje continuo",
+          "Gestión del tiempo"
+        ],
+        "type": "soft"
+      }
     ],
-    "type": "hard"
-  },
-  {
-    "name": "Frontend",
-    "keywords": [
-      "Vue.js",
-      "Nuxt",
-      "Astro",
-      "Typescript",
-      "TailwindCSS",
-      "NuxtUI",
-      "SSR / SSG",
-      "Vuelidate",
-      "Zod",
-      "Axios"
-    ],
-    "type": "hard"
-  },
-  {
-    "name": "DevOps & Cloud",
-    "keywords": [
-      "Docker",
-      "Docker Compose",
-      "Git",
-      "GitHub",
-      "GitHub Actions",
-      "Vercel",
-      "DigitalOcean",
-      "Firebase",
-      "Google APIs",
-      "AWS",
-      "Azure",
-      "Nginx",
-      "Manejo de dominios y DNS"
-    ],
-    "type": "hard"
-  },
-  {
-    "name": "Automatización & AI",
-    "keywords": [
-      "Selenium",
-      "OpenAI API",
-      "Anthropic API",
-      "Pandas",
-      "NumPy",
-      "Openpyxl",
-      "PyAutoGUI",
-      "Reconocimiento de imágenes",
-      "Automatización de tareas administrativas",
-      "Integración con APIs externas"
-    ],
-    "type": "hard"
-  },
-  {
-    "name": "Habilidades Blandas",
-    "keywords": [
-      "Trabajo en equipo",
-      "Trabajo bajo presión",
-      "Análisis profundo",
-      "Resolución de problemas",
-      "Pensamiento crítico",
-      "Adaptabilidad",
-      "Aprendizaje continuo",
-      "Gestión del tiempo"
-    ],
-    "type": "soft"
-  }
-],
     "education": [
       {
         "institution": "Universidad Continental",
