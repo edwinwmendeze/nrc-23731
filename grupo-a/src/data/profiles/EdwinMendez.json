@@ -136,7 +136,7 @@
         "Interfaz modular con componentes Vue",
         "Despliegue optimizado en Vercel"
       ],
-      "url": "https://github.com/edwinwmendez/Herramientas-SUP", 
+      "url": "https://herramientas-sup.vercel.app/", 
       "featured": true,
       "technologies": ["Astro", "Vue 3", "Tailwind CSS", "TypeScript", "Vercel"]
     }

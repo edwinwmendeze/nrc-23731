@@ -6,21 +6,13 @@
 portfolio-grupo/
 ├── src/
 │   ├── components/
-│   │   ├── shared/
-│   │   │   ├── Header.astro
-│   │   │   ├── Footer.astro
-│   │   │   ├── Navigation.astro
-│   │   │   ├── ThemeToggle.astro
-│   │   │   └── SearchBar.astro
 │   │   ├── home/
 │   │   │   ├── Hero.astro
 │   │   │   ├── TeamSection.astro
 │   │   │   └── FeaturedProjects.astro
 │   │   ├── portfolio/
 │   │   │   ├── ProfileHeader.astro
-│   │   │   ├── SkillsSection.astro
 │   │   │   ├── ProjectsSection.astro
-│   │   │   └── ContactSection.astro
 │   │   └── admin/
 │   │       ├── Dashboard.astro
 │   │       └── ProjectManager.astro
@@ -39,21 +31,11 @@ portfolio-grupo/
 │   ├── utils/
 │   │   ├── constants.ts
 │   │   └── helpers.ts
-│   ├── i18n/
-│   │   ├── locales/
-│   │   │   ├── es/
-│   │   │   │   ├── common.json
-│   │   │   │   └── portfolio.json
-│   │   │   └── en/
-│   │   │       ├── common.json
-│   │   │       └── portfolio.json
-│   │   └── config.ts
 │   └── data/
 │       ├── profiles/
 │       │   └── [username].json
 │       └── config/
 │           ├── site.json
-│           └── theme.json
 ├── public/
 │   ├── images/
 │   │   ├── logos/
@@ -62,9 +44,6 @@ portfolio-grupo/
 │   └── assets/
 │       ├── fonts/
 │       └── icons/
-├── tests/
-│   ├── components/
-│   └── utils/
 ├── astro.config.mjs
 ├── package.json
 ├── tsconfig.json

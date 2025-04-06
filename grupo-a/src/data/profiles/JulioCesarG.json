@@ -1,18 +1,17 @@
 {
     "basics": {
-      "name": "Julio",
-      "last_name":"Julio Cesar Guillermo",
-      "label": "Especialista en Redes",
+      "name": "Julio César",
+      "last_name":"Guillermo Colca",
+      "label": "Jefe de Soporte Técnico y Redes",
       "image": {
-        "local": "/images/team/pepe.png",
-        "remote": "https://www.kia.com/content/dam/kwcms/gt/en/images/discover-kia/voice-search/parts-80-1.jpg"
+        "remote": "https://internetenperu2025.wordpress.com/wp-content/uploads/2025/03/pasaporte-02.jpg"
       },
       "email": "41925797@continetal.edu.pe",
-      "phone": "(51) 123-456-789",
+      "phone": "944979705",
       "url": "https://juliocesar.dev",
-      "summary": "Especialista en redes de y experiencia de usuario con enfoque en accesibilidad y rendimiento.",
+      "summary": "Profesional con experiencia liderando equipos técnicos, brindando soporte IT y gestionando infraestructuras de red seguras y eficientes.",
       "location": {
-        "city": "Pasco",
+        "city": "Cerro de Pasco",
         "countryCode": "PE",
         "region": "Pasco"
       },
@@ -24,53 +23,59 @@
         },
         {
           "network": "LinkedIn",
-          "username": "juliocesar",
-          "url": "https://linkedin.com/in/juliocesar"
+          "username": "Julio Cesar Guillermo Colca",
+          "url": "https://www.linkedin.com/in/julio-cesar-guillermo-colca-b9b24874/"
         }
       ]
     },
     "skills": [
   {
+<<<<<<< HEAD
     "name": "Frontend",
     "keywords": ["React", "Vue", "TypeScript", "CSS"],
+=======
+    "name": "Redes y Telecomunicaciones",
+    "keywords": ["TCP/IP", "Routing", "Switching", "Cisco Packet Tracer", "Subnetting", "Firewall", "Topologías de red", "WAN/LAN"],
+    "type": "Tecnologías de la Información"
+>>>>>>> fac13ee9581a7a0afcf72a3401de03b4c6ffdd88
   },
     "type": "hard"
   {
-    "name": "Diseño UX",
-    "keywords": ["Figma", "Adobe XD", "Wireframing"],
-    "type": "hard"
+    "name": "Soporte Técnico",
+    "keywords": ["Mantenimiento de hardware", "Diagnóstico de fallas", "Atención al usuario", "Resolución de incidencias", "Help Desk"],
+    "type": "Tecnologías de la Información"
   },
   {
-    "name": "Trabajo en equipo",
-    "keywords": ["Colaboración", "Resolución de conflictos", "Empatía"],
-    "type": "soft"
+    "name": "Trabajo colaborativo",
+    "keywords": ["Versionamiento con Git", "Contribuciones en GitHub", "Comunicación efectiva", "Scrum básico", "Documentación técnica", "Sinergia", "Liderazgo colaborativo"],
+    "type": "Gestión de proyectos"
   }
 ],
     "education": [
       {
         "institution": "Universidad Continental",
-        "area": "Ingeniería Informática",
-        "studyType": "Licenciatura",
-        "startDate": "2015-03-01",
-        "endDate": "2020-07-15"
+        "area": "Ingeniería de Sistemas e Informática",
+        "studyType": "Bachiller en Ingeniería de Sistemas e Informática",
+        "startDate": "2022-03-01",
+        "endDate": "2026-12-15"
       }
     ],
     "projects": [
   {
-    "name": "Sistema de Componentes",
-    "description": "Biblioteca de componentes accesibles y reutilizables para aplicaciones web",
-    "highlights": ["Cumplimiento WCAG 2.1 AA", "Documentación automática con Storybook"],
-    "url": "https://github.com/juliocesar/components",
+    "name": "Gestión de Infraestructura de Red",
+    "description": "Simulación de una red empresarial con dispositivos Cisco y configuración de protocolos de enrutamiento.",
+    "highlights": ["Configuración de switches y routers con CLI","Topología jerárquica con VLANs","Simulación de fallas y recuperación"],
+    "url": "https://github.com/Julio-Cesar-Guillermo-Colca-2025",
     "featured": false,
-    "technologies": ["React", "TypeScript", "Storybook", "Jest"]
+    "technologies": ["Cisco Packet Tracer", "Switching", "Routing", "VLANs"]
   },
   {
-    "name": "Dashboard Analítico",
-    "description": "Panel de control para visualización de datos empresariales en tiempo real",
-    "highlights": ["Optimizado para dispositivos móviles", "Gráficos interactivos avanzados"],
-    "url": "https://github.com/juliocesar/dashboard",
+    "name": "Participación en Proyecto NRC-23731",
+    "description": "Contribuciones al desarrollo colaborativo del sitio web del grupo con enfoque en tecnologías web modernas.",
+    "highlights": ["Edición del perfil personal", "Manejo de Git", "Uso de Astro y Tailwind CSS"],
+    "url": "https://github.com/edwinwmendeze/nrc-23731",
     "featured": true,
-    "technologies": ["Vue.js", "D3.js", "Firebase", "Tailwind CSS"]
+    "technologies": ["Astro", "React", "Tailwind CSS", "Git"]
   }
 ]
   }
