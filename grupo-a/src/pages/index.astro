@@ -1,17 +1,49 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import Hero from '../components/home/Hero.astro';
-import FeaturedProjects from '../components/home/FeaturedProjects.astro';
 import TeamSection from '../components/home/TeamSection.astro';
-import SkillsOverview from '../components/home/SkillsOverview.astro';
+import FeaturedProjects from '../components/home/FeaturedProjects.astro';
+import ErrorBoundary from '../components/ui/ErrorBoundary.astro';
+import ErrorMessage from '../components/ui/ErrorMessage.astro';
+
+// Intentamos cargar los datos, con manejo de errores
+let teamData;
+let errorLoading = false;
+
+try {
+  // Cargar datos del equipo
+  teamData = await import('../data/config/site.json');
+} catch (error) {
+  console.error('Error al cargar los datos del equipo:', error);
+  errorLoading = true;
+}
 ---
 
 <MainLayout 
   title="Grupo A - Portafolio" 
   description="Portafolio profesional del Grupo A, destacando proyectos y habilidades en desarrollo web."
 >
-  <Hero />
-  <TeamSection />
-  <FeaturedProjects />
+  {errorLoading ? (
+    <div class="container mx-auto px-4 py-20">
+      <ErrorMessage 
+        message="No se pudieron cargar los datos del equipo. Por favor, intenta nuevamente más tarde."
+        type="error" 
+        showIcon={true} 
+      />
+    </div>
+  ) : (
+    <>
+      <ErrorBoundary fallback="No se pudo cargar la sección Hero">
+        <Hero />
+      </ErrorBoundary>
 
+      <ErrorBoundary fallback="No se pudo cargar la sección de integrantes del equipo">
+        <TeamSection />
+      </ErrorBoundary>
+
+      <ErrorBoundary fallback="No se pudo cargar la sección de proyectos destacados">
+        <FeaturedProjects />
+      </ErrorBoundary>
+    </>
+  )}
 </MainLayout>
