@@ -32,22 +32,52 @@ La elección de Astro como framework principal para este portafolio grupal se ba
 ### 3.1 Estructura de Carpetas
 
 ```
-/grupo-a/
+portfolio-grupo/
 ├── src/
-│   ├── components/     # Componentes reutilizables
-│   │   ├── home/        # Componentes específicos para la página de inicio
-│   │   └── ui/          # Componentes de interfaz de usuario genéricos
-│   ├── data/           # Datos estructurados (JSON, YAML)
-│   │   ├── config/      # Configuración del sitio
-│   │   └── profiles/    # Información de perfiles de los miembros del equipo
-│   ├── layouts/        # Plantillas de página
-│   ├── pages/          # Páginas del sitio
-│   ├── services/       # Lógica de negocio y servicios
-│   ├── styles/         # Estilos globales
-│   ├── types/          # Definiciones de tipos TypeScript
-│   └── utils/          # Funciones de utilidad
-├── public/          # Archivos estáticos servidos directamente
-└── docs/            # Documentación del proyecto
+│   ├── components/
+│   │   ├── home/
+│   │   │   ├── Hero.astro
+│   │   │   ├── TeamSection.astro
+│   │   │   └── FeaturedProjects.astro
+│   │   └── ui/
+│   │       ├── Button.astro
+│   │       ├── SocialLink.astro
+│   │       ├── ErrorBoundary.astro
+│   │       ├── ErrorFallback.astro
+│   │       └── ErrorMessage.astro
+│   ├── layouts/
+│   │   └── MainLayout.astro
+│   ├── pages/
+│   │   └── index.astro
+│   ├── styles/
+│   │   ├── global.css
+│   │   └── base.css
+│   ├── data/
+│   │   ├── config/
+│   │   └── profiles/
+│   │       ├── EdwinMendez.json
+│   │       └── [OtrosPerfiles].json
+│   ├── services/
+│   │   └── profileService.ts
+│   ├── types/
+│   │   ├── AppError.ts
+│   │   ├── index.ts
+│   │   ├── profile.ts
+│   │   └── project.ts
+│   └── utils/
+│       └── errorUtils.ts
+├── public/
+│   ├── favicon.svg
+│   └── images/
+│       └── team/
+│           └── edwin.png
+├── astro.config.mjs
+├── package.json
+├── tsconfig.json
+├── jsconfig.json
+├── .prettierrc
+├── .eslintrc.cjs
+└── README.md
 ```
 
 ### 3.2 Patrones Arquitectónicos
