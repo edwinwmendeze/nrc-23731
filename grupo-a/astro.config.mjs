@@ -7,7 +7,7 @@ import icon from 'astro-icon';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://edwinmendeze.github.io',
-  base: '/nrc-23731/grupo-a',  // Base URL para GitHub Pages
+  base: '/nrc-23731',  // Base URL para GitHub Pages (sin /grupo-a)
   integrations: [
     sitemap(),
     compress(),
