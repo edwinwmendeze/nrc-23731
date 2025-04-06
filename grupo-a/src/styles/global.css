@@ -1,13 +1,31 @@
+/* src/styles/global.css */
+/* Import de fuentes y variables */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 :root {
   /* Colores */
   --color-bg: #ffffff;
-  --color-text: #333333;
+  --color-text: #1f2937;
+  --color-text-light: #4b5563;
+  --color-text-lighter: #6b7280;
   --color-accent: #2d2d2d;
   --color-surface: #f7f7f7;
   --color-border: #e0e0e0;
+  --color-gray-100: #f7f7f7;
+  --color-gray-200: #e5e5e5;
+  --color-gray-300: #d3d3d3;
+  --color-gray-400: #b5b5b5;
+  --color-gray-500: #959595;
+  --color-gray-600: #808080;
+  --color-gray-700: #666666;
+  --color-gray-800: #4c4c4c;
+  --color-gray-900: #333333;
+  --color-primary: #3498db;
+  --color-primary-dark: #2e6da4;
   
   /* Tipografía */
-  --font-mono: "Meslo LG", "SF Mono", Menlo, Monaco, Consolas, monospace;
+  --font-family-sans: "Inter", sans-serif;
+  --font-weight-semibold: 600;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
   --font-size-lg: 1.25rem;
@@ -19,45 +37,132 @@
   --space-sm: 1rem;
   --space-md: 2rem;
   --space-lg: 4rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-3xl: 6rem;
   
   /* Otros */
   --border-radius: 2px;
   --max-width: 1200px;
-  --transition: 0.2s ease;
+  --container-max-width: 1200px;
+  --container-padding: 1rem;
+  --transition-normal: 0.2s ease;
+  --transition-fast: 0.1s ease;
 }
 
-body {
-  font-family: var(--font-mono);
-  color: var(--color-text);
-  background-color: var(--color-bg);
-  line-height: 1.6;
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gray-400) var(--color-gray-100);
+}
+
+body {
+  font-family: var(--font-family-sans);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+/* Typography */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   line-height: 1.2;
-  margin-top: 0;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-gray-900);
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+  color: var(--color-gray-100);
+}
+
+p {
+  margin-bottom: var(--spacing-md);
 }
 
 a {
-  color: var(--color-accent);
+  color: var(--color-primary);
   text-decoration: none;
-  transition: color var(--transition);
+  transition: color var(--transition-fast), text-decoration var(--transition-fast);
 }
 
 a:hover {
+  color: var(--color-primary-dark);
   text-decoration: underline;
 }
 
+/* Layout utilities */
 .container {
   width: 100%;
-  max-width: var(--max-width);
+  max-width: var(--container-max-width);
   margin: 0 auto;
-  padding: 0 var(--space-sm);
+  padding: 0 var(--container-padding);
 }
 
 .section {
-  padding: var(--space-lg) 0;
+  padding: var(--spacing-3xl) 0;
+}
+
+/* Flexbox helpers */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.gap-sm {
+  gap: var(--spacing-sm);
+}
+
+.gap-md {
+  gap: var(--spacing-md);
+}
+
+.gap-lg {
+  gap: var(--spacing-lg);
+}
+
+/* Visually hidden (for screen readers) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }

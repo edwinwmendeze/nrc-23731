@@ -2,13 +2,20 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import compress from 'astro-compress';
+import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://grupo-a.com',
+  site: 'https://edwinmendeze.github.io',
+  base: '/nrc-23731',  // Base URL para GitHub Pages (sin /grupo-a)
   integrations: [
     sitemap(),
-    compress()
+    compress(),
+    icon({
+      include: {
+        tabler: ['*'],  // Incluir todos los íconos de Tabler
+      },
+    }),
   ],
   image: {
     // Configuración de optimización de imágenes usando astro:assets
