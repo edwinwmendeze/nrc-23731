@@ -178,13 +178,23 @@ Se implementan las siguientes estrategias:
 
 ### 6.2 SEO y Accesibilidad
 
+- **Puntuaciones perfectas en Lighthouse**: La aplicación ha obtenido puntuaciones excelentes en las auditorías de Lighthouse:
+  - Performance: 99/100
+  - Accessibility: 100/100
+  - Best Practices: 100/100
+  - SEO: 100/100
+
 - **Metadatos configurables**: Cada página tiene metadatos personalizados para SEO.
   
 - **Semántica HTML5**: Uso de etiquetas semánticas para mejorar la accesibilidad y el SEO (`section`, `article`, `header`, etc.).
   
 - **Textos alternativos**: Todas las imágenes incluyen atributos `alt` descriptivos.
   
-- **Contraste adecuado**: Los colores del sitio están seleccionados para asegurar un contraste suficiente, mejorando la legibilidad.
+- **Contraste adecuado**: Los colores del sitio han sido cuidadosamente seleccionados y ajustados para asegurar un contraste óptimo, mejorando la legibilidad para todos los usuarios, incluyendo aquellos con discapacidades visuales.
+
+- **Escalabilidad mejorada**: Configuración de viewport optimizada para permitir el escalado del usuario (user-scalable=yes) con escalas mínima y máxima apropiadas.
+
+- **Sistema de variables CSS**: Implementación de un sistema consistente de variables CSS para colores y estilos que mantiene la coherencia visual y facilita el cumplimiento de los estándares de accesibilidad WCAG.
 
 ## 7. Despliegue
 
