@@ -5,7 +5,9 @@
 :root {
   /* Colores */
   --color-bg: #ffffff;
-  --color-text: #333333;
+  --color-text: #1f2937;
+  --color-text-light: #4b5563;
+  --color-text-lighter: #6b7280;
   --color-accent: #2d2d2d;
   --color-surface: #f7f7f7;
   --color-border: #e0e0e0;

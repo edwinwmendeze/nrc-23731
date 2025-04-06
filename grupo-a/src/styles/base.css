@@ -1,5 +1,3 @@
-@import './variables.css';
-
 /* Reset básico */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -208,4 +206,4 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
-} 
+}
