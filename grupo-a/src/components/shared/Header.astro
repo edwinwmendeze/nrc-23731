@@ -7,10 +7,10 @@ import MobileMenu from './MobileMenu.astro';
 
 <header class="header" id="site-header">
   <div class="container header-container">
-    <!-- Enlace directo a la ruta correcta en GitHub Pages -->
-    <a href="/nrc-23731/" class="logo" aria-label="Volver a inicio">
+    <!-- Logo sin enlace, solo como elemento visual -->
+    <div class="logo" aria-label="Logo del Grupo A">
       <img src="/nrc-23731/images/logo.svg" alt="Grupo A Logo" width="40" height="40" />
-    </a>
+    </div>
     
     <Navigation />
     
@@ -75,11 +75,7 @@ import MobileMenu from './MobileMenu.astro';
   .logo {
     display: flex;
     align-items: center;
-    transition: opacity var(--transition-fast, 0.2s ease);
-  }
-  
-  .logo:hover {
-    opacity: 0.8;
+    cursor: default; /* Indica que no es clickeable */
   }
 
   .logo img {
