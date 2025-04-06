@@ -1,81 +1,61 @@
 {
-    "basics": {
+  "basics": {
       "name": "Julio César",
-      "last_name":"Guillermo Colca",
+      "last_name": "Guillermo Colca",
       "label": "Jefe de Soporte Técnico y Redes",
       "image": {
-        "remote": "https://internetenperu2025.wordpress.com/wp-content/uploads/2025/03/pasaporte-02.jpg"
+          "remote": "https://internetenperu2025.wordpress.com/wp-content/uploads/2025/03/pasaporte-02.jpg"
       },
       "email": "41925797@continetal.edu.pe",
       "phone": "944979705",
-      "url": "https://juliocesar.dev",
+      "url": "https://julio-cesar-guillermo-colca-2025.github.io/mi-portafolio2025/",
       "summary": "Profesional con experiencia liderando equipos técnicos, brindando soporte IT y gestionando infraestructuras de red seguras y eficientes.",
       "location": {
-        "city": "Cerro de Pasco",
-        "countryCode": "PE",
-        "region": "Pasco"
+          "city": "Cerro de Pasco",
+          "countryCode": "PE",
+          "region": "Pasco"
       },
       "profiles": [
-        {
-          "network": "GitHub",
-          "username": "Julio-Cesar-Guillermo-Colca-2025",
-          "url": "https://github.com/Julio-Cesar-Guillermo-Colca-2025"
-        },
-        {
-          "network": "LinkedIn",
-          "username": "Julio Cesar Guillermo Colca",
-          "url": "https://www.linkedin.com/in/julio-cesar-guillermo-colca-b9b24874/"
-        }
+          {
+              "network": "GitHub",
+              "username": "Julio-Cesar-Guillermo-Colca-2025",
+              "url": "https://github.com/Julio-Cesar-Guillermo-Colca-2025"
+          },
+          {
+              "network": "LinkedIn",
+              "username": "Julio Cesar Guillermo Colca",
+              "url": "https://www.linkedin.com/in/julio-cesar-guillermo-colca-b9b24874/"
+          }
       ]
-    },
-    "skills": [
-  {
-<<<<<<< HEAD
-    "name": "Frontend",
-    "keywords": ["React", "Vue", "TypeScript", "CSS"],
-=======
-    "name": "Redes y Telecomunicaciones",
-    "keywords": ["TCP/IP", "Routing", "Switching", "Cisco Packet Tracer", "Subnetting", "Firewall", "Topologías de red", "WAN/LAN"],
-    "type": "Tecnologías de la Información"
->>>>>>> fac13ee9581a7a0afcf72a3401de03b4c6ffdd88
   },
-    "type": "hard"
-  {
-    "name": "Soporte Técnico",
-    "keywords": ["Mantenimiento de hardware", "Diagnóstico de fallas", "Atención al usuario", "Resolución de incidencias", "Help Desk"],
-    "type": "Tecnologías de la Información"
-  },
-  {
-    "name": "Trabajo colaborativo",
-    "keywords": ["Versionamiento con Git", "Contribuciones en GitHub", "Comunicación efectiva", "Scrum básico", "Documentación técnica", "Sinergia", "Liderazgo colaborativo"],
-    "type": "Gestión de proyectos"
-  }
-],
-    "education": [
+  "skills": [
       {
-        "institution": "Universidad Continental",
-        "area": "Ingeniería de Sistemas e Informática",
-        "studyType": "Bachiller en Ingeniería de Sistemas e Informática",
-        "startDate": "2022-03-01",
-        "endDate": "2026-12-15"
+          "name": "Redes y Telecomunicaciones",
+          "keywords": ["TCP/IP", "Routing", "Switching", "Cisco Packet Tracer", "Subnetting", "Firewall"],
+          "type": "hard"
+      },
+      {
+          "name": "Soporte Técnico",
+          "keywords": ["Mantenimiento de hardware", "Diagnóstico de fallas", "Atención al usuario"],
+          "type": "hard"
       }
-    ],
-    "projects": [
-  {
-    "name": "Gestión de Infraestructura de Red",
-    "description": "Simulación de una red empresarial con dispositivos Cisco y configuración de protocolos de enrutamiento.",
-    "highlights": ["Configuración de switches y routers con CLI","Topología jerárquica con VLANs","Simulación de fallas y recuperación"],
-    "url": "https://github.com/Julio-Cesar-Guillermo-Colca-2025",
-    "featured": false,
-    "technologies": ["Cisco Packet Tracer", "Switching", "Routing", "VLANs"]
-  },
-  {
-    "name": "Participación en Proyecto NRC-23731",
-    "description": "Contribuciones al desarrollo colaborativo del sitio web del grupo con enfoque en tecnologías web modernas.",
-    "highlights": ["Edición del perfil personal", "Manejo de Git", "Uso de Astro y Tailwind CSS"],
-    "url": "https://github.com/edwinwmendeze/nrc-23731",
-    "featured": true,
-    "technologies": ["Astro", "React", "Tailwind CSS", "Git"]
-  }
-]
-  }
+  ],
+  "education": [
+      {
+          "institution": "Universidad Continental",
+          "area": "Ingeniería de Sistemas e Informática",
+          "studyType": "Bachiller",
+          "startDate": "2022-03-01",
+          "endDate": "2026-12-15"
+      }
+  ],
+  "projects": [
+      {
+          "name": "Gestión de Infraestructura de Red",
+          "description": "Simulación de red empresarial con dispositivos Cisco",
+          "highlights": ["Configuración de switches", "Topología con VLANs"],
+          "url": "https://github.com/Julio-Cesar-Guillermo-Colca-2025",
+          "technologies": ["Cisco Packet Tracer", "CLI"]
+      }
+  ]
+}
