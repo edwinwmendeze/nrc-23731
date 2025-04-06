@@ -31,7 +31,7 @@ const finalDescription = pageDescription || siteDefaultDescription;
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/meslo.min.css" />
   </head>
   <body>
-    <header class="site-header">
+    <header class="site-header" id="site-header">
       <div class="header-container">
         <nav class="nav">
           <a href="/" class="logo">{ teamName }</a> 
@@ -43,9 +43,9 @@ const finalDescription = pageDescription || siteDefaultDescription;
           </button>
           
           <div class="nav-links">
-            <a href="#proyectos">Proyectos</a>
             <a href="#integrantes">Integrantes</a>
-            <a href="#habilidades">Habilidades</a>
+            <a href="#proyectos">Proyectos</a>
+            
           </div>
         </nav>
       </div>
@@ -57,9 +57,8 @@ const finalDescription = pageDescription || siteDefaultDescription;
         <button class="close-menu" aria-label="Cerrar menú">✕</button>
       </div>
       <div class="mobile-nav-links">
-        <a href="#proyectos">Proyectos</a>
         <a href="#integrantes">Integrantes</a>
-        <a href="#habilidades">Habilidades</a>
+        <a href="#proyectos">Proyectos</a>
       </div>
     </div>
     
@@ -99,15 +98,23 @@ const finalDescription = pageDescription || siteDefaultDescription;
   
   /* Header */
   .site-header {
-    position: sticky;
+    position: fixed;
     top: 0;
     width: 100%;
     z-index: 100;
-    background-color: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    background-color: var(--color-bg);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
     border-bottom: 1px solid var(--color-border, #e2e8f0);
     padding: 1rem 0;
+    transition: all 0.3s ease;
+  }
+  
+  .site-header.scrolled {
+    background-color: rgba(var(--color-bg-rgb, 255, 255, 255), 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
   
   .header-container {
@@ -236,6 +243,7 @@ const finalDescription = pageDescription || siteDefaultDescription;
     width: 100%;
     display: flex;
     flex-direction: column;
+    padding-top: 5rem; /* Agregar espacio para el header fijo */
   }
   
   /* Footer */
@@ -311,6 +319,18 @@ const finalDescription = pageDescription || siteDefaultDescription;
     const overlay = document.querySelector('.mobile-overlay');
     const body = document.body;
     const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
+    const header = document.getElementById('site-header');
+    
+    // Efecto de scroll para el header
+    if (header) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+    }
     
     // Función para abrir el menú
     function openMenu() {

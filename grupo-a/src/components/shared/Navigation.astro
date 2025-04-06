@@ -1,22 +1,38 @@
 ---
-const navItems = [
+export const navItems = [
   { href: '/', label: 'Inicio' },
   { href: '/proyectos', label: 'Proyectos' },
   { href: '/equipo', label: 'Equipo' },
   { href: '/blog', label: 'Blog' },
   { href: '/contacto', label: 'Contacto' },
 ];
+
+// Obtener la ruta actual para determinar el enlace activo
+const currentPath = Astro.url.pathname;
+
+// Obtener la URL base para enlaces
+const BASE_URL = import.meta.env.BASE_URL || '/';
+// Asegurarse de que termina con / para rutas relativas
+const baseUrl = BASE_URL.endsWith('/') ? BASE_URL : `${BASE_URL}/`;
 ---
 
 <nav class="nav">
   <ul class="nav-list">
-    {navItems.map((item) => (
-      <li class="nav-item">
-        <a href={item.href} class="nav-link">
-          {item.label}
-        </a>
-      </li>
-    ))}
+    {navItems.map((item) => {
+      // Construir la URL completa con la base
+      const fullHref = item.href === '/' ? baseUrl : `${baseUrl}${item.href.replace(/^\//, '')}`;
+      
+      // Comprobar si es la página activa
+      const isActive = currentPath === item.href || 
+                     (item.href !== '/' && currentPath.startsWith(item.href));
+      return (
+        <li class="nav-item">
+          <a href={fullHref} class:list={["nav-link", { active: isActive }]}>
+            {item.label}
+          </a>
+        </li>
+      );
+    })}
   </ul>
 </nav>
 
@@ -35,6 +51,8 @@ const navItems = [
     display: flex;
     gap: 1.5rem;
     list-style: none;
+    margin: 0;
+    padding: 0;
   }
 
   .nav-item {
@@ -44,9 +62,10 @@ const navItems = [
   .nav-link {
     color: var(--color-text);
     text-decoration: none;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium, 500);
     padding: 0.5rem;
-    transition: color 0.2s ease;
+    transition: color var(--transition-fast, 0.2s ease);
+    position: relative;
   }
 
   .nav-link:hover {
@@ -65,5 +84,25 @@ const navItems = [
     width: 100%;
     height: 2px;
     background-color: var(--color-primary);
+    transform: scaleX(1);
   }
-</style> 
+  
+  /* Añadir animación para el underline */
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-primary);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--transition-normal, 0.3s ease);
+  }
+  
+  .nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+</style>
