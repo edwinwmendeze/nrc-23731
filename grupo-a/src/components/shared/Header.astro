@@ -3,17 +3,13 @@ import Navigation from './Navigation.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import SearchBar from './SearchBar.astro';
 import MobileMenu from './MobileMenu.astro';
-
-// Obtener la URL base para enlaces
-const BASE_URL = import.meta.env.BASE_URL || '/';
-// Asegurarse de que termina con / para rutas relativas
-const baseUrl = BASE_URL.endsWith('/') ? BASE_URL : `${BASE_URL}/`;
 ---
 
 <header class="header" id="site-header">
   <div class="container header-container">
-    <a href={baseUrl} class="logo" aria-label="Volver a inicio">
-      <img src={`${baseUrl}images/logo.svg`} alt="Grupo A Logo" width="40" height="40" />
+    <!-- Enlace directo a la ruta correcta en GitHub Pages -->
+    <a href="/nrc-23731/" class="logo" aria-label="Volver a inicio">
+      <img src="/nrc-23731/images/logo.svg" alt="Grupo A Logo" width="40" height="40" />
     </a>
     
     <Navigation />
