@@ -104,30 +104,51 @@ Desarrollar un portafolio web grupal que sirva como hub central para presentar a
 
 ```
 portfolio-grupo/
-src/
-components/
-home/
-TeamSection.astro
-FeaturedProjects.astro
-common/
-Header.astro
-Footer.astro
-ui/
-Button.astro
-SocialLink.astro
-layouts/
-MainLayout.astro
-pages/
-index.astro
-styles/
-global.css
-base.css
-data/
-profiles/
-EdwinMendez.json
-[OtrosPerfiles].json
-public/
-images/
+├── src/
+│   ├── components/
+│   │   ├── home/
+│   │   │   ├── Hero.astro
+│   │   │   ├── TeamSection.astro
+│   │   │   └── FeaturedProjects.astro
+│   │   └── ui/
+│   │       ├── Button.astro
+│   │       ├── SocialLink.astro
+│   │       ├── ErrorBoundary.astro
+│   │       ├── ErrorFallback.astro
+│   │       └── ErrorMessage.astro
+│   ├── layouts/
+│   │   └── MainLayout.astro
+│   ├── pages/
+│   │   └── index.astro
+│   ├── styles/
+│   │   ├── global.css
+│   │   └── base.css
+│   ├── data/
+│   │   ├── config/
+│   │   └── profiles/
+│   │       ├── EdwinMendez.json
+│   │       └── [OtrosPerfiles].json
+│   ├── services/
+│   │   └── profileService.ts
+│   ├── types/
+│   │   ├── AppError.ts
+│   │   ├── index.ts
+│   │   ├── profile.ts
+│   │   └── project.ts
+│   └── utils/
+│       └── errorUtils.ts
+├── public/
+│   ├── favicon.svg
+│   └── images/
+│       └── team/
+│           └── edwin.png
+├── astro.config.mjs
+├── package.json
+├── tsconfig.json
+├── jsconfig.json
+├── .prettierrc
+├── .eslintrc.cjs
+└── README.md
 ```
 
 ### 5.2 Componentes Principales
