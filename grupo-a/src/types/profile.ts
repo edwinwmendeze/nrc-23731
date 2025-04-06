@@ -1,4 +1,5 @@
 // src/types/profile.ts
+import type { Project } from './project';
 
 /**
  * Interfaz para perfiles de redes sociales
@@ -72,21 +73,6 @@ export interface SocialProfile {
   }
   
   /**
-   * Interfaz para proyectos
-   */
-  export interface Project {
-    name: string;
-    description: string;
-    highlights: string[];
-    url: string;
-    featured: boolean;
-    technologies: string[];
-    image?: string;
-    startDate?: string;
-    endDate?: string;
-  }
-  
-  /**
    * Interfaz para certificaciones
    */
   export interface Certificate {
@@ -131,11 +117,4 @@ export interface SocialProfile {
    */
   export interface ProfileModule {
     default: Profile;
-  }
-  
-  /**
-   * Interfaz para proyecto con información de autor
-   */
-  export interface ProjectWithAuthor extends Project {
-    author: string;
   }

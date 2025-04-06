@@ -1,76 +1,62 @@
 {
-    "basics": {
-      "name": "Julio",
-      "last_name":"Julio Cesar Guillermo",
-      "label": "Especialista en Redes",
+  "basics": {
+      "name": "Julio César",
+      "last_name": "Guillermo Colca",
+      "label": "Jefe de Soporte Técnico y Redes",
       "image": {
-        "local": "/images/team/pepe.png",
-        "remote": "https://www.kia.com/content/dam/kwcms/gt/en/images/discover-kia/voice-search/parts-80-1.jpg"
+          "remote": "https://internetenperu2025.wordpress.com/wp-content/uploads/2025/03/pasaporte-02.jpg"
       },
       "email": "41925797@continetal.edu.pe",
-      "phone": "(51) 123-456-789",
-      "url": "https://juliocesar.dev",
-      "summary": "Especialista en redes de y experiencia de usuario con enfoque en accesibilidad y rendimiento.",
+      "phone": "944979705",
+      "url": "https://julio-cesar-guillermo-colca-2025.github.io/mi-portafolio2025/",
+      "summary": "Profesional con experiencia liderando equipos técnicos, brindando soporte IT y gestionando infraestructuras de red seguras y eficientes.",
       "location": {
-        "city": "Pasco",
-        "countryCode": "PE",
-        "region": "Pasco"
+          "city": "Cerro de Pasco",
+          "countryCode": "PE",
+          "region": "Pasco"
       },
       "profiles": [
-        {
-          "network": "GitHub",
-          "username": "Julio-Cesar-Guillermo-Colca-2025",
-          "url": "https://github.com/Julio-Cesar-Guillermo-Colca-2025"
-        },
-        {
-          "network": "LinkedIn",
-          "username": "juliocesar",
-          "url": "https://linkedin.com/in/juliocesar"
-        }
+          {
+              "network": "GitHub",
+              "username": "Julio-Cesar-Guillermo-Colca-2025",
+              "url": "https://github.com/Julio-Cesar-Guillermo-Colca-2025"
+          },
+          {
+              "network": "LinkedIn",
+              "username": "Julio Cesar Guillermo Colca",
+              "url": "https://www.linkedin.com/in/julio-cesar-guillermo-colca-b9b24874/"
+          }
       ]
-    },
-    "skills": [
-  {
-    "name": "Frontend",
-    "keywords": ["React", "Vue", "TypeScript", "CSS"],
-    "type": "hard"
   },
-  {
-    "name": "Diseño UX",
-    "keywords": ["Figma", "Adobe XD", "Wireframing"],
-    "type": "hard"
-  },
-  {
-    "name": "Trabajo en equipo",
-    "keywords": ["Colaboración", "Resolución de conflictos", "Empatía"],
-    "type": "soft"
-  }
-],
-    "education": [
+  "skills": [
       {
-        "institution": "Universidad Continental",
-        "area": "Ingeniería Informática",
-        "studyType": "Licenciatura",
-        "startDate": "2015-03-01",
-        "endDate": "2020-07-15"
+          "name": "Redes y Telecomunicaciones",
+          "keywords": ["TCP/IP", "Routing", "Switching", "Cisco Packet Tracer", "Subnetting", "Firewall"],
+          "type": "hard"
+      },
+      {
+          "name": "Soporte Técnico",
+          "keywords": ["Mantenimiento de hardware", "Diagnóstico de fallas", "Atención al usuario"],
+          "type": "hard"
       }
-    ],
-    "projects": [
-  {
-    "name": "Sistema de Componentes",
-    "description": "Biblioteca de componentes accesibles y reutilizables para aplicaciones web",
-    "highlights": ["Cumplimiento WCAG 2.1 AA", "Documentación automática con Storybook"],
-    "url": "https://github.com/juliocesar/components",
-    "featured": false,
-    "technologies": ["React", "TypeScript", "Storybook", "Jest"]
-  },
-  {
-    "name": "Dashboard Analítico",
-    "description": "Panel de control para visualización de datos empresariales en tiempo real",
-    "highlights": ["Optimizado para dispositivos móviles", "Gráficos interactivos avanzados"],
-    "url": "https://github.com/juliocesar/dashboard",
-    "featured": true,
-    "technologies": ["Vue.js", "D3.js", "Firebase", "Tailwind CSS"]
-  }
-]
-  }
+  ],
+  "education": [
+      {
+          "institution": "Universidad Continental",
+          "area": "Ingeniería de Sistemas e Informática",
+          "studyType": "Estudiante",
+          "startDate": "2022-03-01",
+          "endDate": "2026-12-15"
+      }
+  ],
+  "projects": [
+      {
+          "name": "Gestión de Infraestructura de Red",
+          "description": "Simulación de red empresarial con dispositivos Cisco",
+          "highlights": ["Configuración de switches", "Topología con VLANs"],
+          "url": "https://github.com/Julio-Cesar-Guillermo-Colca-2025",
+          "featured": true,
+          "technologies": ["Cisco Packet Tracer", "CLI"]
+      }
+  ]
+}

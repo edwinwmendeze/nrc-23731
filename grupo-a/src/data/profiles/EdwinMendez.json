@@ -1,83 +1,144 @@
 {
-    "basics": {
-      "name": "Edwin Wilson",
-      "last_name": "Méndez Echevarría",
-      "label": "Desarrollador Backend",
-      "image": {
-        "local": "/images/team/edwin.png",
-        "remote": "https://github.com/edwinwmendeze.png"
-      },
-      "email": "45088035@continental.edu.pe",
-      "phone": "(51) 948-924-822",
-      "url": "https://edwinwmendez.dev",
-      "summary": "Especialista en infraestructura, automatización y despliegue continuo. Enfocado en seguridad y escalabilidad.",
-      "location": {
-        "city": "Atalaya",
-        "countryCode": "PE",
-        "departament": "Ucayali"
-      },
-      "profiles": [
-        {
-          "network": "GitHub",
-          "username": "edwin",
-          "url": "https://github.com/edwinwmendez"
-        },
-        {
-          "network": "LinkedIn",
-          "username": "edwinmendez",
-          "url": "https://linkedin.com/in/edwin"
-        }
-      ]
+  "basics": {
+    "name": "Edwin Wilson",
+    "last_name": "Méndez Echevarría",
+    "label": "Analista de datos con experiencia en Python y automatización.",
+    "image": {
+      "local": "/images/team/edwin.png",
+      "remote": "https://github.com/edwinwmendeze.png"
     },
-    "skills": [
-        {
-            "name": "DevOps",
-            "keywords": ["CI/CD", "Docker", "Kubernetes", "AWS"],
-            "type": "hard"
-        },
-        {
-            "name": "Backend",
-            "keywords": ["Node.js", "Python", "Go"],
-            "type": "hard"
-        },
-        {
-            "name": "Liderazgo",
-            "keywords": ["Gestión de equipos", "Mentoría", "Comunicación efectiva"],
-            "type": "soft"
-        }
-        ],
-    "education": [
+    "email": "45088035@continental.edu.pe",
+    "phone": "(51) 948-924-822",
+    "url": "https://edwinwmendeze.github.io/portfolio-personal/",
+    "summary": "Desarrollador backend con experiencia en Python y automatización. Enfocado en despliegues eficientes, soluciones escalables y mejora continua.",
+    "location": {
+      "city": "Atalaya",
+      "countryCode": "PE",
+      "region": "Ucayali"
+    },
+    "profiles": [
       {
-        "institution": "Universidad Continental",
-        "area": "Ingeniería de Sistemas e informatica",
-        "studyType": "Ingenieria",
-        "startDate": "2016-03-01",
-        "endDate": ""
+        "network": "GitHub",
+        "username": "edwin",
+        "url": "https://github.com/edwinwmendeze"
       },
       {
-        "institution": "Instituto de Alta Tecnologia - IDAT",
-        "area": "Computacion e informatica",
-        "studyType": "Tecnica",
-        "startDate": "2016-03-01",
-        "endDate": "2017-12-20"
-      }
-    ],
-    "projects": [
-      {
-        "name": "Pipeline Automatizado",
-        "description": "Implementación de un sistema CI/CD para automatizar el despliegue de aplicaciones en la nube",
-        "highlights": ["Reducción del tiempo de despliegue en un 70%", "Implementación de pruebas automáticas"],
-        "url": "https://github.com/edwin/pipeline",
-        "featured": true,
-        "technologies": ["Jenkins", "Docker", "Kubernetes", "AWS"]
-      },
-      {
-        "name": "Monitoreo Inteligente",
-        "description": "Sistema de monitoreo en tiempo real con alertas predictivas basadas en ML",
-        "highlights": ["Detección temprana de incidentes", "Integración con Slack y PagerDuty"],
-        "url": "https://github.com/edwin/monitoring",
-        "featured": true,
-        "technologies": ["Python", "TensorFlow", "Grafana", "Prometheus"]
+        "network": "LinkedIn",
+        "username": "edwinmendez",
+        "url": "https://linkedin.com/in/edwin"
       }
     ]
-  }
+  },
+  "skills": [
+    {
+      "name": "Backend",
+      "keywords": [
+        "Python-DRF",
+        "PostgreSQL",
+        "Supabase",
+        "Postman"
+      ],
+      "type": "hard"
+    },
+    {
+      "name": "Frontend",
+      "keywords": [
+        "Vue.js",
+        "Nuxt",
+        "Astro",
+        "Tailwind CSS"
+      ],
+      "type": "hard"
+    },
+    {
+      "name": "DevOps & Cloud",
+      "keywords": [
+        "Docker",
+        "Git",
+        "GitHub",
+        "GitHub Actions",
+        "Vercel",
+        "DigitalOcean",
+        "Google Cloud",
+        "AWS"
+      ],
+      "type": "hard"
+    },
+    {
+      "name": "Automatización e Inteligencia Artificial",
+      "keywords": [
+        "Selenium",
+        "Automatización con Python"
+      ],
+      "type": "hard"
+    },
+    {
+      "name": "Habilidades Blandas",
+      "keywords": [
+        "Trabajo en equipo",
+        "Trabajo bajo presión",
+        "Resolución de problemas",
+        "Pensamiento crítico",
+        "Adaptabilidad",
+        "Aprendizaje continuo"
+      ],
+      "type": "soft"
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universidad Continental",
+      "area": "Ingeniería de Sistemas e informatica",
+      "studyType": "Ingenieria",
+      "startDate": "2016-03-01",
+      "endDate": ""
+    },
+    {
+      "institution": "Instituto de Alta Tecnologia - IDAT",
+      "area": "Computacion e informatica",
+      "studyType": "Tecnica",
+      "startDate": "2005-03-01",
+      "endDate": "2007-12-20"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Sistema de Automatización SUP",
+      "description": "Herramienta de automatización de tareas repetitivas desarrollada en Python utilizando pyautogui, diseñada para ejecutar acciones automáticamente desde consola.",
+      "highlights": [
+        "Automatización de procesos manuales con precisión",
+        "Interacción con interfaces gráficas mediante control de mouse y teclado",
+        "Facilidad de ejecución desde consola sin interfaz adicional"
+      ],
+      "url": "https://discord.com/channels/1212350323604201502/1212357244063186955/1214221343319662592",
+      "featured": true,
+      "technologies": ["Python", "pyautogui", "time", "subprocess"]
+    },
+    {
+      "name": "Te Comparto",
+      "description": "Plataforma web para compartir archivos de forma segura, con control de acceso mediante códigos, expiración de enlaces y almacenamiento gestionado con Supabase.",
+      "highlights": [
+        "Interfaz intuitiva para subir y gestionar archivos",
+        "Código de acceso y expiración para compartir de forma segura",
+        "Integración con Supabase para autenticación y almacenamiento",
+        "Diseño adaptable con soporte para modo oscuro"
+      ],
+      "url": "https://tecomparto.com",  
+      "featured": true,
+      "technologies": ["Vue 3", "Nuxt 3", "TypeScript", "Supabase", "Tailwind CSS", "Vitest"]
+    },
+    {
+      "name": "Herramientas SUP",
+      "description": "Suite web de utilidades para procesamiento de archivos institucionales como LIS y PDFs, desarrollada con Astro, Vue y Tailwind CSS.",
+      "highlights": [
+        "Procesamiento de archivos .lis con análisis visual",
+        "Fusión y gestión de archivos PDF",
+        "Interfaz modular con componentes Vue",
+        "Despliegue optimizado en Vercel"
+      ],
+      "url": "https://herramientas-sup.vercel.app/", 
+      "featured": false,
+      "technologies": ["Astro", "Vue 3", "Tailwind CSS", "TypeScript", "Vercel"]
+    }
+  ]
+}

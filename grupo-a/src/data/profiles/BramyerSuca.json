@@ -1,31 +1,31 @@
 {
     "basics": {
-      "name": "Pepe",
-      "last_name":"Pino Huamani",
-      "label": "Desarrollador de Software",
+      "name": "Bramyer",
+      "last_name":"Suca Ccallo",
+      "label": "Estudiante",
       "image": {
         "local": "/images/team/pepe.png",
-        "remote": "https://lh4.googleusercontent.com/-zJzDNcr2eCNUk-nHbExP8MVGoXnI5kxF7Wbyf22mKlnHynNB93Er-nVtHOY4S77KXp4YuNgqz8Km3YzWz-ohjJ2RdX4qTuB_3YfbUWSyrbmDUeCbLlTAy2k9fqrrhUI-A=w1280"
+        "remote": "https://avatars.githubusercontent.com/u/205334107?v=4"
       },
-      "email": "70520575@continetal.edu.pe",
+      "email": "75961185@continetal.edu.pe",
       "phone": "(51) 123-456-789",
       "url": "https://juliocesar.dev",
       "summary": "Especialista en interfaces de usuario y experiencia de usuario con enfoque en accesibilidad y rendimiento.",
       "location": {
         "city": "Cusco",
         "countryCode": "PE",
-        "region": "Sicuani"
+        "region": "Cusco"
       },
       "profiles": [
         {
           "network": "GitHub",
-          "username": "pepepinohuamani",
-          "url": "https://github.com/pepepinohuamani"
+          "username": "Braml-conti",
+          "url": "https://github.com/Braml-conti"
         },
         {
           "network": "LinkedIn",
-          "username": "pepepinohuamani",
-          "url": "https://www.linkedin.com/in/pepe-pino-huamani-799140315/"
+          "username": "juliocesar",
+          "url": "https://linkedin.com/in/juliocesar"
         }
       ]
     },
@@ -48,8 +48,8 @@
 ],
     "education": [
       {
-        "institution": "Universidad Católica San Pablo",
-        "area": "Ingeniería Informática",
+        "institution": "Universidad Continental",
+        "area": "Ingeniería de Sistemas e Informática ",
         "studyType": "Licenciatura",
         "startDate": "2015-03-01",
         "endDate": "2020-07-15"

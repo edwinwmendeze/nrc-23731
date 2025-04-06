@@ -43,12 +43,12 @@ export interface Props {
 
 const { 
   title = "Integrantes", 
-  subtitle = "Conozca a los futuros profesionales detrás de este proyecto" 
+  subtitle = "Conozca a los futuros profesionales de Ingeniería de Sistemas e Informática detrás de este proyecto" 
 } = Astro.props;
 ---
 
 <section id="integrantes" class="team-section">
-  <div class="container">
+  <div class="team-section-inner">
     <div class="section-header">
       <h2 class="section-title">{title}</h2>
       <div class="section-title-underline"></div>
@@ -56,99 +56,120 @@ const {
     </div>
 
     {profiles.length > 0 ? (
-      <div class="team-grid">
-        {profiles.map((profile) => (
-          <div class="team-card">
-                        <div class="team-image-container">
-                          {(() => {
-                const basics = profile.basics;
-                // Check if basics and the image property exist
-                if (basics && basics.image) {
-                  let imageUrl: string | undefined; // Explicitly type imageUrl
+      <div class="team-carousel">
+        <div class="team-grid">
+          {profiles.map((profile) => (
+            <div class="team-card">
+              <div class="team-image-container">
+                {(() => {
+                  const basics = profile.basics;
+                  // Check if basics and the image property exist
+                  if (basics && basics.image) {
+                    let imageUrl: string | undefined; // Explicitly type imageUrl
 
-                  // Determine the correct image URL string
-                  if (typeof basics.image === 'string') {
-                    imageUrl = basics.image; 
-                  } else if (typeof basics.image === 'object' && (basics.image.remote || basics.image.local)) {
-                    // Prioritize remote URL, fallback to local
-                    imageUrl = basics.image.remote || basics.image.local;
-                  }
+                    // Determine the correct image URL string
+                    if (typeof basics.image === 'string') {
+                      imageUrl = basics.image; 
+                    } else if (typeof basics.image === 'object' && (basics.image.remote || basics.image.local)) {
+                      // Prioritize remote URL, fallback to local
+                      imageUrl = basics.image.remote || basics.image.local;
+                    }
 
-                  // Only render the image if we successfully determined a URL
-                  if (imageUrl) {
-                    const fallbackUrl = getImageFallback ? getImageFallback(profile) : '/images/default-avatar.svg'; 
-                    const altText = `Foto de ${basics.name || 'miembro del equipo'}`;
-                    
-                    return (
-                      <img 
-                        src={imageUrl}
-                        alt={altText} 
-                        class="team-image"
-                        data-fallback={fallbackUrl}
-                        onerror={`this.onerror=null; this.src='${fallbackUrl}';`}
-                      />
-                    );
-                  }
-                } 
+                    // Only render the image if we successfully determined a URL
+                    if (imageUrl) {
+                      const fallbackUrl = getImageFallback ? getImageFallback(profile) : '/images/default-avatar.svg'; 
+                      const altText = `Foto de ${basics.name || 'miembro del equipo'}`;
+                      
+                      return (
+                        <img 
+                          src={imageUrl}
+                          alt={altText} 
+                          class="team-image"
+                          data-fallback={fallbackUrl}
+                          onerror={`this.onerror=null; this.src='${fallbackUrl}';`}
+                        />
+                      );
+                    }
+                  } 
+                  
+                  // Render the placeholder if basics, basics.image, or a valid imageUrl is missing
+                  return (
+                    <div class="team-no-image">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                      </svg>
+                    </div>
+                  );
+                })()}
+              </div>
+              
+              <div class="team-info">
+                <h3 class="team-name">
+                  {profile.basics?.name || 'Sin nombre'} 
+                  {profile.basics?.last_name && <span class="team-lastname">{profile.basics.last_name}</span>}
+                </h3>
                 
-                // Render the placeholder if basics, basics.image, or a valid imageUrl is missing
-                return (
-                  <div class="team-no-image">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                      <circle cx="12" cy="7" r="4"></circle>
+                <p class="team-role">{profile.basics?.label || 'Miembro del equipo'}</p>
+                <div class="team-contact-info">
+                  {profile.basics?.location && (
+                    <p class="team-location">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
                     </svg>
+                    {profile.basics.location.city}, {profile.basics.location.region}
+                  </p>
+                )}
+                {profile.basics?.email && (
+                  <div class="team-email" data-email={profile.basics.email}>
+                    <a href={`mailto:${profile.basics.email}`} title="Enviar correo">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                      </svg>
+                    </a>
                   </div>
-                );
-              })()}
-            </div>
-            
-            <div class="team-info">
-              <h3 class="team-name">
-                {profile.basics?.name || 'Sin nombre'} 
-                {profile.basics?.last_name && <span class="team-lastname">{profile.basics.last_name}</span>}
-              </h3>
-              
-              <p class="team-role">{profile.basics?.label || 'Miembro del equipo'}</p>
-              
-              {profile.basics?.location && (
-                <p class="team-location">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                  </svg>
-                  {profile.basics.location.city}, {profile.basics.location.country}
-                </p>
-              )}
-              
-              {profile.basics?.summary && (
-                <p class="team-bio">{profile.basics.summary}</p>
-              )}
-              
-              <div class="team-footer">
-                {profile.basics?.profiles && profile.basics.profiles.length > 0 && (
-                  <div class="team-social">
-                    {profile.basics.profiles.map(social => (
-                      <SocialLink 
-                        network={social.network} 
-                        url={social.url} 
-                        username={social.username} 
-                      />
-                    ))}
-                  </div>
+                )}
+                </div>
+                
+                
+                {profile.basics?.summary && (
+                  <p class="team-bio">{profile.basics.summary}</p>
                 )}
                 
-                {profile.basics?.url && (
-                  <div class="portfolio-link">
-                    <Button href={profile.basics.url} size="sm" variant="primary" target="_blank" rel="noopener">
-                      Ver portafolio
-                    </Button>
-                  </div>
-                )}
+                <div class="team-footer">
+                  {profile.basics?.profiles && profile.basics.profiles.length > 0 && (
+                    <div class="team-social">
+                      {profile.basics.profiles.map(social => (
+                        <SocialLink 
+                          network={social.network} 
+                          url={social.url} 
+                          username={social.username} 
+                        />
+                      ))}
+                    </div>
+                  )}
+                  
+                  {profile.basics?.url && (
+                    <div class="portfolio-link">
+                      <Button href={profile.basics.url} size="sm" variant="primary" target="_blank" rel="noopener">
+                        Ver portafolio
+                      </Button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
+          ))}
+        </div>
+        <div class="scroll-indicator">
+          <div class="indicator-dots">
+            {profiles.map((_, index) => (
+              <span class="indicator-dot" data-index={index}></span>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     ) : (
       <div class="no-profiles-message">
@@ -162,12 +183,16 @@ const {
   .team-section {
     padding: 4rem 0;
     background-color: var(--color-background, #ffffff);
+    width: 100%;
+    box-sizing: border-box;
   }
   
-  .container {
+  .team-section-inner {
     max-width: var(--container-width, 1200px);
     margin: 0 auto;
     padding: 0 var(--space-md, 1.5rem);
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .section-header {
@@ -194,17 +219,36 @@ const {
     font-size: var(--font-size-md, 1.125rem);
     max-width: 800px;
     margin: 0 auto;
-    color: var(--color-text-muted, #718096);
+    color: var(--color-text-lighter);
+    font-weight: 500;
+  }
+  
+  .team-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
   }
   
   .team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    display: flex;
     gap: 2rem;
     margin-top: 2rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1rem;
+    width: 100%;
+    /* Ajustar el ancho para mostrar exactamente el número de tarjetas deseado para cada breakpoint */
+    --cards-per-view: 3;
+    --card-width: calc((100% - (var(--cards-per-view) - 1) * 2rem) / var(--cards-per-view));
   }
   
   .team-card {
+    flex: 0 0 var(--card-width);
+    width: var(--card-width);
+    min-width: 0; /* Para prevenir que se desborde */
+    scroll-snap-align: start;
     background-color: var(--color-white, #ffffff);
     border-radius: var(--radius-lg, 0.75rem);
     box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06));
@@ -212,16 +256,32 @@ const {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box; /* Asegurar que el padding no afecte el ancho total */
   }
   
   .team-card:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05));
   }
+
+  /* Ocultar la barra de desplazamiento pero mantener la funcionalidad */
+  .team-grid::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .team-grid::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  .team-grid::-webkit-scrollbar-thumb {
+    background: var(--color-accent, #4f46e5);
+    border-radius: 4px;
+  }
   
   .team-image-container {
     position: relative;
-    height: 240px;
+    height: 200px;
     overflow: hidden;
   }
   
@@ -251,45 +311,68 @@ const {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    min-height: 240px; /* Altura mínima para garantizar espacio */
   }
   
   .team-name {
     font-size: var(--font-size-lg, 1.25rem);
-    font-weight: 600;
+    font-weight: 700;
     margin: 0 0 0.25rem 0;
-    color: var(--color-heading, #1a202c);
+    color: var(--color-heading, #121826);
   }
   
   .team-lastname {
-    font-weight: 500;
-    color: var(--color-text, #4a5568);
+    font-weight: 600;
+    color: var(--color-text, #2d3748);
   }
   
   .team-role {
     font-size: var(--font-size-sm, 0.875rem);
-    color: var(--color-accent, #4f46e5);
+    color: var(--color-text-light, #3730a3);
     margin: 0 0 0.5rem 0;
-    font-weight: 500;
+    font-weight: 600;
   }
   
-  .team-location {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: var(--font-size-sm, 0.875rem);
-    color: var(--color-text-muted, #718096);
-    margin-bottom: 1rem;
-  }
+  .team-contact-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.team-location {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-text-muted, #4b5563);
+  margin: 0;
+  font-weight: 500;
+}
+
+.team-email {
+  position: relative;
+  display: inline-block;
+}
+
+.team-email a {
+  color: var(--color-text-muted, #4b5563);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
   
   .team-bio {
     font-size: var(--font-size-sm, 0.875rem);
-    color: var(--color-text, #4a5568);
+    color: var(--color-text, #2d3748);
     margin-bottom: 1.5rem;
     line-height: 1.5;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    font-weight: 500;
   }
   
   .team-footer {
@@ -299,6 +382,7 @@ const {
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
+    padding-top: 1rem;
   }
   
   .team-social {
@@ -306,43 +390,163 @@ const {
     gap: 0.75rem;
   }
   
+  .portfolio-link {
+    width: auto;
+  }
+  
+  .portfolio-link :global(a) {
+    display: inline-flex;
+    width: auto;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  
   .no-profiles-message {
     text-align: center;
     padding: 3rem;
     background-color: var(--color-bg-alt, #f8fafc);
     border-radius: var(--radius-md, 0.5rem);
-    color: var(--color-text-muted, #718096);
+    color: var(--color-text-muted, #4b5563);
     font-style: italic;
+    font-weight: 500;
+  }
+  
+  /* Indicador de scroll */
+  .scroll-indicator {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+  
+  .indicator-dots {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .indicator-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-text-muted, #718096);
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .indicator-dot.active {
+    opacity: 1;
+    background-color: var(--color-accent, #3730a3);
+  }
+  
+  /* Media queries para ajustar el número de tarjetas visibles */
+  @media (min-width: 1200px) {
+    .team-grid {
+      --cards-per-view: 3; /* 3 tarjetas en pantallas grandes */
+    }
+  }
+  
+  @media (min-width: 769px) and (max-width: 1199px) {
+    .team-grid {
+      --cards-per-view: 2; /* 2 tarjetas en tablets */
+    }
   }
   
   @media (max-width: 768px) {
-    .team-grid {
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    .team-section {
+      padding: 3rem 0;
     }
     
-    .team-image-container {
-      height: 200px;
+    .team-grid {
+      --cards-per-view: 1; /* 1 tarjeta en móviles */
+      padding: 0 0 1.5rem;
+    }
+    
+    .team-card {
+      flex: 0 0 100%;
+      width: 100%;
+      margin: 0;
+    }
+    
+    .team-info {
+      padding: 1.2rem;
+      min-height: 200px;
+    }
+    
+    .team-name {
+      font-size: 1.1rem;
+    }
+    
+    .team-role {
+      font-size: 0.85rem;
+    }
+    
+    .team-bio {
+      font-size: 0.85rem;
+      margin-bottom: 1.2rem;
+      -webkit-line-clamp: 2;
     }
     
     .team-footer {
       flex-direction: column;
       align-items: flex-start;
+      gap: 0.8rem;
+      width: 100%;
     }
     
     .portfolio-link {
       width: 100%;
+      margin-bottom: 0.5rem;
     }
     
     .portfolio-link :global(a) {
       width: 100%;
       justify-content: center;
+      padding: 0.7rem 1rem;
+      font-size: 0.9rem;
+      box-sizing: border-box;
+      white-space: nowrap;
+      display: inline-block;
+      text-align: center;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .team-image-container {
+      height: 180px;
+    }
+    
+    .team-info {
+      padding: 1rem;
+      min-height: 180px;
+    }
+    
+    .section-title {
+      font-size: 1.5rem;
+    }
+    
+    .section-description {
+      font-size: 0.9rem;
+    }
+    
+    .team-bio {
+      -webkit-line-clamp: 2;
+      margin-bottom: 1rem;
+    }
+    
+    .team-footer {
+      gap: 0.5rem;
+    }
+    
+    .portfolio-link :global(a) {
+      padding: 0.6rem 0.8rem;
+      font-size: 0.85rem;
     }
   }
 </style>
 
 <script>
-  // Script para manejar errores de carga de imágenes
   document.addEventListener('DOMContentLoaded', () => {
+    // Script para manejar errores de carga de imágenes
     const images = document.querySelectorAll<HTMLImageElement>('.team-image');
     
     images.forEach(img => {
@@ -368,5 +572,51 @@ const {
         }
       });
     });
+    
+    // Script para manejar los indicadores de dots y el scroll
+    const teamGrid = document.querySelector('.team-grid');
+    const dots = document.querySelectorAll('.indicator-dot');
+    
+    if (teamGrid && dots.length > 0) {
+      // Marcar el primer dot como activo inicialmente
+      dots[0].classList.add('active');
+      
+      // Función para actualizar dots basado en el scroll
+      const updateActiveDot = () => {
+        if (!teamGrid) return;
+        
+        const scrollLeft = teamGrid.scrollLeft;
+        const cardWidth = teamGrid.querySelector('.team-card')?.clientWidth || 0;
+        const gap = 32; // 2rem
+        
+        const activeIndex = Math.round(scrollLeft / (cardWidth + gap));
+        
+        dots.forEach((dot, index) => {
+          if (index === activeIndex) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        });
+      };
+      
+      // Escuchar eventos de scroll
+      teamGrid.addEventListener('scroll', updateActiveDot);
+      
+      // Permitir clic en dots para navegar
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          if (!teamGrid) return;
+          
+          const cardWidth = teamGrid.querySelector('.team-card')?.clientWidth || 0;
+          const gap = 32; // 2rem
+          
+          teamGrid.scrollTo({
+            left: index * (cardWidth + gap),
+            behavior: 'smooth'
+          });
+        });
+      });
+    }
   });
 </script>
