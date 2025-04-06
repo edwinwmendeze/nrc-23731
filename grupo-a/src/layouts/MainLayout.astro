@@ -30,7 +30,7 @@ const finalDescription = description || siteDefaultDescription;
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0" />
     <meta name="description" content={finalDescription} />
     <meta name="generator" content={Astro.generator} />
     <title>{finalTitle}</title>
@@ -64,7 +64,7 @@ const finalDescription = description || siteDefaultDescription;
       
       <footer class="site-footer">
         <div class="footer-container">
-          <p>&copy; {new Date().getFullYear()} { teamNameGlobal }. Todos los derechos reservados.</p> 
+          <p>&copy; {new Date().getFullYear()} { teamNameGlobal } - NRC-23731. Derechos reservados.</p> 
         </div>
       </footer>
     </ErrorBoundary>
@@ -328,7 +328,7 @@ const finalDescription = description || siteDefaultDescription;
         margin: 0 auto;
         padding: 0 2rem;
         text-align: center;
-        color: var(--color-text-muted, #718096);
+        color: var(--color-text-light);
         font-size: 0.875rem;
       }
       

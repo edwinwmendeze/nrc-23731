@@ -145,17 +145,17 @@ const featuredProjects = await getFeaturedProjects();
 
   .project-author {
     font-size: var(--font-size-sm, 0.875rem);
-    color: var(--color-text-muted, #718096);
+    color: var(--color-text-muted, #4a5568); /* Oscurecido desde #718096 para mejor contraste */
   }
 
   .project-author span {
     color: var(--color-accent, #4f46e5);
-    font-weight: 500;
+    font-weight: 600; /* Aumentado para mejor legibilidad */
   }
 
   .project-description {
     margin-bottom: 1rem;
-    color: var(--color-text, #4a5568);
+    color: var(--color-text, #2d3748); /* Oscurecido para mejor contraste */
     line-height: 1.6;
   }
 
@@ -178,7 +178,7 @@ const featuredProjects = await getFeaturedProjects();
   .project-highlights li {
     margin-bottom: 0.375rem;
     position: relative;
-    color: var(--color-text, #4a5568);
+    color: var(--color-text, #2d3748); /* Oscurecido para mejor contraste */
     line-height: 1.5;
   }
 
@@ -191,12 +191,12 @@ const featuredProjects = await getFeaturedProjects();
   }
 
   .tech-tag {
-    background-color: var(--color-accent-soft, #e1e1e1);
-    color: var(--color-accent-dark, #383838);
+    background-color: var(--color-accent-soft, #d4d4d4); /* Oscurecido desde #e1e1e1 */
+    color: var(--color-accent-dark, #1a1a1a); /* Oscurecido desde #383838 */
     padding: 0.25rem 0.5rem;
     border-radius: var(--radius-sm, 0.25rem);
     font-size: var(--font-size-xs, 0.75rem);
-    font-weight: 500;
+    font-weight: 600; /* Aumentado de 500 para mejor legibilidad */
     word-break: keep-all;
     white-space: nowrap;
   }
@@ -222,7 +222,7 @@ const featuredProjects = await getFeaturedProjects();
   .no-projects {
     text-align: center;
     margin: 3rem 0;
-    color: var(--color-text-muted, #718096);
+    color: var(--color-text-muted, #4a5568); /* Oscurecido desde #718096 */
     font-style: italic;
   }
 
@@ -309,7 +309,7 @@ const featuredProjects = await getFeaturedProjects();
     }
     
     .tech-tag {
-      font-size: 0.7rem;
+      font-size: 0.75rem; /* Aumentado de 0.7rem a 0.75rem para mejor legibilidad */
     }
     
     /* Ajuste específico para dispositivos muy pequeños */

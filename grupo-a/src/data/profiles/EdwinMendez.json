@@ -2,7 +2,7 @@
   "basics": {
     "name": "Edwin Wilson",
     "last_name": "Méndez Echevarría",
-    "label": "Desarrollador Backend y especialista en automatización",
+    "label": "Analista de datos con experiencia en Python y automatización.",
     "image": {
       "local": "/images/team/edwin.png",
       "remote": "https://github.com/edwinwmendeze.png"
@@ -137,7 +137,7 @@
         "Despliegue optimizado en Vercel"
       ],
       "url": "https://herramientas-sup.vercel.app/", 
-      "featured": true,
+      "featured": false,
       "technologies": ["Astro", "Vue 3", "Tailwind CSS", "TypeScript", "Vercel"]
     }
   ]
