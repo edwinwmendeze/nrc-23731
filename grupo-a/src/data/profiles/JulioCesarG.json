@@ -55,6 +55,7 @@
           "description": "Simulación de red empresarial con dispositivos Cisco",
           "highlights": ["Configuración de switches", "Topología con VLANs"],
           "url": "https://github.com/Julio-Cesar-Guillermo-Colca-2025",
+          "featured": true,
           "technologies": ["Cisco Packet Tracer", "CLI"]
       }
   ]
