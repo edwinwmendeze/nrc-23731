@@ -4,13 +4,13 @@
       "last_name": "Soto Silvestre",
       "label": "Desarrollador Backend",
       "image": {
-        "local": "/images/team/Saulo_SSJ.png",
+        "local": "https://github.com/Saulo-pj.png",
         "remote": ""
       },
       "email": "71840465@continental.edu.pe",
       "phone": "(51) 923-976-503",
-      "url": "https://edwinwmendez.dev",
-      "summary": "Especialista en infraestructura, automatización y despliegue continuo. Enfocado en seguridad y escalabilidad.",
+      "url": "https://saulo-pj.github.io/",
+      "summary": "Desarrollador de Software, Web y Videojuegos",
       "location": {
         "city": "Lima",
         "countryCode": "PE",
@@ -24,7 +24,7 @@
         },
         {
           "network": "LinkedIn",
-          "username": "edwinmendez",
+          "username": "SAULO JERSON SOTO SILVESTRE",
           "url": "www.linkedin.com/in/saulo-jerson-soto-silvestre-09b107283"
         }
       ]
@@ -57,20 +57,11 @@
     ],
     "projects": [
       {
-        "name": "Pipeline Automatizado",
-        "description": "Implementación de un sistema CI/CD para automatizar el despliegue de aplicaciones en la nube",
-        "highlights": ["Reducción del tiempo de despliegue en un 70%", "Implementación de pruebas automáticas"],
-        "url": "https://github.com/edwin/pipeline",
+        "name": "Ocean.io",
+        "description": "Videojuego 2D creado a los 15 años que demuestra mis habilidades en programación, diseño gráfico, animación y producción de sonido.",
+        "highlights": ["Proyecto completo de forma autodidacta antes de iniciar estudios universitarios"],
         "featured": true,
-        "technologies": ["Jenkins", "Docker", "Kubernetes", "AWS"]
-      },
-      {
-        "name": "Monitoreo Inteligente",
-        "description": "Sistema de monitoreo en tiempo real con alertas predictivas basadas en ML",
-        "highlights": ["Detección temprana de incidentes", "Integración con Slack y PagerDuty"],
-        "url": "https://github.com/edwin/monitoring",
-        "featured": true,
-        "technologies": ["Python", "TensorFlow", "Grafana", "Prometheus"]
+        "technologies": ["Godot" , "GDScript" ,"Photoshop" ,"LMMS"]
       }
     ]
   }
