@@ -2,354 +2,382 @@
 // src/layouts/MainLayout.astro
 import '../styles/global.css';
 import siteConfig from '../data/config/site.json'; // Importar la configuración
+import ErrorBoundary from "../components/ui/ErrorBoundary.astro";
 
 interface Props {
   title: string; // Mantenemos el título específico de la página
-  description: string; // Mantenemos la descripción específica de la página
+  description?: string; // Mantenemos la descripción específica de la página
+  teamName?: string;
 }
 
-const { title: pageTitle, description: pageDescription } = Astro.props;
+const { 
+  title, 
+  description = "Portafolio del grupo NRC 23731", 
+  teamName = "Grupo A" 
+} = Astro.props;
 
 // Extraer datos globales del sitio/equipo
-const teamName = siteConfig.team.name; // Nombre del equipo para el logo/footer
+const teamNameGlobal = siteConfig.team.name; // Nombre del equipo para el logo/footer
 const siteDefaultTitle = siteConfig.site.seo.title; // Título por defecto del sitio
 const siteDefaultDescription = siteConfig.site.seo.description; // Descripción por defecto
 
 // Usar título/descripción de la página si se proporcionan, si no, usar los por defecto del JSON
-const finalTitle = pageTitle || siteDefaultTitle;
-const finalDescription = pageDescription || siteDefaultDescription;
+const finalTitle = title || siteDefaultTitle;
+const finalDescription = description || siteDefaultDescription;
 ---
 
 <html lang="es">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0" />
     <meta name="description" content={finalDescription} />
     <meta name="generator" content={Astro.generator} />
     <title>{finalTitle}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/meslo.min.css" />
   </head>
   <body>
-    <header class="site-header">
-      <div class="header-container">
-        <nav class="nav">
-          <a href="/" class="logo">{ teamName }</a> 
-          
-          <button class="menu-toggle" aria-label="Abrir menú">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-          </button>
-          
-          <div class="nav-links">
-            <a href="#proyectos">Proyectos</a>
-            <a href="#integrantes">Integrantes</a>
-            <a href="#habilidades">Habilidades</a>
-          </div>
-        </nav>
-      </div>
-    </header>
+    <ErrorBoundary fallback="Ocurrió un error al cargar la aplicación. Intente recargar la página.">
+      <header class="site-header" id="site-header">
+        <div class="header-container">
+          <nav class="nav">
+            <span class="logo" style="cursor: default;">{ teamNameGlobal }</span> 
+            
+            <button class="menu-toggle" aria-label="Abrir menú">
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+            </button>
+            
+            <div class="nav-links">
+              <a href="#integrantes">Integrantes</a>
+              <a href="#proyectos">Proyectos</a>
+              
+            </div>
+          </nav>
+        </div>
+      </header>
+      
+      <main class="site-content">
+        <slot />
+      </main>
+      
+      <footer class="site-footer">
+        <div class="footer-container">
+          <p>&copy; {new Date().getFullYear()} { teamNameGlobal } - NRC-23731. Derechos reservados.</p> 
+        </div>
+      </footer>
+    </ErrorBoundary>
     
     <div class="mobile-menu">
       <div class="mobile-menu-header">
-        <a href="/" class="logo">{ teamName }</a>
+        <span class="logo" style="cursor: default;">{ teamNameGlobal }</span>
         <button class="close-menu" aria-label="Cerrar menú">✕</button>
       </div>
       <div class="mobile-nav-links">
-        <a href="#proyectos">Proyectos</a>
         <a href="#integrantes">Integrantes</a>
-        <a href="#habilidades">Habilidades</a>
+        <a href="#proyectos">Proyectos</a>
       </div>
     </div>
     
     <div class="mobile-overlay"></div>
     
-    <main class="site-content">
-      <slot />
-    </main>
-    
-    <footer class="site-footer">
-      <div class="footer-container">
-        <p>&copy; {new Date().getFullYear()} { teamName }. Todos los derechos reservados.</p> 
-      </div>
-    </footer>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const closeMenu = document.querySelector('.close-menu');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const overlay = document.querySelector('.mobile-overlay');
+        const body = document.body;
+        const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
+        const header = document.getElementById('site-header');
+        
+        // Efecto de scroll para el header
+        if (header) {
+          window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+              header.classList.add('scrolled');
+            } else {
+              header.classList.remove('scrolled');
+            }
+          });
+        }
+        
+        // Función para abrir el menú
+        function openMenu() {
+          mobileMenu?.classList.add('active');
+          overlay?.classList.add('active');
+          body.classList.add('menu-open');
+          menuToggle?.classList.add('active');
+        }
+        
+        // Función para cerrar el menú
+        function closeMenuFunc() {
+          mobileMenu?.classList.remove('active');
+          overlay?.classList.remove('active');
+          body.classList.remove('menu-open');
+          menuToggle?.classList.remove('active');
+        }
+        
+        // Event listeners
+        menuToggle?.addEventListener('click', openMenu);
+        closeMenu?.addEventListener('click', closeMenuFunc);
+        overlay?.addEventListener('click', closeMenuFunc);
+        
+        // Cerrar menú al hacer clic en enlaces
+        mobileLinks.forEach(link => {
+          link.addEventListener('click', closeMenuFunc);
+        });
+        
+        // Cerrar menú al redimensionar
+        window.addEventListener('resize', () => {
+          if (window.innerWidth > 768 && body.classList.contains('menu-open')) {
+            closeMenuFunc();
+          }
+        });
+        
+        // Cerrar menú con Escape
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && mobileMenu?.classList.contains('active')) {
+            closeMenuFunc();
+          }
+        });
+      });
+    </script>
+
+    <style>
+      /* Reset global */
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden;
+      }
+      
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
+      
+      /* Header */
+      .site-header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 100;
+        background-color: var(--color-bg);
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+        border-bottom: 1px solid var(--color-border, #e2e8f0);
+        padding: 1rem 0;
+        transition: all 0.3s ease;
+      }
+      
+      .site-header.scrolled {
+        background-color: rgba(var(--color-bg-rgb, 255, 255, 255), 0.85);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+      
+      .header-container {
+        max-width: var(--container-width, 1200px);
+        margin: 0 auto;
+        padding: 0 2rem;
+        width: 100%;
+      }
+      
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      .logo {
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: var(--color-heading, #1a202c);
+        text-decoration: none;
+        z-index: 150;
+      }
+      
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+      
+      .nav-links a {
+        text-decoration: none;
+        color: var(--color-text, #4a5568);
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+      
+      .nav-links a:hover {
+        color: var(--color-accent, #4f46e5);
+      }
+      
+      /* Mobile Menu */
+      .menu-toggle {
+        display: none;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 150;
+      }
+      
+      .bar {
+        display: block;
+        width: 25px;
+        height: 3px;
+        margin: 5px auto;
+        background-color: var(--color-text, #4a5568);
+        transition: all 0.3s ease-in-out;
+      }
+      
+      .mobile-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        height: 100vh;
+        background-color: white;
+        z-index: 200;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        overflow-y: auto;
+      }
+      
+      .mobile-menu.active {
+        right: 0;
+      }
+      
+      .mobile-menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+      
+      .close-menu {
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--color-text, #4a5568);
+      }
+      
+      .mobile-nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      
+      .mobile-nav-links a {
+        font-size: 1.2rem;
+        text-decoration: none;
+        color: var(--color-text, #4a5568);
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--color-border, #e2e8f0);
+      }
+      
+      .mobile-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 190;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
+      }
+      
+      .mobile-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      
+      /* Main content */
+      .site-content {
+        flex-grow: 1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding-top: 5rem; /* Agregar espacio para el header fijo */
+      }
+      
+      /* Footer */
+      .site-footer {
+        width: 100%;
+        padding: 2rem 0;
+        background-color: var(--color-background, #ffffff);
+        border-top: 1px solid var(--color-border, #e2e8f0);
+      }
+      
+      .footer-container {
+        max-width: var(--container-width, 1200px);
+        margin: 0 auto;
+        padding: 0 2rem;
+        text-align: center;
+        color: var(--color-text-light);
+        font-size: 0.875rem;
+      }
+      
+      /* Media queries */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+        
+        .menu-toggle {
+          display: block;
+        }
+        
+        .header-container, 
+        .footer-container {
+          padding: 0 1.5rem;
+        }
+        
+        body.menu-open {
+          overflow: hidden;
+        }
+        
+        .menu-toggle.active .bar:nth-child(1) {
+          transform: translateY(8px) rotate(45deg);
+        }
+        
+        .menu-toggle.active .bar:nth-child(2) {
+          opacity: 0;
+        }
+        
+        .menu-toggle.active .bar:nth-child(3) {
+          transform: translateY(-8px) rotate(-45deg);
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .header-container, 
+        .footer-container {
+          padding: 0 1rem;
+        }
+        
+        .mobile-menu {
+          width: 85%;
+        }
+        
+        .site-footer {
+          padding: 1.5rem 0;
+        }
+      }
+    </style>
   </body>
 </html>
-
-<style>
-  /* Reset global */
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-  
-  html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    overflow-x: hidden;
-  }
-  
-  body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  }
-  
-  /* Header */
-  .site-header {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    z-index: 100;
-    background-color: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border-bottom: 1px solid var(--color-border, #e2e8f0);
-    padding: 1rem 0;
-  }
-  
-  .header-container {
-    max-width: var(--container-width, 1200px);
-    margin: 0 auto;
-    padding: 0 2rem;
-    width: 100%;
-  }
-  
-  .nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .logo {
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: var(--color-heading, #1a202c);
-    text-decoration: none;
-    z-index: 150;
-  }
-  
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-  }
-  
-  .nav-links a {
-    text-decoration: none;
-    color: var(--color-text, #4a5568);
-    font-weight: 500;
-    transition: color 0.2s;
-  }
-  
-  .nav-links a:hover {
-    color: var(--color-accent, #4f46e5);
-  }
-  
-  /* Mobile Menu */
-  .menu-toggle {
-    display: none;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    z-index: 150;
-  }
-  
-  .bar {
-    display: block;
-    width: 25px;
-    height: 3px;
-    margin: 5px auto;
-    background-color: var(--color-text, #4a5568);
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .mobile-menu {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 80%;
-    height: 100vh;
-    background-color: white;
-    z-index: 200;
-    transition: right 0.3s ease;
-    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    overflow-y: auto;
-  }
-  
-  .mobile-menu.active {
-    right: 0;
-  }
-  
-  .mobile-menu-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-  }
-  
-  .close-menu {
-    background: transparent;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--color-text, #4a5568);
-  }
-  
-  .mobile-nav-links {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  
-  .mobile-nav-links a {
-    font-size: 1.2rem;
-    text-decoration: none;
-    color: var(--color-text, #4a5568);
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--color-border, #e2e8f0);
-  }
-  
-  .mobile-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 190;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease;
-  }
-  
-  .mobile-overlay.active {
-    opacity: 1;
-    visibility: visible;
-  }
-  
-  /* Main content */
-  .site-content {
-    flex-grow: 1;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Footer */
-  .site-footer {
-    width: 100%;
-    padding: 2rem 0;
-    background-color: var(--color-background, #ffffff);
-    border-top: 1px solid var(--color-border, #e2e8f0);
-  }
-  
-  .footer-container {
-    max-width: var(--container-width, 1200px);
-    margin: 0 auto;
-    padding: 0 2rem;
-    text-align: center;
-    color: var(--color-text-muted, #718096);
-    font-size: 0.875rem;
-  }
-  
-  /* Media queries */
-  @media (max-width: 768px) {
-    .nav-links {
-      display: none;
-    }
-    
-    .menu-toggle {
-      display: block;
-    }
-    
-    .header-container, 
-    .footer-container {
-      padding: 0 1.5rem;
-    }
-    
-    body.menu-open {
-      overflow: hidden;
-    }
-    
-    .menu-toggle.active .bar:nth-child(1) {
-      transform: translateY(8px) rotate(45deg);
-    }
-    
-    .menu-toggle.active .bar:nth-child(2) {
-      opacity: 0;
-    }
-    
-    .menu-toggle.active .bar:nth-child(3) {
-      transform: translateY(-8px) rotate(-45deg);
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .header-container, 
-    .footer-container {
-      padding: 0 1rem;
-    }
-    
-    .mobile-menu {
-      width: 85%;
-    }
-    
-    .site-footer {
-      padding: 1.5rem 0;
-    }
-  }
-</style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const menuToggle = document.querySelector('.menu-toggle');
-    const closeMenu = document.querySelector('.close-menu');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    const overlay = document.querySelector('.mobile-overlay');
-    const body = document.body;
-    const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
-    
-    // Función para abrir el menú
-    function openMenu() {
-      mobileMenu?.classList.add('active');
-      overlay?.classList.add('active');
-      body.classList.add('menu-open');
-      menuToggle?.classList.add('active');
-    }
-    
-    // Función para cerrar el menú
-    function closeMenuFunc() {
-      mobileMenu?.classList.remove('active');
-      overlay?.classList.remove('active');
-      body.classList.remove('menu-open');
-      menuToggle?.classList.remove('active');
-    }
-    
-    // Event listeners
-    menuToggle?.addEventListener('click', openMenu);
-    closeMenu?.addEventListener('click', closeMenuFunc);
-    overlay?.addEventListener('click', closeMenuFunc);
-    
-    // Cerrar menú al hacer clic en enlaces
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', closeMenuFunc);
-    });
-    
-    // Cerrar menú al redimensionar
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 768 && body.classList.contains('menu-open')) {
-        closeMenuFunc();
-      }
-    });
-    
-    // Cerrar menú con Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && mobileMenu?.classList.contains('active')) {
-        closeMenuFunc();
-      }
-    });
-  });
-</script>

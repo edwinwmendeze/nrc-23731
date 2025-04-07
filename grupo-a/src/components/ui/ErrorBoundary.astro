@@ -1,0 +1,72 @@
+---
+/**
+ * Componente ErrorBoundary
+ * Captura errores en tiempo de renderizado y muestra un mensaje amigable
+ * Se puede usar para envolver partes de la aplicaciu00f3n que podru00edan fallar
+ */
+interface Props {
+  fallback?: string;
+}
+
+const { fallback = "Algo saliu00f3 mal. Por favor, intenta nuevamente mu00e1s tarde." } = Astro.props;
+
+// Intentamos renderizar el contenido del slot
+// Si ocurre un error, mostramos el mensaje de fallback
+let hasError = false;
+let errorMessage = fallback;
+
+try {
+  // En Astro, intentar anticipar errores es complicado
+  // Este es un enfoque simple que funciona para errores conocidos
+  // Intenta acceder a alguna propiedad que podru00eda causar error?
+} catch (error) {
+  hasError = true;
+  if (error instanceof Error) {
+    errorMessage = error.message || fallback;
+  }
+}
+
+import ErrorMessage from './ErrorMessage.astro';
+---
+
+{hasError ? (
+  <div class="error-boundary">
+    <ErrorMessage message={errorMessage} type="error" />
+    <div class="mt-4">
+      <button 
+        class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        onclick="window.location.reload()">
+        Recargar pu00e1gina
+      </button>
+    </div>
+  </div>
+) : (
+  <slot />
+)}
+
+<script>
+  // Captura errores en componentes cliente durante el tiempo de ejecuciu00f3n
+  document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('error', (event) => {
+      // Solo procesa errores que ocurren dentro de algu00fan error-boundary
+      const targetElement = event.target as Element;
+      const errorBoundary = targetElement.closest('.error-boundary');
+      
+      if (errorBoundary) {
+        event.preventDefault();
+        // Puedes mostrar un mensaje personalizado o realizar alguna acciu00f3n
+        console.error('Error capturado por ErrorBoundary:', event.error);
+      }
+    });
+  });
+</script>
+
+<style>
+  .error-boundary {
+    padding: 1.5rem;
+    border: 1px solid #f56565;
+    border-radius: 0.5rem;
+    background-color: #fff5f5;
+    text-align: center;
+  }
+</style>

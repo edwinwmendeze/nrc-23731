@@ -1,0 +1,164 @@
+---
+// src/components/ui/ErrorFallback.astro
+// Componente para manejar errores y estados de fallback de manera elegante
+
+import { Icon } from 'astro-icon/components';
+import Button from './Button.astro';
+import type { ErrorResponse, ErrorType } from '../../types';
+
+interface Props {
+  /** Título del error */
+  title?: string;
+  /** Mensaje de error */
+  message?: string;
+  /** Objeto de error completo si está disponible */
+  error?: ErrorResponse;
+  /** Función a ejecutar al intentar de nuevo (opcional) */
+  retryLabel?: string;
+  /** Acción alternativa (opcional) */
+  alternativeAction?: {
+    label: string;
+    href: string;
+  };
+  /** Clases CSS adicionales */
+  class?: string;
+}
+
+const {
+  title = 'Algo salió mal',
+  message = 'Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo más tarde.',
+  error,
+  retryLabel,
+  alternativeAction,
+  class: className,
+} = Astro.props;
+
+// Determinar mensaje y título según el tipo de error
+let displayTitle = title;
+let displayMessage = message;
+
+if (error) {
+  displayMessage = error.message || displayMessage;
+  
+  // Personalizar mensaje según el tipo de error
+  // Usando comparación explícita de cadenas para evitar problemas de tipos
+  const errorType = error.type as string;
+  
+  if (errorType === 'not_found') {
+    displayTitle = 'No encontrado';
+  } else if (errorType === 'network') {
+    displayTitle = 'Error de conexión';
+  } else if (errorType === 'auth') {
+    displayTitle = 'Error de autenticación';
+  }
+  // Otros casos según necesidad
+}
+---
+
+<div class:list={['error-fallback', className]}>
+  <div class="error-icon">
+    <Icon name="tabler:alert-triangle" />
+  </div>
+  
+  <div class="error-content">
+    <h3>{displayTitle}</h3>
+    <p>{displayMessage}</p>
+    
+    {error?.details && (
+      <details class="error-details">
+        <summary>Detalles técnicos</summary>
+        <pre>{JSON.stringify(error.details, null, 2)}</pre>
+      </details>
+    )}
+  </div>
+  
+  <div class="error-actions">
+    {retryLabel && (
+      <Button 
+        variant="primary" 
+        size="sm"
+        onClick="window.location.reload()"
+      >
+        <Icon name="tabler:refresh" slot="icon-left" />
+        {retryLabel}
+      </Button>
+    )}
+    
+    {alternativeAction && (
+      <Button 
+        variant="outline" 
+        size="sm"
+        href={alternativeAction.href}
+      >
+        {alternativeAction.label}
+      </Button>
+    )}
+  </div>
+</div>
+
+<style>
+  .error-fallback {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--spacing-lg, 2rem);
+    background-color: var(--color-bg);
+    border-radius: var(--radius-lg, 0.5rem);
+    border: 1px solid var(--color-gray-200);
+    max-width: 32rem;
+    margin: 0 auto;
+    gap: var(--spacing-md, 1rem);
+  }
+
+  .error-icon {
+    font-size: 2.5rem;
+    color: var(--color-error, #ef4444);
+    margin-bottom: var(--spacing-sm, 0.5rem);
+  }
+
+  .error-content {
+    width: 100%;
+  }
+
+  .error-content h3 {
+    font-size: var(--font-size-xl, 1.25rem);
+    font-weight: var(--font-weight-bold, 700);
+    margin-bottom: var(--spacing-xs, 0.25rem);
+    color: var(--color-text);
+  }
+
+  .error-content p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-md, 1rem);
+  }
+
+  .error-details {
+    background-color: var(--color-gray-100);
+    border-radius: var(--radius-md, 0.375rem);
+    padding: var(--spacing-sm, 0.5rem);
+    margin-top: var(--spacing-sm, 0.5rem);
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .error-details summary {
+    font-weight: var(--font-weight-medium, 500);
+    color: var(--color-text-muted);
+    user-select: none;
+  }
+
+  .error-details pre {
+    font-size: var(--font-size-sm, 0.875rem);
+    white-space: pre-wrap;
+    overflow-x: auto;
+    color: var(--color-text);
+  }
+
+  .error-actions {
+    display: flex;
+    gap: var(--spacing-sm, 0.5rem);
+    margin-top: var(--spacing-md, 1rem);
+  }
+</style>

@@ -1,7 +1,7 @@
 {
     "basics": {
       "name": "Jorge Alberto",
-      "last_name":"Baca",
+      "last_name":"Baca Lipe",
       "label": "Desarrollador web",
       "image": {
         "local": "/images/team/pepe.png",
@@ -9,7 +9,7 @@
       },
       "email": "71205979@continetal.edu.pe",
       "phone": "(51) 910125897",
-      "url": "https://juliocesar.dev",
+      "url": "https://jorgealbertobacalipe.github.io/",
       "summary": "Desarrollador web con experiencia proporcionando sitios web agiles para los usuarios .",
       "location": {
         "city": "Puerto Maldonado",
@@ -57,12 +57,12 @@
     ],
     "projects": [
   {
-    "name": "Sistema de Componentes",
-    "description": "Biblioteca de componentes accesibles y reutilizables para aplicaciones web",
-    "highlights": ["Cumplimiento WCAG 2.1 AA", "Documentación automática con Storybook"],
-    "url": "https://github.com/juliocesar/components",
-    "featured": false,
-    "technologies": ["React", "TypeScript", "Storybook", "Jest"]
+    "name": "nrc-23731",
+    "description": "Proyecto de portafolio",
+    "highlights": ["Github,Proyecto colaborativo"],
+    "url": "",
+    "featured": true,
+    "technologies": ["Astro", "Typescript", "css", "Javascript"]
   },
   {
     "name": "Dashboard Analítico",
