@@ -48,8 +48,8 @@
 ],
     "education": [
       {
-        "institution": "Universidad Católica San Pablo",
-        "area": "Ingeniería Informática",
+        "institution": "Instituto Continental",
+        "area": "Ingeniería Artificial con Inteligencia Artificial",
         "studyType": "Licenciatura",
         "startDate": "2015-03-01",
         "endDate": "2020-07-15"
@@ -67,7 +67,7 @@
   {
     "name": "Dashboard Analítico",
     "description": "Panel de control para visualización de datos empresariales en tiempo real",
-    "highlights": ["Optimizado para dispositivos móviles", "Gráficos interactivos avanzados"],
+    "highlights": ["Regulando para dispositivos móviles", "Representación interactiva avanzada"],
     "url": "https://github.com/juliocesar/dashboard",
     "featured": true,
     "technologies": ["Vue.js", "D3.js", "Firebase", "Tailwind CSS"]
