@@ -82,7 +82,10 @@ const finalDescription = description || siteDefaultDescription;
     <div class="mobile-menu">
       <div class="mobile-menu-header">
         <span class="logo" style="cursor: default;">{teamNameGlobal}</span>
-        <button class="close-menu" aria-label="Cerrar menú">✕</button>
+        <div class="mobile-menu-controls">
+          <ThemeToggle />
+          <button class="close-menu" aria-label="Cerrar menú">✕</button>
+        </div>
       </div>
       <div class="mobile-nav-links">
         <a href="#integrantes">Integrantes</a>
