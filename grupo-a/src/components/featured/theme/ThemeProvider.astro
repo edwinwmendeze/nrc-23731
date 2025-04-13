@@ -1,0 +1,47 @@
+---
+// ThemeProvider.astro - Inicializa el tema y proporciona script para manejar cambios
+---
+
+<script is:inline>
+  // Este script se ejecuta inmediatamente durante la carga de la página
+  (function () {
+    // Función que aplica el tema
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+    }
+
+    // Obtener preferencia guardada o usar preferencia del sistema
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    // Si hay tema guardado, usarlo; si no, usar preferencia del sistema
+    if (savedTheme) {
+      applyTheme(savedTheme);
+    } else {
+      applyTheme(prefersDark ? 'dark' : 'light');
+    }
+
+    // Exportar funciones para uso global
+    window.themeManager = {
+      setTheme: applyTheme,
+      getTheme: () => localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light'),
+      toggleTheme: () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        applyTheme(newTheme);
+        // Disparar evento personalizado
+        window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: newTheme } }));
+        return newTheme;
+      },
+    };
+
+    // Escuchar cambios en las preferencias del sistema
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('theme')) {
+        // Solo cambiar si el usuario no ha establecido una preferencia
+        applyTheme(e.matches ? 'dark' : 'light');
+      }
+    });
+  })();
+</script>
