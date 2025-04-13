@@ -1,25 +1,17 @@
 ---
-// ThemeToggle.astro - Botón visual para cambiar entre temas
+// src/components/ui/ThemeToggle.astro
 ---
 
-<button
-  id="theme-toggle"
-  aria-label="Cambiar tema"
-  title="Cambiar entre modo claro y oscuro"
-  class="theme-toggle"
->
-  <!-- Ícono para modo claro (visible en modo oscuro) -->
+<button id="theme-toggle" aria-label="Cambiar tema" class="theme-toggle">
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    class="sun-icon"
+    class="icon sun"
     width="24"
     height="24"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
     stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
   >
     <circle cx="12" cy="12" r="5"></circle>
     <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -32,51 +24,53 @@
     <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
   </svg>
 
-  <!-- Ícono para modo oscuro (visible en modo claro) -->
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    class="moon-icon"
+    class="icon moon"
     width="24"
     height="24"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
     stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
   >
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
   </svg>
 </button>
 
 <script>
-  // Este script se ejecuta después de la hidratación del cliente
+  // Script para manejar el cambio de tema
   document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
 
+    // Verificar el tema actual al cargar
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    updateToggleAppearance(currentTheme);
+
     // Función para actualizar la apariencia del botón
     function updateToggleAppearance(theme) {
-      if (!themeToggle) return;
-
       if (theme === 'dark') {
-        themeToggle.classList.add('dark-mode');
+        themeToggle?.classList.add('dark-mode');
       } else {
-        themeToggle.classList.remove('dark-mode');
+        themeToggle?.classList.remove('dark-mode');
       }
     }
 
-    // Configurar estado inicial
-    updateToggleAppearance(window.themeManager.getTheme());
-
-    // Agregar listener de clic
+    // Toggle de tema al hacer clic
     themeToggle?.addEventListener('click', () => {
-      const newTheme = window.themeManager.toggleTheme();
-      updateToggleAppearance(newTheme);
-    });
+      // Obtener el tema actual y cambiarlo
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
 
-    // Escuchar cambios externos en el tema
-    window.addEventListener('themeChanged', (e) => {
-      updateToggleAppearance(e.detail.theme);
+      // Aplicar el nuevo tema
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+
+      // Actualizar apariencia del botón
+      updateToggleAppearance(newTheme);
+
+      console.log('Tema cambiado a:', newTheme); // Para depuración
     });
   });
 </script>
@@ -93,53 +87,40 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-text);
     position: relative;
-    transition: all 0.3s ease;
+    color: var(--color-text);
   }
 
   .theme-toggle:hover {
     background-color: var(--color-surface);
   }
 
-  .sun-icon,
-  .moon-icon {
+  .icon {
     position: absolute;
     transition:
-      transform 0.5s ease,
-      opacity 0.5s ease;
+      transform 0.3s ease,
+      opacity 0.3s ease;
   }
 
-  /* Por defecto, en light mode mostramos la luna */
-  .sun-icon {
+  /* Por defecto en modo claro */
+  .sun {
     opacity: 0;
-    transform: scale(0.5) rotate(-45deg);
+    transform: scale(0.5);
   }
 
-  .moon-icon {
+  .moon {
     opacity: 1;
-    transform: scale(1) rotate(0);
+    transform: scale(1);
   }
 
-  /* En dark mode, mostramos el sol */
-  .theme-toggle.dark-mode .sun-icon {
+  /* Cuando está en modo oscuro */
+  .theme-toggle.dark-mode .sun {
     opacity: 1;
-    transform: scale(1) rotate(0);
+    transform: scale(1);
   }
 
-  .theme-toggle.dark-mode .moon-icon {
+  .theme-toggle.dark-mode .moon {
     opacity: 0;
-    transform: scale(0.5) rotate(45deg);
-  }
-
-  /* Mejora: Estilos para dispositivos táctiles */
-  @media (hover: none) {
-    .theme-toggle:hover {
-      background-color: transparent;
-    }
-
-    .theme-toggle:active {
-      background-color: var(--color-surface);
-    }
+    transform: scale(0.5);
   }
 </style>

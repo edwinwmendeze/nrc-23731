@@ -2,7 +2,7 @@
 // src/layouts/MainLayout.astro
 import '../styles/global.css';
 import '../styles/theme.css'; // Si lo creaste como archivo separado
-import ThemeProvider from '../components/featured/theme/ThemeProvider.astro';
+
 import ThemeToggle from '../components/featured/theme/ThemeToggle.astro';
 
 import siteConfig from '../data/config/site.json'; // Importar la configuración
@@ -96,6 +96,13 @@ const finalDescription = description || siteDefaultDescription;
     <div class="mobile-overlay"></div>
 
     <script>
+      // Aplicar tema guardado inmediatamente para evitar parpadeo
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+      // Usar tema guardado o preferencia del sistema
+      const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', initialTheme);
       document.addEventListener('DOMContentLoaded', () => {
         const menuToggle = document.querySelector('.menu-toggle');
         const closeMenu = document.querySelector('.close-menu');
