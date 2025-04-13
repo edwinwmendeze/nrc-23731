@@ -15,21 +15,27 @@ try {
 }
 
 // Funciones auxiliares para procesar imágenes
-function getImageSrc(profile: Profile) {
+function getImageSrc(profile: Profile): string {
   if (!profile.basics?.image) return '';
   // Verifica si es un objeto y accede a 'local' de forma segura
-  if (typeof profile.basics.image === 'object') {
-    return profile.basics.image?.local || ''; // Añadido ?. aquí
+  if (typeof profile.basics.image === 'object' && profile.basics.image.local) {
+    // Añadir el prefijo base para GitHub Pages si la ruta es relativa
+    const localPath = profile.basics.image.local;
+    if (localPath.startsWith('/')) {
+      // Usar el import.meta.env.BASE_URL para obtener la ruta base de Astro
+      return import.meta.env.BASE_URL + localPath;
+    }
+    return localPath;
   }
   // Si es una cadena (o no es objeto pero existe), devuélvela
-  return profile.basics.image || ''; 
+  return typeof profile.basics.image === 'string' ? profile.basics.image : ''; 
 }
 
-function getImageFallback(profile: Profile) {
+function getImageFallback(profile: Profile): string {
   if (!profile.basics?.image) return '';
   // Verifica si es un objeto y accede a 'remote' de forma segura
-  if (typeof profile.basics.image === 'object') {
-    return profile.basics.image?.remote || ''; // Añadido ?. aquí
+  if (typeof profile.basics.image === 'object' && profile.basics.image.remote) {
+    return profile.basics.image.remote;
   }
   // El fallback solo aplica si la imagen es un objeto con URL remota
   return '';
@@ -72,12 +78,12 @@ const {
                       imageUrl = basics.image; 
                     } else if (typeof basics.image === 'object' && (basics.image.remote || basics.image.local)) {
                       // Prioritize remote URL, fallback to local
-                      imageUrl = basics.image.remote || basics.image.local;
+                      imageUrl = basics.image.remote || getImageSrc(profile);
                     }
 
                     // Only render the image if we successfully determined a URL
                     if (imageUrl) {
-                      const fallbackUrl = getImageFallback ? getImageFallback(profile) : '/images/default-avatar.svg'; 
+                      const fallbackUrl = getImageFallback(profile) || `${import.meta.env.BASE_URL}/images/default-avatar.svg`; 
                       const altText = `Foto de ${basics.name || 'miembro del equipo'}`;
                       
                       return (
