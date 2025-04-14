@@ -226,6 +226,51 @@ Se implementan las siguientes estrategias:
 
 - **Sistema de variables CSS**: Implementación de un sistema consistente de variables CSS para colores y estilos que mantiene la coherencia visual y facilita el cumplimiento de los estándares de accesibilidad WCAG.
 
+## 6.3 Implementación de Funcionalidades Avanzadas
+
+### 6.3.1 Sistema de Tema Oscuro/Claro
+
+El portafolio implementa un sistema completo de temas claro/oscuro que mejora significativamente la experiencia de usuario:
+
+1. ** Características técnicas**:
+   - Uso de atributo `data-theme` en el elemento HTML raíz para controlar el tema
+   - Variables CSS para todos los colores y elementos visuales
+   - Detección automática de preferencias del sistema (`prefers-color-scheme`)
+   - Persistencia de preferencias mediante `localStorage`
+   - Script inline para evitar parpadeo (FOUC - Flash of Unstyled Content)
+
+2. **Consideraciones de diseño**:
+   - Contraste adecuado en ambos temas para mantener WCAG AA/AAA
+   - Transiciones suaves entre temas para mejorar la experiencia
+
+**Implementación**:
+```html
+<script is:inline>
+  // Aplicar tema guardado inmediatamente para evitar parpadeo
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  
+  // Usar tema guardado o preferencia del sistema
+  const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', initialTheme);
+</script>
+
+### 6.3.2 Botón "Volver Arriba"
+Componente de navegación que mejora la experiencia de usuario en secciones largas:
+
+1. **Características técnicas:
+
+- Aparición/desaparición automática basada en la posición de scroll
+- Animación de desplazamiento suave utilizando scrollTo con behavior: 'smooth'
+- Compatibilidad con temas claro/oscuro
+
+
+2. **Consideraciones de accesibilidad:
+
+- Etiquetas ARIA adecuadas
+- Contraste suficiente en ambos temas
+- Tamaño de toque optimizado para dispositivos móviles
+
 ## 7. Despliegue
 
 ### 7.1 Configuración de GitHub Pages
@@ -367,3 +412,41 @@ try {
 
 *Documento elaborado por: Grupo A - NRC 23731*  
 *Última actualización: 6 de abril de 2025*
+
+## 12. Gestión de Código con Git y GitHub
+
+### 12.1 Implementación de GitFlow
+
+El proyecto implementó un flujo de trabajo basado en GitFlow para la gestión del código fuente:
+
+1. **Estructura de ramas**:
+   - `main`: Código en producción
+   - `develop`: Rama de integración para nuevas características
+   - `feature/*`: Ramas para características individuales
+   - `release/*`: Ramas para preparar nuevas versiones
+   - `hotfix/*`: Ramas para correcciones urgentes en producción
+
+2. **Flujo de trabajo implementado**:
+   - Desarrollo de características en ramas independientes (`feature/modo-oscuro`, `feature/volver-arriba`)
+   - Integración a `develop` mediante `git flow feature finish`
+   - Preparación de releases desde `develop` con `git flow release start/finish`
+   - Cada miembro trabajó en sus características asignadas sin interferir con el trabajo de los demás
+
+3. **Gestión de conflictos**:
+   - Se utilizó el enfoque de resolución manual cuando surgieron conflictos
+   - Se priorizó la conservación de ambas funcionalidades en caso de conflicto
+   - Testeo después de cada resolución para verificar la integridad del código
+
+### 12.2 Automatización de CI/CD
+
+Se implementó integración y despliegue continuo mediante GitHub Actions:
+
+1. **Flujo de trabajo**:
+   - Verificación automática en cada push a `develop` y `main`
+   - Ejecución de pruebas de linting y compilación
+   - Despliegue automático a GitHub Pages cuando se actualiza `main`
+
+2. **Beneficios obtenidos**:
+   - Detección temprana de errores
+   - Despliegue consistente y automático
+   - Reducción de errores humanos en el proceso de publicación
