@@ -1,0 +1,51 @@
+---
+// src/components/featured/BackToTop.astro
+// Eliminar estas importaciones
+// import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './BackToTop.css';
+---
+
+<button id="back-to-top" class="back-to-top" aria-label="Volver arriba">
+  <!-- Quitar o comentar esta línea -->
+  <!-- <FontAwesomeIcon icon={faArrowUp} /> -->
+
+  <!-- Descomentar este SVG -->
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M18 15l-6-6-6 6"></path>
+  </svg>
+</button>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const backToTopButton = document.getElementById('back-to-top');
+
+    // Mostrar/ocultar botón al hacer scroll
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        backToTopButton.classList.add('show');
+      } else {
+        backToTopButton.classList.remove('show');
+      }
+    });
+
+    // Scroll suave al hacer click
+    backToTopButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    });
+  });
+</script>

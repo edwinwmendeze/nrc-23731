@@ -6,7 +6,12 @@ import '../styles/theme.css'; // Si lo creaste como archivo separado
 import ThemeToggle from '../components/featured/theme/ThemeToggle.astro';
 
 import siteConfig from '../data/config/site.json'; // Importar la configuración
+<<<<<<< HEAD
 import ErrorBoundary from '../components/ui/ErrorBoundary.astro';
+=======
+import ErrorBoundary from "../components/ui/ErrorBoundary.astro";
+import BackToTop from '../components/featured/BackToTop.astro';
+>>>>>>> feature/volver-arriba
 
 interface Props {
   title: string; // Mantenemos el título específico de la página
@@ -68,7 +73,11 @@ const finalDescription = description || siteDefaultDescription;
       <main class="site-content">
         <slot />
       </main>
+<<<<<<< HEAD
 
+=======
+      <BackToTop />
+>>>>>>> feature/volver-arriba
       <footer class="site-footer">
         <div class="footer-container">
           <p>
