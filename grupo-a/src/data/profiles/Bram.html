@@ -1129,5 +1129,14 @@
         // Iniciar la carga del portafolio
         loadPortfolioData();
     </script>
+    <p>Visitas totales: <span id="visitas">Cargando...</span></p>
+
+    <script>
+      fetch('https://api.countapi.xyz/hit/nrc-23731/visitas')
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('visitas').innerText = data.value;
+        });
+    </script>
 </body>
 </html>
