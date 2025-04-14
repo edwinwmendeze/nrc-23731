@@ -3,6 +3,7 @@
 import '../styles/global.css';
 import siteConfig from '../data/config/site.json'; // Importar la configuración
 import ErrorBoundary from "../components/ui/ErrorBoundary.astro";
+import BackToTop from '../components/featured/BackToTop.astro';
 
 interface Props {
   title: string; // Mantenemos el título específico de la página
@@ -61,7 +62,7 @@ const finalDescription = description || siteDefaultDescription;
       <main class="site-content">
         <slot />
       </main>
-      
+      <BackToTop />
       <footer class="site-footer">
         <div class="footer-container">
           <p>&copy; {new Date().getFullYear()} { teamNameGlobal } - NRC-23731. Derechos reservados.</p> 
