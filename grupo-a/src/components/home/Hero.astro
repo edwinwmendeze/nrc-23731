@@ -9,17 +9,19 @@ const siteDescription = siteConfig.site.description; // Descripción general del
 const teamDescription = siteConfig.team.description; // Descripción específica del equipo
 ---
 
-<section class="hero" id="inicio"> {/* Añadido id para navegación si es necesario */}
+<section class="hero" id="inicio">
+  {/* Añadido id para navegación si es necesario */}
   <div class="container">
     <div class="hero-content">
-      <h1 class="title">{ teamName }</h1>
+      <h1 class="title">{teamName}</h1>
       {/* Usar la descripción del sitio como subtítulo principal */}
-      <p class="subtitle">{ siteDescription }</p>
+      <p class="subtitle">{siteDescription}</p>
       {/* Añadir la descripción del equipo para un poco más de contexto */}
-      <p class="description">{ teamDescription }</p>
+      <p class="description">{teamDescription}</p>
       <div class="actions">
         <Button href="#integrantes" variant="primary">Conoce al equipo</Button>
-        <Button href="#proyectos" variant="secondary">Ver Proyectos</Button> {/* Cambiado a secondary para contraste */}
+        <Button href="#proyectos" variant="primary">Ver Proyectos</Button>
+        {/* Cambiado a secondary para contraste */}
       </div>
     </div>
   </div>
@@ -38,8 +40,8 @@ const teamDescription = siteConfig.team.description; // Descripción específica
   .hero-content {
     max-width: 800px;
     /* Centrar el texto si prefieres */
-     text-align: center; 
-     margin: 0 auto; /* Asegura centrado horizontal si text-align está activo */
+    text-align: center;
+    margin: 0 auto; /* Asegura centrado horizontal si text-align está activo */
   }
 
   .title {
@@ -53,19 +55,20 @@ const teamDescription = siteConfig.team.description; // Descripción específica
     font-size: clamp(1.2rem, 3vw, 1.6rem); /* Tamaño de fuente responsive */
     color: var(--color-text);
     margin-bottom: var(--space-sm);
-     opacity: 0.9;
-     max-width: 650px; /* Limitar ancho para legibilidad */
-     margin-left: auto; /* Centrar si text-align no está activo */
-     margin-right: auto; /* Centrar si text-align no está activo */
+    opacity: 0.9;
+    max-width: 650px; /* Limitar ancho para legibilidad */
+    margin-left: auto; /* Centrar si text-align no está activo */
+    margin-right: auto; /* Centrar si text-align no está activo */
   }
 
-   .description { /* Estilo para la nueva descripción del equipo */
+  .description {
+    /* Estilo para la nueva descripción del equipo */
     font-size: var(--font-size-base); /* Tamaño base */
     color: var(--color-text-muted); /* Un color más suave */
     margin-bottom: var(--space-lg); /* Espacio antes de los botones */
-     max-width: 600px; /* Limitar ancho */
-     margin-left: auto; 
-     margin-right: auto;
+    max-width: 600px; /* Limitar ancho */
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .actions {
@@ -87,20 +90,51 @@ const teamDescription = siteConfig.team.description; // Descripción específica
     .subtitle {
       font-size: 1.1rem;
     }
-     .description {
-       font-size: var(--font-size-sm);
-     }
+    .description {
+      font-size: var(--font-size-sm);
+    }
   }
-   @media (max-width: 480px) {
-     .actions {
-       flex-direction: column; /* Apilar botones */
-       align-items: center;
-       gap: var(--space-sm);
-     }
-      /* Estilo global para los botones dentro de actions en pantallas pequeñas */
-     .actions :global(.button) { 
-       width: 80%; 
-       max-width: 280px;
-     }
-   }
+  @media (max-width: 480px) {
+    .actions {
+      flex-direction: column; /* Apilar botones */
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    /* Estilo global para los botones dentro de actions en pantallas pequeñas */
+    .actions :global(.button) {
+      width: 80%;
+      max-width: 280px;
+    }
+  }
+  .title {
+    font-size: clamp(2.8rem, 6vw, 4rem);
+    /* Cambia esto: */
+    /* color: var(--color-heading); */
+    /* Por esto: */
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-xs);
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+    opacity: 0.9;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .description {
+    font-size: var(--font-size-base);
+    /* Cambia esto: */
+    /* color: var(--color-text-muted); */
+    /* Por esto: */
+    color: var(--color-text-light);
+    margin-bottom: var(--space-lg);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 </style>
