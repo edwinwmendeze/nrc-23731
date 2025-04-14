@@ -1,0 +1,45 @@
+/* Tema claro (default) */
+:root {
+  --color-bg: #ffffff;
+  --color-text: #1f2937;
+  --color-text-light: #4b5563;
+  --color-text-lighter: #6b7280;
+  --color-accent: #2d2d2d;
+  --color-surface: #f7f7f7;
+  --color-border: #e0e0e0;
+
+  /* Variables adicionales */
+  --color-bg-rgb: 255, 255, 255;
+  --color-overlay: rgba(255, 255, 255, 0.8);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+
+  /* Transición para cambio suave entre temas */
+  --theme-transition:
+    background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Tema oscuro */
+[data-theme='dark'] {
+  --color-bg: #121212;
+  --color-text: #e5e7eb;
+  --color-text-light: #9ca3af;
+  --color-text-lighter: #6b7280;
+  --color-accent: #60a5fa; /* Azul más claro para mejor contraste en oscuro */
+  --color-surface: #1e1e1e;
+  --color-border: #2e2e2e;
+
+  /* Variables adicionales */
+  --color-bg-rgb: 18, 18, 18;
+  --color-overlay: rgba(18, 18, 18, 0.8);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Aplicar transiciones a elementos clave */
+body,
+.site-header,
+.team-card,
+.project-card,
+.btn,
+.site-footer {
+  transition: var(--theme-transition);
+}

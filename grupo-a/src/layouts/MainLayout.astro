@@ -1,8 +1,12 @@
 ---
 // src/layouts/MainLayout.astro
 import '../styles/global.css';
+import '../styles/theme.css'; // Si lo creaste como archivo separado
+
+import ThemeToggle from '../components/featured/theme/ThemeToggle.astro';
+
 import siteConfig from '../data/config/site.json'; // Importar la configuración
-import ErrorBoundary from "../components/ui/ErrorBoundary.astro";
+import ErrorBoundary from '../components/ui/ErrorBoundary.astro';
 
 interface Props {
   title: string; // Mantenemos el título específico de la página
@@ -10,11 +14,7 @@ interface Props {
   teamName?: string;
 }
 
-const { 
-  title, 
-  description = "Portafolio del grupo NRC 23731", 
-  teamName = "Grupo A" 
-} = Astro.props;
+const { title, description = 'Portafolio del grupo NRC 23731', teamName = 'Grupo A' } = Astro.props;
 
 // Extraer datos globales del sitio/equipo
 const teamNameGlobal = siteConfig.team.name; // Nombre del equipo para el logo/footer
@@ -30,7 +30,10 @@ const finalDescription = description || siteDefaultDescription;
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0"
+    />
     <meta name="description" content={finalDescription} />
     <meta name="generator" content={Astro.generator} />
     <title>{finalTitle}</title>
@@ -41,48 +44,65 @@ const finalDescription = description || siteDefaultDescription;
       <header class="site-header" id="site-header">
         <div class="header-container">
           <nav class="nav">
-            <span class="logo" style="cursor: default;">{ teamNameGlobal }</span> 
-            
-            <button class="menu-toggle" aria-label="Abrir menú">
-              <span class="bar"></span>
-              <span class="bar"></span>
-              <span class="bar"></span>
-            </button>
-            
+            <span class="logo" style="cursor: default;">{teamNameGlobal}</span>
+
+            <div class="nav-controls">
+              <!-- Agregar el toggle de tema en la navegación -->
+              <ThemeToggle />
+
+              <button class="menu-toggle" aria-label="Abrir menú">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+              </button>
+            </div>
+
             <div class="nav-links">
               <a href="#integrantes">Integrantes</a>
               <a href="#proyectos">Proyectos</a>
-              
             </div>
           </nav>
         </div>
       </header>
-      
+
       <main class="site-content">
         <slot />
       </main>
-      
+
       <footer class="site-footer">
         <div class="footer-container">
-          <p>&copy; {new Date().getFullYear()} { teamNameGlobal } - NRC-23731. Derechos reservados.</p> 
+          <p>
+            &copy; {new Date().getFullYear()}
+            {teamNameGlobal} - NRC-23731. Derechos reservados.
+          </p>
         </div>
       </footer>
     </ErrorBoundary>
-    
+
     <div class="mobile-menu">
       <div class="mobile-menu-header">
-        <span class="logo" style="cursor: default;">{ teamNameGlobal }</span>
-        <button class="close-menu" aria-label="Cerrar menú">✕</button>
+        <span class="logo" style="cursor: default;">{teamNameGlobal}</span>
+        <div class="mobile-menu-controls">
+          <ThemeToggle />
+          <button class="close-menu" aria-label="Cerrar menú">✕</button>
+        </div>
       </div>
       <div class="mobile-nav-links">
         <a href="#integrantes">Integrantes</a>
         <a href="#proyectos">Proyectos</a>
       </div>
     </div>
-    
+
     <div class="mobile-overlay"></div>
-    
+
     <script>
+      // Aplicar tema guardado inmediatamente para evitar parpadeo
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+      // Usar tema guardado o preferencia del sistema
+      const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', initialTheme);
       document.addEventListener('DOMContentLoaded', () => {
         const menuToggle = document.querySelector('.menu-toggle');
         const closeMenu = document.querySelector('.close-menu');
@@ -91,7 +111,7 @@ const finalDescription = description || siteDefaultDescription;
         const body = document.body;
         const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
         const header = document.getElementById('site-header');
-        
+
         // Efecto de scroll para el header
         if (header) {
           window.addEventListener('scroll', () => {
@@ -102,7 +122,7 @@ const finalDescription = description || siteDefaultDescription;
             }
           });
         }
-        
+
         // Función para abrir el menú
         function openMenu() {
           mobileMenu?.classList.add('active');
@@ -110,7 +130,7 @@ const finalDescription = description || siteDefaultDescription;
           body.classList.add('menu-open');
           menuToggle?.classList.add('active');
         }
-        
+
         // Función para cerrar el menú
         function closeMenuFunc() {
           mobileMenu?.classList.remove('active');
@@ -118,24 +138,24 @@ const finalDescription = description || siteDefaultDescription;
           body.classList.remove('menu-open');
           menuToggle?.classList.remove('active');
         }
-        
+
         // Event listeners
         menuToggle?.addEventListener('click', openMenu);
         closeMenu?.addEventListener('click', closeMenuFunc);
         overlay?.addEventListener('click', closeMenuFunc);
-        
+
         // Cerrar menú al hacer clic en enlaces
-        mobileLinks.forEach(link => {
+        mobileLinks.forEach((link) => {
           link.addEventListener('click', closeMenuFunc);
         });
-        
+
         // Cerrar menú al redimensionar
         window.addEventListener('resize', () => {
           if (window.innerWidth > 768 && body.classList.contains('menu-open')) {
             closeMenuFunc();
           }
         });
-        
+
         // Cerrar menú con Escape
         document.addEventListener('keydown', (e) => {
           if (e.key === 'Escape' && mobileMenu?.classList.contains('active')) {
@@ -147,24 +167,38 @@ const finalDescription = description || siteDefaultDescription;
 
     <style>
       /* Reset global */
-      *, *::before, *::after {
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
       }
-      
-      html, body {
+
+      html,
+      body {
         margin: 0;
         padding: 0;
         width: 100%;
         overflow-x: hidden;
       }
-      
+
       body {
         display: flex;
         flex-direction: column;
         min-height: 100vh;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          'Open Sans',
+          'Helvetica Neue',
+          sans-serif;
       }
-      
+
       /* Header */
       .site-header {
         position: fixed;
@@ -178,27 +212,29 @@ const finalDescription = description || siteDefaultDescription;
         padding: 1rem 0;
         transition: all 0.3s ease;
       }
-      
+
       .site-header.scrolled {
         background-color: rgba(var(--color-bg-rgb, 255, 255, 255), 0.85);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        box-shadow:
+          0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
       }
-      
+
       .header-container {
         max-width: var(--container-width, 1200px);
         margin: 0 auto;
         padding: 0 2rem;
         width: 100%;
       }
-      
+
       .nav {
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
-      
+
       .logo {
         font-weight: 700;
         font-size: 1.25rem;
@@ -206,23 +242,23 @@ const finalDescription = description || siteDefaultDescription;
         text-decoration: none;
         z-index: 150;
       }
-      
+
       .nav-links {
         display: flex;
         gap: 2rem;
       }
-      
+
       .nav-links a {
         text-decoration: none;
         color: var(--color-text, #4a5568);
         font-weight: 500;
         transition: color 0.2s;
       }
-      
+
       .nav-links a:hover {
         color: var(--color-accent, #4f46e5);
       }
-      
+
       /* Mobile Menu */
       .menu-toggle {
         display: none;
@@ -231,7 +267,7 @@ const finalDescription = description || siteDefaultDescription;
         cursor: pointer;
         z-index: 150;
       }
-      
+
       .bar {
         display: block;
         width: 25px;
@@ -240,7 +276,7 @@ const finalDescription = description || siteDefaultDescription;
         background-color: var(--color-text, #4a5568);
         transition: all 0.3s ease-in-out;
       }
-      
+
       .mobile-menu {
         position: fixed;
         top: 0;
@@ -254,18 +290,18 @@ const finalDescription = description || siteDefaultDescription;
         padding: 2rem;
         overflow-y: auto;
       }
-      
+
       .mobile-menu.active {
         right: 0;
       }
-      
+
       .mobile-menu-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 2rem;
       }
-      
+
       .close-menu {
         background: transparent;
         border: none;
@@ -273,13 +309,13 @@ const finalDescription = description || siteDefaultDescription;
         cursor: pointer;
         color: var(--color-text, #4a5568);
       }
-      
+
       .mobile-nav-links {
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
       }
-      
+
       .mobile-nav-links a {
         font-size: 1.2rem;
         text-decoration: none;
@@ -287,7 +323,7 @@ const finalDescription = description || siteDefaultDescription;
         padding: 0.5rem 0;
         border-bottom: 1px solid var(--color-border, #e2e8f0);
       }
-      
+
       .mobile-overlay {
         position: fixed;
         top: 0;
@@ -300,12 +336,12 @@ const finalDescription = description || siteDefaultDescription;
         visibility: hidden;
         transition: opacity 0.3s ease;
       }
-      
+
       .mobile-overlay.active {
         opacity: 1;
         visibility: visible;
       }
-      
+
       /* Main content */
       .site-content {
         flex-grow: 1;
@@ -314,7 +350,7 @@ const finalDescription = description || siteDefaultDescription;
         flex-direction: column;
         padding-top: 5rem; /* Agregar espacio para el header fijo */
       }
-      
+
       /* Footer */
       .site-footer {
         width: 100%;
@@ -322,7 +358,7 @@ const finalDescription = description || siteDefaultDescription;
         background-color: var(--color-background, #ffffff);
         border-top: 1px solid var(--color-border, #e2e8f0);
       }
-      
+
       .footer-container {
         max-width: var(--container-width, 1200px);
         margin: 0 auto;
@@ -331,52 +367,79 @@ const finalDescription = description || siteDefaultDescription;
         color: var(--color-text-light);
         font-size: 0.875rem;
       }
-      
+
       /* Media queries */
       @media (max-width: 768px) {
         .nav-links {
           display: none;
         }
-        
+
         .menu-toggle {
           display: block;
         }
-        
-        .header-container, 
+
+        .header-container,
         .footer-container {
           padding: 0 1.5rem;
         }
-        
+
         body.menu-open {
           overflow: hidden;
         }
-        
+
         .menu-toggle.active .bar:nth-child(1) {
           transform: translateY(8px) rotate(45deg);
         }
-        
+
         .menu-toggle.active .bar:nth-child(2) {
           opacity: 0;
         }
-        
+
         .menu-toggle.active .bar:nth-child(3) {
           transform: translateY(-8px) rotate(-45deg);
         }
       }
-      
+
       @media (max-width: 480px) {
-        .header-container, 
+        .header-container,
         .footer-container {
           padding: 0 1rem;
         }
-        
+
         .mobile-menu {
           width: 85%;
         }
-        
+
         .site-footer {
           padding: 1.5rem 0;
         }
+      }
+      /* Agregar esto para el nuevo nav-controls */
+      .nav-controls {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      /* Ajustar los estilos del menú móvil si es necesario */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .menu-toggle {
+          display: block;
+        }
+
+        /* Asegurar que el toggle siga visible en móvil */
+        .nav-controls {
+          margin-left: auto;
+        }
+      }
+      .nav-controls {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
       }
     </style>
   </body>
