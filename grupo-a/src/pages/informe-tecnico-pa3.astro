@@ -61,7 +61,7 @@ const progreso = [
         <div class="mb-6">
           <p class="font-bold mb-3 mt-3 text-lg">Código actual para cargar perfiles:</p>
           <div class="border border-gray-300 rounded-lg overflow-hidden">
-            <img src="../../public/images/pa3/obtener_perfiles.png" alt="Código actual para cargar perfiles" class="w-full">
+            <img src="/images/pa3/obtener_perfiles.png" alt="Código actual para cargar perfiles" class="w-full">
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@ const progreso = [
       
       <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
         <p class="mb-4">
-          Seguiremos el proceso de Test-Driven Development (TDD) para la implementación del ORM. Este enfoque
+          Seguimos el proceso de Test-Driven Development (TDD) para la implementación del ORM. Este enfoque
           se basa en tres fases principales: RED (escribir pruebas que fallan), GREEN (implementar código mínimo
           para que las pruebas pasen) y REFACTOR (mejorar el código manteniendo las pruebas).
         </p>
@@ -89,14 +89,14 @@ const progreso = [
           <div class="mb-6">
             <p class="font-bold mb-3 text-lg">Prueba inicial para BaseORM:</p>
             <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="../../public/images/pa3/prueba_inicial_baseORM.png" alt="Código de prueba inicial para BaseORM" class="w-full">
+              <img src="/images/pa3/prueba_inicial_baseORM.png" alt="Código de prueba inicial para BaseORM" class="w-full">
             </div>
           </div>
           
           <div class="mb-6 bg-red-50 p-5 rounded-lg border border-red-200">
             <p class="font-bold mb-3 text-lg text-red-800">Error esperado en la fase RED:</p>
             <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
-              <img src="../../public/images/pa3/test_tdd_fase_red.png" alt="Resultado de prueba fallando (RED)" class="w-full">
+              <img src="/images/pa3/test_tdd_fase_red.png" alt="Resultado de prueba fallando (RED)" class="w-full">
             </div>
             <p class="text-red-700">
               Este error es precisamente lo que esperamos en la fase RED del TDD: estamos probando una clase 
@@ -118,14 +118,14 @@ const progreso = [
           <div class="mb-6">
             <p class="font-bold mb-3 text-lg">Implementación básica de BaseORM:</p>
             <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="../../public/images/pa3/baseorm_implementacion.png" alt="Implementación básica de BaseORM" class="w-full">
+              <img src="/images/pa3/baseorm_implementacion.png" alt="Implementación básica de BaseORM" class="w-full">
             </div>
           </div>
           
           <div class="mb-6 bg-green-50 p-5 rounded-lg border border-green-200">
             <p class="font-bold mb-3 text-lg text-green-800">Resultado de la prueba (éxito):</p>
             <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
-              <img src="../../public/images/pa3/test_tdd_fase_green.png" alt="Resultado de prueba pasando (GREEN)" class="w-full">
+              <img src="/images/pa3/test_tdd_fase_green.png" alt="Resultado de prueba pasando (GREEN)" class="w-full">
             </div>
             <p class="text-green-700">
               Las pruebas pasan, lo que confirma que nuestra implementación básica de la inicialización del ORM 
@@ -141,20 +141,20 @@ const progreso = [
         <div class="bg-white p-6 rounded-lg shadow-sm">
           <p class="mb-5">
             Ahora podemos añadir más funcionalidades y mejorar el código existente, siempre asegurándonos 
-            de que las pruebas sigan pasando. Implementaremos el método findAll() y un sistema de caché.
+            de que las pruebas sigan pasando. Implementamos el método findAll() y un sistema de caché.
           </p>
           
           <div class="mb-6">
             <p class="font-bold mb-3 text-lg">Pruebas para findAll():</p>
             <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="../../public/images/pa3/test_findall.png" alt="Pruebas para findAll()" class="w-full">
+              <img src="/images/pa3/test_findall.png" alt="Pruebas para findAll()" class="w-full">
             </div>
           </div>
           
           <div class="mb-6">
             <p class="font-bold mb-3 text-lg">Implementación refactorizada de BaseORM:</p>
             <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="../../public/images/pa3/baseorm_refactor.png" alt="BaseORM refactorizado" class="w-full">
+              <img src="/images/pa3/baseorm_refactor.png" alt="BaseORM refactorizado" class="w-full">
             </div>
           </div>
           
@@ -164,6 +164,203 @@ const progreso = [
             <li>Implementamos un sistema de caché para optimizar lecturas repetidas</li>
             <li>Añadimos métodos findAll() y findById() con soporte para opciones</li>
             <li>Mejoramos el manejo de errores para mayor robustez</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div id="implementacion-completa" class="mb-10">
+        <h3 class="text-xl font-bold mb-5 pl-4 border-l-4 border-purple-500">Implementación Completa: Expandiendo funcionalidades</h3>
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <p class="mb-5">
+            Una vez completado el ciclo TDD básico, hemos expandido la implementación para incluir
+            funcionalidades más avanzadas y específicas para nuestro proyecto.
+          </p>
+          
+          <div class="mb-6">
+            <p class="font-bold mb-3 text-lg">BaseORM completo:</p>
+            <pre class="text-xs bg-gray-100 p-4 rounded overflow-x-auto">
+import * as fs from 'fs/promises';
+import path from 'path';
+import &#123; AppError &#125; from '../../types/AppError';
+
+/**
+ * BaseORM - Clase base para la implementación del ORM
+ * Proporciona funcionalidades CRUD básicas para entidades JSON
+ */
+export class BaseORM&lt;T extends Record&lt;string, any&gt;&gt; &#123;
+  private basePath: string;
+  private initialized: boolean = false;
+  private cache: Map&lt;string, T&gt; = new Map();
+  protected indexesBuilt: boolean = false;
+  private indexes: Map&lt;string, Map&lt;string, Set&lt;string&gt;&gt;&gt; = new Map();
+  
+  /**
+   * Constructor para BaseORM
+   * @param basePath Ruta base donde se almacenarán los archivos JSON
+   * @param idField Nombre del campo que se usará como identificador (por defecto 'id')
+   */
+  constructor(basePath: string, private idField: string = 'id') &#123;
+    this.basePath = basePath;
+  &#125;
+  
+  // ... más métodos ...
+  
+  /**
+   * Encuentra entidades por un campo específico
+   * @param field Campo por el que buscar
+   * @param value Valor a buscar
+   * @param options Opciones para la búsqueda
+   * @returns Lista de entidades que coinciden con la búsqueda
+   */
+  async findByField(field: string, value: any, options: &#123;
+    useIndex?: boolean,
+    useCache?: boolean,
+    exactMatch?: boolean
+  &#125; = &#123;&#125;): Promise&lt;T[]&gt; &#123;
+    // Implementación de búsqueda por campo
+  &#125;
+  
+  /**
+   * Cuenta el número total de entidades
+   * @param filter Filtro opcional
+   * @returns Número de entidades
+   */
+  async count(filter?: (entity: T) =&gt; boolean): Promise&lt;number&gt; &#123;
+    const entities = await this.findAll();
+    
+    if (filter) &#123;
+      return entities.filter(filter).length;
+    &#125;
+    
+    return entities.length;
+  &#125;
+  
+  // ... otros métodos avanzados ...
+&#125;</pre>
+          </div>
+          
+          <div class="mb-6">
+            <p class="font-bold mb-3 text-lg">ProfileORM especializado:</p>
+            <pre class="text-xs bg-gray-100 p-4 rounded overflow-x-auto">
+import &#123; BaseORM &#125; from './BaseORM';
+import path from 'path';
+import type &#123; Profile, Skill, Project &#125; from '../../types';
+import &#123; AppError &#125; from '../../types/AppError';
+
+/**
+ * ProfileORM - Implementación específica de ORM para perfiles
+ * Extiende BaseORM para añadir funcionalidades específicas para perfiles
+ */
+export class ProfileORM extends BaseORM&lt;Profile&gt; &#123;
+  private static instance: ProfileORM | null = null;
+  
+  /**
+   * Constructor de ProfileORM
+   * @param basePath Ruta base para los archivos de perfil
+   */
+  constructor(basePath: string = path.join(process.cwd(), 'src/data/profiles')) &#123;
+    super(basePath, 'id');
+    this.buildProfileIndexes();
+  &#125;
+  
+  /**
+   * Obtiene una instancia singleton de ProfileORM
+   * @returns Instancia de ProfileORM
+   */
+  public static getInstance(): ProfileORM &#123;
+    if (!ProfileORM.instance) &#123;
+      ProfileORM.instance = new ProfileORM();
+    &#125;
+    return ProfileORM.instance;
+  &#125;
+  
+  // Métodos específicos para perfiles
+  
+  /**
+   * Encuentra perfiles por nombre con coincidencia parcial o exacta
+   * @param name Nombre a buscar
+   * @param options Opciones de búsqueda 
+   * @returns Lista de perfiles que coinciden
+   */
+  async findByName(name: string, options: &#123; exactMatch?: boolean &#125; = &#123;&#125;): Promise&lt;Profile[]&gt; &#123;
+    const &#123; exactMatch = false &#125; = options;
+    
+    // Si es búsqueda exacta, usar findByField
+    if (exactMatch) &#123;
+      return this.findByField('basics.name', name, &#123; 
+        useIndex: true,
+        exactMatch: true
+      &#125;);
+    &#125;
+    
+    // Para búsqueda parcial, cargar todos los perfiles y filtrar
+    const profiles = await this.findAll();
+    return profiles.filter(profile => 
+      profile.basics && 
+      profile.basics.name && 
+      profile.basics.name.toLowerCase().includes(name.toLowerCase())
+    );
+  &#125;
+  
+  /**
+   * Obtiene estadísticas sobre los perfiles
+   * @returns Estadísticas de perfiles
+   */
+  async getStats(): Promise&lt;&#123;
+    totalProfiles: number;
+    totalSkills: number;
+    totalProjects: number;
+    featuredProjects: number;
+    skillsByType: Record&lt;string, number&gt;;
+  &#125;&gt; &#123;
+    // Implementación de estadísticas
+  &#125;
+&#125;</pre>
+          </div>
+          
+          <div class="mb-6">
+            <p class="font-bold mb-3 text-lg">Pruebas avanzadas para ProfileORM:</p>
+            <pre class="text-xs bg-gray-100 p-4 rounded overflow-x-auto">
+// Tests para funcionalidades específicas de ProfileORM
+describe('findByName()', () => &#123;
+  it('debe encontrar perfiles por nombre con coincidencia exacta', async () => &#123;
+    const result = await profileORM.findByName('Test', &#123; exactMatch: true &#125;);
+    
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe('testuser');
+    expect(result[0].basics.name).toBe('Test');
+  &#125;);
+  
+  it('debe encontrar perfiles por nombre con coincidencia parcial', async () => &#123;
+    const result = await profileORM.findByName('Test', &#123; exactMatch: false &#125;);
+    
+    expect(result).toHaveLength(2);
+    expect(result[0].id).toBe('testuser');
+    expect(result[1].id).toBe('anothertest');
+  &#125;);
+&#125;);</pre>
+          </div>
+          
+          <div class="mb-6 bg-green-50 p-5 rounded-lg border border-green-200">
+            <p class="font-bold mb-3 text-lg text-green-800">Resultado de todas las pruebas:</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
+              <img src="/images/pa3/test_all_passing.png" alt="Todas las pruebas pasando" class="w-full">
+            </div>
+            <p class="text-green-700">
+              Tras completar la implementación y resolver todos los problemas, todas las pruebas pasan exitosamente.
+              Esto confirma que nuestro ORM funciona correctamente y cumple con los requisitos establecidos.
+            </p>
+          </div>
+          
+          <p class="mt-5">La implementación completa de nuestro ORM incluye:</p>
+          <ul class="list-disc pl-8 mb-4 mt-3 space-y-2">
+            <li><strong>Operaciones CRUD completas:</strong> Create, Read, Update, Delete para entidades JSON</li>
+            <li><strong>Sistema de indexación:</strong> Optimiza búsquedas por campos frecuentes</li>
+            <li><strong>Validación robusta:</strong> Validación de datos específica para cada tipo de entidad</li>
+            <li><strong>Manejo de errores centralizado:</strong> Clase AppError para gestión consistente de errores</li>
+            <li><strong>Patrón Singleton:</strong> Evita instancias múltiples y optimiza recursos</li>
+            <li><strong>Consultas avanzadas:</strong> Filtrado, ordenamiento, paginación y búsqueda por campos específicos</li>
+            <li><strong>Estadísticas y análisis:</strong> Métodos para obtener información agregada sobre las entidades</li>
           </ul>
         </div>
       </div>
@@ -199,10 +396,57 @@ const progreso = [
         </div>
         
         <div class="mb-6">
-          <p class="font-bold mb-3 text-lg">Implementación de ProfileORM:</p>
-          <div class="border border-gray-300 rounded-lg overflow-hidden">
-            <img src="../../public/images/pa3/profileorm_implementacion.png" alt="Implementación de ProfileORM" class="w-full">
-          </div>
+          <p class="font-bold mb-3 text-lg">Servicio de perfiles actualizado:</p>
+          <pre class="text-xs bg-gray-100 p-4 rounded overflow-x-auto">
+// src/services/profileService.ts
+import type &#123; Profile, ProfileModule, Project, ProjectWithAuthor &#125; from '../types';
+import &#123; ProfileORM &#125; from '../lib/orm/ProfileORM';
+import path from 'path';
+
+/**
+ * Singleton para ProfileORM
+ * Usamos una variable privada para mantener la instancia
+ */
+let _profileORM: ProfileORM | null = null;
+
+/**
+ * Obtiene la instancia de ProfileORM
+ * @returns Instancia de ProfileORM
+ */
+function getProfileORM(): ProfileORM &#123;
+  if (!_profileORM) &#123;
+    _profileORM = new ProfileORM(path.join(process.cwd(), 'src/data/profiles'));
+  &#125;
+  return _profileORM;
+&#125;
+
+/**
+ * Obtiene todos los perfiles disponibles
+ * @param options Opciones para la consulta
+ * @returns Lista de perfiles
+ */
+export async function getProfiles(options: &#123;
+  sort?: &#123; field: string, order: 'asc' | 'desc' &#125;,
+  limit?: number,
+  offset?: number,
+  useCache?: boolean
+&#125; = &#123;&#125;): Promise&lt;Profile[]&gt; &#123;
+  try &#123;
+    // Si estamos en un entorno de navegador donde fs no está disponible,
+    // usamos el método original con import.meta.glob
+    if (typeof window !== 'undefined') &#123;
+      const profilesFiles = import.meta.glob&lt;ProfileModule&gt;('../data/profiles/*.json', &#123; eager: true &#125;);
+      return Object.values(profilesFiles).map(profile => profile.default);
+    &#125;
+    
+    // En el servidor, usamos ProfileORM
+    const profileORM = getProfileORM();
+    return profileORM.findAll(options);
+  &#125; catch (error) &#123;
+    console.error('Error cargando perfiles:', error);
+    return [];
+  &#125;
+&#125;</pre>
         </div>
         
         <p class="mb-4">Esta implementación nos permite manejar los perfiles de manera estructurada y eficiente, abriendo la puerta a futuras mejoras como:</p>
@@ -212,6 +456,194 @@ const progreso = [
           <li>Validación más exhaustiva</li>
           <li>Migración potencial a una base de datos real sin cambiar la API</li>
         </ul>
+      </div>
+    </section>
+    
+    <section id="capacidades-orm" class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">¿Qué podemos hacer con nuestro ORM?</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p class="mb-4">
+          Nuestra implementación ORM ofrece numerosas capacidades que mejoran significativamente
+          la forma en que trabajamos con los datos en el proyecto. A continuación se detallan las principales
+          operaciones que podemos realizar:
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+          <div class="bg-indigo-50 p-5 rounded-lg shadow-sm">
+            <h3 class="font-bold text-lg mb-3 text-indigo-700">1. Operaciones CRUD completas</h3>
+            <ul class="list-disc pl-5 space-y-1">
+              <li><strong>Crear:</strong> <code>profileORM.save(newProfile)</code></li>
+              <li><strong>Leer:</strong> <code>profileORM.findById('123')</code></li>
+              <li><strong>Actualizar:</strong> <code>profileORM.update('123', &#123; updates &#125;)</code></li>
+              <li><strong>Eliminar:</strong> <code>profileORM.delete('123')</code></li>
+            </ul>
+          </div>
+          
+          <div class="bg-indigo-50 p-5 rounded-lg shadow-sm">
+            <h3 class="font-bold text-lg mb-3 text-indigo-700">2. Búsquedas avanzadas</h3>
+            <ul class="list-disc pl-5 space-y-1">
+              <li><strong>Por nombre:</strong> <code>profileORM.findByName('Juan')</code></li>
+              <li><strong>Por habilidad:</strong> <code>profileORM.findBySkill('JavaScript')</code></li>
+              <li><strong>Por tipo de habilidad:</strong> <code>profileORM.findBySkillType('hard')</code></li>
+              <li><strong>Por país:</strong> <code>profileORM.findByCountry('Peru')</code></li>
+            </ul>
+          </div>
+          
+          <div class="bg-indigo-50 p-5 rounded-lg shadow-sm">
+            <h3 class="font-bold text-lg mb-3 text-indigo-700">3. Gestión de habilidades y proyectos</h3>
+            <ul class="list-disc pl-5 space-y-1">
+              <li><strong>Añadir habilidad:</strong> <code>profileORM.addSkill('123', newSkill)</code></li>
+              <li><strong>Quitar habilidad:</strong> <code>profileORM.removeSkill('123', 'JavaScript')</code></li>
+              <li><strong>Añadir proyecto:</strong> <code>profileORM.addProject('123', newProject)</code></li>
+              <li><strong>Quitar proyecto:</strong> <code>profileORM.removeProject('123', 'Proyecto A')</code></li>
+            </ul>
+          </div>
+          
+          <div class="bg-indigo-50 p-5 rounded-lg shadow-sm">
+            <h3 class="font-bold text-lg mb-3 text-indigo-700">4. Consultas y estadísticas</h3>
+            <ul class="list-disc pl-5 space-y-1">
+              <li><strong>Proyectos destacados:</strong> <code>profileORM.getFeaturedProjects()</code></li>
+              <li><strong>Estadísticas:</strong> <code>profileORM.getStats()</code></li>
+              <li><strong>Filtrado avanzado:</strong> <code>profileORM.findAll(&#123; filter: f => f.skills.length > 2 &#125;)</code></li>
+              <li><strong>Conteo:</strong> <code>profileORM.count()</code></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="mt-6 mb-4">
+          <h3 class="text-xl font-bold mb-4 text-indigo-700">Comparación: Antes vs Después</h3>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-red-50 p-5 rounded-lg shadow-sm">
+              <h4 class="font-bold mb-3">ANTES:</h4>
+              <pre class="text-xs bg-white p-3 rounded mb-3">
+export async function getProfiles(): Promise&lt;Profile[]&gt; &#123;
+  try &#123;
+    const profilesFiles = import.meta.glob&lt;ProfileModule&gt;(
+      '../data/profiles/*.json', 
+      &#123; eager: true &#125;
+    );
+    return Object.values(profilesFiles)
+      .map(profile => profile.default);
+  &#125; catch (error) &#123;
+    console.error('Error cargando perfiles:', error);
+    return [];
+  &#125;
+&#125;</pre>
+              <p class="text-sm">
+                Un único método simple, sin capacidad de filtrado,
+                ordenamiento o manipulación de datos. Sin validación
+                ni manejo robusto de errores.
+              </p>
+            </div>
+            
+            <div class="bg-green-50 p-5 rounded-lg shadow-sm">
+              <h4 class="font-bold mb-3">DESPUÉS:</h4>
+              <pre class="text-xs bg-white p-3 rounded mb-3">
+// Con ORM podemos hacer:
+const profiles = await profileORM.findAll(&#123;
+  sort: &#123; field: 'basics.name', order: 'asc' &#125;,
+  limit: 5,
+  offset: 10
+&#125;);
+
+const skilledProfiles = await profileORM.findBySkill('React');
+
+const profile = await profileORM.findById('user123');
+profile.skills.push(newSkill);
+await profileORM.save(profile);</pre>
+              <p class="text-sm">
+                Sistema completo con CRUD, búsquedas avanzadas,
+                filtrado, paginación, ordenamiento, validación y 
+                manejo de errores. Optimizado con caché e índices.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-gray-100 p-5 rounded-lg mt-6">
+          <h3 class="text-lg font-bold mb-3">Ventajas principales:</h3>
+          <ul class="list-disc pl-8 space-y-1">
+            <li><strong>Código más limpio y mantenible:</strong> Abstracción que facilita los cambios futuros</li>
+            <li><strong>Mayor robustez:</strong> Validación y manejo de errores integrados</li>
+            <li><strong>Mejor rendimiento:</strong> Sistema de caché e indexación para consultas frecuentes</li>
+            <li><strong>Funcionalidad extendida:</strong> Capacidades CRUD completas y búsquedas avanzadas</li>
+            <li><strong>Compatibilidad:</strong> Funciona tanto en el servidor como en el cliente</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="adaptacion-archivos" class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Adaptación para archivos sin ID</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p class="mb-5">
+          Durante la implementación, identificamos un problema importante: los archivos JSON de perfiles 
+          no contienen un campo ID explícito. Para solucionar este problema, adaptamos nuestro ORM para
+          que pueda trabajar con estos archivos sin modificarlos.
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div class="bg-yellow-50 p-5 rounded-lg shadow-sm">
+            <h3 class="font-bold text-lg mb-3 text-yellow-700">Problema identificado</h3>
+            <p class="mb-3">Los archivos JSON no tienen un campo ID, pero nuestro ORM necesita identificar entidades de forma única.</p>
+            <pre class="text-xs bg-white p-3 rounded">
+// Ejemplo de un perfil sin campo ID:
+&#123;
+  "basics": &#123;
+    "name": "Edwin Wilson",
+    "last_name": "Méndez Echevarría",
+    "label": "Analista de datos...",
+    // ... resto del perfil sin ID
+  &#125;,
+  "skills": [...]
+&#125;</pre>
+          </div>
+          
+          <div class="bg-green-50 p-5 rounded-lg shadow-sm">
+            <h3 class="font-bold text-lg mb-3 text-green-700">Solución implementada</h3>
+            <p class="mb-3">Adaptamos el ORM para usar el nombre del archivo como ID, o generarlo a partir del nombre del perfil.</p>
+            <pre class="text-xs bg-white p-3 rounded">
+// Solución en getEntityId():
+private getEntityId(entity: T, filename?: string): string | null &#123;
+  // Si la entidad tiene un ID, usarlo
+  const id = entity[this.idField];
+  if (id) return String(id);
+  
+  // Si se proporcionó un nombre de archivo, usarlo
+  if (filename) return path.basename(filename, '.json');
+  
+  // Generar ID a partir del nombre
+  if (entity.basics && entity.basics.name) &#123;
+    return entity.basics.name
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+  &#125;
+  
+  return null;
+&#125;</pre>
+          </div>
+        </div>
+        
+        <p class="mb-4">Con esta adaptación, nuestro ORM:</p>
+        <ul class="list-disc pl-8 mb-4 space-y-2">
+          <li>Lee archivos JSON sin campo ID, usando el nombre del archivo como identificador</li>
+          <li>Al guardar un perfil sin ID, genera uno automáticamente a partir del nombre</li>
+          <li>Mantiene la compatibilidad con los archivos existentes sin necesidad de modificarlos</li>
+          <li>Funciona de manera transparente para el resto del código, que no necesita saber cómo se manejan los IDs</li>
+        </ul>
+        
+        <div class="bg-blue-50 p-5 rounded-lg">
+          <h3 class="font-bold text-lg mb-3 text-blue-700">Lección aprendida:</h3>
+          <p>
+            Este desafío nos enseñó la importancia de adaptar nuestras soluciones a los datos existentes, 
+            en lugar de forzar los datos a adaptarse a nuestras soluciones. Aplicando el principio KISS
+            (Keep It Simple, Stupid), logramos una implementación que funciona con los datos tal como están,
+            sin necesidad de migraciones o transformaciones complejas.
+          </p>
+        </div>
       </div>
     </section>
     
@@ -226,33 +658,90 @@ const progreso = [
           <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
             <h3 class="font-bold text-lg mb-3 text-indigo-700">1. Sistema de caché</h3>
             <p class="mb-3">Almacenamos entidades leídas previamente en memoria para reducir accesos a disco:</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="../../public/images/pa3/optimizacion_cache.png" alt="Sistema de caché" class="w-full">
-            </div>
+            <pre class="text-xs bg-gray-100 p-4 rounded overflow-x-auto">
+private cache: Map&lt;string, T&gt; = new Map();
+
+// En findById
+if (useCache && this.cache.has(id)) &#123;
+  return this.cache.get(id) || null;
+&#125;
+
+// Después de leer
+if (useCache) &#123;
+  this.cache.set(id, entity);
+&#125;</pre>
           </div>
           
           <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
             <h3 class="font-bold text-lg mb-3 text-indigo-700">2. Inicialización perezosa</h3>
             <p class="mb-3">Inicializamos recursos solo cuando es necesario:</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="../../public/images/pa3/optimizacion_lazy.png" alt="Inicialización perezosa" class="w-full">
-            </div>
+            <pre class="text-xs bg-gray-100 p-4 rounded overflow-x-auto">
+async initialize(): Promise&lt;void&gt; &#123;
+  if (this.initialized) return;
+  
+  try &#123;
+    await fs.access(this.basePath);
+  &#125; catch (error) &#123;
+    // Directorio no existe, lo creamos
+    await fs.mkdir(this.basePath, &#123; recursive: true &#125;);
+  &#125;
+  
+  this.initialized = true;
+&#125;</pre>
           </div>
           
           <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
-            <h3 class="font-bold text-lg mb-3 text-indigo-700">3. Filtrado eficiente</h3>
-            <p class="mb-3">Implementamos filtros que aprovechan la caché:</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="../../public/images/pa3/optimizacion_filtrado.png" alt="Filtrado eficiente" class="w-full">
-            </div>
+            <h3 class="font-bold text-lg mb-3 text-indigo-700">3. Sistema de indexación</h3>
+            <p class="mb-3">Creamos índices para campos frecuentemente consultados:</p>
+            <pre class="text-xs bg-gray-100 p-4 rounded overflow-x-auto">
+protected async buildIndexes(fields: string[]): Promise&lt;void&gt; &#123;
+  if (this.indexesBuilt) return;
+  
+  const entities = await this.findAll(&#123; useCache: false &#125;);
+  
+  // Inicializar índices
+  fields.forEach(field => &#123;
+    this.indexes.set(field, new Map());
+  &#125;);
+  
+  // Construir índices
+  for (const entity of entities) &#123;
+    const entityId = this.getEntityId(entity);
+    if (!entityId) continue;
+    
+    for (const field of fields) &#123;
+      // Indexar por campo
+    &#125;
+  &#125;
+  
+  this.indexesBuilt = true;
+&#125;</pre>
           </div>
           
           <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
             <h3 class="font-bold text-lg mb-3 text-indigo-700">4. Manejo inteligente de errores</h3>
-            <p class="mb-3">Evitamos que errores puntuales afecten al sistema completo:</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="../../public/images/pa3/optimizacion_errores.png" alt="Manejo de errores" class="w-full">
-            </div>
+            <p class="mb-3">Sistema centralizado de gestión de errores con información específica:</p>
+            <pre class="text-xs bg-gray-100 p-4 rounded overflow-x-auto">
+export class AppError extends Error &#123;
+  /**
+   * Código de error específico
+   */
+  code: ErrorCode;
+  
+  /**
+   * Detalles adicionales sobre el error
+   */
+  details?: Record&lt;string, any&gt;;
+  
+  constructor(code: ErrorCode, message: string, details?: Record&lt;string, any&gt;) &#123;
+    super(message);
+    this.name = 'AppError';
+    this.code = code;
+    this.details = details;
+    
+    Object.setPrototypeOf(this, AppError.prototype);
+  &#125;
+&#125;</pre>
           </div>
         </div>
         
@@ -275,7 +764,7 @@ const progreso = [
         <ul class="list-disc pl-8 mb-6 space-y-2">
           <li><strong class="text-indigo-700">Mayor robustez:</strong> Las pruebas unitarias garantizan que el código funcione como se espera.</li>
           <li><strong class="text-indigo-700">Código más mantenible:</strong> La abstracción proporcionada por el ORM facilita futuros cambios.</li>
-          <li><strong class="text-indigo-700">Mejor rendimiento:</strong> Las optimizaciones como caché reducen la latencia.</li>
+          <li><strong class="text-indigo-700">Mejor rendimiento:</strong> Las optimizaciones como caché e índices reducen la latencia.</li>
           <li><strong class="text-indigo-700">Desarrollo metódico:</strong> El enfoque TDD nos obligó a pensar en la funcionalidad antes de implementarla.</li>
         </ul>
         
@@ -312,6 +801,11 @@ const progreso = [
   img {
     max-width: 100%;
     height: auto;
+  }
+  
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
   
   @media (max-width: 768px) {
