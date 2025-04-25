@@ -1,0 +1,236 @@
+---
+import Layout from '../layouts/MainLayout.astro';
+
+const progreso = [
+  { paso: "Configuración inicial", completado: true },
+  { paso: "Fase RED del BaseORM", completado: false },
+  { paso: "Fase GREEN del BaseORM", completado: false },
+  { paso: "Fase REFACTOR del BaseORM", completado: false },
+  { paso: "Implementación ORM completa", completado: false }
+];
+---
+
+<Layout title="Informe Técnico PA3">
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Informe Técnico - Implementación ORM y TDD</h1>
+    
+    <div class="progress-tracker mb-8">
+      <h2 class="text-xl font-bold mb-4">Progreso del Desarrollo</h2>
+      <div class="steps">
+        {progreso.map((item, index) => (
+          <div class={`step ${item.completado ? 'completed' : 'pending'}`}>
+            <div class="step-number">{index + 1}</div>
+            <div class="step-text">{item.paso}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+    
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4">Introducción</h2>
+      <p class="mb-4">
+        Este informe documenta la implementación de un sistema ORM (Object-Relational Mapping) para 
+        archivos JSON en nuestro proyecto de portafolio grupal, siguiendo la metodología de 
+        Desarrollo Guiado por Pruebas (TDD).
+      </p>
+      <p>
+        El proyecto originalmente utiliza archivos JSON como fuente de datos para mostrar perfiles
+        de integrantes del equipo. Mediante esta implementación, abstraemos el acceso a estos datos
+        siguiendo los principios de ORM y garantizamos su correcto funcionamiento mediante pruebas unitarias.
+      </p>
+    </section>
+    
+    <section class="mb-10">
+      <h2 class="text-2xl font-bold mb-4">Estado Actual</h2>
+      <p class="mb-4">
+        Actualmente, el proyecto utiliza un sistema simple de importación de archivos JSON mediante
+        import.meta.glob para cargar datos de perfiles. Esta implementación funciona pero carece de:
+      </p>
+      <ul class="list-disc pl-6 mb-4">
+        <li>Abstracción para operaciones CRUD</li>
+        <li>Validación de datos consistente</li>
+        <li>Optimización para consultas frecuentes</li>
+        <li>Pruebas unitarias que garanticen su funcionamiento</li>
+      </ul>
+      
+      <div class="code-block mb-4">
+        <p class="font-bold mb-2">Código actual para cargar perfiles:</p>
+        <pre class="overflow-x-auto bg-gray-800 text-white p-4 rounded">export async function getProfiles(): Promise&lt;Profile[]&gt; &#123;
+  try &#123;
+    const profilesFiles = import.meta.glob&lt;ProfileModule&gt;('../data/profiles/*.json', &#123; eager: true &#125;);
+    return Object.values(profilesFiles).map(profile =&gt; profile.default);
+  &#125; catch (error) &#123;
+    console.error('Error cargando perfiles:', error);
+    return [];
+  &#125;
+&#125;</pre>
+      </div>
+    </section>
+    
+    <section id="implementacion-tdd" class="mb-10">
+      <h2 class="text-2xl font-bold mb-4">Implementación con TDD</h2>
+      <p class="mb-4">Seguiremos el proceso de Test-Driven Development (TDD) para la implementación del ORM:</p>
+      
+      <div id="fase-red" class="mb-6">
+        <h3 class="text-xl font-semibold mb-3">Fase RED: Creando pruebas que fallan</h3>
+        <p class="mb-4">En esta fase, escribimos pruebas para funcionalidades que aún no existen.</p>
+        
+        <div class="code-block mb-8">
+          <p class="font-bold mb-2">Prueba inicial para BaseORM:</p>
+          <pre class="overflow-x-auto bg-gray-800 text-white p-4 rounded" style="text-align: left;">// tests/lib/orm/BaseORM.test.ts
+import &#123; describe, it, expect, vi &#125; from 'vitest';
+import fs from 'fs/promises';
+import path from 'path';
+
+// Crear mock para fs/promises
+vi.mock('fs/promises', () =&gt; &#123;
+  readdir: vi.fn(),
+  readFile: vi.fn(),
+  writeFile: vi.fn(),
+  mkdir: vi.fn(),
+  access: vi.fn()
+&#125;);
+
+// Definir interfaz simple para las pruebas
+interface TestEntity &#123;
+  id: string;
+  name: string;
+&#125;
+
+// Este describe falla porque BaseORM aún no existe
+describe('BaseORM', () =&gt; &#123;
+  it('debe crear el directorio si no existe', async () =&gt; &#123;
+    // Intenta importar BaseORM (que no existe, causará error)
+    const &#123; BaseORM &#125; = await import('../../../src/lib/orm/BaseORM');
+    
+    // El resto de la prueba no se ejecutará
+    const testDir = path.join(process.cwd(), 'data/test');
+    const orm = new BaseORM&lt;TestEntity&gt;(testDir);
+    
+    expect(orm).toBeDefined();
+  &#125;);
+&#125;);
+</pre>
+        </div>
+        
+        <!-- Separador visual para forzar espacio -->
+        <div style="height: 2.5rem;"></div>
+        
+        <div class="error-output mb-4 bg-red-100 p-4 rounded">
+          <p class="font-bold text-red-800">Resultado de la prueba (error esperado):</p>
+          <!-- Imagen dentro de un code-block para igualar el ancho y estilo del PRE -->
+          <div class="code-block mb-4">
+            <img src="/public/images/pa3/tdd_fase_red.png" alt="Error al importar BaseORM" class="rounded shadow" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+          </div>
+          <pre class="text-red-800 text-sm overflow-x-auto">Error: Cannot find module '../../../src/lib/orm/BaseORM' from 'tests/lib/orm/BaseORM.test.ts'</pre>
+        </div>
+        
+        <p class="mb-4">Este error es exactamente lo que esperamos en la fase RED del TDD. Estamos intentando probar una clase que aún no existe, lo que confirma que estamos siguiendo correctamente el proceso.</p>
+      </div>
+      
+      <div id="fase-green" class="mb-6 opacity-50">
+        <h3 class="text-xl font-semibold mb-3">Fase GREEN: Implementando código funcional</h3>
+        <p>En esta fase, escribiremos el código mínimo necesario para que las pruebas pasen.</p>
+        <div class="placeholder-image bg-gray-200 h-40 flex items-center justify-center rounded mb-4">
+          <p class="text-gray-500">Captura de pruebas pasando (pendiente)</p>
+        </div>
+      </div>
+      
+      <div id="fase-refactor" class="mb-6 opacity-50">
+        <h3 class="text-xl font-semibold mb-3">Fase REFACTOR: Mejorando el código</h3>
+        <p>En esta fase, mejoraremos el código manteniendo las pruebas pasando.</p>
+        <div class="placeholder-image bg-gray-200 h-40 flex items-center justify-center rounded mb-4">
+          <p class="text-gray-500">Captura de mejoras (pendiente)</p>
+        </div>
+      </div>
+    </section>
+    
+    <section id="orm" class="mb-10 opacity-50">
+      <h2 class="text-2xl font-bold mb-4">Implementación ORM</h2>
+      <p>Contenido pendiente - Se documentará la implementación del ORM</p>
+    </section>
+    
+    <section id="optimizacion" class="mb-10 opacity-50">
+      <h2 class="text-2xl font-bold mb-4">Optimización de Consultas</h2>
+      <p>Contenido pendiente - Se documentarán las optimizaciones implementadas</p>
+    </section>
+    
+    <section id="conclusion" class="mb-10 opacity-50">
+      <h2 class="text-2xl font-bold mb-4">Conclusión</h2>
+      <p>Contenido pendiente - Conclusiones finales del trabajo</p>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  main {
+    font-family: monospace;
+    line-height: 1.6;
+  }
+  
+  .progress-tracker {
+    background-color: #f3f4f6;
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+  
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .step-number {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  
+  .completed .step-number {
+    background-color: green;
+    color: white;
+  }
+  
+  .pending .step-number {
+    background-color: gray;
+    color: white;
+  }
+  
+  .step-text {
+    font-weight: 500;
+  }
+  
+  .completed .step-text {
+    color: green;
+  }
+  
+  .code-block {
+    background-color: #f3f4f6;
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+  
+  pre {
+    overflow-x: auto;
+    font-size: 0.875rem;
+  }
+  
+  .opacity-50 {
+    opacity: 0.5;
+  }
+  
+  .code-block-img {
+    max-width: 100%;
+    height: auto;
+  }
+</style>

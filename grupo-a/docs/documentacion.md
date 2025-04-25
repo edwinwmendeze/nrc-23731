@@ -8,23 +8,23 @@ En la era digital actual, la presencia en línea es fundamental para profesional
 
 ### 1.2 Problema
 
--   Falta de presencia digital profesional unificada para el grupo
--   Dificultad para mostrar tanto el trabajo en equipo como las habilidades individuales
--   Necesidad de un punto central que conecte con los portafolios individuales
--   Desafío de mantener una identidad grupal mientras se destaca el talento individual
--   Dificultad para demostrar trabajo colaborativo y resultados del equipo
--   Limitaciones en la accesibilidad de proyectos web tradicionales
+- Falta de presencia digital profesional unificada para el grupo
+- Dificultad para mostrar tanto el trabajo en equipo como las habilidades individuales
+- Necesidad de un punto central que conecte con los portafolios individuales
+- Desafío de mantener una identidad grupal mientras se destaca el talento individual
+- Dificultad para demostrar trabajo colaborativo y resultados del equipo
+- Limitaciones en la accesibilidad de proyectos web tradicionales
 
 ### 1.3 Solución Propuesta
 
 Desarrollo de un portafolio web grupal utilizando Astro como framework principal, que permite:
 
--   Mostrar información del equipo como unidad
--   Presentar a cada integrante con enlaces a sus portafolios individuales
--   Mantener un diseño responsive y accesible (100/100 en Lighthouse)
--   Implementar buenas prácticas de desarrollo
--   Proporcionar una experiencia de usuario intuitiva
--   Utilizar JSON para la gestión eficiente de los datos de perfiles
+- Mostrar información del equipo como unidad
+- Presentar a cada integrante con enlaces a sus portafolios individuales
+- Mantener un diseño responsive y accesible (100/100 en Lighthouse)
+- Implementar buenas prácticas de desarrollo
+- Proporcionar una experiencia de usuario intuitiva
+- Utilizar JSON para la gestión eficiente de los datos de perfiles
 
 ## 2. Objetivos
 
@@ -82,6 +82,24 @@ Desarrollar un portafolio web grupal que sirva como hub central para presentar a
 - Etiquetas semánticas HTML5
 - Textos alternativos descriptivos para todas las imágenes
 - Variables CSS consistentes para mantener coherencia visual
+
+### 3.5 Características Avanzadas de UX
+
+#### 3.5.1 Tema Oscuro/Claro
+
+- Sistema de cambio de tema con toggle intuitivo
+- Persistencia de preferencia mediante localStorage
+- Detección automática de preferencias del sistema operativo
+- Transiciones suaves entre temas para mejorar la experiencia visual
+- Variables CSS optimizadas para mantener coherencia visual en ambos temas
+
+#### 3.5.2 Botón "Volver Arriba"
+
+- Aparición automática al hacer scroll
+- Animación suave al subir
+- Diseño adaptativo que se ajusta a modo oscuro/claro
+- Optimizado para dispositivos móviles
+- Mejora la navegación en páginas con mucho contenido
 
 ## 4. Tecnologías Utilizadas
 
