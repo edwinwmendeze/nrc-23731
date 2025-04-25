@@ -26,7 +26,7 @@ export interface SocialProfile {
   export interface ProfileBasics {
     name: string;
     last_name: string;
-    label: string;
+    occupation: string;
     image: string | { 
       local?: string; 
       remote?: string;

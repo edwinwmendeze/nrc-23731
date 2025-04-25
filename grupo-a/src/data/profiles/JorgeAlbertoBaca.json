@@ -8,7 +8,7 @@
   "basics": {
       "name": "Jorge Alberto",
       "last_name":"Baca Lipe",
-      "label": "Desarrollador web",
+      "occupation": "Desarrollador web",
       "image": {
         "local": "/images/team/pepe.png",
         "remote": "https://avatars.githubusercontent.com/u/205255421?v=4&size=64"

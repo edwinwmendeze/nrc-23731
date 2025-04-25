@@ -1,0 +1,17 @@
+{
+  "id": "lidiaa",
+  "basics": {
+    "name": "lidiaa",
+    "last_name": "Nuevo",
+    "occupation": "Sin especificar",
+    "email": "",
+    "image": {
+      "local": "/images/placeholder.png"
+    }
+  },
+  "auth": {
+    "username": "lidiaa",
+    "passwordHash": "c2013355990186fcdd90ee8b0abe3912122002615333b89b7d5df13f9b025e26",
+    "lastLogin": "2025-04-25T19:15:55.854Z"
+  }
+}

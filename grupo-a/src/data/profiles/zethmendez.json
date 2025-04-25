@@ -3,7 +3,7 @@
   "basics": {
     "name": "Zeth",
     "last_name": "Mendez",
-    "label": "admin",
+    "occupation": "admin",
     "email": "asdlkj@gmail.com",
     "image": {
       "local": "/images/placeholder.png"

@@ -328,8 +328,8 @@ export class ProfileORM extends BaseORM<Profile> {
       errors.push('El apellido es obligatorio');
     }
     
-    if (!profile.basics.label) {
-      errors.push('El rol/etiqueta es obligatorio');
+    if (!profile.basics.occupation) {
+      errors.push('La ocupación es obligatoria');
     }
     
     // Validar imagen

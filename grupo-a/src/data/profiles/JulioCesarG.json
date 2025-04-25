@@ -8,7 +8,7 @@
   "basics": {
       "name": "Julio César",
       "last_name": "Guillermo Colca",
-      "label": "Jefe de Soporte Técnico y Redes",
+      "occupation": "Jefe de Soporte Técnico y Redes",
       "image": {
           "remote": "https://internetenperu2025.wordpress.com/wp-content/uploads/2025/03/pasaporte-02.jpg"
       },

@@ -8,7 +8,7 @@
   "basics": {
     "name": "Edwin Wilson",
     "last_name": "Méndez Echevarría",
-    "label": "Analista de datos con experiencia en Python y automatización.",
+    "occupation": "Analista de datos con experiencia en Python y automatización.",
     "image": {
       "local": "/images/team/edwin.png",
       "remote": "https://github.com/edwinwmendeze.png"

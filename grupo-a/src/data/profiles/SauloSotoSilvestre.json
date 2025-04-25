@@ -8,7 +8,7 @@
   "basics": {
     "name": "Saulo Jerson",
     "last_name": "Soto Silvestre",
-    "label": "Desarrollador Backend",
+    "occupation": "Desarrollador Backend",
     "image": {
       "local": "/images/team/saulo.png",
         "remote": "https://github.com/Saulo-pj.png"
