@@ -95,7 +95,10 @@ const {
                 )}
                 {profile.basics?.email && (
                   <a href={`mailto:${profile.basics.email}`} title="Enviar correo" class="hover:text-indigo-600 dark:hover:text-indigo-400">
-                    <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 12H8m8 0a4 4 0 11-8 0 4 4 0 018 0zm2 6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h12a2 2 0 012 2v12z"/></svg>
+                    <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+                      <path d="M22 7l-10 5L2 7"></path>
+                    </svg>
                   </a>
                 )}
               </div>
