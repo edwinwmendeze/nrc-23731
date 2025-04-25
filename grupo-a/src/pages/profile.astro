@@ -1,0 +1,81 @@
+---
+export const prerender = false;
+import { AuthService } from '../lib/services/AuthService';
+import { ProfileORM } from '../lib/orm/ProfileORM';
+import MainLayout from '../layouts/MainLayout.astro';
+import '../styles/global.css';
+
+let profile = null;
+let error = '';
+
+const token = Astro.cookies.get('auth_token')?.value;
+if (token) {
+  try {
+    const authService = new AuthService();
+    const verifyResult = await authService.verifyToken(token);
+    if (verifyResult.valid && verifyResult.profileId) {
+      const orm = new ProfileORM();
+      profile = await orm.findById(verifyResult.profileId);
+    } else {
+      error = 'Sesión inválida. Por favor inicia sesión.';
+    }
+  } catch (e) {
+    error = 'Error al cargar el perfil';
+  }
+} else {
+  error = 'No has iniciado sesión.';
+}
+---
+<MainLayout title="Mi Perfil">
+  <section class="max-w-3xl mx-auto mt-24 mb-12">
+    {error && <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4">{error}</div>}
+    {profile && (
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+        <div class="flex flex-col sm:flex-row items-center gap-6 px-8 py-8 border-b border-gray-200 dark:border-gray-700">
+          <img src={profile.basics.image?.remote || profile.basics.image?.local || '/nrc-23731/images/placeholder.png'} alt="Foto de perfil" class="w-28 h-28 rounded-full border-4 border-indigo-100 dark:border-indigo-700 object-cover" />
+          <div class="flex-1 flex flex-col gap-2 items-center sm:items-start">
+            <div class="flex items-center gap-2">
+              <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{profile.basics.name} {profile.basics.last_name}</h2>
+              <span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full ml-2">Activo</span>
+            </div>
+            <p class="text-gray-500 text-sm">{profile.basics.email}</p>
+            <button class="mt-2 px-4 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition text-sm font-medium">Editar perfil</button>
+          </div>
+        </div>
+        <div class="px-8 py-6 flex flex-col gap-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <div class="text-xs text-gray-500 mb-1">Teléfono</div>
+              <div class="font-medium text-gray-900 dark:text-white">{profile.basics.phone || '-'}</div>
+            </div>
+            <div>
+              <div class="text-xs text-gray-500 mb-1">Ciudad</div>
+              <div class="font-medium text-gray-900 dark:text-white">{profile.basics.location?.city || '-'}, {profile.basics.location?.region || '-'}</div>
+            </div>
+            <div>
+              <div class="text-xs text-gray-500 mb-1">Ocupación</div>
+              <div class="font-medium text-gray-900 dark:text-white">{profile.basics.occupation || '-'}</div>
+            </div>
+            <div>
+              <div class="text-xs text-gray-500 mb-1">Enlace personal</div>
+              <a href={profile.basics.url} target="_blank" class="text-indigo-600 hover:underline text-sm">{profile.basics.url}</a>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-4 mt-2">
+            {profile.basics.profiles && profile.basics.profiles.map((net) => (
+              <a href={net.url} target="_blank" class="bg-gray-100 dark:bg-gray-700 hover:bg-indigo-100 dark:hover:bg-indigo-600 p-2 rounded-full transition flex items-center gap-1 text-indigo-700 dark:text-indigo-300 text-sm font-semibold" rel="noopener noreferrer" title={net.network}>
+                <span>{net.network}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+        <div class="bg-gray-50 dark:bg-gray-900 px-8 py-6 border-t border-gray-200 dark:border-gray-700 flex flex-col gap-4">
+          <div class="flex flex-col gap-2 sm:flex-row sm:gap-6">
+            <button class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition text-sm font-medium">Cambiar contraseña</button>
+            <button class="flex-1 px-4 py-2 bg-red-100 dark:bg-red-700 text-red-700 dark:text-white rounded hover:bg-red-200 dark:hover:bg-red-600 transition text-sm font-medium">Cerrar sesión</button>
+          </div>
+        </div>
+      </div>
+    )}
+  </section>
+</MainLayout>

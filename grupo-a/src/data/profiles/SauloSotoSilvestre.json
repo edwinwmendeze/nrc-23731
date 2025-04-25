@@ -10,8 +10,7 @@
     "last_name": "Soto Silvestre",
     "occupation": "Desarrollador Backend",
     "image": {
-      "local": "/images/team/saulo.png",
-        "remote": "https://github.com/Saulo-pj.png"
+      "remote": "https://github.com/Saulo-pj.png"
       },
       "email": "71840465@continental.edu.pe",
       "phone": "(51) 923-976-503",
