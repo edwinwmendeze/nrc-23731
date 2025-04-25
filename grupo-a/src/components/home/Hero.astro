@@ -1,140 +1,58 @@
 ---
-// src/components/home/Hero.astro
 import Button from '../ui/Button.astro';
-import siteConfig from '../../data/config/site.json'; // Importar la configuración
+import siteConfig from '../../data/config/site.json';
 
-// Extraer datos relevantes del JSON
 const teamName = siteConfig.team.name;
-const siteDescription = siteConfig.site.description; // Descripción general del sitio/portafolio
-const teamDescription = siteConfig.team.description; // Descripción específica del equipo
+const siteDescription = siteConfig.site.description;
+const teamDescription = siteConfig.team.description;
 ---
 
-<section class="hero" id="inicio">
-  {/* Añadido id para navegación si es necesario */}
-  <div class="container">
-    <div class="hero-content">
-      <h1 class="title">{teamName}</h1>
-      {/* Usar la descripción del sitio como subtítulo principal */}
-      <p class="subtitle">{siteDescription}</p>
-      {/* Añadir la descripción del equipo para un poco más de contexto */}
-      <p class="description">{teamDescription}</p>
-      <div class="actions">
-        <Button href="#integrantes" variant="primary">Conoce al equipo</Button>
-        <Button href="#proyectos" variant="primary">Ver Proyectos</Button>
-        {/* Cambiado a secondary para contraste */}
+<section 
+  id="inicio" 
+  class="relative py-24 md:py-36 flex items-center min-h-[80vh] overflow-hidden bg-gray-50 dark:bg-gray-900"
+>
+  <!-- Fondo con patrón geométrico para modo claro y oscuro -->
+  <div class="absolute inset-0 z-0 opacity-10 dark:opacity-20">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+      <rect class="text-indigo-500 dark:text-indigo-400" fill="currentColor" width="800" height="800"/>
+      <g fill="none" stroke="white" stroke-width="1">
+        <path d="M769 229L1037 260.9M927 880L731 737 520 660 309 538 40 599 295 764 126.5 879.5 40 599-197 493 102 382-31 229 126.5 79.5-69-63"/>
+        <path d="M-31 229L237 261 390 382 731 737M520 660L309 538 40 599 295 764 126.5 879.5 40 599-197 493 102 382-31 229 126.5 79.5-69-63"/>
+        <path d="M520 660L309 538 295 764 731 737M520 660L309 538 40 599M520 660L309 538M520 660L126.5 879.5M520 660L731 737M520 660L520 660"/>
+        <path d="M520 660L520 660 520 660M520 660L520 660M520 660L520 660M520 660L520 660"/>
+      </g>
+    </svg>
+  </div>
+  
+  <!-- Overlay de color para dar profundidad -->
+  <div class="absolute inset-0 z-0 bg-gradient-to-br from-indigo-500/30 to-purple-600/30 dark:from-indigo-900/50 dark:to-purple-900/50"></div>
+  
+  <!-- Contenido principal -->
+  <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
+    <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-8 md:p-12 rounded-2xl shadow-xl">
+      <h1 class="text-5xl md:text-6xl font-bold mb-4 text-indigo-700 dark:text-indigo-400">{teamName}</h1>
+      <p class="text-xl md:text-2xl font-medium mb-3 text-gray-800 dark:text-gray-200">{siteDescription}</p>
+      <p class="text-base md:text-lg mb-8 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">{teamDescription}</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button 
+          href="#integrantes" 
+          variant="primary" 
+          class="px-8 py-3 text-lg font-semibold shadow-md hover:scale-105 transition-transform bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-600"
+        >
+          Conoce al equipo
+        </Button>
+        <Button 
+          href="#proyectos" 
+          variant="secondary" 
+          class="px-8 py-3 text-lg font-semibold shadow-md hover:scale-105 transition-transform bg-white text-indigo-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-indigo-300 dark:hover:bg-gray-600"
+        >
+          Ver Proyectos
+        </Button>
       </div>
     </div>
   </div>
+  
+  <!-- Decoración adicional: círculos flotantes -->
+  <div class="absolute top-20 left-10 w-20 h-20 bg-indigo-500/20 dark:bg-indigo-400/10 rounded-full blur-xl"></div>
+  <div class="absolute bottom-20 right-10 w-32 h-32 bg-purple-500/20 dark:bg-purple-400/10 rounded-full blur-xl"></div>
 </section>
-
-<style>
-  .hero {
-    padding: var(--space-xl) 0; /* Un poco más de espacio vertical */
-    display: flex;
-    align-items: center;
-    min-height: 80vh; /* Ajustar según sea necesario */
-    /* Considera un fondo sutil si quieres diferenciarlo un poco */
-    /* background-color: var(--color-background-alt); */
-  }
-
-  .hero-content {
-    max-width: 800px;
-    /* Centrar el texto si prefieres */
-    text-align: center;
-    margin: 0 auto; /* Asegura centrado horizontal si text-align está activo */
-  }
-
-  .title {
-    font-size: clamp(2.8rem, 6vw, 4rem); /* Tamaño de fuente responsive */
-    color: var(--color-heading);
-    margin-bottom: var(--space-xs);
-    line-height: 1.2;
-  }
-
-  .subtitle {
-    font-size: clamp(1.2rem, 3vw, 1.6rem); /* Tamaño de fuente responsive */
-    color: var(--color-text);
-    margin-bottom: var(--space-sm);
-    opacity: 0.9;
-    max-width: 650px; /* Limitar ancho para legibilidad */
-    margin-left: auto; /* Centrar si text-align no está activo */
-    margin-right: auto; /* Centrar si text-align no está activo */
-  }
-
-  .description {
-    /* Estilo para la nueva descripción del equipo */
-    font-size: var(--font-size-base); /* Tamaño base */
-    color: var(--color-text-muted); /* Un color más suave */
-    margin-bottom: var(--space-lg); /* Espacio antes de los botones */
-    max-width: 600px; /* Limitar ancho */
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .actions {
-    display: flex;
-    gap: var(--space-md); /* Espacio entre botones */
-    justify-content: center; /* Centrar botones horizontalmente */
-    flex-wrap: wrap; /* Permitir que los botones se envuelvan */
-  }
-
-  /* Ajustes para pantallas más pequeñas */
-  @media (max-width: 768px) {
-    .hero {
-      padding: var(--space-lg) 0;
-      min-height: 70vh;
-    }
-    .title {
-      font-size: 2.5rem;
-    }
-    .subtitle {
-      font-size: 1.1rem;
-    }
-    .description {
-      font-size: var(--font-size-sm);
-    }
-  }
-  @media (max-width: 480px) {
-    .actions {
-      flex-direction: column; /* Apilar botones */
-      align-items: center;
-      gap: var(--space-sm);
-    }
-    /* Estilo global para los botones dentro de actions en pantallas pequeñas */
-    .actions :global(.button) {
-      width: 80%;
-      max-width: 280px;
-    }
-  }
-  .title {
-    font-size: clamp(2.8rem, 6vw, 4rem);
-    /* Cambia esto: */
-    /* color: var(--color-heading); */
-    /* Por esto: */
-    color: var(--color-gray-900);
-    margin-bottom: var(--space-xs);
-    line-height: 1.2;
-  }
-
-  .subtitle {
-    font-size: clamp(1.2rem, 3vw, 1.6rem);
-    color: var(--color-text);
-    margin-bottom: var(--space-sm);
-    opacity: 0.9;
-    max-width: 650px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .description {
-    font-size: var(--font-size-base);
-    /* Cambia esto: */
-    /* color: var(--color-text-muted); */
-    /* Por esto: */
-    color: var(--color-text-light);
-    margin-bottom: var(--space-lg);
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-</style>

@@ -1,17 +1,23 @@
 ---
-// src/components/ui/ThemeToggle.astro
+// src/components/featured/theme/ThemeToggle.astro
 ---
 
-<button id="theme-toggle" aria-label="Cambiar tema" class="theme-toggle">
+<button
+  id="theme-toggle"
+  type="button"
+  class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+  aria-label="Cambiar tema"
+>
+  <!-- Icono de sol (visible en modo claro) -->
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    class="icon sun"
-    width="24"
-    height="24"
+    class="w-5 h-5 block dark:hidden"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
     stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
   >
     <circle cx="12" cy="12" r="5"></circle>
     <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -23,104 +29,46 @@
     <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
     <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
   </svg>
-
+  
+  <!-- Icono de luna (visible en modo oscuro) -->
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    class="icon moon"
-    width="24"
-    height="24"
+    class="w-5 h-5 hidden dark:block"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
     stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
   >
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
   </svg>
 </button>
 
-<script>
-  // Script para manejar el cambio de tema
+<script is:inline>
+  // Script para modo oscuro en Tailwind v4
   document.addEventListener('DOMContentLoaded', () => {
+    // Aplicar tema inicial basado en localStorage o preferencia del sistema
+    document.documentElement.classList.toggle(
+      'dark',
+      localStorage.theme === 'dark' || 
+      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    );
+    
+    // Configurar el toggle
     const themeToggle = document.getElementById('theme-toggle');
-
-    // Verificar el tema actual al cargar
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    updateToggleAppearance(currentTheme);
-
-    // Función para actualizar la apariencia del botón
-    function updateToggleAppearance(theme) {
-      if (theme === 'dark') {
-        themeToggle?.classList.add('dark-mode');
-      } else {
-        themeToggle?.classList.remove('dark-mode');
-      }
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        // Alternar la clase dark en el elemento html
+        document.documentElement.classList.toggle('dark');
+        
+        // Guardar preferencia en localStorage
+        if (document.documentElement.classList.contains('dark')) {
+          localStorage.theme = 'dark';
+        } else {
+          localStorage.theme = 'light';
+        }
+      });
     }
-
-    // Toggle de tema al hacer clic
-    themeToggle?.addEventListener('click', () => {
-      // Obtener el tema actual y cambiarlo
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-
-      // Aplicar el nuevo tema
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-
-      // Actualizar apariencia del botón
-      updateToggleAppearance(newTheme);
-
-      console.log('Tema cambiado a:', newTheme); // Para depuración
-    });
   });
 </script>
-
-<style>
-  .theme-toggle {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    color: var(--color-text);
-  }
-
-  .theme-toggle:hover {
-    background-color: var(--color-surface);
-  }
-
-  .icon {
-    position: absolute;
-    transition:
-      transform 0.3s ease,
-      opacity 0.3s ease;
-  }
-
-  /* Por defecto en modo claro */
-  .sun {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-
-  .moon {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  /* Cuando está en modo oscuro */
-  .theme-toggle.dark-mode .sun {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .theme-toggle.dark-mode .moon {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-</style>
