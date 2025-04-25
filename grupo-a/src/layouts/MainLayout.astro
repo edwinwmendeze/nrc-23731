@@ -1,7 +1,6 @@
 ---
 // src/layouts/MainLayout.astro
 import '../styles/global.css';
-import '../styles/theme.css'; // Si lo creaste como archivo separado
 
 import ThemeToggle from '../components/featured/theme/ThemeToggle.astro';
 
@@ -40,63 +39,28 @@ const finalDescription = description || siteDefaultDescription;
     <title>{finalTitle}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/meslo.min.css" />
   </head>
-  <body>
+  <body class="bg-gray-50 dark:bg-gray-900 min-h-screen flex flex-col">
     <ErrorBoundary fallback="Ocurrió un error al cargar la aplicación. Intente recargar la página.">
-      <header class="site-header" id="site-header">
-        <div class="header-container">
-          <nav class="nav">
-            <span class="logo" style="cursor: default;">{teamNameGlobal}</span>
-
-            <div class="nav-controls">
-              <!-- Agregar el toggle de tema en la navegación -->
-              <ThemeToggle />
-
-              <button class="menu-toggle" aria-label="Abrir menú">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-              </button>
-            </div>
-
-            <div class="nav-links">
-              <a href="#integrantes">Integrantes</a>
-              <a href="#proyectos">Proyectos</a>
-            </div>
-          </nav>
+      <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-white/80 dark:bg-gray-900/80 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/60 supports-[backdrop-filter]:backdrop-blur-md flex items-center justify-between px-6 py-3">
+        <span class="text-2xl font-bold text-indigo-700 dark:text-white cursor-default">{teamNameGlobal}</span>
+        <nav class="flex gap-8">
+          <a href="#integrantes" class="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition font-medium">Integrantes</a>
+          <a href="#proyectos" class="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition font-medium">Proyectos</a>
+        </nav>
+        <div class="flex items-center gap-4">
+          <ThemeToggle />
         </div>
       </header>
-
-      <main class="site-content">
+      <main class="flex-1 pt-24 px-4 py-8">
         <slot />
       </main>
-
       <BackToTop />
-      <footer class="site-footer">
-        <div class="footer-container">
-          <p>
-            &copy; {new Date().getFullYear()}
-            {teamNameGlobal} - NRC-23731. Derechos reservados.
-          </p>
-        </div>
+      <footer class="w-full py-4 px-6 bg-gray-100 dark:bg-gray-800 text-center text-gray-500 text-sm">
+        <p>
+          &copy; {new Date().getFullYear()} {teamNameGlobal} - NRC-23731. Derechos reservados.
+        </p>
       </footer>
     </ErrorBoundary>
-
-    <div class="mobile-menu">
-      <div class="mobile-menu-header">
-        <span class="logo" style="cursor: default;">{teamNameGlobal}</span>
-        <div class="mobile-menu-controls">
-          <ThemeToggle />
-          <button class="close-menu" aria-label="Cerrar menú">✕</button>
-        </div>
-      </div>
-      <div class="mobile-nav-links">
-        <a href="#integrantes">Integrantes</a>
-        <a href="#proyectos">Proyectos</a>
-      </div>
-    </div>
-
-    <div class="mobile-overlay"></div>
-
     <script>
       // Aplicar tema guardado inmediatamente para evitar parpadeo
       const savedTheme = localStorage.getItem('theme');
@@ -166,283 +130,5 @@ const finalDescription = description || siteDefaultDescription;
         });
       });
     </script>
-
-    <style>
-      /* Reset global */
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        overflow-x: hidden;
-      }
-
-      body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        font-family:
-          system-ui,
-          -apple-system,
-          BlinkMacSystemFont,
-          'Segoe UI',
-          Roboto,
-          Oxygen,
-          Ubuntu,
-          Cantarell,
-          'Open Sans',
-          'Helvetica Neue',
-          sans-serif;
-      }
-
-      /* Header */
-      .site-header {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 100;
-        background-color: var(--color-bg);
-        backdrop-filter: blur(0px);
-        -webkit-backdrop-filter: blur(0px);
-        border-bottom: 1px solid var(--color-border, #e2e8f0);
-        padding: 1rem 0;
-        transition: all 0.3s ease;
-      }
-
-      .site-header.scrolled {
-        background-color: rgba(var(--color-bg-rgb, 255, 255, 255), 0.85);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        box-shadow:
-          0 4px 6px -1px rgba(0, 0, 0, 0.1),
-          0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      }
-
-      .header-container {
-        max-width: var(--container-width, 1200px);
-        margin: 0 auto;
-        padding: 0 2rem;
-        width: 100%;
-      }
-
-      .nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .logo {
-        font-weight: 700;
-        font-size: 1.25rem;
-        color: var(--color-heading, #1a202c);
-        text-decoration: none;
-        z-index: 150;
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 2rem;
-      }
-
-      .nav-links a {
-        text-decoration: none;
-        color: var(--color-text, #4a5568);
-        font-weight: 500;
-        transition: color 0.2s;
-      }
-
-      .nav-links a:hover {
-        color: var(--color-accent, #4f46e5);
-      }
-
-      /* Mobile Menu */
-      .menu-toggle {
-        display: none;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        z-index: 150;
-      }
-
-      .bar {
-        display: block;
-        width: 25px;
-        height: 3px;
-        margin: 5px auto;
-        background-color: var(--color-text, #4a5568);
-        transition: all 0.3s ease-in-out;
-      }
-
-      .mobile-menu {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 80%;
-        height: 100vh;
-        background-color: white;
-        z-index: 200;
-        transition: right 0.3s ease;
-        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-        padding: 2rem;
-        overflow-y: auto;
-      }
-
-      .mobile-menu.active {
-        right: 0;
-      }
-
-      .mobile-menu-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 2rem;
-      }
-
-      .close-menu {
-        background: transparent;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: var(--color-text, #4a5568);
-      }
-
-      .mobile-nav-links {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-      }
-
-      .mobile-nav-links a {
-        font-size: 1.2rem;
-        text-decoration: none;
-        color: var(--color-text, #4a5568);
-        padding: 0.5rem 0;
-        border-bottom: 1px solid var(--color-border, #e2e8f0);
-      }
-
-      .mobile-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 190;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease;
-      }
-
-      .mobile-overlay.active {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      /* Main content */
-      .site-content {
-        flex-grow: 1;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        padding-top: 5rem; /* Agregar espacio para el header fijo */
-      }
-
-      /* Footer */
-      .site-footer {
-        width: 100%;
-        padding: 2rem 0;
-        background-color: var(--color-background, #ffffff);
-        border-top: 1px solid var(--color-border, #e2e8f0);
-      }
-
-      .footer-container {
-        max-width: var(--container-width, 1200px);
-        margin: 0 auto;
-        padding: 0 2rem;
-        text-align: center;
-        color: var(--color-text-light);
-        font-size: 0.875rem;
-      }
-
-      /* Media queries */
-      @media (max-width: 768px) {
-        .nav-links {
-          display: none;
-        }
-
-        .menu-toggle {
-          display: block;
-        }
-
-        .header-container,
-        .footer-container {
-          padding: 0 1.5rem;
-        }
-
-        body.menu-open {
-          overflow: hidden;
-        }
-
-        .menu-toggle.active .bar:nth-child(1) {
-          transform: translateY(8px) rotate(45deg);
-        }
-
-        .menu-toggle.active .bar:nth-child(2) {
-          opacity: 0;
-        }
-
-        .menu-toggle.active .bar:nth-child(3) {
-          transform: translateY(-8px) rotate(-45deg);
-        }
-      }
-
-      @media (max-width: 480px) {
-        .header-container,
-        .footer-container {
-          padding: 0 1rem;
-        }
-
-        .mobile-menu {
-          width: 85%;
-        }
-
-        .site-footer {
-          padding: 1.5rem 0;
-        }
-      }
-      /* Agregar esto para el nuevo nav-controls */
-      .nav-controls {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-
-      /* Ajustar los estilos del menú móvil si es necesario */
-      @media (max-width: 768px) {
-        .nav-links {
-          display: none;
-        }
-
-        .menu-toggle {
-          display: block;
-        }
-
-        /* Asegurar que el toggle siga visible en móvil */
-        .nav-controls {
-          margin-left: auto;
-        }
-      }
-      .nav-controls {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-    </style>
   </body>
 </html>

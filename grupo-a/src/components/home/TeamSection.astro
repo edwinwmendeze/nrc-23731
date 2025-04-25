@@ -25,21 +25,28 @@ try {
   // Continuar con array vacío para evitar fallo de la aplicación
 }
 
-// Funciones auxiliares para procesar imágenes
+// Función mejorada para obtener imagen local y fallback remoto
 function getImageSrc(profile: Profile): string {
   if (!profile.basics?.image) return '';
-  // Verifica si es un objeto y accede a 'local' de forma segura
-  if (typeof profile.basics.image === 'object' && profile.basics.image.local) {
-    // Añadir el prefijo base para GitHub Pages si la ruta es relativa
+  if (typeof profile.basics.image === 'object') {
     const localPath = profile.basics.image.local;
-    if (localPath.startsWith('/')) {
-      // Usar el import.meta.env.BASE_URL para obtener la ruta base de Astro
-      return import.meta.env.BASE_URL + localPath;
+    const remotePath = profile.basics.image.remote;
+    if (localPath) {
+      // Probar si la imagen local existe usando import.meta.glob
+      try {
+        const images = import.meta.glob('/public/images/team/*');
+        // Si existe la local, usarla
+        if (images['/public' + localPath]) {
+          return import.meta.env.BASE_URL + localPath;
+        }
+      } catch {}
     }
-    return localPath;
+    // Si no existe la local, usar la remota
+    if (remotePath) {
+      return remotePath;
+    }
   }
-  // Si es una cadena (o no es objeto pero existe), devuélvela
-  return typeof profile.basics.image === 'string' ? profile.basics.image : ''; 
+  return typeof profile.basics.image === 'string' ? profile.basics.image : '';
 }
 
 function getImageFallback(profile: Profile): string {
@@ -64,146 +71,47 @@ const {
 } = Astro.props;
 ---
 
-<section id="integrantes" class="py-16 bg-white dark:bg-gray-900 w-full">
+<section id="integrantes" class="py-20 bg-gray-50 dark:bg-gray-900 w-full">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">{title}</h2>
-      <div class="h-1 w-16 bg-indigo-600 mx-auto mb-4"></div>
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">{title}</h2>
+      <div class="h-1 w-16 bg-indigo-600 mx-auto mb-4 rounded-full"></div>
       <p class="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">{subtitle}</p>
     </div>
-
     {profiles.length > 0 ? (
-      <div class="relative overflow-hidden">
-        <div class="flex gap-8 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-indigo-500 dark:scrollbar-track-gray-800 dark:scrollbar-thumb-indigo-400 pt-2">
-          {profiles.map((profile) => (
-            <div class="flex-none w-full sm:w-1/2 lg:w-1/3 snap-start scroll-ml-4">
-              <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg dark:shadow-gray-900/30 transition-transform duration-300 hover:-translate-y-2 overflow-hidden h-full flex flex-col">
-                <div class="relative h-48 overflow-hidden">
-                  {(() => {
-                    const basics = profile.basics;
-                    // Check if basics and the image property exist
-                    if (basics && basics.image) {
-                      let imageUrl: string | undefined; // Explicitly type imageUrl
-
-                      // Determine the correct image URL string
-                      if (typeof basics.image === 'string') {
-                        imageUrl = basics.image; 
-                      } else if (typeof basics.image === 'object' && (basics.image.remote || basics.image.local)) {
-                        // Prioritize remote URL, fallback to local
-                        imageUrl = basics.image.remote || getImageSrc(profile);
-                      }
-
-                      // Only render the image if we successfully determined a URL
-                      if (imageUrl) {
-                        const fallbackUrl = getImageFallback(profile) || `${import.meta.env.BASE_URL}/images/default-avatar.svg`; 
-                        const altText = `Foto de ${basics.name || 'miembro del equipo'}`;
-                        
-                        return (
-                          <img 
-                            src={imageUrl}
-                            alt={altText} 
-                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                            data-fallback={fallbackUrl}
-                            onerror={`this.onerror=null; this.src='${fallbackUrl}';`}
-                          />
-                        );
-                      }
-                    } 
-                    
-                    // Render the placeholder if basics, basics.image, or a valid imageUrl is missing
-                    return (
-                      <div class="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                          <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                      </div>
-                    );
-                  })()}
-                </div>
-                
-                <div class="p-6 flex flex-col flex-grow">
-                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-1">
-                    {profile.basics?.name || 'Sin nombre'} 
-                    {profile.basics?.last_name && <span class="font-medium text-gray-700 dark:text-gray-300">{profile.basics.last_name}</span>}
-                  </h3>
-                  
-                  <p class="text-sm text-indigo-600 dark:text-indigo-400 font-medium mb-2">
-                    {profile.basics?.label || 'Miembro del equipo'}
-                  </p>
-                  
-                  <div class="flex items-center gap-4 mb-4 text-sm text-gray-600 dark:text-gray-400">
-                    {profile.basics?.location && (
-                      <p class="flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline">
-                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                          <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
-                        {profile.basics.location.city}, {profile.basics.location.region}
-                      </p>
-                    )}
-                    
-                    {profile.basics?.email && (
-                      <div class="inline-block" data-email={profile.basics.email}>
-                        <a href={`mailto:${profile.basics.email}`} title="Enviar correo" class="text-gray-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400 transition-colors">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                            <polyline points="22,6 12,13 2,6"></polyline>
-                          </svg>
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {profile.basics?.summary && (
-                    <p class="text-sm text-gray-700 dark:text-gray-300 mb-6 line-clamp-3">
-                      {profile.basics.summary}
-                    </p>
-                  )}
-                  
-                  <div class="mt-auto flex items-center justify-between flex-wrap gap-3">
-                    {profile.basics?.profiles && profile.basics.profiles.length > 0 && (
-                      <div class="flex gap-3">
-                        {profile.basics.profiles.map(social => (
-                          <SocialLink 
-                            network={social.network} 
-                            url={social.url} 
-                            username={social.username} 
-                          />
-                        ))}
-                      </div>
-                    )}
-                    
-                    {profile.basics?.url && (
-                      <div class="ml-auto">
-                        <Button href={profile.basics.url} size="sm" variant="primary" target="_blank" rel="noopener">
-                          Ver portafolio
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                </div>
+      <div class="grid gap-8 grid-cols-1 md:grid-cols-3">
+        {profiles.map((profile) => (
+          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 overflow-hidden flex flex-col items-center p-0">
+            <img src={getImageSrc(profile)} alt={profile.basics?.name} class="w-32 h-32 object-cover object-center rounded-2xl mx-auto mt-6 shadow-md border-4 border-white dark:border-gray-900" loading="lazy" />
+            <div class="w-full flex-1 flex flex-col p-6">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">{profile.basics?.name} {profile.basics?.last_name}</h3>
+              <p class="text-gray-700 dark:text-gray-200 text-base font-medium mb-1">{profile.basics?.label}</p>
+              <div class="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-2">
+                {profile.basics?.location?.city && (
+                  <>
+                    <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <span>{profile.basics.location.city}, {profile.basics.location.region}</span>
+                  </>
+                )}
+                {profile.basics?.email && (
+                  <a href={`mailto:${profile.basics.email}`} title="Enviar correo" class="hover:text-indigo-600 dark:hover:text-indigo-400">
+                    <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 12H8m8 0a4 4 0 11-8 0 4 4 0 018 0zm2 6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h12a2 2 0 012 2v12z"/></svg>
+                  </a>
+                )}
               </div>
+              <p class="text-gray-600 dark:text-gray-300 text-sm mb-4 text-left line-clamp-2">{profile.basics?.summary}</p>
+              <div class="flex gap-2 mb-4">
+                {profile.basics?.profiles?.map((social) => (
+                  <SocialLink network={social.network} url={social.url} username={social.username} />
+                ))}
+              </div>
+              <Button href={profile.basics?.url} variant="secondary" class="mt-auto w-full">Ver portafolio</Button>
             </div>
-          ))}
-        </div>
-        
-        <div class="flex justify-center mt-6">
-          <div class="flex gap-2">
-            {profiles.map((_, index) => (
-              <button 
-                class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 opacity-50 transition-opacity duration-300 hover:opacity-100 focus:opacity-100 data-[active=true]:opacity-100 data-[active=true]:bg-indigo-600 dark:data-[active=true]:bg-indigo-400"
-                data-index={index}
-                aria-label={`Ver perfil ${index + 1}`}
-              ></button>
-            ))}
           </div>
-        </div>
+        ))}
       </div>
     ) : (
-      <div class="text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-lg">
-        <p class="text-gray-600 dark:text-gray-400 italic font-medium">No se encontraron perfiles para mostrar.</p>
-      </div>
+      <p class="text-center text-gray-600 dark:text-gray-400 italic my-12">No hay integrantes disponibles actualmente.</p>
     )}
   </div>
 </section>
@@ -236,51 +144,5 @@ const {
         }
       });
     });
-    
-    // Script para manejar los indicadores de dots y el scroll
-    const teamGrid = document.querySelector('.overflow-x-auto');
-    const dots = document.querySelectorAll('[data-index]');
-    
-    if (teamGrid && dots.length > 0) {
-      // Marcar el primer dot como activo inicialmente
-      dots[0].setAttribute('data-active', 'true');
-      
-      // Función para actualizar dots basado en el scroll
-      const updateActiveDot = () => {
-        if (!teamGrid) return;
-        
-        const scrollLeft = teamGrid.scrollLeft;
-        const cardWidth = teamGrid.querySelector('.flex-none')?.clientWidth || 0;
-        const gap = 32; // gap-8 equivale a 2rem o 32px
-        
-        const activeIndex = Math.round(scrollLeft / (cardWidth + gap));
-        
-        dots.forEach((dot, index) => {
-          if (index === activeIndex) {
-            dot.setAttribute('data-active', 'true');
-          } else {
-            dot.setAttribute('data-active', 'false');
-          }
-        });
-      };
-      
-      // Escuchar eventos de scroll
-      teamGrid.addEventListener('scroll', updateActiveDot);
-      
-      // Permitir clic en dots para navegar
-      dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-          if (!teamGrid) return;
-          
-          const cardWidth = teamGrid.querySelector('.flex-none')?.clientWidth || 0;
-          const gap = 32; // gap-8 equivale a 2rem o 32px
-          
-          teamGrid.scrollTo({
-            left: index * (cardWidth + gap),
-            behavior: 'smooth'
-          });
-        });
-      });
-    }
   });
 </script>
