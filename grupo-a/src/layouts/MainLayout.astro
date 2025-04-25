@@ -29,7 +29,7 @@ const finalDescription = description || siteDefaultDescription;
 <html lang="es" class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/nrc-23731/favicon.svg" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0"
@@ -51,17 +51,22 @@ const finalDescription = description || siteDefaultDescription;
   </head>
   <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen flex flex-col">
     <ErrorBoundary fallback="Ocurrió un error al cargar la aplicación. Intente recargar la página.">
-      <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-white/80 dark:bg-gray-900/80 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-gray-900/60 supports-[backdrop-filter]:backdrop-blur-md flex items-center justify-between px-6 py-3">
-        <a href={import.meta.env.BASE_URL} class="text-2xl font-bold text-indigo-700 dark:text-indigo-400 cursor-pointer hover:underline transition-all">
-          {teamNameGlobal}
-        </a>
-        <nav class="flex gap-8">
-          <a href="#integrantes" class="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition font-medium">Integrantes</a>
-          <a href="#proyectos" class="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition font-medium">Proyectos</a>
+      <header class="bg-white dark:bg-gray-900 shadow fixed top-0 left-0 right-0 z-30">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+          <div class="flex items-center gap-4">
+            <span class="text-xl font-bold text-indigo-700 dark:text-indigo-400">{teamNameGlobal}</span>
+          </div>
+          <div class="flex items-center gap-8">
+            <a href="/nrc-23731/" class="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition font-medium">Inicio</a>
+            <a href="/nrc-23731/informe-tecnico-pa3" class="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition font-medium">Informe Técnico</a>
+            <a href="/nrc-23731/login" class="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition font-medium">Iniciar sesión</a>
+            <a href="/nrc-23731/register" class="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition font-medium">Registrarse</a>
+            <a href="/nrc-23731/proyectos" class="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition font-medium">Proyectos</a>
+          </div>
+          <div class="flex items-center gap-4">
+            <ThemeToggle />
+          </div>
         </nav>
-        <div class="flex items-center gap-4">
-          <ThemeToggle />
-        </div>
       </header>
       <main class="flex-1 pt-24 px-4 py-8">
         <slot />

@@ -1,0 +1,64 @@
+---
+export const prerender = false;
+import '../styles/global.css';
+let error = '';
+let success = false;
+
+if (Astro.request.method === 'POST') {
+  console.log('[LOGIN] Método:', Astro.request.method, '| Content-Type:', Astro.request.headers.get('content-type'));
+  try {
+    const form = await Astro.request.formData();
+    const username = typeof form.get('username') === 'string' ? form.get('username') : '';
+    const password = typeof form.get('password') === 'string' ? form.get('password') : '';
+    const testfield = typeof form.get('testfield') === 'string' ? form.get('testfield') : '';
+    console.log('[LOGIN] username recibido:', username, '| password recibido:', password, '| testfield recibido:', testfield);
+    try {
+      const { AuthService } = await import('../lib/services/AuthService');
+      const authService = new AuthService();
+      const result = await authService.login(username, password);
+      console.log('[LOGIN] Resultado de login:', result);
+      if (result.success) {
+        success = true;
+        Astro.cookies.set('auth_token', result.token, { path: '/', httpOnly: true });
+        return Astro.redirect('/nrc-23731/profile');
+      } else {
+        error = result.message || 'Credenciales incorrectas';
+      }
+    } catch (e) {
+      error = 'Error interno al intentar iniciar sesión';
+      console.error('[LOGIN] Error interno:', e);
+    }
+  } catch (e) {
+    error = 'Error procesando el formulario. Verifica que tu navegador envía correctamente los datos.';
+    console.error('[LOGIN] Error al procesar formData:', e);
+  }
+}
+---
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Iniciar Sesión</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body class="bg-gradient-to-br from-indigo-100 via-white to-indigo-200 min-h-screen flex items-center justify-center">
+    <main class="w-full max-w-sm p-8 bg-white rounded-2xl shadow-xl border border-gray-200">
+      <h1 class="text-3xl font-extrabold mb-6 text-center text-indigo-700">Iniciar Sesión</h1>
+      {error && <div class="mb-4 text-red-600 font-semibold bg-red-50 border border-red-200 rounded px-3 py-2 text-center">{error}</div>}
+      <form method="POST" action="/nrc-23731/login" autocomplete="off" class="space-y-5">
+        <input type="hidden" name="testfield" value="testvalue" />
+        <div>
+          <label class="block mb-1 font-semibold text-gray-700" for="username">Usuario</label>
+          <input type="text" id="username" name="username" required class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400 transition" />
+        </div>
+        <div>
+          <label class="block mb-1 font-semibold text-gray-700" for="password">Contraseña</label>
+          <input type="password" id="password" name="password" required class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400 transition" />
+        </div>
+        <button type="submit" class="w-full py-2 px-4 bg-indigo-600 text-white rounded-lg font-bold text-lg hover:bg-indigo-700 transition">Entrar</button>
+      </form>
+      <div class="mt-6 text-center text-sm text-gray-600">
+        ¿No tienes cuenta? <a href="/nrc-23731/register" class="text-indigo-600 hover:underline font-semibold">Regístrate</a>
+      </div>
+    </main>
+  </body>
+</html>

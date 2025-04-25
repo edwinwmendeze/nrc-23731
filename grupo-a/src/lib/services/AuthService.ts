@@ -88,7 +88,7 @@ export class AuthService {
         return {
           success: true,
           profile: {
-            id: 'EdwinMendez',
+            id: 'edwinmendez',
             basics: {
               name: 'Edwin Wilson',
               last_name: 'Méndez Echevarría',
@@ -99,7 +99,7 @@ export class AuthService {
               passwordHash: 'hash-simulado'
             }
           },
-          token: this.generateToken('EdwinMendez')
+          token: this.generateToken('edwinmendez')
         };
       }
       
@@ -296,7 +296,7 @@ export class AuthService {
       if (token && !token.includes('.')) {
         return {
           valid: true,
-          profileId: 'EdwinMendez'
+          profileId: 'edwinmendez'
         };
       }
       
