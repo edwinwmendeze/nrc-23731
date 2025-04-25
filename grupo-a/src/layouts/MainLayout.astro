@@ -42,7 +42,9 @@ const finalDescription = description || siteDefaultDescription;
   <body class="bg-gray-50 dark:bg-gray-900 min-h-screen flex flex-col">
     <ErrorBoundary fallback="Ocurrió un error al cargar la aplicación. Intente recargar la página.">
       <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-white/80 dark:bg-gray-900/80 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/60 supports-[backdrop-filter]:backdrop-blur-md flex items-center justify-between px-6 py-3">
-        <span class="text-2xl font-bold text-indigo-700 dark:text-white cursor-default">{teamNameGlobal}</span>
+        <a href={import.meta.env.BASE_URL} class="text-2xl font-bold text-indigo-700 dark:text-white cursor-pointer hover:underline transition-all">
+          {teamNameGlobal}
+        </a>
         <nav class="flex gap-8">
           <a href="#integrantes" class="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition font-medium">Integrantes</a>
           <a href="#proyectos" class="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition font-medium">Proyectos</a>
