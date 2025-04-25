@@ -1,28 +1,25 @@
 ---
-// src/layouts/MainLayout.astro
+// src/layouts/AdminLayout.astro
 import '../styles/global.css';
-
 import ThemeToggle from '../components/featured/theme/ThemeToggle.astro';
-
-import siteConfig from '../data/config/site.json'; // Importar la configuración
+import siteConfig from '../data/config/site.json';
 import ErrorBoundary from '../components/ui/ErrorBoundary.astro';
 import BackToTop from '../components/featured/BackToTop.astro';
 
 interface Props {
-  title: string; // Mantenemos el título específico de la página
-  description?: string; // Mantenemos la descripción específica de la página
-  teamName?: string;
+  title: string;
+  description?: string;
 }
 
-const { title, description = 'Portafolio del grupo NRC 23731', teamName = 'Grupo A' } = Astro.props;
+const { title, description = 'Panel de administración' } = Astro.props;
 
 // Extraer datos globales del sitio/equipo
-const teamNameGlobal = siteConfig.team.name; // Nombre del equipo para el logo/footer
-const siteDefaultTitle = siteConfig.site.seo.title; // Título por defecto del sitio
-const siteDefaultDescription = siteConfig.site.seo.description; // Descripción por defecto
+const teamNameGlobal = siteConfig.team.name;
+const siteDefaultTitle = siteConfig.site.seo.title;
+const siteDefaultDescription = siteConfig.site.seo.description;
 
-// Usar título/descripción de la página si se proporcionan, si no, usar los por defecto del JSON
-const finalTitle = title || siteDefaultTitle;
+// Usar título/descripción de la página si se proporcionan, si no, usar los por defecto
+const finalTitle = `${title} | Admin`;
 const finalDescription = description || siteDefaultDescription;
 ---
 
@@ -48,29 +45,52 @@ const finalDescription = description || siteDefaultDescription;
           (!localStorage.theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
       );
     </script>
+    
+    <!-- Script para verificar autenticación -->
+    <script>
+      // Verificar si el usuario está autenticado
+      import { isAuthenticated } from '../utils/auth.js';
+      
+      document.addEventListener('DOMContentLoaded', () => {
+        if (!isAuthenticated()) {
+          // Redirigir a la página de login si no está autenticado
+          window.location.href = '/auth/login?redirect=' + encodeURIComponent(window.location.pathname);
+        }
+      });
+    </script>
   </head>
-  <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen flex flex-col">
+  <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen flex flex-col">
     <ErrorBoundary fallback="Ocurrió un error al cargar la aplicación. Intente recargar la página.">
-      <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-white/80 dark:bg-gray-900/80 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-gray-900/60 supports-[backdrop-filter]:backdrop-blur-md flex items-center justify-between px-6 py-3">
-        <a href={import.meta.env.BASE_URL} class="text-2xl font-bold text-indigo-700 dark:text-indigo-400 cursor-pointer hover:underline transition-all">
-          {teamNameGlobal}
-        </a>
-        <nav class="flex gap-8">
-          <a href="#integrantes" class="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition font-medium">Integrantes</a>
-          <a href="#proyectos" class="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition font-medium">Proyectos</a>
-        </nav>
-        <div class="flex items-center gap-4">
-          <a href={`${import.meta.env.BASE_URL}/auth/login`} class="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition font-medium px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md">
-            Iniciar Sesión
+      <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-indigo-600 dark:bg-indigo-800 shadow-md">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+          <a href="/admin/profile" class="text-2xl font-bold text-white cursor-pointer hover:underline transition-all">
+            Panel de Administración
           </a>
-          <ThemeToggle />
+          <nav class="flex gap-8">
+            <a href="/admin/profile" class="text-white hover:text-indigo-200 transition font-medium">
+              Mi Perfil
+            </a>
+            <a href="/admin/edit-profile" class="text-white hover:text-indigo-200 transition font-medium">
+              Editar Perfil
+            </a>
+          </nav>
+          <div class="flex items-center gap-4">
+            <ThemeToggle />
+            <button 
+              id="logoutButton" 
+              class="px-4 py-1 bg-white text-indigo-700 rounded-md hover:bg-indigo-100 transition-colors">
+              Cerrar Sesión
+            </button>
+          </div>
         </div>
       </header>
-      <main class="flex-1 pt-24 px-4 py-8">
+      
+      <main class="flex-1 container mx-auto px-4 pt-24 pb-8 max-w-6xl">
         <slot />
       </main>
-      <footer class="bg-gray-100 dark:bg-gray-800 py-8 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <footer class="bg-gray-200 dark:bg-gray-800 py-6 mt-auto">
+        <div class="container mx-auto px-4">
           <div class="flex flex-col md:flex-row justify-between items-center">
             <div class="mb-4 md:mb-0">
               <p class="text-gray-600 dark:text-gray-300 text-sm">&copy; {new Date().getFullYear()} {teamNameGlobal}. Todos los derechos reservados.</p>
@@ -88,5 +108,20 @@ const finalDescription = description || siteDefaultDescription;
       </footer>
       <BackToTop />
     </ErrorBoundary>
+    
+    <!-- Script para manejar el logout -->
+    <script>
+      import { logout } from '../utils/auth.js';
+      
+      document.addEventListener('DOMContentLoaded', () => {
+        const logoutButton = document.getElementById('logoutButton');
+        
+        if (logoutButton) {
+          logoutButton.addEventListener('click', () => {
+            logout();
+          });
+        }
+      });
+    </script>
   </body>
 </html>

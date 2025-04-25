@@ -1,0 +1,36 @@
+---
+// src/pages/auth/register.astro
+import Layout from '../../layouts/MainLayout.astro';
+import RegisterForm from '../../components/auth/RegisterForm.astro';
+
+// Verificar si el usuario ya está autenticado
+const isAuthenticated = false; // Esto se maneja en el cliente para evitar problemas de hidratación
+---
+
+<Layout title="Registrarse">
+  <main class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+      <div class="text-center">
+        <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-2">
+          Crear una cuenta
+        </h1>
+        <p class="text-gray-600 dark:text-gray-400">
+          Regístrate para administrar tu perfil en el sistema
+        </p>
+      </div>
+      
+      <RegisterForm />
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import { isAuthenticated } from '../../utils/auth.js';
+  
+  // Redireccionar si ya está autenticado
+  document.addEventListener('DOMContentLoaded', () => {
+    if (isAuthenticated()) {
+      window.location.href = '/admin/profile';
+    }
+  });
+</script>

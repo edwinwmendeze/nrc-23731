@@ -1,0 +1,843 @@
+---
+// src/components/admin/ProfileEditor.astro
+// Componente para editar el perfil del usuario
+import SocialLink from '../ui/SocialLink.astro';
+
+const { profile } = Astro.props;
+---
+
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+  <div class="bg-indigo-600 dark:bg-indigo-800 p-6">
+    <h1 class="text-2xl font-bold text-white">Editar Perfil</h1>
+    <p class="text-indigo-100">Actualiza tu información personal y profesional</p>
+  </div>
+  
+  <div class="p-6">
+    <form id="profileForm" class="space-y-8">
+      <!-- Información Básica -->
+      <section>
+        <h2 class="text-xl font-bold mb-4 text-gray-800 dark:text-white border-b pb-2">
+          Información Básica
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Nombre
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={profile.basics.name}
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+              required
+            />
+          </div>
+          
+          <div>
+            <label for="lastName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Apellido
+            </label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={profile.basics.last_name}
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+              required
+            />
+          </div>
+        </div>
+        
+        <div class="mb-6">
+          <label for="label" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Título Profesional
+          </label>
+          <input
+            type="text"
+            id="label"
+            name="label"
+            value={profile.basics.label}
+            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+          />
+        </div>
+        
+        <div class="mb-6">
+          <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Correo Electrónico
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={profile.basics.email}
+            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+            required
+          />
+        </div>
+        
+        <div class="mb-6">
+          <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Teléfono
+          </label>
+          <input
+            type="text"
+            id="phone"
+            name="phone"
+            value={profile.basics.phone}
+            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+          />
+        </div>
+        
+        <div class="mb-6">
+          <label for="summary" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Resumen Profesional
+          </label>
+          <textarea
+            id="summary"
+            name="summary"
+            rows="4"
+            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+          >{profile.basics.summary}</textarea>
+        </div>
+        
+        <!-- Ubicación -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label for="city" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Ciudad
+            </label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              value={profile.basics.location?.city}
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+            />
+          </div>
+          
+          <div>
+            <label for="country" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              País
+            </label>
+            <input
+              type="text"
+              id="country"
+              name="country"
+              value={profile.basics.location?.country}
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+            />
+          </div>
+        </div>
+      </section>
+      
+      <!-- Habilidades -->
+      <section>
+        <h2 class="text-xl font-bold mb-4 text-gray-800 dark:text-white border-b pb-2">
+          Habilidades
+        </h2>
+        
+        <div class="mb-6" id="skills-container">
+          {profile.skills && profile.skills.map((skill, index) => (
+            <div class="skill-item bg-gray-50 dark:bg-gray-700 p-4 rounded-lg mb-4">
+              <div class="flex justify-between mb-2">
+                <h3 class="text-md font-semibold text-gray-800 dark:text-white">Habilidad #{index + 1}</h3>
+                <button 
+                  type="button" 
+                  class="remove-skill text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+                  data-index={index}
+                >
+                  Eliminar
+                </button>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Nombre
+                  </label>
+                  <input
+                    type="text"
+                    name={`skill-name-${index}`}
+                    value={skill.name}
+                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Nivel (1-10)
+                  </label>
+                  <input
+                    type="number"
+                    name={`skill-level-${index}`}
+                    value={skill.level}
+                    min="1"
+                    max="10"
+                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Tipo
+                  </label>
+                  <select
+                    name={`skill-type-${index}`}
+                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                    required
+                  >
+                    <option value="hard" selected={skill.type === 'hard'}>Técnica</option>
+                    <option value="soft" selected={skill.type === 'soft'}>Blanda</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Palabras clave (separadas por coma)
+                </label>
+                <input
+                  type="text"
+                  name={`skill-keywords-${index}`}
+                  value={skill.keywords?.join(', ')}
+                  class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <button
+          type="button"
+          id="add-skill"
+          class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+          Añadir Habilidad
+        </button>
+      </section>
+      
+      <!-- Proyectos -->
+      <section>
+        <h2 class="text-xl font-bold mb-4 text-gray-800 dark:text-white border-b pb-2">
+          Proyectos
+        </h2>
+        
+        <div class="mb-6" id="projects-container">
+          {profile.projects && profile.projects.map((project, index) => (
+            <div class="project-item bg-gray-50 dark:bg-gray-700 p-4 rounded-lg mb-4">
+              <div class="flex justify-between mb-2">
+                <h3 class="text-md font-semibold text-gray-800 dark:text-white">Proyecto #{index + 1}</h3>
+                <button 
+                  type="button" 
+                  class="remove-project text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+                  data-index={index}
+                >
+                  Eliminar
+                </button>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Nombre
+                  </label>
+                  <input
+                    type="text"
+                    name={`project-name-${index}`}
+                    value={project.name}
+                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    URL
+                  </label>
+                  <input
+                    type="url"
+                    name={`project-url-${index}`}
+                    value={project.url}
+                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+              </div>
+              
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Descripción
+                </label>
+                <textarea
+                  name={`project-description-${index}`}
+                  rows="3"
+                  class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                >{project.description}</textarea>
+              </div>
+              
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  URL de la imagen
+                </label>
+                <input
+                  type="text"
+                  name={`project-image-${index}`}
+                  value={project.image}
+                  class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                />
+              </div>
+              
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id={`project-featured-${index}`}
+                  name={`project-featured-${index}`}
+                  checked={project.featured}
+                  class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                />
+                <label for={`project-featured-${index}`} class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+                  Proyecto Destacado
+                </label>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <button
+          type="button"
+          id="add-project"
+          class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+          Añadir Proyecto
+        </button>
+      </section>
+      
+      <!-- Redes Sociales -->
+      <section>
+        <h2 class="text-xl font-bold mb-4 text-gray-800 dark:text-white border-b pb-2">
+          Redes Sociales
+        </h2>
+        
+        <div class="mb-6" id="socials-container">
+          {profile.basics.profiles && profile.basics.profiles.map((social, index) => (
+            <div class="social-item bg-gray-50 dark:bg-gray-700 p-4 rounded-lg mb-4">
+              <div class="flex justify-between mb-2">
+                <h3 class="text-md font-semibold text-gray-800 dark:text-white">Red Social #{index + 1}</h3>
+                <button 
+                  type="button" 
+                  class="remove-social text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+                  data-index={index}
+                >
+                  Eliminar
+                </button>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Red Social
+                  </label>
+                  <select
+                    name={`social-network-${index}`}
+                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                    required
+                  >
+                    <option value="LinkedIn" selected={social.network === 'LinkedIn'}>LinkedIn</option>
+                    <option value="GitHub" selected={social.network === 'GitHub'}>GitHub</option>
+                    <option value="Twitter" selected={social.network === 'Twitter'}>Twitter</option>
+                    <option value="Instagram" selected={social.network === 'Instagram'}>Instagram</option>
+                    <option value="Default" selected={social.network === 'Default'}>Otra</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    Usuario
+                  </label>
+                  <input
+                    type="text"
+                    name={`social-username-${index}`}
+                    value={social.username}
+                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    URL
+                  </label>
+                  <input
+                    type="url"
+                    name={`social-url-${index}`}
+                    value={social.url}
+                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <button
+          type="button"
+          id="add-social"
+          class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+          Añadir Red Social
+        </button>
+      </section>
+      
+      <!-- Botones de formulario -->
+      <div class="flex justify-end space-x-4 pt-4 border-t">
+        <button
+          type="button"
+          id="cancel-button"
+          class="px-6 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Cancelar
+        </button>
+        
+        <button
+          type="submit"
+          class="px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Guardar Cambios
+        </button>
+      </div>
+      
+      <!-- Mensaje de estado/error -->
+      <div id="statusMessage" class="hidden mt-4 p-4 rounded-md">
+        <p class="text-center font-medium"></p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  import { updateProfile, getProfile } from '../../utils/auth.js';
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    const profileForm = document.getElementById('profileForm');
+    const addSkillButton = document.getElementById('add-skill');
+    const addProjectButton = document.getElementById('add-project');
+    const addSocialButton = document.getElementById('add-social');
+    const cancelButton = document.getElementById('cancel-button');
+    const statusMessage = document.getElementById('statusMessage');
+    const statusText = statusMessage.querySelector('p');
+    
+    // Contador para nuevos items
+    let skillCounter = document.querySelectorAll('.skill-item').length;
+    let projectCounter = document.querySelectorAll('.project-item').length;
+    let socialCounter = document.querySelectorAll('.social-item').length;
+    
+    // Función para mostrar mensaje
+    function showMessage(message, isError = false) {
+      statusText.textContent = message;
+      statusMessage.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+      statusMessage.classList.add(isError ? 'bg-red-100' : 'bg-green-100');
+      statusText.classList.add(isError ? 'text-red-800' : 'text-green-800');
+      statusMessage.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Función para crear una nueva habilidad
+    function addSkill() {
+      const skillsContainer = document.getElementById('skills-container');
+      const index = skillCounter++;
+      
+      const skillItem = document.createElement('div');
+      skillItem.className = 'skill-item bg-gray-50 dark:bg-gray-700 p-4 rounded-lg mb-4';
+      skillItem.innerHTML = `
+        <div class="flex justify-between mb-2">
+          <h3 class="text-md font-semibold text-gray-800 dark:text-white">Habilidad #${index + 1}</h3>
+          <button 
+            type="button" 
+            class="remove-skill text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+            data-index="${index}"
+          >
+            Eliminar
+          </button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Nombre
+            </label>
+            <input
+              type="text"
+              name="skill-name-${index}"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+              required
+            />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Nivel (1-10)
+            </label>
+            <input
+              type="number"
+              name="skill-level-${index}"
+              value="5"
+              min="1"
+              max="10"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+              required
+            />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Tipo
+            </label>
+            <select
+              name="skill-type-${index}"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+              required
+            >
+              <option value="hard">Técnica</option>
+              <option value="soft">Blanda</option>
+            </select>
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Palabras clave (separadas por coma)
+          </label>
+          <input
+            type="text"
+            name="skill-keywords-${index}"
+            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+          />
+        </div>
+      `;
+      
+      skillsContainer.appendChild(skillItem);
+      
+      // Añadir evento para eliminar esta habilidad
+      const removeButton = skillItem.querySelector('.remove-skill');
+      removeButton.addEventListener('click', () => {
+        skillItem.remove();
+      });
+    }
+    
+    // Función para crear un nuevo proyecto
+    function addProject() {
+      const projectsContainer = document.getElementById('projects-container');
+      const index = projectCounter++;
+      
+      const projectItem = document.createElement('div');
+      projectItem.className = 'project-item bg-gray-50 dark:bg-gray-700 p-4 rounded-lg mb-4';
+      projectItem.innerHTML = `
+        <div class="flex justify-between mb-2">
+          <h3 class="text-md font-semibold text-gray-800 dark:text-white">Proyecto #${index + 1}</h3>
+          <button 
+            type="button" 
+            class="remove-project text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+            data-index="${index}"
+          >
+            Eliminar
+          </button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Nombre
+            </label>
+            <input
+              type="text"
+              name="project-name-${index}"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+              required
+            />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              URL
+            </label>
+            <input
+              type="url"
+              name="project-url-${index}"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+            />
+          </div>
+        </div>
+        
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Descripción
+          </label>
+          <textarea
+            name="project-description-${index}"
+            rows="3"
+            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+          ></textarea>
+        </div>
+        
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            URL de la imagen
+          </label>
+          <input
+            type="text"
+            name="project-image-${index}"
+            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+          />
+        </div>
+        
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="project-featured-${index}"
+            name="project-featured-${index}"
+            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+          />
+          <label for="project-featured-${index}" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+            Proyecto Destacado
+          </label>
+        </div>
+      `;
+      
+      projectsContainer.appendChild(projectItem);
+      
+      // Añadir evento para eliminar este proyecto
+      const removeButton = projectItem.querySelector('.remove-project');
+      removeButton.addEventListener('click', () => {
+        projectItem.remove();
+      });
+    }
+    
+    // Función para crear una nueva red social
+    function addSocial() {
+      const socialsContainer = document.getElementById('socials-container');
+      const index = socialCounter++;
+      
+      const socialItem = document.createElement('div');
+      socialItem.className = 'social-item bg-gray-50 dark:bg-gray-700 p-4 rounded-lg mb-4';
+      socialItem.innerHTML = `
+        <div class="flex justify-between mb-2">
+          <h3 class="text-md font-semibold text-gray-800 dark:text-white">Red Social #${index + 1}</h3>
+          <button 
+            type="button" 
+            class="remove-social text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+            data-index="${index}"
+          >
+            Eliminar
+          </button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Red Social
+            </label>
+            <select
+              name="social-network-${index}"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+              required
+            >
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="GitHub">GitHub</option>
+              <option value="Twitter">Twitter</option>
+              <option value="Instagram">Instagram</option>
+              <option value="Default">Otra</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Usuario
+            </label>
+            <input
+              type="text"
+              name="social-username-${index}"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+              required
+            />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              URL
+            </label>
+            <input
+              type="url"
+              name="social-url-${index}"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+              required
+            />
+          </div>
+        </div>
+      `;
+      
+      socialsContainer.appendChild(socialItem);
+      
+      // Añadir evento para eliminar esta red social
+      const removeButton = socialItem.querySelector('.remove-social');
+      removeButton.addEventListener('click', () => {
+        socialItem.remove();
+      });
+    }
+    
+    // Añadir eventos para los botones de eliminación existentes
+    document.querySelectorAll('.remove-skill').forEach(button => {
+      button.addEventListener('click', () => {
+        button.closest('.skill-item').remove();
+      });
+    });
+    
+    document.querySelectorAll('.remove-project').forEach(button => {
+      button.addEventListener('click', () => {
+        button.closest('.project-item').remove();
+      });
+    });
+    
+    document.querySelectorAll('.remove-social').forEach(button => {
+      button.addEventListener('click', () => {
+        button.closest('.social-item').remove();
+      });
+    });
+    
+    // Añadir eventos para los botones de adición
+    addSkillButton.addEventListener('click', addSkill);
+    addProjectButton.addEventListener('click', addProject);
+    addSocialButton.addEventListener('click', addSocial);
+    
+    // Evento para cancelar edición
+    cancelButton.addEventListener('click', () => {
+      window.location.href = '/admin/profile';
+    });
+    
+    // Evento para enviar formulario
+    profileForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Mostrar estado de carga
+      const submitButton = profileForm.querySelector('button[type="submit"]');
+      const originalButtonText = submitButton.innerHTML;
+      submitButton.innerHTML = 'Guardando...';
+      submitButton.disabled = true;
+      
+      try {
+        // Obtener perfil actual
+        const currentProfile = getProfile();
+        
+        // Crear objeto de perfil actualizado
+        const updatedProfile = {
+          ...currentProfile,
+          basics: {
+            ...currentProfile.basics,
+            name: document.getElementById('name').value,
+            last_name: document.getElementById('lastName').value,
+            label: document.getElementById('label').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            summary: document.getElementById('summary').value,
+            location: {
+              ...currentProfile.basics.location,
+              city: document.getElementById('city').value,
+              country: document.getElementById('country').value
+            }
+          }
+        };
+        
+        // Recopilar habilidades
+        const skills = [];
+        document.querySelectorAll('.skill-item').forEach((item, i) => {
+          const nameInput = item.querySelector(`[name^="skill-name-"]`);
+          const levelInput = item.querySelector(`[name^="skill-level-"]`);
+          const typeInput = item.querySelector(`[name^="skill-type-"]`);
+          const keywordsInput = item.querySelector(`[name^="skill-keywords-"]`);
+          
+          if (nameInput && nameInput.value) {
+            skills.push({
+              name: nameInput.value,
+              level: parseInt(levelInput?.value || '5'),
+              type: typeInput?.value || 'hard',
+              keywords: keywordsInput?.value ? keywordsInput.value.split(',').map(k => k.trim()) : []
+            });
+          }
+        });
+        updatedProfile.skills = skills;
+        
+        // Recopilar proyectos
+        const projects = [];
+        document.querySelectorAll('.project-item').forEach((item, i) => {
+          const nameInput = item.querySelector(`[name^="project-name-"]`);
+          const urlInput = item.querySelector(`[name^="project-url-"]`);
+          const descriptionInput = item.querySelector(`[name^="project-description-"]`);
+          const imageInput = item.querySelector(`[name^="project-image-"]`);
+          const featuredInput = item.querySelector(`[name^="project-featured-"]`);
+          
+          if (nameInput && nameInput.value) {
+            projects.push({
+              name: nameInput.value,
+              url: urlInput?.value || '',
+              description: descriptionInput?.value || '',
+              image: imageInput?.value || '',
+              featured: featuredInput?.checked || false
+            });
+          }
+        });
+        updatedProfile.projects = projects;
+        
+        // Recopilar redes sociales
+        const socials = [];
+        document.querySelectorAll('.social-item').forEach((item, i) => {
+          const networkInput = item.querySelector(`[name^="social-network-"]`);
+          const usernameInput = item.querySelector(`[name^="social-username-"]`);
+          const urlInput = item.querySelector(`[name^="social-url-"]`);
+          
+          if (networkInput && usernameInput && usernameInput.value) {
+            socials.push({
+              network: networkInput.value,
+              username: usernameInput.value,
+              url: urlInput?.value || ''
+            });
+          }
+        });
+        updatedProfile.basics.profiles = socials;
+        
+        // Enviar actualización al servidor
+        const result = await updateProfile(updatedProfile);
+        
+        if (result.success) {
+          showMessage('Perfil actualizado correctamente', false);
+          setTimeout(() => {
+            window.location.href = '/admin/profile';
+          }, 1500);
+        } else {
+          showMessage(result.message || 'Error al actualizar perfil', true);
+          
+          // Restaurar botón
+          submitButton.innerHTML = originalButtonText;
+          submitButton.disabled = false;
+        }
+      } catch (error) {
+        console.error('Error en actualización de perfil:', error);
+        showMessage('Error al conectar con el servidor', true);
+        
+        // Restaurar botón
+        submitButton.innerHTML = originalButtonText;
+        submitButton.disabled = false;
+      }
+    });
+  });
+</script>

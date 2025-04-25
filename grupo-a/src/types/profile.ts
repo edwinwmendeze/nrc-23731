@@ -118,3 +118,23 @@ export interface SocialProfile {
   export interface ProfileModule {
     default: Profile;
   }
+
+
+  /**
+ * Interfaz para datos de autenticación
+ */
+export interface Auth {
+  /** Nombre de usuario único */
+  username: string;
+  /** Hash de la contraseña */
+  passwordHash: string;
+  /** Fecha del último inicio de sesión */
+  lastLogin?: string;
+}
+
+// Extender la interfaz Profile
+declare module "./profile" {
+  interface Profile {
+    auth?: Auth;
+  }
+}

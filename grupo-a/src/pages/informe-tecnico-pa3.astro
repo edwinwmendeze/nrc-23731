@@ -6,7 +6,9 @@ const progreso = [
   { paso: "Fase RED del BaseORM", completado: true },
   { paso: "Fase GREEN del BaseORM", completado: true },
   { paso: "Fase REFACTOR del BaseORM", completado: true },
-  { paso: "Implementación ORM completa", completado: true }
+  { paso: "Implementación ORM completa", completado: true },
+  { paso: "Implementación del servicio de autenticación", completado: true },
+  { paso: "Implementación del panel de administración", completado: true }
 ];
 ---
 
@@ -771,7 +773,15 @@ export class AppError extends Error &#123;
         <p>
           Este proyecto demuestra la aplicación práctica de principios de ingeniería de software como 
           DRY (Don't Repeat Yourself), KISS (Keep It Simple, Stupid) y YAGNI (You Aren't Gonna Need It), 
-          resultando en un código más limpio, eficiente y comprobable.
+          resultando en un código más limpio, eficiente y comprobable. A través de la implementación del ORM y
+          del Panel de Administración, hemos construido un sistema completo que satisface los requerimientos del 
+          proyecto y proporciona una base sólida para futuras extensiones.
+        </p>
+        
+        <p class="mt-4 font-medium text-indigo-700">
+          La combinación de TDD con los principios de desarrollo nos ha permitido crear una solución robusta, mantenible
+          y orientada a las necesidades reales del usuario, demostrando las mejores prácticas de la ingeniería
+          de software moderna.
         </p>
       </div>
     </section>
@@ -781,7 +791,7 @@ export class AppError extends Error &#123;
       <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Implementación de Autenticación con TDD</h2>
       <div class="bg-white p-6 rounded-lg shadow-sm">
         <p class="mb-4 text-lg">
-          Siguiendo la metodología TDD, hemos implementado un sistema de autenticación que permite
+          Siguiendo la metodología TDD, hemos implementado un sistema de autenticación completo que permite
           a los usuarios gestionar sus propios perfiles de manera segura. Este servicio extiende las
           capacidades de nuestro ORM y demuestra la flexibilidad de nuestra arquitectura.
         </p>
@@ -855,7 +865,7 @@ export class AppError extends Error &#123;
             <div class="mb-6">
               <p class="font-bold mb-3 text-lg">Implementación refactorizada:</p>
               <div class="border border-gray-300 rounded-lg overflow-hidden">
-                <img src="../../public/images/pa3/auth_refactor_implementation.png" alt="Implementación refactorizada de AuthService" class="w-full">
+                <img src="../../public/images/pa3/code_service_tdd_refactor_auth.png" alt="Implementación refactorizada de AuthService" class="w-full">
               </div>
               <p class="mt-4">
                 La implementación completa del AuthService se encuentra disponible en el 
@@ -898,7 +908,8 @@ export class AppError extends Error &#123;
           <div class="bg-white p-6 rounded-lg shadow-sm">
             <p class="mb-5">
               Con el servicio de autenticación implementado, desarrollamos un panel de administración
-              que permite a los usuarios gestionar sus propios perfiles.
+              que permite a los usuarios gestionar sus propios perfiles. Aplicamos los principios DRY, KISS y YAGNI
+              para crear una interfaz intuitiva y fácil de usar.
             </p>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -932,15 +943,27 @@ export class AppError extends Error &#123;
               <li>Editar su información personal</li>
               <li>Gestionar sus habilidades técnicas y blandas</li>
               <li>Administrar sus proyectos destacados</li>
+              <li>Configurar sus redes sociales</li>
               <li>Todo esto de manera segura gracias al sistema de autenticación</li>
             </ul>
+            
+            <div class="mt-6 bg-gray-100 p-5 rounded-lg">
+              <h4 class="text-lg font-bold mb-3">Arquitectura del Panel de Administración:</h4>
+              <p class="mb-3">Estructuramos el panel de administración siguiendo un enfoque modular y reutilizable:</p>
+              <ul class="list-disc pl-8 mb-4 space-y-1">
+                <li><strong>Modelo cliente-servidor</strong>: Utilizamos endpoints API para separar la lógica del servidor de la interfaz de usuario</li>
+                <li><strong>Componentes reutilizables</strong>: Creamos componentes independientes para cada sección (login, registro, dashboard, editor)</li>
+                <li><strong>Capas de abstracción</strong>: Implementamos utilidades para autenticación que simplifican el manejo de tokens y sesiones</li>
+                <li><strong>Protección de rutas</strong>: Verificación de autenticación tanto en cliente como en servidor</li>
+              </ul>
+            </div>
           </div>
         </div>
         
         <div class="bg-gray-100 p-5 rounded-lg mt-6">
-          <h3 class="text-lg font-bold mb-3">Conclusiones sobre el uso de TDD en la implementación de autenticación:</h3>
+          <h3 class="text-lg font-bold mb-3">Conclusiones sobre el uso de TDD en la implementación del sistema:</h3>
           <p class="mb-3">
-            La aplicación de TDD en el desarrollo del sistema de autenticación demostró varias ventajas:
+            La aplicación de TDD en el desarrollo del sistema de autenticación y panel de administración demostró varias ventajas:
           </p>
           <ul class="list-disc pl-8 space-y-2">
             <li>Definición clara del comportamiento esperado antes de la implementación</li>
@@ -948,11 +971,48 @@ export class AppError extends Error &#123;
             <li>Confianza para refactorizar y mejorar el código sin romper funcionalidades</li>
             <li>Documentación viva del comportamiento del sistema a través de pruebas</li>
             <li>Diseño más modular y orientado a interfaces</li>
+            <li>Mayor facilidad para mantener y extender las funcionalidades</li>
           </ul>
           <p class="mt-3">
             Esta implementación también demuestra cómo nuestro ORM puede extenderse para soportar
             nuevas funcionalidades manteniendo la integridad y coherencia del diseño original.
           </p>
+        </div>
+        
+        <div class="bg-indigo-50 p-5 rounded-lg mt-6">
+          <h3 class="text-lg font-bold mb-3 text-indigo-800">Aplicación de los Principios de Desarrollo:</h3>
+          <div class="mb-4">
+            <h4 class="font-bold text-indigo-700">1. DRY (Don't Repeat Yourself)</h4>
+            <p class="mb-2">Aplicación en el proyecto:</p>
+            <ul class="list-disc pl-8 mb-3 space-y-1">
+              <li>Creamos componentes reutilizables para interfaces similares</li>
+              <li>Implementamos utilidades de autenticación centralizadas</li>
+              <li>Utilizamos layouts compartidos para mantener una estructura consistente</li>
+              <li>Creamos endpoints API reutilizables para operaciones comunes</li>
+            </ul>
+          </div>
+          
+          <div class="mb-4">
+            <h4 class="font-bold text-indigo-700">2. KISS (Keep It Simple, Stupid)</h4>
+            <p class="mb-2">Aplicación en el proyecto:</p>
+            <ul class="list-disc pl-8 mb-3 space-y-1">
+              <li>Diseñamos una interfaz de usuario intuitiva y directa</li>
+              <li>Implementamos formularios con validación clara y mensajes de error comprensibles</li>
+              <li>Utilizamos soluciones simples pero efectivas para la autenticación</li>
+              <li>Evitamos complicaciones innecesarias en la arquitectura</li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 class="font-bold text-indigo-700">3. YAGNI (You Aren't Gonna Need It)</h4>
+            <p class="mb-2">Aplicación en el proyecto:</p>
+            <ul class="list-disc pl-8 space-y-1">
+              <li>Nos centramos en implementar solo las funcionalidades necesarias</li>
+              <li>Evitamos agregar características especulativas o innecesarias</li>
+              <li>Implementamos el panel de administración con las funciones esenciales primero</li>
+              <li>Priorizamos la funcionalidad básica sobre características avanzadas</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
