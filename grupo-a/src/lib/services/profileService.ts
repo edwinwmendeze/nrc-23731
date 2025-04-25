@@ -1,6 +1,6 @@
 // src/services/profileService.ts
-import type { Profile, ProfileModule, Project, ProjectWithAuthor, SocialIconKey } from '../types';
-import { ProfileORM } from '../lib/orm/ProfileORM';
+import type { Profile, ProfileModule, Project, ProjectWithAuthor, SocialIconKey } from '../../types';
+import { ProfileORM } from '../orm/ProfileORM';
 import path from 'path';
 
 /**

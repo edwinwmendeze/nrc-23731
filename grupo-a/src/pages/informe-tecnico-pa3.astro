@@ -775,6 +775,178 @@ export class AppError extends Error &#123;
         </p>
       </div>
     </section>
+    <!-- Añadir en src/pages/informe-tecnico-pa3.astro -->
+
+    <section id="implementacion-autenticacion" class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Implementación de Autenticación con TDD</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p class="mb-4 text-lg">
+          Siguiendo la metodología TDD, hemos implementado un sistema de autenticación que permite
+          a los usuarios gestionar sus propios perfiles de manera segura. Este servicio extiende las
+          capacidades de nuestro ORM y demuestra la flexibilidad de nuestra arquitectura.
+        </p>
+        
+        <div id="fase-red-auth" class="mb-10">
+          <h3 class="text-xl font-bold mb-5 pl-4 border-l-4 border-red-500">Fase RED: Definiendo el comportamiento esperado</h3>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <p class="mb-5">
+              En esta fase, escribimos pruebas para un servicio de autenticación que aún no existía,
+              definiendo el comportamiento esperado para login, registro y verificación de tokens.
+            </p>
+            
+            <div class="mb-6">
+              <p class="font-bold mb-3 text-lg">Pruebas para AuthService:</p>
+              <div class="border border-gray-300 rounded-lg overflow-hidden">
+                <img src="../../public/images/pa3/code_test_tdd_auth.png" alt="Código de pruebas para AuthService" class="w-full">
+              </div>
+            </div>
+            
+            <div class="mb-6 bg-red-50 p-5 rounded-lg border border-red-200">
+              <p class="font-bold mb-3 text-lg text-red-800">Error esperado en la fase RED:</p>
+              <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
+                <img src="../../public/images/pa3/test_tdd_fase_red.png" alt="Resultado de pruebas fallando (RED)" class="w-full">
+              </div>
+              <p class="text-red-700">
+                Como se observa, todas las pruebas fallan porque el servicio AuthService no existe.
+                Este es precisamente el comportamiento esperado en la fase RED del TDD: definimos
+                primero qué esperamos del código antes de implementarlo.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div id="fase-green-auth" class="mb-10">
+          <h3 class="text-xl font-bold mb-5 pl-4 border-l-4 border-green-500">Fase GREEN: Implementación mínima funcional</h3>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <p class="mb-5">
+              Implementamos la mínima cantidad de código necesario para que las pruebas pasen,
+              sin preocuparnos demasiado por la elegancia o eficiencia del código.
+            </p>
+            
+            <div class="mb-6">
+              <p class="font-bold mb-3 text-lg">Implementación básica de AuthService:</p>
+              <div class="border border-gray-300 rounded-lg overflow-hidden">
+                <img src="../../public/images/pa3/code_service_tdd_auth.png" alt="Implementación básica de AuthService" class="w-full">
+              </div>
+            </div>
+            
+            <div class="mb-6 bg-green-50 p-5 rounded-lg border border-green-200">
+              <p class="font-bold mb-3 text-lg text-green-800">Resultado de las pruebas (éxito):</p>
+              <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
+                <img src="../../public/images/pa3/test_tdd_green_auth.png" alt="Resultado de pruebas pasando (GREEN)" class="w-full">
+              </div>
+              <p class="text-green-700">
+                Las pruebas pasan, confirmando que nuestra implementación mínima cumple con el comportamiento
+                esperado. Esta implementación se enfoca principalmente en pasar las pruebas, sin preocuparse
+                por la calidad o mantenibilidad del código todavía.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div id="fase-refactor-auth" class="mb-10">
+          <h3 class="text-xl font-bold mb-5 pl-4 border-l-4 border-blue-500">Fase REFACTOR: Mejorando la implementación</h3>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <p class="mb-5">
+              Una vez que las pruebas pasan, podemos mejorar el código sin miedo a romper la funcionalidad,
+              ya que las pruebas nos alertarán si algo deja de funcionar como se espera.
+            </p>
+            
+            <div class="mb-6">
+              <p class="font-bold mb-3 text-lg">Implementación refactorizada:</p>
+              <div class="border border-gray-300 rounded-lg overflow-hidden">
+                <img src="/images/pa3/auth_refactor_implementation.png" alt="Implementación refactorizada de AuthService" class="w-full">
+              </div>
+            </div>
+            
+            <div class="mb-6 bg-blue-50 p-5 rounded-lg border border-blue-200">
+              <p class="font-bold mb-3 text-lg text-blue-800">Pruebas pasando con código refactorizado:</p>
+              <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
+                <img src="../../public/images/pa3/test_tdd_refactor_auth.png" alt="Pruebas pasando después de refactorizar" class="w-full">
+              </div>
+              <p class="text-blue-700">
+                Las pruebas siguen pasando, lo que confirma que nuestras mejoras no han alterado el 
+                comportamiento esperado del código. Hemos mejorado la estructura, legibilidad y 
+                eficiencia sin cambiar la funcionalidad.
+              </p>
+            </div>
+            
+            <div class="mt-6">
+              <p class="font-bold mb-3 text-lg">Mejoras implementadas en la fase REFACTOR:</p>
+              <ul class="list-disc pl-8 mb-4 space-y-2">
+                <li>Reemplazo de respuestas codificadas con implementaciones reales</li>
+                <li>Mejora del manejo de errores con mensajes más específicos</li>
+                <li>Implementación de validación de datos más robusta</li>
+                <li>Optimización de la generación y verificación de tokens</li>
+                <li>Documentación completa del código con comentarios descriptivos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div id="implementacion-panel-admin" class="mb-10">
+          <h3 class="text-xl font-bold mb-5 pl-4 border-l-4 border-purple-500">Implementación del Panel de Administración</h3>
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <p class="mb-5">
+              Con el servicio de autenticación implementado, desarrollamos un panel de administración
+              que permite a los usuarios gestionar sus propios perfiles.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <p class="font-bold mb-3 text-lg">Página de inicio de sesión:</p>
+                <div class="border border-gray-300 rounded-lg overflow-hidden">
+                  <img src="/images/pa3/login_page.png" alt="Página de inicio de sesión" class="w-full">
+                </div>
+              </div>
+              
+              <div>
+                <p class="font-bold mb-3 text-lg">Panel de perfil de usuario:</p>
+                <div class="border border-gray-300 rounded-lg overflow-hidden">
+                  <img src="/images/pa3/profile_dashboard.png" alt="Panel de perfil de usuario" class="w-full">
+                </div>
+              </div>
+            </div>
+            
+            <div class="mb-6">
+              <p class="font-bold mb-3 text-lg">Página de edición de perfil:</p>
+              <div class="border border-gray-300 rounded-lg overflow-hidden">
+                <img src="/images/pa3/profile_edit.png" alt="Página de edición de perfil" class="w-full">
+              </div>
+            </div>
+            
+            <p class="mt-5">
+              El panel de administración implementado permite a los usuarios:
+            </p>
+            <ul class="list-disc pl-8 mb-4 space-y-2">
+              <li>Ver un resumen completo de su perfil</li>
+              <li>Editar su información personal</li>
+              <li>Gestionar sus habilidades técnicas y blandas</li>
+              <li>Administrar sus proyectos destacados</li>
+              <li>Todo esto de manera segura gracias al sistema de autenticación</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="bg-gray-100 p-5 rounded-lg mt-6">
+          <h3 class="text-lg font-bold mb-3">Conclusiones sobre el uso de TDD en la implementación de autenticación:</h3>
+          <p class="mb-3">
+            La aplicación de TDD en el desarrollo del sistema de autenticación demostró varias ventajas:
+          </p>
+          <ul class="list-disc pl-8 space-y-2">
+            <li>Definición clara del comportamiento esperado antes de la implementación</li>
+            <li>Detección temprana de errores y problemas de diseño</li>
+            <li>Confianza para refactorizar y mejorar el código sin romper funcionalidades</li>
+            <li>Documentación viva del comportamiento del sistema a través de pruebas</li>
+            <li>Diseño más modular y orientado a interfaces</li>
+          </ul>
+          <p class="mt-3">
+            Esta implementación también demuestra cómo nuestro ORM puede extenderse para soportar
+            nuevas funcionalidades manteniendo la integridad y coherencia del diseño original.
+          </p>
+        </div>
+      </div>
+    </section>
   </main>
 </Layout>
 
