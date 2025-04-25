@@ -1,5 +1,4 @@
 ---
-export const prerender = false;
 import { AuthService } from '../lib/services/AuthService';
 import { ProfileORM } from '../lib/orm/ProfileORM';
 import MainLayout from '../layouts/MainLayout.astro';
@@ -8,22 +7,30 @@ import '../styles/global.css';
 let profile = null;
 let error = '';
 
-const token = Astro.cookies.get('auth_token')?.value;
-if (token) {
-  try {
-    const authService = new AuthService();
-    const verifyResult = await authService.verifyToken(token);
-    if (verifyResult.valid && verifyResult.profileId) {
-      const orm = new ProfileORM();
-      profile = await orm.findById(verifyResult.profileId);
-    } else {
-      error = 'Sesión inválida. Por favor inicia sesión.';
-    }
-  } catch (e) {
-    error = 'Error al cargar el perfil';
+// Logout handler
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  if (form.get('action') === 'logout') {
+    Astro.cookies.delete('auth_token', { path: '/' });
+    return Astro.redirect('/nrc-23731/login', 303);
   }
-} else {
-  error = 'No has iniciado sesión.';
+}
+
+const token = Astro.cookies.get('auth_token')?.value;
+if (!token) {
+  return Astro.redirect('/nrc-23731/login', 303);
+}
+try {
+  const authService = new AuthService();
+  const verifyResult = await authService.verifyToken(token);
+  if (verifyResult.valid && verifyResult.profileId) {
+    const orm = new ProfileORM();
+    profile = await orm.findById(verifyResult.profileId);
+  } else {
+    return Astro.redirect('/nrc-23731/login', 303);
+  }
+} catch (e) {
+  error = 'Error al cargar el perfil';
 }
 ---
 <MainLayout title="Mi Perfil">
@@ -39,7 +46,7 @@ if (token) {
               <span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full ml-2">Activo</span>
             </div>
             <p class="text-gray-500 text-sm">{profile.basics.email}</p>
-            <button class="mt-2 px-4 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition text-sm font-medium">Editar perfil</button>
+            <button class="mt-2 px-4 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition text-sm font-medium" onclick="window.location.href='/nrc-23731/profile/edit'">Editar perfil</button>
           </div>
         </div>
         <div class="px-8 py-6 flex flex-col gap-6">
@@ -71,8 +78,11 @@ if (token) {
         </div>
         <div class="bg-gray-50 dark:bg-gray-900 px-8 py-6 border-t border-gray-200 dark:border-gray-700 flex flex-col gap-4">
           <div class="flex flex-col gap-2 sm:flex-row sm:gap-6">
-            <button class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition text-sm font-medium">Cambiar contraseña</button>
-            <button class="flex-1 px-4 py-2 bg-red-100 dark:bg-red-700 text-red-700 dark:text-white rounded hover:bg-red-200 dark:hover:bg-red-600 transition text-sm font-medium">Cerrar sesión</button>
+            <button type="button" class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition text-sm font-medium" onclick="alert('Esta funcionalidad te permitirá cambiar tu contraseña próximamente.')">Cambiar contraseña</button>
+            <form method="POST" style="display:inline;flex:1;">
+              <input type="hidden" name="action" value="logout" />
+              <button type="submit" class="w-full px-4 py-2 bg-red-100 dark:bg-red-700 text-red-700 dark:text-white rounded hover:bg-red-200 dark:hover:bg-red-600 transition text-sm font-medium">Cerrar sesión</button>
+            </form>
           </div>
         </div>
       </div>

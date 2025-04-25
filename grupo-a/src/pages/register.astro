@@ -5,6 +5,9 @@ import '../styles/global.css';
 let error = '';
 let success = false;
 
+const url = new URL(Astro.request.url);
+if (url.searchParams.get('success') === '1') success = true;
+
 if (Astro.request.method === 'POST') {
   try {
     const form = await Astro.request.formData();
@@ -21,8 +24,8 @@ if (Astro.request.method === 'POST') {
         const authService = new AuthService();
         const result = await authService.register({ username, password });
         if (result.success) {
-          success = true;
-          Astro.cookies.set('auth_token', result.token, { path: '/', httpOnly: true });
+          // PRG: redirigir tras éxito
+          return Astro.redirect('/nrc-23731/register?success=1', 303);
         } else {
           error = result.message || 'No se pudo registrar el usuario';
         }
@@ -45,7 +48,7 @@ if (Astro.request.method === 'POST') {
     <main class="bg-white p-8 rounded shadow-md w-full max-w-md">
       <h1 class="text-2xl font-bold mb-6 text-center">Registro</h1>
       {error && <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4">{error}</div>}
-      {success && <div class="bg-green-100 text-green-700 px-4 py-2 rounded mb-4">¡Registro exitoso! Ahora puedes iniciar sesión.</div>}
+      {success && <div class="bg-green-100 text-green-700 px-4 py-2 rounded mb-4 success-msg">¡Registro exitoso! Ahora puedes iniciar sesión.</div>}
       <form method="POST" action="register" class="space-y-4">
         <div>
           <label class="block mb-1 font-medium" for="username">Usuario</label>
@@ -65,5 +68,15 @@ if (Astro.request.method === 'POST') {
         ¿Ya tienes cuenta? <a href="login" class="text-indigo-600 hover:underline">Inicia sesión</a>
       </div>
     </main>
+    <script>
+      setTimeout(() => {
+        const msg = document.querySelector('.success-msg');
+        if (msg) msg.style.display = 'none';
+        // Limpiar el parámetro success de la URL sin recargar
+        const url = new URL(window.location);
+        url.searchParams.delete('success');
+        window.history.replaceState({}, document.title, url.pathname + url.search);
+      }, 3500);
+    </script>
   </body>
 </html>

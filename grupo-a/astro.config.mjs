@@ -9,6 +9,7 @@ import icon from 'astro-icon';
 export default defineConfig({
   site: 'https://edwinmendeze.github.io',
   base: '/nrc-23731',  // Base URL para GitHub Pages (sin /grupo-a)
+  output: "server",
   integrations: [
     sitemap(),
     compress(),

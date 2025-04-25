@@ -1,36 +1,50 @@
 ---
-export const prerender = false;
+
 import '../styles/global.css';
 let error = '';
 let success = false;
 
+const url = new URL(Astro.request.url);
+if (url.searchParams.get('error')) error = decodeURIComponent(url.searchParams.get('error'));
+if (url.searchParams.get('success') === '1') success = true;
+
 if (Astro.request.method === 'POST') {
-  console.log('[LOGIN] Método:', Astro.request.method, '| Content-Type:', Astro.request.headers.get('content-type'));
   try {
     const form = await Astro.request.formData();
     const username = typeof form.get('username') === 'string' ? form.get('username') : '';
     const password = typeof form.get('password') === 'string' ? form.get('password') : '';
     const testfield = typeof form.get('testfield') === 'string' ? form.get('testfield') : '';
-    console.log('[LOGIN] username recibido:', username, '| password recibido:', password, '| testfield recibido:', testfield);
     try {
       const { AuthService } = await import('../lib/services/AuthService');
       const authService = new AuthService();
       const result = await authService.login(username, password);
-      console.log('[LOGIN] Resultado de login:', result);
       if (result.success) {
         success = true;
         Astro.cookies.set('auth_token', result.token, { path: '/', httpOnly: true });
-        return Astro.redirect('/nrc-23731/profile');
+        // Validar si el perfil está incompleto
+        const profile = result.profile;
+        const basics = profile?.basics || {};
+        const location = basics.location || {};
+        const needsCompletion =
+          !basics.occupation || basics.occupation === 'Ingresar ocupacion' ||
+          !basics.image?.remote || basics.image.remote === '' ||
+          !location.city ||
+          !location.region ||
+          !location.countryCode;
+        if (needsCompletion) {
+          return Astro.redirect('/nrc-23731/profile/edit?complete_profile=1', 303);
+        } else {
+          return Astro.redirect('/nrc-23731/profile');
+        }
       } else {
-        error = result.message || 'Credenciales incorrectas';
+        // PRG: redirigir con error
+        return Astro.redirect('/nrc-23731/login?error=' + encodeURIComponent(result.message || 'Credenciales incorrectas'), 303);
       }
     } catch (e) {
-      error = 'Error interno al intentar iniciar sesión';
-      console.error('[LOGIN] Error interno:', e);
+      return Astro.redirect('/nrc-23731/login?error=' + encodeURIComponent('Error interno al intentar iniciar sesión'), 303);
     }
   } catch (e) {
-    error = 'Error procesando el formulario. Verifica que tu navegador envía correctamente los datos.';
-    console.error('[LOGIN] Error al procesar formData:', e);
+    return Astro.redirect('/nrc-23731/login?error=' + encodeURIComponent('Error procesando el formulario.'), 303);
   }
 }
 ---
@@ -43,7 +57,8 @@ if (Astro.request.method === 'POST') {
   <body class="bg-gradient-to-br from-indigo-100 via-white to-indigo-200 min-h-screen flex items-center justify-center">
     <main class="w-full max-w-sm p-8 bg-white rounded-2xl shadow-xl border border-gray-200">
       <h1 class="text-3xl font-extrabold mb-6 text-center text-indigo-700">Iniciar Sesión</h1>
-      {error && <div class="mb-4 text-red-600 font-semibold bg-red-50 border border-red-200 rounded px-3 py-2 text-center">{error}</div>}
+      {success && <div class="mb-4 text-green-600 font-semibold bg-green-50 border border-green-200 rounded px-3 py-2 text-center success-msg">¡Sesión iniciada correctamente!</div>}
+      {error && <div class="mb-4 text-red-600 font-semibold bg-red-50 border border-red-200 rounded px-3 py-2 text-center error-msg">{error}</div>}
       <form method="POST" action="/nrc-23731/login" autocomplete="off" class="space-y-5">
         <input type="hidden" name="testfield" value="testvalue" />
         <div>
@@ -60,5 +75,20 @@ if (Astro.request.method === 'POST') {
         ¿No tienes cuenta? <a href="/nrc-23731/register" class="text-indigo-600 hover:underline font-semibold">Regístrate</a>
       </div>
     </main>
+    <script>
+      setTimeout(() => {
+        const msg = document.querySelector('.success-msg');
+        if (msg) msg.style.display = 'none';
+        // Limpiar success de la URL
+        const url = new URL(window.location);
+        url.searchParams.delete('success');
+        window.history.replaceState({}, document.title, url.pathname + url.search);
+        // Limpiar error de la URL
+        const err = document.querySelector('.error-msg');
+        if (err) err.style.display = 'none';
+        url.searchParams.delete('error');
+        window.history.replaceState({}, document.title, url.pathname + url.search);
+      }, 3500);
+    </script>
   </body>
 </html>

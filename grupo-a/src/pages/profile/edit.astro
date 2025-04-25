@@ -1,31 +1,30 @@
-export const prerender = false;
 ---
 import { AuthService } from '../../lib/services/AuthService';
 import { ProfileORM } from '../../lib/orm/ProfileORM';
 import MainLayout from '../../layouts/MainLayout.astro';
 
-let loggedIn = false;
 let userProfile = null;
 const token = Astro.cookies.get('auth_token')?.value;
-if (token) {
-  try {
-    const authService = new AuthService();
-    const verifyResult = await authService.verifyToken(token);
-    if (verifyResult.valid && verifyResult.profileId) {
-      loggedIn = true;
-      const orm = new ProfileORM();
-      userProfile = await orm.findById(verifyResult.profileId);
-    }
-  } catch {}
-}
 
-if (!loggedIn) {
-  return new Response(null, { status: 302, headers: { Location: '/nrc-23731/login' } });
+if (!token) {
+  return Astro.redirect('/nrc-23731/login', 303);
+}
+try {
+  const authService = new AuthService();
+  const verifyResult = await authService.verifyToken(token);
+  if (verifyResult.valid && verifyResult.profileId) {
+    userProfile = await (new ProfileORM()).findById(verifyResult.profileId);
+  } else {
+    return Astro.redirect('/nrc-23731/login', 303);
+  }
+} catch {
+  return Astro.redirect('/nrc-23731/login', 303);
 }
 
 const url = new URL(Astro.request.url);
 let success = url.searchParams.get('success') === '1';
 let error = null;
+let showCompleteProfileMsg = url.searchParams.get('complete_profile') === '1';
 if (Astro.request.method === 'POST') {
   try {
     const formData = await Astro.request.formData();
@@ -63,16 +62,22 @@ if (Astro.request.method === 'POST') {
     userProfile.basics = {
       ...userProfile.basics,
       name: formData.get('name') ?? '',
+      last_name: formData.get('last_name') ?? '',
       email: formData.get('email') ?? '',
       phone: formData.get('phone') ?? '',
       url: formData.get('url') ?? '',
+      image: {
+        ...(typeof userProfile.basics.image === 'object' ? userProfile.basics.image : {}),
+        remote: formData.get('image_remote') ?? ''
+      },
       location: {
         city,
         region,
         countryCode
       },
       summary,
-      profiles
+      profiles,
+      occupation: formData.get('occupation') ?? '',
     };
     userProfile.skills = skills;
     const orm = new ProfileORM();
@@ -86,11 +91,21 @@ if (Astro.request.method === 'POST') {
 ---
 <MainLayout title="Editar perfil">
   <div class="max-w-2xl mx-auto py-12">
-    <h1 class="text-3xl font-bold mb-8 flex items-center gap-4">
-      <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 11l6 6M9 17H7a2 2 0 01-2-2v-2a2 2 0 012-2h2m0 0V7a2 2 0 012-2h2a2 2 0 012 2v2"/></svg>
-      Editar perfil
-    </h1>
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold flex items-center gap-4">
+        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 11l6 6M9 17H7a2 2 0 01-2-2v-2a2 2 0 012-2h2m0 0V7a2 2 0 012-2h2a2 2 0 012 2v2"/></svg>
+        Editar perfil
+      </h1>
+      <a href="/nrc-23731/profile" class="inline-flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-semibold text-sm transition">
+        Volver al perfil
+      </a>
+    </div>
     {success && <div class="mb-4 p-3 rounded bg-green-100 text-green-800 success-msg">Perfil actualizado correctamente.</div>}
+    {showCompleteProfileMsg && (
+      <div class="mb-4 p-3 rounded bg-yellow-100 text-yellow-900 border border-yellow-300 font-semibold">
+        ¡Completa tu perfil! Por favor, ingresa tu ocupación, ubicación y una imagen de perfil para continuar usando la aplicación.
+      </div>
+    )}
     {error && <div class="mb-4 p-3 rounded bg-red-100 text-red-800">{error}</div>}
     <div class="max-w-3xl mx-auto">
       <form method="POST" class="space-y-6" id="profile-form">
@@ -126,12 +141,20 @@ if (Astro.request.method === 'POST') {
                   <input type="text" name="name" required class="w-full rounded border border-gray-300 px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" value={userProfile?.basics?.name || ''} />
                 </div>
                 <div>
+                  <label class="block text-sm font-medium mb-1 dark:text-gray-300">Apellido</label>
+                  <input type="text" name="last_name" required class="w-full rounded border border-gray-300 px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" value={userProfile?.basics?.last_name || ''} />
+                </div>
+                <div>
                   <label class="block text-sm font-medium mb-1 dark:text-gray-300">Correo electrónico</label>
                   <input type="email" name="email" required class="w-full rounded border border-gray-300 px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" value={userProfile?.basics?.email || ''} />
                 </div>
                 <div>
                   <label class="block text-sm font-medium mb-1 dark:text-gray-300">Teléfono</label>
                   <input type="text" name="phone" class="w-full rounded border border-gray-300 px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" value={userProfile?.basics?.phone || ''} />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1 dark:text-gray-300">Ocupación</label>
+                  <input type="text" name="occupation" required class="w-full rounded border border-gray-300 px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" value={userProfile?.basics?.occupation || ''} />
                 </div>
                 <div>
                   <label class="block text-sm font-medium mb-1 dark:text-gray-300">Ciudad</label>
@@ -148,6 +171,10 @@ if (Astro.request.method === 'POST') {
                 <div class="md:col-span-2">
                   <label class="block text-sm font-medium mb-1 dark:text-gray-300">Enlace personal</label>
                   <input type="url" name="url" class="w-full rounded border border-gray-300 px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" value={userProfile?.basics?.url || ''} />
+                </div>
+                <div class="md:col-span-2">
+                  <label class="block text-sm font-medium mb-1 dark:text-gray-300">Avatar (URL de imagen)</label>
+                  <input type="url" name="image_remote" class="w-full rounded border border-gray-300 px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" value={typeof userProfile.basics.image === 'string' ? userProfile.basics.image : userProfile?.basics?.image?.remote || ''} />
                 </div>
               </div>
               <div class="mt-8">
