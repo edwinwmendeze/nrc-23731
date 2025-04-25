@@ -1,0 +1,5 @@
+export const prerender = false;
+---
+Astro.cookies.delete('auth_token', { path: '/' });
+return new Response(null, { status: 302, headers: { Location: '/nrc-23731/login' } });
+---
