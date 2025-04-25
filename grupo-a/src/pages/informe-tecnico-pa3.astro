@@ -3,161 +3,288 @@ import Layout from '../layouts/MainLayout.astro';
 
 const progreso = [
   { paso: "Configuración inicial", completado: true },
-  { paso: "Fase RED del BaseORM", completado: false },
-  { paso: "Fase GREEN del BaseORM", completado: false },
-  { paso: "Fase REFACTOR del BaseORM", completado: false },
-  { paso: "Implementación ORM completa", completado: false }
+  { paso: "Fase RED del BaseORM", completado: true },
+  { paso: "Fase GREEN del BaseORM", completado: true },
+  { paso: "Fase REFACTOR del BaseORM", completado: true },
+  { paso: "Implementación ORM completa", completado: true }
 ];
 ---
 
 <Layout title="Informe Técnico PA3">
-  <main class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-6">Informe Técnico - Implementación ORM y TDD</h1>
+  <main class="container mx-auto px-4 py-8 max-w-4xl">
+    <h1 class="text-4xl font-bold mb-8 pb-2 border-b-2 border-gray-300">Informe Técnico - Implementación ORM y TDD</h1>
     
-    <div class="progress-tracker mb-8">
-      <h2 class="text-xl font-bold mb-4">Progreso del Desarrollo</h2>
+    <div class="progress-tracker mb-10 bg-gray-100 p-6 rounded-lg shadow-sm">
+      <h2 class="text-2xl font-bold mb-5">Progreso del Desarrollo</h2>
       <div class="steps">
         {progreso.map((item, index) => (
-          <div class={`step ${item.completado ? 'completed' : 'pending'}`}>
-            <div class="step-number">{index + 1}</div>
-            <div class="step-text">{item.paso}</div>
+          <div class={`step flex items-center mb-3 ${item.completado ? 'completed' : 'pending'}`}>
+            <div class="step-number flex items-center justify-center w-8 h-8 rounded-full mr-3">
+              {index + 1}
+            </div>
+            <div class="step-text font-medium">{item.paso}</div>
           </div>
         ))}
       </div>
     </div>
     
-    <section class="mb-10">
-      <h2 class="text-2xl font-bold mb-4">Introducción</h2>
-      <p class="mb-4">
-        Este informe documenta la implementación de un sistema ORM (Object-Relational Mapping) para 
-        archivos JSON en nuestro proyecto de portafolio grupal, siguiendo la metodología de 
-        Desarrollo Guiado por Pruebas (TDD).
-      </p>
-      <p>
-        El proyecto originalmente utiliza archivos JSON como fuente de datos para mostrar perfiles
-        de integrantes del equipo. Mediante esta implementación, abstraemos el acceso a estos datos
-        siguiendo los principios de ORM y garantizamos su correcto funcionamiento mediante pruebas unitarias.
-      </p>
-    </section>
-    
-    <section class="mb-10">
-      <h2 class="text-2xl font-bold mb-4">Estado Actual</h2>
-      <p class="mb-4">
-        Actualmente, el proyecto utiliza un sistema simple de importación de archivos JSON mediante
-        import.meta.glob para cargar datos de perfiles. Esta implementación funciona pero carece de:
-      </p>
-      <ul class="list-disc pl-6 mb-4">
-        <li>Abstracción para operaciones CRUD</li>
-        <li>Validación de datos consistente</li>
-        <li>Optimización para consultas frecuentes</li>
-        <li>Pruebas unitarias que garanticen su funcionamiento</li>
-      </ul>
-      
-      <div class="code-block mb-4">
-        <p class="font-bold mb-2">Código actual para cargar perfiles:</p>
-        <pre class="overflow-x-auto bg-gray-800 text-white p-4 rounded">export async function getProfiles(): Promise&lt;Profile[]&gt; &#123;
-  try &#123;
-    const profilesFiles = import.meta.glob&lt;ProfileModule&gt;('../data/profiles/*.json', &#123; eager: true &#125;);
-    return Object.values(profilesFiles).map(profile =&gt; profile.default);
-  &#125; catch (error) &#123;
-    console.error('Error cargando perfiles:', error);
-    return [];
-  &#125;
-&#125;</pre>
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Introducción</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p class="mb-4 text-lg">
+          Este informe documenta la implementación de un sistema ORM (Object-Relational Mapping) para 
+          archivos JSON en nuestro proyecto de portafolio grupal, siguiendo la metodología de 
+          Desarrollo Guiado por Pruebas (TDD).
+        </p>
+        <p class="text-lg">
+          El proyecto originalmente utiliza archivos JSON como fuente de datos para mostrar perfiles
+          de integrantes del equipo. Mediante esta implementación, abstraemos el acceso a estos datos
+          siguiendo los principios de ORM y garantizamos su correcto funcionamiento mediante pruebas unitarias.
+        </p>
       </div>
     </section>
     
-    <section id="implementacion-tdd" class="mb-10">
-      <h2 class="text-2xl font-bold mb-4">Implementación con TDD</h2>
-      <p class="mb-4">Seguiremos el proceso de Test-Driven Development (TDD) para la implementación del ORM:</p>
-      
-      <div id="fase-red" class="mb-6">
-        <h3 class="text-xl font-semibold mb-3">Fase RED: Creando pruebas que fallan</h3>
-        <p class="mb-4">En esta fase, escribimos pruebas para funcionalidades que aún no existen.</p>
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Estado Actual</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p class="mb-4">
+          Actualmente, el proyecto utiliza un sistema simple de importación de archivos JSON mediante
+          import.meta.glob para cargar datos de perfiles. Esta implementación funciona pero carece de:
+        </p>
+        <ul class="list-disc pl-8 mb-6 space-y-2">
+          <li>Abstracción para operaciones CRUD</li>
+          <li>Validación de datos consistente</li>
+          <li>Optimización para consultas frecuentes</li>
+          <li>Pruebas unitarias que garanticen su funcionamiento</li>
+        </ul>
         
-        <div class="code-block mb-8">
-          <p class="font-bold mb-2">Prueba inicial para BaseORM:</p>
-          <pre class="overflow-x-auto bg-gray-800 text-white p-4 rounded" style="text-align: left;">// tests/lib/orm/BaseORM.test.ts
-import &#123; describe, it, expect, vi &#125; from 'vitest';
-import fs from 'fs/promises';
-import path from 'path';
-
-// Crear mock para fs/promises
-vi.mock('fs/promises', () =&gt; &#123;
-  readdir: vi.fn(),
-  readFile: vi.fn(),
-  writeFile: vi.fn(),
-  mkdir: vi.fn(),
-  access: vi.fn()
-&#125;);
-
-// Definir interfaz simple para las pruebas
-interface TestEntity &#123;
-  id: string;
-  name: string;
-&#125;
-
-// Este describe falla porque BaseORM aún no existe
-describe('BaseORM', () =&gt; &#123;
-  it('debe crear el directorio si no existe', async () =&gt; &#123;
-    // Intenta importar BaseORM (que no existe, causará error)
-    const &#123; BaseORM &#125; = await import('../../../src/lib/orm/BaseORM');
-    
-    // El resto de la prueba no se ejecutará
-    const testDir = path.join(process.cwd(), 'data/test');
-    const orm = new BaseORM&lt;TestEntity&gt;(testDir);
-    
-    expect(orm).toBeDefined();
-  &#125;);
-&#125;);
-</pre>
-        </div>
-        
-        <!-- Separador visual para forzar espacio -->
-        <div style="height: 2.5rem;"></div>
-        
-        <div class="error-output mb-4 bg-red-100 p-4 rounded">
-          <p class="font-bold text-red-800">Resultado de la prueba (error esperado):</p>
-          <!-- Imagen dentro de un code-block para igualar el ancho y estilo del PRE -->
-          <div class="code-block mb-4">
-            <img src="/public/images/pa3/tdd_fase_red.png" alt="Error al importar BaseORM" class="rounded shadow" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+        <div class="mb-6">
+          <p class="font-bold mb-3 mt-3 text-lg">Código actual para cargar perfiles:</p>
+          <div class="border border-gray-300 rounded-lg overflow-hidden">
+            <img src="../../public/images/pa3/obtener_perfiles.png" alt="Código actual para cargar perfiles" class="w-full">
           </div>
-          <pre class="text-red-800 text-sm overflow-x-auto">Error: Cannot find module '../../../src/lib/orm/BaseORM' from 'tests/lib/orm/BaseORM.test.ts'</pre>
+        </div>
+      </div>
+    </section>
+    
+    <section id="implementacion-tdd" class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Implementación con TDD</h2>
+      
+      <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+        <p class="mb-4">
+          Seguiremos el proceso de Test-Driven Development (TDD) para la implementación del ORM. Este enfoque
+          se basa en tres fases principales: RED (escribir pruebas que fallan), GREEN (implementar código mínimo
+          para que las pruebas pasen) y REFACTOR (mejorar el código manteniendo las pruebas).
+        </p>
+      </div>
+      
+      <div id="fase-red" class="mb-10">
+        <h3 class="text-xl font-bold mb-5 pl-4 border-l-4 border-red-500">Fase RED: Creando pruebas que fallan</h3>
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <p class="mb-5">
+            En esta fase, escribimos pruebas para funcionalidades que aún no existen. Esto nos ayuda a
+            definir claramente el comportamiento esperado antes de implementar el código.
+          </p>
+          
+          <div class="mb-6">
+            <p class="font-bold mb-3 text-lg">Prueba inicial para BaseORM:</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
+              <img src="../../public/images/pa3/prueba_inicial_baseORM.png" alt="Código de prueba inicial para BaseORM" class="w-full">
+            </div>
+          </div>
+          
+          <div class="mb-6 bg-red-50 p-5 rounded-lg border border-red-200">
+            <p class="font-bold mb-3 text-lg text-red-800">Error esperado en la fase RED:</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
+              <img src="../../public/images/pa3/test_tdd_fase_red.png" alt="Resultado de prueba fallando (RED)" class="w-full">
+            </div>
+            <p class="text-red-700">
+              Este error es precisamente lo que esperamos en la fase RED del TDD: estamos probando una clase 
+              que aún no existe. Según la metodología TDD, debemos crear primero la prueba (que fallará) y 
+              luego implementar el código mínimo necesario para que pase.
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <div id="fase-green" class="mb-10">
+        <h3 class="text-xl font-bold mb-5 pl-4 border-l-4 border-green-500">Fase GREEN: Implementando código funcional</h3>
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <p class="mb-5">
+            En esta fase, implementamos el código mínimo necesario para que las pruebas pasen, enfocándonos
+            solamente en la funcionalidad requerida.
+          </p>
+          
+          <div class="mb-6">
+            <p class="font-bold mb-3 text-lg">Implementación básica de BaseORM:</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
+              <img src="../../public/images/pa3/baseorm_implementacion.png" alt="Implementación básica de BaseORM" class="w-full">
+            </div>
+          </div>
+          
+          <div class="mb-6 bg-green-50 p-5 rounded-lg border border-green-200">
+            <p class="font-bold mb-3 text-lg text-green-800">Resultado de la prueba (éxito):</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
+              <img src="../../public/images/pa3/test_tdd_fase_green.png" alt="Resultado de prueba pasando (GREEN)" class="w-full">
+            </div>
+            <p class="text-green-700">
+              Las pruebas pasan, lo que confirma que nuestra implementación básica de la inicialización del ORM 
+              funciona correctamente. Este es un ejemplo perfecto del ciclo TDD: primero escribimos pruebas que 
+              fallan (RED), luego implementamos el código mínimo necesario para que pasen (GREEN).
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <div id="fase-refactor" class="mb-10">
+        <h3 class="text-xl font-bold mb-5 pl-4 border-l-4 border-blue-500">Fase REFACTOR: Mejorando el código</h3>
+        <div class="bg-white p-6 rounded-lg shadow-sm">
+          <p class="mb-5">
+            Ahora podemos añadir más funcionalidades y mejorar el código existente, siempre asegurándonos 
+            de que las pruebas sigan pasando. Implementaremos el método findAll() y un sistema de caché.
+          </p>
+          
+          <div class="mb-6">
+            <p class="font-bold mb-3 text-lg">Pruebas para findAll():</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
+              <img src="../../public/images/pa3/test_findall.png" alt="Pruebas para findAll()" class="w-full">
+            </div>
+          </div>
+          
+          <div class="mb-6">
+            <p class="font-bold mb-3 text-lg">Implementación refactorizada de BaseORM:</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
+              <img src="../../public/images/pa3/baseorm_refactor.png" alt="BaseORM refactorizado" class="w-full">
+            </div>
+          </div>
+          
+          <p class="mt-5">En esta fase de refactorización, hemos mejorado significativamente nuestro ORM:</p>
+          <ul class="list-disc pl-8 mb-4 mt-3 space-y-2">
+            <li>Añadimos control de inicialización para evitar operaciones redundantes</li>
+            <li>Implementamos un sistema de caché para optimizar lecturas repetidas</li>
+            <li>Añadimos métodos findAll() y findById() con soporte para opciones</li>
+            <li>Mejoramos el manejo de errores para mayor robustez</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <section id="orm" class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Implementación ORM</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p class="mb-6">
+          El ORM que hemos creado proporciona una capa de abstracción sobre los archivos JSON, tratándolos 
+          como si fueran tablas en una base de datos relacional:
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
+            <h3 class="font-bold text-lg mb-3 text-indigo-700">Arquitectura del ORM</h3>
+            <p class="mb-3">Diseñamos una arquitectura en dos niveles:</p>
+            <ul class="list-disc pl-8 space-y-1">
+              <li><strong>BaseORM:</strong> Clase base genérica que maneja operaciones comunes</li>
+              <li><strong>ProfileORM:</strong> Clase específica para perfiles que extiende BaseORM</li>
+            </ul>
+          </div>
+          
+          <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
+            <h3 class="font-bold text-lg mb-3 text-indigo-700">Características principales</h3>
+            <ul class="list-disc pl-8 space-y-1">
+              <li>Operaciones CRUD básicas (Create, Read, Update, Delete)</li>
+              <li>Sistema de caché integrado para optimizar rendimiento</li>
+              <li>Manejo de errores robusto</li>
+              <li>Validación de datos</li>
+            </ul>
+          </div>
         </div>
         
-        <p class="mb-4">Este error es exactamente lo que esperamos en la fase RED del TDD. Estamos intentando probar una clase que aún no existe, lo que confirma que estamos siguiendo correctamente el proceso.</p>
-      </div>
-      
-      <div id="fase-green" class="mb-6 opacity-50">
-        <h3 class="text-xl font-semibold mb-3">Fase GREEN: Implementando código funcional</h3>
-        <p>En esta fase, escribiremos el código mínimo necesario para que las pruebas pasen.</p>
-        <div class="placeholder-image bg-gray-200 h-40 flex items-center justify-center rounded mb-4">
-          <p class="text-gray-500">Captura de pruebas pasando (pendiente)</p>
+        <div class="mb-6">
+          <p class="font-bold mb-3 text-lg">Implementación de ProfileORM:</p>
+          <div class="border border-gray-300 rounded-lg overflow-hidden">
+            <img src="../../public/images/pa3/profileorm_implementacion.png" alt="Implementación de ProfileORM" class="w-full">
+          </div>
         </div>
+        
+        <p class="mb-4">Esta implementación nos permite manejar los perfiles de manera estructurada y eficiente, abriendo la puerta a futuras mejoras como:</p>
+        <ul class="list-disc pl-8 mb-4 space-y-2">
+          <li>Búsqueda avanzada por múltiples criterios</li>
+          <li>Ordenamiento y paginación</li>
+          <li>Validación más exhaustiva</li>
+          <li>Migración potencial a una base de datos real sin cambiar la API</li>
+        </ul>
       </div>
-      
-      <div id="fase-refactor" class="mb-6 opacity-50">
-        <h3 class="text-xl font-semibold mb-3">Fase REFACTOR: Mejorando el código</h3>
-        <p>En esta fase, mejoraremos el código manteniendo las pruebas pasando.</p>
-        <div class="placeholder-image bg-gray-200 h-40 flex items-center justify-center rounded mb-4">
-          <p class="text-gray-500">Captura de mejoras (pendiente)</p>
+    </section>
+    
+    <section id="optimizacion" class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Optimización de Consultas</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p class="mb-6">
+          Hemos implementado varias estrategias de optimización para mejorar el rendimiento:
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
+            <h3 class="font-bold text-lg mb-3 text-indigo-700">1. Sistema de caché</h3>
+            <p class="mb-3">Almacenamos entidades leídas previamente en memoria para reducir accesos a disco:</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
+              <img src="../../public/images/pa3/optimizacion_cache.png" alt="Sistema de caché" class="w-full">
+            </div>
+          </div>
+          
+          <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
+            <h3 class="font-bold text-lg mb-3 text-indigo-700">2. Inicialización perezosa</h3>
+            <p class="mb-3">Inicializamos recursos solo cuando es necesario:</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
+              <img src="../../public/images/pa3/optimizacion_lazy.png" alt="Inicialización perezosa" class="w-full">
+            </div>
+          </div>
+          
+          <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
+            <h3 class="font-bold text-lg mb-3 text-indigo-700">3. Filtrado eficiente</h3>
+            <p class="mb-3">Implementamos filtros que aprovechan la caché:</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
+              <img src="../../public/images/pa3/optimizacion_filtrado.png" alt="Filtrado eficiente" class="w-full">
+            </div>
+          </div>
+          
+          <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
+            <h3 class="font-bold text-lg mb-3 text-indigo-700">4. Manejo inteligente de errores</h3>
+            <p class="mb-3">Evitamos que errores puntuales afecten al sistema completo:</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
+              <img src="../../public/images/pa3/optimizacion_errores.png" alt="Manejo de errores" class="w-full">
+            </div>
+          </div>
         </div>
+        
+        <p class="mt-4">
+          Estas optimizaciones garantizan un funcionamiento eficiente incluso con conjuntos de datos grandes, 
+          manteniendo baja la latencia de las operaciones frecuentes.
+        </p>
       </div>
     </section>
     
-    <section id="orm" class="mb-10 opacity-50">
-      <h2 class="text-2xl font-bold mb-4">Implementación ORM</h2>
-      <p>Contenido pendiente - Se documentará la implementación del ORM</p>
-    </section>
-    
-    <section id="optimizacion" class="mb-10 opacity-50">
-      <h2 class="text-2xl font-bold mb-4">Optimización de Consultas</h2>
-      <p>Contenido pendiente - Se documentarán las optimizaciones implementadas</p>
-    </section>
-    
-    <section id="conclusion" class="mb-10 opacity-50">
-      <h2 class="text-2xl font-bold mb-4">Conclusión</h2>
-      <p>Contenido pendiente - Conclusiones finales del trabajo</p>
+    <section id="conclusion" class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Conclusión</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p class="mb-5">
+          Mediante la implementación de un sistema ORM para archivos JSON siguiendo Test-Driven Development (TDD), 
+          hemos mejorado significativamente la calidad y mantenibilidad de nuestro código.
+        </p>
+        
+        <p class="mb-4 font-medium">Los beneficios principales que hemos obtenido son:</p>
+        <ul class="list-disc pl-8 mb-6 space-y-2">
+          <li><strong class="text-indigo-700">Mayor robustez:</strong> Las pruebas unitarias garantizan que el código funcione como se espera.</li>
+          <li><strong class="text-indigo-700">Código más mantenible:</strong> La abstracción proporcionada por el ORM facilita futuros cambios.</li>
+          <li><strong class="text-indigo-700">Mejor rendimiento:</strong> Las optimizaciones como caché reducen la latencia.</li>
+          <li><strong class="text-indigo-700">Desarrollo metódico:</strong> El enfoque TDD nos obligó a pensar en la funcionalidad antes de implementarla.</li>
+        </ul>
+        
+        <p>
+          Este proyecto demuestra la aplicación práctica de principios de ingeniería de software como 
+          DRY (Don't Repeat Yourself), KISS (Keep It Simple, Stupid) y YAGNI (You Aren't Gonna Need It), 
+          resultando en un código más limpio, eficiente y comprobable.
+        </p>
+      </div>
     </section>
   </main>
 </Layout>
@@ -168,69 +295,28 @@ describe('BaseORM', () =&gt; &#123;
     line-height: 1.6;
   }
   
-  .progress-tracker {
-    background-color: #f3f4f6;
-    padding: 1rem;
-    border-radius: 0.5rem;
-  }
-  
-  .steps {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .step {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .step-number {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-  }
-  
   .completed .step-number {
-    background-color: green;
+    background-color: #10b981;
     color: white;
   }
   
   .pending .step-number {
-    background-color: gray;
+    background-color: #9ca3af;
     color: white;
   }
   
-  .step-text {
-    font-weight: 500;
-  }
-  
   .completed .step-text {
-    color: green;
+    color: #10b981;
   }
   
-  .code-block {
-    background-color: #f3f4f6;
-    padding: 1rem;
-    border-radius: 0.5rem;
-  }
-  
-  pre {
-    overflow-x: auto;
-    font-size: 0.875rem;
-  }
-  
-  .opacity-50 {
-    opacity: 0.5;
-  }
-  
-  .code-block-img {
+  img {
     max-width: 100%;
     height: auto;
+  }
+  
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

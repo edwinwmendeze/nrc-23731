@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import tailwindcss from "@tailwindcss/vite";
 import sitemap from '@astrojs/sitemap';
 import compress from 'astro-compress';
 import icon from 'astro-icon';
@@ -17,6 +18,9 @@ export default defineConfig({
       },
     }),
   ],
+  vite: {
+    plugins: [tailwindcss()],
+  },
   image: {
     // Configuración de optimización de imágenes usando astro:assets
     service: {

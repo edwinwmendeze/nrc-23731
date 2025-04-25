@@ -59,6 +59,10 @@ portfolio-grupo/
 │   │       └── [OtrosPerfiles].json
 │   ├── services/
 │   │   └── profileService.ts
+│   ├── lib/
+│   │   └── orm/
+│   │       ├── BaseORM.ts
+│   │       └── ProfileORM.ts
 │   ├── types/
 │   │   ├── AppError.ts
 │   │   ├── index.ts
@@ -66,6 +70,11 @@ portfolio-grupo/
 │   │   └── project.ts
 │   └── utils/
 │       └── errorUtils.ts
+├── tests/
+│   └── lib/
+│       └── orm/
+│           ├── BaseORM.test.ts
+│           └── ProfileORM.test.ts
 ├── public/
 │   ├── favicon.svg
 │   └── images/
@@ -77,6 +86,7 @@ portfolio-grupo/
 ├── jsconfig.json
 ├── .prettierrc
 ├── .eslintrc.cjs
+├── vitest.config.ts
 └── README.md
 ```
 
@@ -88,6 +98,7 @@ El proyecto implementa los siguientes patrones arquitectónicos propios del fram
 2. **SSG (Static Site Generation)**: Generación estática para optimizar rendimiento y SEO, una característica fundamental de Astro.
 3. **Arquitectura por Capas**: Separación entre UI, datos y lógica de aplicación.
 4. **Manejo de Errores Centralizado**: Sistema robusto para captura y presentación de errores.
+5. **Object-Relational Mapping (ORM)**: Abstracción para manejo de archivos JSON como si fueran una base de datos relacional.
 
 ## 4. Componentes Principales
 
@@ -196,6 +207,159 @@ Se implementan las siguientes estrategias:
 
 - **Manejo robusto de errores**: Durante la carga de datos, se implementa un sistema que evita fallos en la aplicación si algún archivo no existe o tiene errores.
 
+### 5.3 Implementación de ORM para JSON
+
+Hemos implementado un sistema ORM (Object-Relational Mapping) para gestionar los archivos JSON como si fueran una base de datos relacional, siguiendo la metodología TDD (Test-Driven Development):
+
+#### 5.3.1 Arquitectura del ORM
+
+El sistema ORM consiste en dos clases principales:
+
+1. **BaseORM**: Clase genérica que proporciona operaciones CRUD básicas para cualquier tipo de entidad:
+   - Inicialización y gestión de directorios
+   - Operaciones de lectura (findAll, findById)
+   - Sistema de caché para optimizar lecturas repetidas
+   - Manejo de errores
+
+```typescript
+// src/lib/orm/BaseORM.ts
+import * as fs from 'fs/promises';
+import path from 'path';
+
+export class BaseORM<T extends { id: string }> {
+  private basePath: string;
+  private initialized: boolean = false;
+  private cache: Map<string, T> = new Map();
+  
+  constructor(basePath: string) {
+    this.basePath = basePath;
+  }
+  
+  async initialize(): Promise<void> {
+    try {
+      await fs.access(this.basePath);
+    } catch (error) {
+      // Directorio no existe, lo creamos
+      await fs.mkdir(this.basePath, { recursive: true });
+    }
+  }
+  
+  async findAll(options: { useCache?: boolean } = {}): Promise<T[]> {
+    const { useCache = true } = options;
+    
+    try {
+      // Inicializar si es necesario
+      await this.initialize();
+      
+      // Leer todos los archivos JSON
+      const files = await fs.readdir(this.basePath);
+      const jsonFiles = files.filter(file => file.endsWith('.json'));
+      
+      // Cargar y parsear cada archivo
+      const entities: T[] = [];
+      for (const file of jsonFiles) {
+        const filePath = path.join(this.basePath, file);
+        const content = await fs.readFile(filePath, 'utf-8');
+        entities.push(JSON.parse(content));
+      }
+      
+      return entities;
+    } catch (error) {
+      console.error('Error en findAll:', error);
+      return [];
+    }
+  }
+}
+```
+
+2. **ProfileORM**: Clase específica para perfiles que extiende BaseORM:
+   - Validación específica para el modelo de perfil
+   - Métodos adicionales como búsqueda por nombre o habilidades
+   - Indexación para optimizar búsquedas frecuentes
+
+```typescript
+// src/lib/orm/ProfileORM.ts
+import { BaseORM } from './BaseORM';
+import path from 'path';
+import type { Profile } from '../../types';
+
+export class ProfileORM extends BaseORM<Profile> {
+  constructor(basePath: string = path.join(process.cwd(), 'src/data/profiles')) {
+    super(basePath);
+  }
+  
+  async findByName(name: string): Promise<Profile[]> {
+    const profiles = await this.findAll();
+    return profiles.filter(profile => 
+      profile.basics?.name === name
+    );
+  }
+  
+  // Otros métodos específicos para perfiles...
+}
+```
+
+#### 5.3.2 Implementación siguiendo TDD
+
+El desarrollo del ORM siguió estrictamente el ciclo TDD (Test-Driven Development):
+
+1. **Fase RED**: Primero se escribieron pruebas para las funcionalidades deseadas, que inicialmente fallaban:
+
+```typescript
+// tests/lib/orm/BaseORM.test.ts
+describe('initialize()', () => {
+  it('debe crear el directorio si no existe', async () => {
+    // Simular que el directorio no existe
+    vi.mocked(fs.access).mockRejectedValueOnce(new Error('ENOENT'));
+    
+    await orm.initialize();
+    
+    // Verificar que se intentó crear el directorio
+    expect(fs.mkdir).toHaveBeenCalledWith(testDir, { recursive: true });
+  });
+});
+```
+
+2. **Fase GREEN**: Luego se implementó el código mínimo necesario para que las pruebas pasaran.
+
+3. **Fase REFACTOR**: Finalmente, se mejoraron las implementaciones manteniendo las pruebas exitosas:
+   - Adición de sistema de caché
+   - Optimización de inicialización
+   - Mejora en el manejo de errores
+
+### 5.3.3 Optimización de consultas
+
+Para garantizar un rendimiento óptimo, se implementaron varias técnicas de optimización:
+
+1. **Sistema de caché en memoria**: Evita lecturas repetidas del sistema de archivos
+2. **Inicialización perezosa**: Solo crea directorios cuando es necesario
+3. **Indexación**: Para búsquedas frecuentes por nombre o habilidades
+4. **Normalización de cadenas**: Para búsquedas insensibles a mayúsculas/minúsculas y acentos
+
+### 5.3.4 Integración con el servicio existente
+
+Se actualizó el `profileService.ts` para utilizar el nuevo ORM, manteniendo la compatibilidad con el resto de la aplicación:
+
+```typescript
+// src/services/profileService.ts
+import { ProfileORM } from '../lib/orm/ProfileORM';
+import type { Profile, ProjectWithAuthor } from '../types';
+
+// Instancia del ORM
+const profileORM = new ProfileORM();
+
+export async function getProfiles(): Promise<Profile[]> {
+  try {
+    return await profileORM.findAll();
+  } catch (error) {
+    console.error('Error cargando perfiles:', error);
+    return [];
+  }
+}
+
+// Resto del servicio...
+```
+
 ## 6. Optimizaciones y Rendimiento
 
 ### 6.1 Optimizaciones de Rendimiento
@@ -254,6 +418,7 @@ El portafolio implementa un sistema completo de temas claro/oscuro que mejora si
   const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', initialTheme);
 </script>
+```
 
 ### 6.3.2 Botón "Volver Arriba"
 Componente de navegación que mejora la experiencia de usuario en secciones largas:
@@ -297,9 +462,134 @@ El proceso de Integración Continua y Despliegue Continuo (CI/CD) implementado e
 
 La configuración se encuentra en el archivo `.github/workflows/deploy.yml` del repositorio.
 
-## 8. Buenas Prácticas Implementadas
+## 8. Pruebas Unitarias y TDD
 
-### 8.1 Prácticas de Desarrollo
+### 8.1 Configuración del entorno de pruebas
+
+Para implementar pruebas unitarias, configuramos Vitest como framework de testing:
+
+```typescript
+// vitest.config.ts
+/// <reference types="vitest" />
+import { getViteConfig } from 'astro/config';
+
+export default getViteConfig({
+  test: {
+    globals: true,
+    environment: 'node'
+  }
+});
+```
+
+Además, añadimos scripts en `package.json` para facilitar la ejecución de pruebas:
+
+```json
+"scripts": {
+  "test": "vitest run",
+  "test:watch": "vitest",
+  "test:coverage": "vitest run --coverage"
+}
+```
+
+### 8.2 Proceso TDD (Test-Driven Development)
+
+El desarrollo del ORM siguió estrictamente el ciclo RED-GREEN-REFACTOR:
+
+#### 8.2.1 Fase RED: Pruebas que fallan
+
+Primero escribimos pruebas para funcionalidad que aún no existía:
+
+```typescript
+// tests/lib/orm/BaseORM.test.ts
+describe('BaseORM', () => {
+  describe('initialize()', () => {
+    it('debe crear el directorio si no existe', async () => {
+      // Simular que el directorio no existe
+      vi.mocked(fs.access).mockRejectedValueOnce(new Error('ENOENT'));
+      
+      await orm.initialize();
+      
+      // Verificar que se intentó crear el directorio
+      expect(fs.mkdir).toHaveBeenCalledWith(testDir, { recursive: true });
+    });
+  });
+});
+```
+
+Al ejecutar esta prueba, obtuvimos un error porque BaseORM aún no existía:
+
+```
+Error: Cannot find module '../../../src/lib/orm/BaseORM' from 'tests/lib/orm/BaseORM.test.ts'
+```
+
+#### 8.2.2 Fase GREEN: Implementación mínima
+
+Implementamos el código mínimo necesario para que las pruebas pasaran:
+
+```typescript
+// src/lib/orm/BaseORM.ts
+import * as fs from 'fs/promises';
+import path from 'path';
+
+export class BaseORM<T extends { id: string }> {
+  private basePath: string;
+  
+  constructor(basePath: string) {
+    this.basePath = basePath;
+  }
+  
+  async initialize(): Promise<void> {
+    try {
+      await fs.access(this.basePath);
+    } catch (error) {
+      // Directorio no existe, lo creamos
+      await fs.mkdir(this.basePath, { recursive: true });
+    }
+  }
+}
+```
+
+Con esta implementación, las pruebas pasaron correctamente:
+
+```
+✓ tests/lib/orm/BaseORM.test.ts (2 tests) 
+
+Test Files  1 passed (1)
+Tests  2 passed (2)
+```
+
+#### 8.2.3 Fase REFACTOR: Mejora del código
+
+Finalmente, mejoramos la implementación manteniendo las pruebas exitosas:
+
+```typescript
+// Refactorizando initialize() para añadir verificación de estado
+async initialize(): Promise<void> {
+  if (this.initialized) return;
+  
+  try {
+    await fs.access(this.basePath);
+  } catch (error) {
+    // Directorio no existe, lo creamos
+    await fs.mkdir(this.basePath, { recursive: true });
+  }
+  
+  this.initialized = true;
+}
+```
+
+### 8.3 Beneficios del enfoque TDD
+
+El desarrollo guiado por pruebas nos proporcionó múltiples ventajas:
+
+1. **Detección temprana de errores**: Los fallos se identifican inmediatamente durante el desarrollo
+2. **Diseño más limpio**: El código resultó ser más modular y con mejor separación de responsabilidades
+3. **Documentación viva**: Las pruebas sirven como documentación ejecutable del comportamiento esperado
+4. **Confianza en refactorizaciones**: Las modificaciones posteriores pueden realizarse con la certeza de que no se romperá la funcionalidad existente
+
+## 9. Buenas Prácticas Implementadas
+
+### 9.1 Prácticas de Desarrollo
 
 - **Código tipado con TypeScript**: Se utilizan interfaces y tipos para definir estructuras de datos, mejorando la detección temprana de errores.
 
@@ -339,7 +629,7 @@ try {
 }
 ```
 
-### 8.2 Diseño Responsivo
+### 9.2 Diseño Responsivo
 
 - **Enfoque mobile-first**: Diseño que prioriza la experiencia en dispositivos móviles y luego se adapta a pantallas más grandes.
 
@@ -363,9 +653,9 @@ try {
 
 - **Componentes flexibles**: Elementos que se ajustan automáticamente a distintos tamaños de pantalla mediante CSS Grid y Flexbox.
 
-## 9. Desafíos y Soluciones
+## 10. Desafíos y Soluciones
 
-### 9.1 Desafíos Encontrados
+### 10.1 Desafíos Encontrados
 
 1. **Problemas con rutas en GitHub Pages**: Se requiere configuración especial para que las rutas funcionen correctamente en el entorno de GitHub Pages.
    - **Solución**: Configuración de Astro modificada para usar la ruta base correcta.
@@ -376,46 +666,54 @@ try {
 3. **Carga dinámica de perfiles**: Era necesario que el sistema mostrara automáticamente la misma cantidad de perfiles que archivos JSON existentes.
    - **Solución**: Implementación de un servicio que escanea la carpeta de perfiles y carga dinámicamente todos los archivos encontrados.
 
-4. **Coordinación y organización del equipo**: Uno de los principales desafíos fue coordinar reuniones y llegar a acuerdos sobre aspectos del proyecto, debido a que cada integrante tenía diferentes disponibilidades horarias por motivos laborales, académicos y personales.
+4. **Configuración de pruebas con mock de módulos ESM**: Durante la implementación de pruebas TDD, surgieron desafíos con el mock de módulos ESM como fs/promises.
+   - **Solución**: Configuración específica para Vitest con patrones adecuados de mock para módulos nativos.
+
+5. **Coordinación y organización del equipo**: Uno de los principales desafíos fue coordinar reuniones y llegar a acuerdos sobre aspectos del proyecto, debido a que cada integrante tenía diferentes disponibilidades horarias por motivos laborales, académicos y personales.
    - **Solución**: Se estableció un sistema de comunicación efectiva, con reuniones programadas con anticipación y documentación clara de decisiones tomadas. La paciencia y dedicación de todos los miembros permitió superar estos obstáculos y completar el proyecto satisfactoriamente.
 
-## 10. Conclusiones y Recomendaciones
+## 11. Conclusiones y Recomendaciones
 
-### 10.1 Logros Alcanzados
+### 11.1 Logros Alcanzados
 
 - Desarrollo exitoso de un portafolio grupal minimalista y responsivo
 - Implementación de un sistema robusto de manejo de errores
 - Creación de una estructura de proyecto escalable y mantenible
 - Despliegue efectivo en GitHub Pages
 - Sistema dinámico para agregar perfiles de equipo mediante archivos JSON
+- Implementación de ORM para gestión de datos JSON siguiendo TDD
+- Pruebas unitarias con alta cobertura y optimizaciones de rendimiento
 
-### 10.2 Recomendaciones para Futuras Mejoras
+### 11.2 Recomendaciones para Futuras Mejoras
 
 1. **Internacionalización**: Implementar soporte para múltiples idiomas.
 2. **Modo Oscuro**: Adición de un toggle para cambiar entre modo claro y oscuro.
 3. **Filtrado de Proyectos**: Agregar funcionalidad para filtrar proyectos por tecnología o categoría.
 4. **Blog Integrado**: Considerar la adición de una sección de blog para compartir conocimientos.
-5. **Pruebas Automatizadas**: Implementar tests unitarios y de integración.
+5. **Ampliación de Pruebas**: Extender las pruebas a componentes de UI.
 6. **Optimización de imágenes**: Añadir procesamiento automático para optimizar imágenes de perfil.
+7. **Expansión del ORM**: Añadir más funcionalidades y soporte para relaciones entre entidades.
 
 ---
 
-## 11. Referencias
+## 12. Referencias
 
 - [Documentación oficial de Astro](https://docs.astro.build/)
 - [GitHub Pages](https://pages.github.com/)
 - [Guía de CSS Variables](https://developer.mozilla.org/es/docs/Web/CSS/Using_CSS_custom_properties)
 - [TypeScript](https://www.typescriptlang.org/docs/)
 - [HTML Elementos Semánticos](https://developer.mozilla.org/es/docs/Web/HTML/Element)
+- [Vitest - Framework de pruebas](https://vitest.dev/guide/)
+- [Test-Driven Development (TDD)](https://martinfowler.com/bliki/TestDrivenDevelopment.html)
 
 ---
 
 *Documento elaborado por: Grupo A - NRC 23731*  
-*Última actualización: 6 de abril de 2025*
+*Última actualización: 24 de abril de 2025*
 
-## 12. Gestión de Código con Git y GitHub
+## 13. Gestión de Código con Git y GitHub
 
-### 12.1 Implementación de GitFlow
+### 13.1 Implementación de GitFlow
 
 El proyecto implementó un flujo de trabajo basado en GitFlow para la gestión del código fuente:
 
@@ -427,7 +725,7 @@ El proyecto implementó un flujo de trabajo basado en GitFlow para la gestión d
    - `hotfix/*`: Ramas para correcciones urgentes en producción
 
 2. **Flujo de trabajo implementado**:
-   - Desarrollo de características en ramas independientes (`feature/modo-oscuro`, `feature/volver-arriba`)
+   - Desarrollo de características en ramas independientes (`feature/modo-oscuro`, `feature/volver-arriba`, `feature/orm-tdd`)
    - Integración a `develop` mediante `git flow feature finish`
    - Preparación de releases desde `develop` con `git flow release start/finish`
    - Cada miembro trabajó en sus características asignadas sin interferir con el trabajo de los demás
@@ -437,7 +735,7 @@ El proyecto implementó un flujo de trabajo basado en GitFlow para la gestión d
    - Se priorizó la conservación de ambas funcionalidades en caso de conflicto
    - Testeo después de cada resolución para verificar la integridad del código
 
-### 12.2 Automatización de CI/CD
+### 13.2 Automatización de CI/CD
 
 Se implementó integración y despliegue continuo mediante GitHub Actions:
 
