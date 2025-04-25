@@ -82,7 +82,7 @@ const {
       <div class="grid gap-8 grid-cols-1 md:grid-cols-3">
         {profiles.map((profile) => (
           <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 overflow-hidden flex flex-col items-center p-0">
-            <img src={getImageSrc(profile)} alt={profile.basics?.name} class="w-32 h-32 object-cover object-center rounded-2xl mx-auto mt-6 shadow-md border-4 border-white dark:border-gray-900" loading="lazy" />
+            <img src={getImageSrc(profile)} alt={profile.basics?.name} class="w-32 h-32 object-cover object-center rounded-2xl mx-auto mt-6 shadow-md border-4 border-white dark:border-gray-700" loading="lazy" />
             <div class="w-full flex-1 flex flex-col p-6">
               <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">{profile.basics?.name} {profile.basics?.last_name}</h3>
               <p class="text-gray-700 dark:text-gray-200 text-base font-medium mb-1">{profile.basics?.label}</p>
@@ -105,7 +105,7 @@ const {
                   <SocialLink network={social.network} url={social.url} username={social.username} />
                 ))}
               </div>
-              <Button href={profile.basics?.url} variant="secondary" class="mt-auto w-full">Ver portafolio</Button>
+              <Button href={profile.basics?.url} variant="secondary" class="mt-auto w-full bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-200 hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors">Ver portafolio</Button>
             </div>
           </div>
         ))}

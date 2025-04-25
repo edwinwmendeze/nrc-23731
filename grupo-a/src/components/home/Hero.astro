@@ -7,14 +7,52 @@ const siteDescription = siteConfig.site.description;
 const teamDescription = siteConfig.team.description;
 ---
 
-<section id="inicio" class="relative bg-gradient-to-br from-indigo-600 via-purple-500 to-pink-400 py-24 md:py-36 flex items-center min-h-[70vh]">
-  <div class="max-w-3xl mx-auto px-4 text-center text-white">
-    <h1 class="text-5xl md:text-6xl font-bold mb-4 drop-shadow-lg">{teamName}</h1>
-    <p class="text-xl md:text-2xl font-medium mb-3 opacity-90">{siteDescription}</p>
-    <p class="text-base md:text-lg mb-8 opacity-80 max-w-xl mx-auto">{teamDescription}</p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <Button href="#integrantes" variant="primary" class="px-8 py-3 text-lg font-semibold shadow-md hover:scale-105 transition-transform">Conoce al equipo</Button>
-      <Button href="#proyectos" variant="secondary" class="px-8 py-3 text-lg font-semibold shadow-md hover:scale-105 transition-transform">Ver Proyectos</Button>
+<section 
+  id="inicio" 
+  class="relative py-24 md:py-36 flex items-center min-h-[80vh] overflow-hidden bg-gray-50 dark:bg-gray-900"
+>
+  <!-- Fondo con patrón geométrico para modo claro y oscuro -->
+  <div class="absolute inset-0 z-0 opacity-10 dark:opacity-20">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+      <rect class="text-indigo-500 dark:text-indigo-400" fill="currentColor" width="800" height="800"/>
+      <g fill="none" stroke="white" stroke-width="1">
+        <path d="M769 229L1037 260.9M927 880L731 737 520 660 309 538 40 599 295 764 126.5 879.5 40 599-197 493 102 382-31 229 126.5 79.5-69-63"/>
+        <path d="M-31 229L237 261 390 382 731 737M520 660L309 538 40 599 295 764 126.5 879.5 40 599-197 493 102 382-31 229 126.5 79.5-69-63"/>
+        <path d="M520 660L309 538 295 764 731 737M520 660L309 538 40 599M520 660L309 538M520 660L126.5 879.5M520 660L731 737M520 660L520 660"/>
+        <path d="M520 660L520 660 520 660M520 660L520 660M520 660L520 660M520 660L520 660"/>
+      </g>
+    </svg>
+  </div>
+  
+  <!-- Overlay de color para dar profundidad -->
+  <div class="absolute inset-0 z-0 bg-gradient-to-br from-indigo-500/30 to-purple-600/30 dark:from-indigo-900/50 dark:to-purple-900/50"></div>
+  
+  <!-- Contenido principal -->
+  <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
+    <div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-8 md:p-12 rounded-2xl shadow-xl">
+      <h1 class="text-5xl md:text-6xl font-bold mb-4 text-indigo-700 dark:text-indigo-400">{teamName}</h1>
+      <p class="text-xl md:text-2xl font-medium mb-3 text-gray-800 dark:text-gray-200">{siteDescription}</p>
+      <p class="text-base md:text-lg mb-8 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">{teamDescription}</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button 
+          href="#integrantes" 
+          variant="primary" 
+          class="px-8 py-3 text-lg font-semibold shadow-md hover:scale-105 transition-transform bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-600"
+        >
+          Conoce al equipo
+        </Button>
+        <Button 
+          href="#proyectos" 
+          variant="secondary" 
+          class="px-8 py-3 text-lg font-semibold shadow-md hover:scale-105 transition-transform bg-white text-indigo-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-indigo-300 dark:hover:bg-gray-600"
+        >
+          Ver Proyectos
+        </Button>
+      </div>
     </div>
   </div>
+  
+  <!-- Decoración adicional: círculos flotantes -->
+  <div class="absolute top-20 left-10 w-20 h-20 bg-indigo-500/20 dark:bg-indigo-400/10 rounded-full blur-xl"></div>
+  <div class="absolute bottom-20 right-10 w-32 h-32 bg-purple-500/20 dark:bg-purple-400/10 rounded-full blur-xl"></div>
 </section>
