@@ -11,7 +11,7 @@ export class BaseORM<T extends { id: string }> {
     this.basePath = basePath;
   }
   
-  // Refactorizado para comprobar si ya está inicializado
+  // Inicialización perezosa
   async initialize(): Promise<void> {
     if (this.initialized) return;
     
@@ -25,7 +25,7 @@ export class BaseORM<T extends { id: string }> {
     this.initialized = true;
   }
   
-  // Implementación de findAll con caché
+  // Método findAll con sistema de caché
   async findAll(options: { useCache?: boolean } = {}): Promise<T[]> {
     const { useCache = true } = options;
     
@@ -39,15 +39,18 @@ export class BaseORM<T extends { id: string }> {
       for (const file of jsonFiles) {
         const id = path.basename(file, '.json');
         
+        // Usar caché si está disponible
         if (useCache && this.cache.has(id)) {
           entities.push(this.cache.get(id)!);
           continue;
         }
         
+        // Cargar desde archivo si no está en caché
         const filePath = path.join(this.basePath, file);
         const content = await fs.readFile(filePath, 'utf-8');
         const entity = JSON.parse(content) as T;
         
+        // Guardar en caché para uso futuro
         if (useCache) {
           this.cache.set(id, entity);
         }
@@ -62,13 +65,14 @@ export class BaseORM<T extends { id: string }> {
     }
   }
   
-  // Método para buscar una entidad por ID
+  // Método findById para obtener una entidad específica
   async findById(id: string, options: { useCache?: boolean } = {}): Promise<T | null> {
     const { useCache = true } = options;
     
     try {
       await this.initialize();
       
+      // Usar caché si está disponible
       if (useCache && this.cache.has(id)) {
         return this.cache.get(id) || null;
       }
@@ -77,6 +81,7 @@ export class BaseORM<T extends { id: string }> {
       const content = await fs.readFile(filePath, 'utf-8');
       const entity = JSON.parse(content) as T;
       
+      // Guardar en caché para uso futuro
       if (useCache) {
         this.cache.set(id, entity);
       }
@@ -89,6 +94,10 @@ export class BaseORM<T extends { id: string }> {
   
   // Método para guardar una entidad
   async save(entity: T): Promise<T> {
+    if (!entity.id) {
+      throw new Error('La entidad debe tener un ID');
+    }
+    
     await this.initialize();
     
     const filePath = path.join(this.basePath, `${entity.id}.json`);
@@ -108,7 +117,7 @@ export class BaseORM<T extends { id: string }> {
       const filePath = path.join(this.basePath, `${id}.json`);
       await fs.unlink(filePath);
       
-      // Eliminar de la caché
+      // Eliminar de caché
       this.cache.delete(id);
       
       return true;
