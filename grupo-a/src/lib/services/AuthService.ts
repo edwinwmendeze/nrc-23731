@@ -61,6 +61,7 @@ export interface RegistrationData {
   email: string;
   name: string;
   lastName: string;
+  label: string;
 }
 
 /**
@@ -189,7 +190,7 @@ export class AuthService {
           basics: {
             name: data.name,
             last_name: data.lastName,
-            label: '',
+            label: data.label,
             email: data.email,
             image: {
               local: '/images/placeholder.png'
@@ -245,7 +246,7 @@ export class AuthService {
         basics: {
           name: data.name,
           last_name: data.lastName,
-          label: '',
+          label: data.label,
           email: data.email,
           image: {
             local: '/images/placeholder.png'
@@ -414,6 +415,10 @@ export class AuthService {
     
     if (!data.lastName || data.lastName.trim().length === 0) {
       errors.push('El apellido es obligatorio');
+    }
+    
+    if (!data.label || data.label.trim().length === 0) {
+      errors.push('El rol/etiqueta es obligatorio');
     }
     
     return errors;

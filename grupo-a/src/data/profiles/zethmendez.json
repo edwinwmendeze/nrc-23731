@@ -1,0 +1,17 @@
+{
+  "id": "zethmendez",
+  "basics": {
+    "name": "Zeth",
+    "last_name": "Mendez",
+    "label": "admin",
+    "email": "asdlkj@gmail.com",
+    "image": {
+      "local": "/images/placeholder.png"
+    }
+  },
+  "auth": {
+    "username": "zeth",
+    "passwordHash": "c2013355990186fcdd90ee8b0abe3912122002615333b89b7d5df13f9b025e26",
+    "lastLogin": "2025-04-25T18:55:13.305Z"
+  }
+}
