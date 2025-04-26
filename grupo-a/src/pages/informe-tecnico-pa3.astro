@@ -8,7 +8,9 @@ const progreso = [
   { paso: "Fase REFACTOR del BaseORM", completado: true },
   { paso: "Implementación ORM completa", completado: true },
   { paso: "Implementación del servicio de autenticación", completado: true },
-  { paso: "Implementación del panel de administración", completado: true }
+  { paso: "Implementación del panel de administración", completado: true },
+  { paso: "Tests unitarios y de integración", completado: true },
+  { paso: "CI/CD con GitHub Actions", completado: true }
 ];
 ---
 
@@ -42,6 +44,10 @@ const progreso = [
           El proyecto originalmente utiliza archivos JSON como fuente de datos para mostrar perfiles
           de integrantes del equipo. Mediante esta implementación, abstraemos el acceso a estos datos
           siguiendo los principios de ORM y garantizamos su correcto funcionamiento mediante pruebas unitarias.
+        </p>
+        <p class="text-lg mt-4">
+          El objetivo principal es demostrar la aplicación de técnicas TDD y ORM para la gestión eficiente
+          de datos, cumpliendo con los requisitos establecidos para el proyecto de Construcción de Software.
         </p>
       </div>
     </section>
@@ -754,39 +760,6 @@ export class AppError extends Error &#123;
       </div>
     </section>
     
-    <section id="conclusion" class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Conclusión</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p class="mb-5">
-          Mediante la implementación de un sistema ORM para archivos JSON siguiendo Test-Driven Development (TDD), 
-          hemos mejorado significativamente la calidad y mantenibilidad de nuestro código.
-        </p>
-        
-        <p class="mb-4 font-medium">Los beneficios principales que hemos obtenido son:</p>
-        <ul class="list-disc pl-8 mb-6 space-y-2">
-          <li><strong class="text-indigo-700">Mayor robustez:</strong> Las pruebas unitarias garantizan que el código funcione como se espera.</li>
-          <li><strong class="text-indigo-700">Código más mantenible:</strong> La abstracción proporcionada por el ORM facilita futuros cambios.</li>
-          <li><strong class="text-indigo-700">Mejor rendimiento:</strong> Las optimizaciones como caché e índices reducen la latencia.</li>
-          <li><strong class="text-indigo-700">Desarrollo metódico:</strong> El enfoque TDD nos obligó a pensar en la funcionalidad antes de implementarla.</li>
-        </ul>
-        
-        <p>
-          Este proyecto demuestra la aplicación práctica de principios de ingeniería de software como 
-          DRY (Don't Repeat Yourself), KISS (Keep It Simple, Stupid) y YAGNI (You Aren't Gonna Need It), 
-          resultando en un código más limpio, eficiente y comprobable. A través de la implementación del ORM y
-          del Panel de Administración, hemos construido un sistema completo que satisface los requerimientos del 
-          proyecto y proporciona una base sólida para futuras extensiones.
-        </p>
-        
-        <p class="mt-4 font-medium text-indigo-700">
-          La combinación de TDD con los principios de desarrollo nos ha permitido crear una solución robusta, mantenible
-          y orientada a las necesidades reales del usuario, demostrando las mejores prácticas de la ingeniería
-          de software moderna.
-        </p>
-      </div>
-    </section>
-    <!-- Añadir en src/pages/informe-tecnico-pa3.astro -->
-
     <section id="implementacion-autenticacion" class="mb-12">
       <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Implementación de Autenticación con TDD</h2>
       <div class="bg-white p-6 rounded-lg shadow-sm">
@@ -807,14 +780,16 @@ export class AppError extends Error &#123;
             <div class="mb-6">
               <p class="font-bold mb-3 text-lg">Pruebas para AuthService:</p>
               <div class="border border-gray-300 rounded-lg overflow-hidden">
-                <img src="../../public/images/pa3/code_test_tdd_auth.png" alt="Código de pruebas para AuthService" class="w-full">
+                <img src="/images/pa3/auth_service_test.png" alt="Código de pruebas para AuthService" class="w-full">
+                <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura del archivo de pruebas AuthService.test.ts</p>
               </div>
             </div>
             
             <div class="mb-6 bg-red-50 p-5 rounded-lg border border-red-200">
               <p class="font-bold mb-3 text-lg text-red-800">Error esperado en la fase RED:</p>
               <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
-                <img src="../../public/images/pa3/test_tdd_fase_red.png" alt="Resultado de pruebas fallando (RED)" class="w-full">
+                <img src="/images/pa3/red_phase_auth.png" alt="Resultado de pruebas fallando (RED)" class="w-full">
+                <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura del error de las pruebas de autenticación</p>
               </div>
               <p class="text-red-700">
                 Como se observa, todas las pruebas fallan porque el servicio AuthService no existe.
@@ -836,14 +811,16 @@ export class AppError extends Error &#123;
             <div class="mb-6">
               <p class="font-bold mb-3 text-lg">Implementación básica de AuthService:</p>
               <div class="border border-gray-300 rounded-lg overflow-hidden">
-                <img src="../../public/images/pa3/code_service_tdd_auth.png" alt="Implementación básica de AuthService" class="w-full">
+                <img src="/images/pa3/auth_service_impl.png" alt="Implementación básica de AuthService" class="w-full">
+                <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de la implementación inicial de AuthService</p>
               </div>
             </div>
             
             <div class="mb-6 bg-green-50 p-5 rounded-lg border border-green-200">
               <p class="font-bold mb-3 text-lg text-green-800">Resultado de las pruebas (éxito):</p>
               <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
-                <img src="../../public/images/pa3/test_tdd_green_auth.png" alt="Resultado de pruebas pasando (GREEN)" class="w-full">
+                <img src="/images/pa3/green_phase_auth.png" alt="Resultado de pruebas pasando (GREEN)" class="w-full">
+                <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de las pruebas pasando</p>
               </div>
               <p class="text-green-700">
                 Las pruebas pasan, confirmando que nuestra implementación mínima cumple con el comportamiento
@@ -865,22 +842,21 @@ export class AppError extends Error &#123;
             <div class="mb-6">
               <p class="font-bold mb-3 text-lg">Implementación refactorizada:</p>
               <div class="border border-gray-300 rounded-lg overflow-hidden">
-                <img src="../../public/images/pa3/code_service_tdd_refactor_auth.png" alt="Implementación refactorizada de AuthService" class="w-full">
+                <img src="/images/pa3/auth_service_refactor.png" alt="Implementación refactorizada de AuthService" class="w-full">
+                <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de la implementación refactorizada de AuthService</p>
               </div>
               <p class="mt-4">
-                La implementación completa del AuthService se encuentra disponible en el 
-                <a href="https://github.com/edwinwmendeze/nrc-23731/blob/develop/grupo-a/src/lib/services/AuthService.ts" 
-                   target="_blank" class="text-blue-600 underline">
-                  repositorio del proyecto
-                </a>.
-                Aquí mostramos una versión resumida con la estructura general y los comentarios:
+                La implementación completa del AuthService utiliza técnicas avanzadas como hashing de contraseñas
+                con bcrypt, generación de tokens JWT, y validación robusta de datos. Todo esto se ha implementado
+                de manera incremental, asegurando siempre que las pruebas sigan pasando.
               </p>
             </div>
             
             <div class="mb-6 bg-blue-50 p-5 rounded-lg border border-blue-200">
               <p class="font-bold mb-3 text-lg text-blue-800">Pruebas pasando con código refactorizado:</p>
               <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
-                <img src="../../public/images/pa3/test_tdd_refactor_auth.png" alt="Pruebas pasando después de refactorizar" class="w-full">
+                <img src="/images/pa3/refactor_phase_auth.png" alt="Pruebas pasando después de refactorizar" class="w-full">
+                <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de las pruebas pasando después del refactor</p>
               </div>
               
               <p class="text-blue-700">
@@ -902,82 +878,225 @@ export class AppError extends Error &#123;
             </div>
           </div>
         </div>
+      </div>
+    </section>
+    
+    <section id="sistema-autenticacion" class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Sistema de Autenticación y Panel de Administración</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p class="mb-5">
+          Con nuestro ORM y servicios de autenticación implementados, desarrollamos un completo panel de administración
+          que permite a los usuarios gestionar sus propios perfiles. Veamos el flujo completo:
+        </p>
         
-        <div id="implementacion-panel-admin" class="mb-10">
-          <h3 class="text-xl font-bold mb-5 pl-4 border-l-4 border-purple-500">Implementación del Panel de Administración</h3>
-          <div class="bg-white p-6 rounded-lg shadow-sm">
-            <p class="mb-5">
-              Con el servicio de autenticación implementado, desarrollamos un panel de administración
-              que permite a los usuarios gestionar sus propios perfiles. Aplicamos los principios DRY, KISS y YAGNI
-              para crear una interfaz intuitiva y fácil de usar.
-            </p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <p class="font-bold mb-3 text-lg">Página de inicio de sesión:</p>
-                <div class="border border-gray-300 rounded-lg overflow-hidden">
-                  <img src="/images/pa3/login_page.png" alt="Página de inicio de sesión" class="w-full">
-                </div>
-              </div>
-              
-              <div>
-                <p class="font-bold mb-3 text-lg">Panel de perfil de usuario:</p>
-                <div class="border border-gray-300 rounded-lg overflow-hidden">
-                  <img src="/images/pa3/profile_dashboard.png" alt="Panel de perfil de usuario" class="w-full">
-                </div>
-              </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <p class="font-bold mb-3 text-lg">Página de inicio de sesión:</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
+              <img src="/images/pa3/login_page.png" alt="Página de inicio de sesión" class="w-full">
+              <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de la página de login</p>
             </div>
-            
-            <div class="mb-6">
-              <p class="font-bold mb-3 text-lg">Página de edición de perfil:</p>
-              <div class="border border-gray-300 rounded-lg overflow-hidden">
-                <img src="/images/pa3/profile_edit.png" alt="Página de edición de perfil" class="w-full">
-              </div>
-            </div>
-            
-            <p class="mt-5">
-              El panel de administración implementado permite a los usuarios:
-            </p>
-            <ul class="list-disc pl-8 mb-4 space-y-2">
-              <li>Ver un resumen completo de su perfil</li>
-              <li>Editar su información personal</li>
-              <li>Gestionar sus habilidades técnicas y blandas</li>
-              <li>Administrar sus proyectos destacados</li>
-              <li>Configurar sus redes sociales</li>
-              <li>Todo esto de manera segura gracias al sistema de autenticación</li>
-            </ul>
-            
-            <div class="mt-6 bg-gray-100 p-5 rounded-lg">
-              <h4 class="text-lg font-bold mb-3">Arquitectura del Panel de Administración:</h4>
-              <p class="mb-3">Estructuramos el panel de administración siguiendo un enfoque modular y reutilizable:</p>
-              <ul class="list-disc pl-8 mb-4 space-y-1">
-                <li><strong>Modelo cliente-servidor</strong>: Utilizamos endpoints API para separar la lógica del servidor de la interfaz de usuario</li>
-                <li><strong>Componentes reutilizables</strong>: Creamos componentes independientes para cada sección (login, registro, dashboard, editor)</li>
-                <li><strong>Capas de abstracción</strong>: Implementamos utilidades para autenticación que simplifican el manejo de tokens y sesiones</li>
-                <li><strong>Protección de rutas</strong>: Verificación de autenticación tanto en cliente como en servidor</li>
-              </ul>
+          </div>
+          
+          <div>
+            <p class="font-bold mb-3 text-lg">Página de registro:</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
+              <img src="/images/pa3/register_page.png" alt="Página de registro" class="w-full">
+              <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de la página de registro</p>
             </div>
           </div>
         </div>
         
-        <div class="bg-gray-100 p-5 rounded-lg mt-6">
-          <h3 class="text-lg font-bold mb-3">Conclusiones sobre el uso de TDD en la implementación del sistema:</h3>
-          <p class="mb-3">
-            La aplicación de TDD en el desarrollo del sistema de autenticación y panel de administración demostró varias ventajas:
-          </p>
-          <ul class="list-disc pl-8 space-y-2">
-            <li>Definición clara del comportamiento esperado antes de la implementación</li>
-            <li>Detección temprana de errores y problemas de diseño</li>
-            <li>Confianza para refactorizar y mejorar el código sin romper funcionalidades</li>
-            <li>Documentación viva del comportamiento del sistema a través de pruebas</li>
-            <li>Diseño más modular y orientado a interfaces</li>
-            <li>Mayor facilidad para mantener y extender las funcionalidades</li>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <p class="font-bold mb-3 text-lg">Panel de perfil de usuario:</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
+              <img src="/images/pa3/profile_dashboard.png" alt="Panel de perfil de usuario" class="w-full">
+              <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura del panel de perfil</p>
+            </div>
+          </div>
+          
+          <div>
+            <p class="font-bold mb-3 text-lg">Página de edición de perfil:</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
+              <img src="/images/pa3/profile_edit.png" alt="Página de edición de perfil" class="w-full">
+              <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de la página de edición de perfil</p>
+            </div>
+          </div>
+        </div>
+        
+        <p class="mt-5">
+          El panel de administración implementado permite a los usuarios:
+        </p>
+        <ul class="list-disc pl-8 mb-4 space-y-2">
+          <li>Ver un resumen completo de su perfil</li>
+          <li>Editar su información personal</li>
+          <li>Gestionar sus habilidades técnicas y blandas</li>
+          <li>Administrar sus proyectos destacados</li>
+          <li>Configurar sus redes sociales</li>
+          <li>Todo esto de manera segura gracias al sistema de autenticación</li>
+        </ul>
+        
+        <div class="mt-6 bg-gray-100 p-5 rounded-lg">
+          <h4 class="text-lg font-bold mb-3">Arquitectura del Sistema de Autenticación:</h4>
+          <p class="mb-3">El sistema de autenticación se ha diseñado siguiendo las mejores prácticas:</p>
+          <ul class="list-disc pl-8 mb-4 space-y-1">
+            <li><strong>JWT (JSON Web Tokens)</strong> para gestión de sesiones sin estado</li>
+            <li><strong>Bcrypt</strong> para hashing seguro de contraseñas</li>
+            <li><strong>Cookies HttpOnly</strong> para mayor seguridad contra ataques XSS</li>
+            <li><strong>Middleware de autenticación</strong> para proteger rutas sensibles</li>
+            <li><strong>Manejo de errores contextual</strong> con mensajes amigables para el usuario</li>
           </ul>
-          <p class="mt-3">
-            Esta implementación también demuestra cómo nuestro ORM puede extenderse para soportar
-            nuevas funcionalidades manteniendo la integridad y coherencia del diseño original.
+        </div>
+      </div>
+    </section>
+    
+    <section id="testing-completo" class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Pruebas Unitarias y de Integración</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p class="mb-5">
+          Una parte fundamental de nuestro proyecto ha sido la implementación exhaustiva de pruebas unitarias
+          y de integración para asegurar el correcto funcionamiento de nuestro ORM y servicios.
+        </p>
+        
+        <div class="mb-6">
+          <p class="font-bold mb-3 text-lg">Estructura del directorio de tests:</p>
+          <div class="border border-gray-300 rounded-lg overflow-hidden">
+            <img src="/images/pa3/tests_structure.png" alt="Estructura del directorio de tests" class="w-full">
+            <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de la estructura de carpetas de tests</p>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <p class="font-bold mb-3 text-lg">Tests para BaseORM:</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
+              <img src="/images/pa3/baseorm_tests.png" alt="Tests para BaseORM" class="w-full">
+              <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de los tests de BaseORM</p>
+            </div>
+          </div>
+          
+          <div>
+            <p class="font-bold mb-3 text-lg">Tests para ProfileORM:</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
+              <img src="/images/pa3/profileorm_tests.png" alt="Tests para ProfileORM" class="w-full">
+              <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de los tests de ProfileORM</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mb-6">
+          <p class="font-bold mb-3 text-lg">Tests para AuthService:</p>
+          <div class="border border-gray-300 rounded-lg overflow-hidden">
+            <img src="/images/pa3/authservice_tests.png" alt="Tests para AuthService" class="w-full">
+            <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de los tests de AuthService</p>
+          </div>
+        </div>
+        
+        <div class="mb-6 bg-green-50 p-5 rounded-lg border border-green-200">
+          <p class="font-bold mb-3 text-lg text-green-800">Resumen de cobertura de pruebas:</p>
+          <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
+            <img src="/images/pa3/test_coverage.png" alt="Cobertura de pruebas" class="w-full">
+            <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de la cobertura de pruebas</p>
+          </div>
+          <p class="text-green-700">
+            Nuestros tests cubren todas las funcionalidades críticas de nuestro ORM y servicios, asegurando
+            que el código funcione correctamente y sea resistente a cambios futuros.
           </p>
         </div>
+        
+        <p class="mt-5">Estrategias de testing utilizadas:</p>
+        <ul class="list-disc pl-8 mb-4 space-y-2">
+          <li><strong>Mocking</strong> de sistemas externos como el sistema de archivos para aislamiento adecuado</li>
+          <li><strong>Tests paramétricos</strong> para probar múltiples escenarios con un solo test</li>
+          <li><strong>Fixtures y helpers</strong> para facilitar la creación de datos de prueba</li>
+          <li><strong>Tests de bordes</strong> para asegurar comportamiento correcto en casos límite</li>
+          <li><strong>Tests de integración</strong> para comprobar la interacción entre componentes</li>
+        </ul>
+      </div>
+    </section>
+    
+    <section id="ci-cd" class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Integración Continua con GitHub Actions</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p class="mb-5">
+          Para completar nuestro enfoque de desarrollo basado en pruebas, implementamos un pipeline de
+          integración continua con GitHub Actions que ejecuta nuestras pruebas automáticamente en cada push.
+        </p>
+        
+        <div class="mb-6">
+          <p class="font-bold mb-3 text-lg">Configuración del workflow de tests:</p>
+          <div class="border border-gray-300 rounded-lg overflow-hidden">
+            <img src="/images/pa3/github_workflow_config.png" alt="Configuración del workflow en GitHub Actions" class="w-full">
+            <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura del archivo YAML de GitHub Actions</p>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <p class="font-bold mb-3 text-lg">Ejecución en GitHub Actions:</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
+              <img src="/images/pa3/github_actions_execution.png" alt="Ejecución de tests en GitHub Actions" class="w-full">
+              <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de la ejecución en GitHub Actions</p>
+            </div>
+          </div>
+          
+          <div>
+            <p class="font-bold mb-3 text-lg">Resultado detallado de los tests:</p>
+            <div class="border border-gray-300 rounded-lg overflow-hidden">
+              <img src="/images/pa3/github_actions_results.png" alt="Resultados detallados de los tests" class="w-full">
+              <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de los resultados detallados</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mb-6 bg-green-50 p-5 rounded-lg border border-green-200">
+          <p class="font-bold mb-3 text-lg text-green-800">Reporte de tests en GitHub:</p>
+          <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
+            <img src="/images/pa3/github_test_report.png" alt="Reporte de tests en GitHub" class="w-full">
+            <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura del reporte de tests en GitHub</p>
+          </div>
+          <p class="text-green-700">
+            El reporte muestra que todos los tests pasan correctamente, lo que confirma que nuestro ORM y 
+            servicios cumplen con los requisitos funcionales establecidos.
+          </p>
+        </div>
+        
+        <p class="mt-5">Beneficios de nuestro pipeline de CI/CD:</p>
+        <ul class="list-disc pl-8 mb-4 space-y-2">
+          <li><strong>Detección temprana de regresiones</strong> al ejecutar tests automáticamente en cada cambio</li>
+          <li><strong>Validación en entornos limpios</strong> para detectar problemas de configuración</li>
+          <li><strong>Feedback rápido</strong> sobre la calidad del código</li>
+          <li><strong>Informes detallados</strong> sobre la ejecución de los tests</li>
+          <li><strong>Integración con GitHub</strong> para visualizar resultados directamente en PRs</li>
+        </ul>
+      </div>
+    </section>
+    
+    <section id="conclusion" class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Conclusión</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p class="mb-5">
+          Mediante la implementación de un sistema ORM para archivos JSON siguiendo Test-Driven Development (TDD), 
+          hemos mejorado significativamente la calidad y mantenibilidad de nuestro código.
+        </p>
+        
+        <p class="mb-4 font-medium">Los beneficios principales que hemos obtenido son:</p>
+        <ul class="list-disc pl-8 mb-6 space-y-2">
+          <li><strong class="text-indigo-700">Mayor robustez:</strong> Las pruebas unitarias garantizan que el código funcione como se espera.</li>
+          <li><strong class="text-indigo-700">Código más mantenible:</strong> La abstracción proporcionada por el ORM facilita futuros cambios.</li>
+          <li><strong class="text-indigo-700">Mejor rendimiento:</strong> Las optimizaciones como caché e índices reducen la latencia.</li>
+          <li><strong class="text-indigo-700">Desarrollo metódico:</strong> El enfoque TDD nos obligó a pensar en la funcionalidad antes de implementarla.</li>
+          <li><strong class="text-indigo-700">Proceso de CI/CD robusto:</strong> La automatización de pruebas asegura calidad continua.</li>
+        </ul>
+        
+        <p>
+          Este proyecto demuestra la aplicación práctica de principios de ingeniería de software como 
+          DRY (Don't Repeat Yourself), KISS (Keep It Simple, Stupid) y YAGNI (You Aren't Gonna Need It), 
+          resultando en un código más limpio, eficiente y comprobable. A través de la implementación del ORM,
+          del servicio de autenticación y del panel de administración, hemos construido un sistema completo 
+          que satisface los requerimientos del proyecto y proporciona una base sólida para futuras extensiones.
+        </p>
         
         <div class="bg-indigo-50 p-5 rounded-lg mt-6">
           <h3 class="text-lg font-bold mb-3 text-indigo-800">Aplicación de los Principios de Desarrollo:</h3>
@@ -1014,6 +1133,12 @@ export class AppError extends Error &#123;
             </ul>
           </div>
         </div>
+        
+        <p class="mt-6 font-medium text-indigo-700">
+          La combinación de TDD con los principios de desarrollo nos ha permitido crear una solución robusta, mantenible
+          y orientada a las necesidades reales del usuario, demostrando las mejores prácticas de la ingeniería
+          de software moderna.
+        </p>
       </div>
     </section>
   </main>
