@@ -1,8 +1,13 @@
 ---
-
 import '../styles/global.css';
 let error = '';
 let success = false;
+
+// Redirección si ya está autenticado
+const authToken = Astro.cookies.get('auth_token')?.value;
+if (authToken) {
+  return Astro.redirect('/nrc-23731/profile', 303);
+}
 
 const url = new URL(Astro.request.url);
 if (url.searchParams.get('error')) error = decodeURIComponent(url.searchParams.get('error'));
