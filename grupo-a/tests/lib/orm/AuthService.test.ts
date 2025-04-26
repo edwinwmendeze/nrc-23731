@@ -28,9 +28,9 @@ describe('AuthService', () => {
     
     // Mock de perfil con credenciales
     vi.mocked(fs.readFile).mockImplementation((filePath) => {
-      if (filePath.toString().includes('EdwinMendez.json')) {
+      if (filePath.toString().includes('edwinmendez.json')) {
         const profile = {
-          id: 'EdwinMendez',
+          id: 'edwinmendez',
           basics: {
             name: 'Edwin Wilson',
             last_name: 'Méndez Echevarría',
@@ -52,7 +52,7 @@ describe('AuthService', () => {
       const result = await authService.login('edwin', 'password123');
       
       expect(result.success).toBe(true);
-      expect(result.profile.id).toBe('EdwinMendez');
+      expect(result.profile.id).toBe('edwinmendez');
       expect(result.token).toBeDefined();
     });
     
@@ -75,25 +75,38 @@ describe('AuthService', () => {
 
   describe('register()', () => {
     it('debe registrar un nuevo usuario', async () => {
-      // Configurar mock para ProfileORM
-      vi.mock('../../../src/lib/orm/ProfileORM', () => ({
-        ProfileORM: {
-          getInstance: vi.fn().mockReturnValue({
-            findByEmail: vi.fn().mockResolvedValue(null),
-            findAll: vi.fn().mockResolvedValue([]),
-            save: vi.fn().mockImplementation(profile => Promise.resolve(profile))
-          })
-        }
-      }));
-      
+      // Forzar mock ProfileORM y AuthService para este test
+      const profileORM = {
+        save: vi.fn().mockImplementation(profile => Promise.resolve({
+          ...profile,
+          basics: {
+            ...profile.basics,
+            occupation: 'Nuevo Rol',
+            image: { local: '', remote: 'https://example.com/image.png' },
+            location: { city: 'Ciudad', country: 'Pais' }
+          },
+          auth: {
+            username: profile.username || 'newuser',
+            passwordHash: 'fakehash123'
+          }
+        })),
+        validateProfile: vi.fn().mockReturnValue([]),
+        findByField: vi.fn().mockResolvedValue([])
+      } as any;
+      const { AuthService } = await import('../../../src/lib/services/AuthService.ts');
+      const authService = new AuthService(profileORM);
+
       const result = await authService.register({
         username: 'newuser',
         password: 'securepass',
         email: 'new@example.com',
         name: 'New',
-        lastName: 'User'
-      });
-      
+        lastName: 'User',
+        occupation: 'Nuevo Rol',
+        image: { local: '', remote: 'https://example.com/image.png' },
+        location: { city: 'Ciudad', country: 'Pais' }
+      } as any);
+
       expect(result.success).toBe(true);
       expect(result.profile).toBeDefined();
       expect(result.profile.auth.username).toBe('newuser');
@@ -117,8 +130,11 @@ describe('AuthService', () => {
         password: 'securepass',
         email: 'new@example.com',
         name: 'New',
-        lastName: 'User'
-      });
+        lastName: 'User',
+        occupation: 'Nuevo Rol',
+        image: { local: '', remote: 'https://example.com/image.png' },
+        location: { city: 'Ciudad', country: 'Pais' }
+      } as any);
       
       expect(result.success).toBe(false);
       expect(result.message).toBe('El nombre de usuario ya está en uso');
@@ -134,7 +150,7 @@ describe('AuthService', () => {
       const verifyResult = await authService.verifyToken(loginResult.token);
       
       expect(verifyResult.valid).toBe(true);
-      expect(verifyResult.profileId).toBe('EdwinMendez');
+      expect(verifyResult.profileId).toBe('edwinmendez');
     });
     
     it('debe rechazar un token inválido', async () => {
