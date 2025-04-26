@@ -7,7 +7,8 @@ import '../styles/global.css';
 let profile = null;
 let error = "";
 
-console.log('Cookies en profile:', Astro.cookies.getAll());
+// Elimina el log que causa el error en producción
+// console.log('Cookies en profile:', Astro.cookies.getAll());
 const token = Astro.cookies.get('auth_token')?.value;
 console.log('Token en profile:', token);
 
