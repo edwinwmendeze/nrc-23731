@@ -28,7 +28,7 @@ if (Astro.request.method === 'POST') {
         Astro.cookies.set('auth_token', result.token, { path: '/', httpOnly: true, secure: true, sameSite: 'lax', maxAge: 60 * 60 * 24 * 7 });
         // Validar si el perfil está incompleto
         const profile = result.profile;
-        const basics = profile?.basics || {};>
+        const basics = profile?.basics || {};
         const location = basics.location || {};
         const needsCompletion =
           !basics.occupation || basics.occupation === 'Ingresar ocupacion' ||
