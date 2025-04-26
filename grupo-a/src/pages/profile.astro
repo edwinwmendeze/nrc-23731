@@ -5,7 +5,11 @@ import MainLayout from '../layouts/MainLayout.astro';
 import '../styles/global.css';
 
 let profile = null;
-let error = '';
+let error = "";
+
+console.log('Cookies en profile:', Astro.cookies.getAll());
+const token = Astro.cookies.get('auth_token')?.value;
+console.log('Token en profile:', token);
 
 // Logout handler
 if (Astro.request.method === 'POST') {
@@ -16,7 +20,6 @@ if (Astro.request.method === 'POST') {
   }
 }
 
-const token = Astro.cookies.get('auth_token')?.value;
 if (!token) {
   return Astro.redirect('/login', 303);
 }
@@ -26,6 +29,9 @@ try {
   if (verifyResult.valid && verifyResult.profileId) {
     const orm = new ProfileORM();
     profile = await orm.findById(verifyResult.profileId);
+    if (!profile) {
+      error = "No se pudo cargar el perfil.";
+    }
   } else {
     return Astro.redirect('/login', 303);
   }
@@ -36,6 +42,7 @@ try {
 <MainLayout title="Mi Perfil">
   <section class="max-w-3xl mx-auto mt-24 mb-12">
     {error && <div class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4">{error}</div>}
+    {!profile && !error && <div class="bg-yellow-100 text-yellow-700 px-4 py-2 rounded mb-4">No se encontró el perfil.</div>}
     {profile && (
       <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
         <div class="flex flex-col sm:flex-row items-center gap-6 px-8 py-8 border-b border-gray-200 dark:border-gray-700">
