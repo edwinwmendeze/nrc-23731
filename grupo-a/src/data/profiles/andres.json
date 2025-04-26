@@ -1,0 +1,17 @@
+{
+  "id": "andres",
+  "basics": {
+    "name": "andres",
+    "last_name": "Ingresar Apellido",
+    "occupation": "Ingresar ocupacion",
+    "email": "",
+    "image": {
+      "remote": "https://ruta_imagen_internet.png"
+    }
+  },
+  "auth": {
+    "username": "andres",
+    "passwordHash": "d98771631e4b6e74ff8ed1dfd743d879e14bace1b78c46998fa891cec77c4fcc",
+    "lastLogin": "2025-04-26T03:02:40.354Z"
+  }
+}

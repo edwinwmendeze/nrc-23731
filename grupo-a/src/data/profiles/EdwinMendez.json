@@ -6,7 +6,7 @@
     "lastLogin": "2024-04-25T12:00:00.000Z"
   },
   "basics": {
-    "name": "Edwin Wilson",
+    "name": "Edwin Wilsonn",
     "last_name": "Méndez Echevarría",
     "occupation": "Analista de datos con experiencia en Python y automatización.",
     "image": {
@@ -39,7 +39,7 @@
       },
       {
         "network": "prueba2",
-        "username": "",
+        "username": "aaa",
         "url": "https://facebook/edwinwmendez"
       }
     ]
