@@ -1,0 +1,50 @@
+---
+import { AuthService } from "../../lib/services/AuthService";
+import { ProfileORM } from "../../lib/orm/ProfileORM";
+import MainLayout from '../../layouts/MainLayout.astro';
+
+let errorMsg = '';
+let deleted = false;
+
+const token = Astro.cookies.get('auth_token')?.value;
+
+if (!token) {
+  return Astro.redirect('/nrc-23731/login', 303);
+}
+
+try {
+  const authService = new AuthService();
+  const verifyResult = await authService.verifyToken(token);
+  if (!verifyResult.valid || !verifyResult.profileId) {
+    return Astro.redirect('/nrc-23731/login', 303);
+  }
+  if (Astro.request.method === 'POST') {
+    const orm = ProfileORM.getInstance ? ProfileORM.getInstance() : new ProfileORM();
+    const ok = await orm.deleteProfile(verifyResult.profileId);
+    if (ok) {
+      deleted = true;
+      Astro.cookies.delete('auth_token', { path: '/' });
+      return Astro.redirect('/nrc-23731/', 303);
+    } else {
+      errorMsg = 'No se pudo eliminar el perfil.';
+    }
+  }
+} catch (e) {
+  return Astro.redirect('/nrc-23731/login', 303);
+}
+---
+<MainLayout title="Eliminar cuenta">
+  <div class="max-w-lg mx-auto py-16">
+    <h1 class="text-2xl font-bold text-red-700 mb-4 flex items-center gap-2">
+      <svg class="w-7 h-7 text-red-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      Eliminar cuenta
+    </h1>
+    <p class="mb-6 text-red-600">Esta acción es <strong>irreversible</strong>. Todos tus datos de perfil se eliminarán permanentemente.</p>
+    {errorMsg && <div class="mb-4 p-3 rounded bg-red-100 text-red-800">{errorMsg}</div>}
+    {!deleted && (
+      <form method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar tu cuenta? Esta acción no se puede deshacer.')">
+        <button type="submit" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition">Eliminar mi cuenta</button>
+      </form>
+    )}
+  </div>
+</MainLayout>

@@ -1,25 +1,25 @@
 {
+  "id": "edwinmendez",
   "auth": {
     "username": "edwinmendez",
-    "passwordHash": "5b722b307fce6c944905d132691d5e4a2214b7fe92b738920eb3fce3a90420a19511c3010a0e7712b054daef5b57bad59ecbd93b3280f210578f547f4aed4d25",
+    "passwordHash": "c2013355990186fcdd90ee8b0abe3912122002615333b89b7d5df13f9b025e26",
     "lastLogin": "2024-04-25T12:00:00.000Z"
   },
   "basics": {
     "name": "Edwin Wilson",
     "last_name": "Méndez Echevarría",
-    "label": "Analista de datos con experiencia en Python y automatización.",
+    "occupation": "Analista de datos con experiencia en Python y automatización.",
     "image": {
-      "local": "/images/team/edwin.png",
       "remote": "https://github.com/edwinwmendeze.png"
     },
     "email": "45088035@continental.edu.pe",
     "phone": "(51) 948-924-822",
     "url": "https://edwinwmendeze.github.io/portfolio-personal/",
-    "summary": "Desarrollador backend con experiencia en Python y automatización. Enfocado en despliegues eficientes, soluciones escalables y mejora continua.",
+    "summary": "",
     "location": {
       "city": "Atalaya",
-      "countryCode": "PE",
-      "region": "Ucayali"
+      "region": "Ucayali",
+      "countryCode": "PE"
     },
     "profiles": [
       {
@@ -31,32 +31,43 @@
         "network": "LinkedIn",
         "username": "edwinmendez",
         "url": "https://linkedin.com/in/edwinwmendez"
+      },
+      {
+        "network": "Facebook",
+        "username": "edwinwmendez",
+        "url": "https://facebook/edwinwmendez"
+      },
+      {
+        "network": "prueba2",
+        "username": "",
+        "url": "https://facebook/edwinwmendez"
       }
     ]
   },
   "skills": [
     {
       "name": "Backend",
+      "type": "hard",
       "keywords": [
         "Python-DRF",
         "PostgreSQL",
         "Supabase",
         "Postman"
-      ],
-      "type": "hard"
+      ]
     },
     {
       "name": "Frontend",
+      "type": "hard",
       "keywords": [
         "Vue.js",
         "Nuxt",
         "Astro",
         "Tailwind CSS"
-      ],
-      "type": "hard"
+      ]
     },
     {
       "name": "DevOps & Cloud",
+      "type": "hard",
       "keywords": [
         "Docker",
         "Git",
@@ -66,19 +77,19 @@
         "DigitalOcean",
         "Google Cloud",
         "AWS"
-      ],
-      "type": "hard"
+      ]
     },
     {
       "name": "Automatización e Inteligencia Artificial",
+      "type": "hard",
       "keywords": [
         "Selenium",
         "Automatización con Python"
-      ],
-      "type": "hard"
+      ]
     },
     {
       "name": "Habilidades Blandas",
+      "type": "soft",
       "keywords": [
         "Trabajo en equipo",
         "Trabajo bajo presión",
@@ -86,8 +97,14 @@
         "Pensamiento crítico",
         "Adaptabilidad",
         "Aprendizaje continuo"
-      ],
-      "type": "soft"
+      ]
+    },
+    {
+      "name": "Prueba",
+      "type": "soft",
+      "keywords": [
+        "aaa"
+      ]
     }
   ],
   "education": [
@@ -117,7 +134,12 @@
       ],
       "url": "https://discord.com/channels/1212350323604201502/1212357244063186955/1214221343319662592",
       "featured": true,
-      "technologies": ["Python", "pyautogui", "time", "subprocess"]
+      "technologies": [
+        "Python",
+        "pyautogui",
+        "time",
+        "subprocess"
+      ]
     },
     {
       "name": "Te Comparto",
@@ -128,9 +150,16 @@
         "Integración con Supabase para autenticación y almacenamiento",
         "Diseño adaptable con soporte para modo oscuro"
       ],
-      "url": "https://tecomparto.com",  
+      "url": "https://tecomparto.com",
       "featured": true,
-      "technologies": ["Vue 3", "Nuxt 3", "TypeScript", "Supabase", "Tailwind CSS", "Vitest"]
+      "technologies": [
+        "Vue 3",
+        "Nuxt 3",
+        "TypeScript",
+        "Supabase",
+        "Tailwind CSS",
+        "Vitest"
+      ]
     },
     {
       "name": "Herramientas SUP",
@@ -141,9 +170,15 @@
         "Interfaz modular con componentes Vue",
         "Despliegue optimizado en Vercel"
       ],
-      "url": "https://herramientas-sup.vercel.app/", 
+      "url": "https://herramientas-sup.vercel.app/",
       "featured": false,
-      "technologies": ["Astro", "Vue 3", "Tailwind CSS", "TypeScript", "Vercel"]
+      "technologies": [
+        "Astro",
+        "Vue 3",
+        "Tailwind CSS",
+        "TypeScript",
+        "Vercel"
+      ]
     }
   ]
 }

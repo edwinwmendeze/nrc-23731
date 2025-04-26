@@ -1,4 +1,5 @@
 ---
+
 import MainLayout from '../layouts/MainLayout.astro';
 import Hero from '../components/home/Hero.astro';
 import TeamSection from '../components/home/TeamSection.astro';
@@ -44,6 +45,9 @@ try {
       <ErrorBoundary fallback="No se pudo cargar la sección de proyectos destacados">
         <FeaturedProjects />
       </ErrorBoundary>
+      <div class="mt-8 flex justify-center">
+        <a href="/login" class="inline-block px-6 py-3 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition text-lg font-semibold">Iniciar sesión</a>
+      </div>
     </>
   )}
 </MainLayout>

@@ -328,8 +328,8 @@ export class ProfileORM extends BaseORM<Profile> {
       errors.push('El apellido es obligatorio');
     }
     
-    if (!profile.basics.label) {
-      errors.push('El rol/etiqueta es obligatorio');
+    if (!profile.basics.occupation) {
+      errors.push('La ocupación es obligatoria');
     }
     
     // Validar imagen
@@ -440,5 +440,14 @@ export class ProfileORM extends BaseORM<Profile> {
       featuredProjects,
       skillsByType
     };
+  }
+  
+  /**
+   * Elimina un perfil por su ID
+   * @param profileId ID del perfil a eliminar
+   * @returns true si se eliminó correctamente, false si no
+   */
+  async deleteProfile(profileId: string): Promise<boolean> {
+    return super.delete(profileId);
   }
 }

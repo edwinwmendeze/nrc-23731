@@ -14,7 +14,7 @@ vi.mock('fs/promises', () => ({
 
 // Importar fs/promises DESPUÉS de mockearlo
 import * as fs from 'fs/promises';
-import type { Profile, Skill, Project } from '../../../src/types';
+import type { Profile, Skill } from '../../../src/types';
 
 // Mock para un perfil de prueba
 const mockProfile: Profile = {
@@ -22,7 +22,7 @@ const mockProfile: Profile = {
   basics: {
     name: 'Test',
     last_name: 'User',
-    label: 'Software Developer',
+    occupation: 'Desarrollador',
     image: {
       local: '/images/test.png',
       remote: 'https://example.com/test.png'
@@ -72,7 +72,7 @@ const anotherProfile: Profile = {
   basics: {
     name: 'Testing Again',
     last_name: 'User',
-    label: 'UX Designer',
+    occupation: 'Diseñador',
     image: {
       local: '/images/another.png',
       remote: 'https://example.com/another.png'
@@ -275,7 +275,7 @@ describe('ProfileORM', () => {
         basics: {
           name: '',
           last_name: 'User',
-          label: '',
+          occupation: '',
           image: null as any,
           email: 'test@example.com'
         }
@@ -285,7 +285,7 @@ describe('ProfileORM', () => {
       
       expect(errors.length).toBeGreaterThan(0);
       expect(errors).toContain('El nombre es obligatorio');
-      expect(errors).toContain('El rol/etiqueta es obligatorio');
+      expect(errors).toContain('La ocupación es obligatoria');
       expect(errors).toContain('La imagen es obligatoria');
     });
   });

@@ -58,9 +58,6 @@ export interface TokenVerification {
 export interface RegistrationData {
   username: string;
   password: string;
-  email: string;
-  name: string;
-  lastName: string;
 }
 
 /**
@@ -88,18 +85,20 @@ export class AuthService {
         return {
           success: true,
           profile: {
-            id: 'EdwinMendez',
+            id: 'edwinmendez',
             basics: {
               name: 'Edwin Wilson',
               last_name: 'Méndez Echevarría',
-              email: '45088035@continental.edu.pe'
+              occupation: '',
+              email: '45088035@continental.edu.pe',
+              image: { local: '/images/placeholder.png' }
             },
             auth: {
               username: 'edwin',
               passwordHash: 'hash-simulado'
             }
           },
-          token: this.generateToken('EdwinMendez')
+          token: this.generateToken('edwinmendez')
         };
       }
       
@@ -181,74 +180,34 @@ export class AuthService {
           message: 'El nombre de usuario ya está en uso'
         };
       }
-      
-      if (data.username === 'newuser') {
-        const passwordHash = await SimpleHash.hash(data.password);
-        const newProfile: Profile = {
-          id: `${data.name}${data.lastName}`.toLowerCase().replace(/\s+/g, ''),
-          basics: {
-            name: data.name,
-            last_name: data.lastName,
-            label: '',
-            email: data.email,
-            image: {
-              local: '/images/placeholder.png'
-            }
-          },
-          auth: {
-            username: data.username,
-            passwordHash
-          }
-        };
-        
-        return {
-          success: true,
-          profile: newProfile,
-          token: this.generateToken(newProfile.id)
-        };
-      }
-      
+
       // Implementación real para producción
-      const validationErrors = this.validateRegistrationData(data);
-      if (validationErrors.length > 0) {
-        return {
-          success: false,
-          message: `Datos inválidos: ${validationErrors.join(', ')}`
-        };
+      if (!data.username || data.username.length < 3) {
+        return { success: false, message: 'El nombre de usuario debe tener al menos 3 caracteres' };
       }
-      
+      if (!data.password || data.password.length < 6) {
+        return { success: false, message: 'La contraseña debe tener al menos 6 caracteres' };
+      }
       const existingUsername = await this.profileORM.findByField('auth.username', data.username, {
         exactMatch: true
       });
-      
       if (existingUsername.length > 0) {
         return {
           success: false,
           message: 'El nombre de usuario ya está en uso'
         };
       }
-      
-      const existingEmail = await this.profileORM.findByEmail(data.email);
-      
-      if (existingEmail) {
-        return {
-          success: false,
-          message: 'El correo electrónico ya está registrado'
-        };
-      }
-      
       const passwordHash = await SimpleHash.hash(data.password);
-      const profileId = this.generateProfileId(data.name, data.lastName);
-      
+      const profileId = data.username.toLowerCase();
       const newProfile: Profile = {
         id: profileId,
         basics: {
-          name: data.name,
-          last_name: data.lastName,
-          label: '',
-          email: data.email,
+          name: data.username,
+          last_name: 'Ingresar Apellido',
+          occupation: 'Ingresar ocupacion',
+          email: '',
           image: {
-            local: '/images/placeholder.png'
+            remote: "https://ruta_imagen_internet.png"
           }
         },
         auth: {
@@ -257,10 +216,8 @@ export class AuthService {
           lastLogin: new Date().toISOString()
         }
       };
-      
       const savedProfile = await this.profileORM.save(newProfile);
       const token = this.generateToken(savedProfile.id);
-      
       return {
         success: true,
         profile: savedProfile,
@@ -296,7 +253,7 @@ export class AuthService {
       if (token && !token.includes('.')) {
         return {
           valid: true,
-          profileId: 'EdwinMendez'
+          profileId: 'edwinmendez'
         };
       }
       
@@ -402,18 +359,6 @@ export class AuthService {
     
     if (!data.password || data.password.length < 6) {
       errors.push('La contraseña debe tener al menos 6 caracteres');
-    }
-    
-    if (!data.email || !this.isValidEmail(data.email)) {
-      errors.push('El email no es válido');
-    }
-    
-    if (!data.name || data.name.trim().length === 0) {
-      errors.push('El nombre es obligatorio');
-    }
-    
-    if (!data.lastName || data.lastName.trim().length === 0) {
-      errors.push('El apellido es obligatorio');
     }
     
     return errors;
