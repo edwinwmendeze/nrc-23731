@@ -441,4 +441,13 @@ export class ProfileORM extends BaseORM<Profile> {
       skillsByType
     };
   }
+  
+  /**
+   * Elimina un perfil por su ID
+   * @param profileId ID del perfil a eliminar
+   * @returns true si se eliminó correctamente, false si no
+   */
+  async deleteProfile(profileId: string): Promise<boolean> {
+    return super.delete(profileId);
+  }
 }

@@ -284,132 +284,143 @@ if (Astro.request.method === 'POST') {
         </div>
       </form>
     </div>
-    <script type="module">
-      // Desktop Tabs logic
-      const tabBtns = document.querySelectorAll('.tab-btn');
-      const tabSections = document.querySelectorAll('#tab-content .tab-section');
-      tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          tabBtns.forEach(b => b.classList.remove('text-blue-600', 'border-blue-600', 'active'));
-          tabBtns.forEach(b => b.classList.add('border-transparent'));
-          btn.classList.remove('border-transparent');
-          btn.classList.add('text-blue-600', 'border-blue-600', 'active');
-          const tab = btn.getAttribute('data-tab');
-          tabSections.forEach(section => {
-            if (section.getAttribute('data-content') === tab) {
-              section.classList.remove('hidden');
-            } else {
-              section.classList.add('hidden');
-            }
-          });
-        });
-      });
-      // Lógica para agregar/eliminar habilidades y perfiles sociales
-      document.addEventListener('DOMContentLoaded', () => {
-        // HABILIDADES
-        document.querySelectorAll('.add-skill-btn').forEach(addBtn => {
-          addBtn.addEventListener('click', () => {
-            document.querySelectorAll('.skills-list').forEach(skillsList => {
-              const idx = skillsList.querySelectorAll('.skill-row').length;
-              const row = document.createElement('tr');
-              row.className = 'skill-row';
-              row.setAttribute('data-idx', idx);
-              row.innerHTML = `
-                <td class=\"px-2 py-1 align-middle\"><input type=\"text\" name=\"skill_name_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white\" placeholder=\"Habilidad\" /></td>
-                <td class=\"px-2 py-1 align-middle\">
-                  <select name=\"skill_type_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white\">
-                    <option value=\"\">Selecciona tipo</option>
-                    <option value=\"hard\">Hard</option>
-                    <option value=\"soft\">Soft</option>
-                  </select>
-                </td>
-                <td class=\"px-2 py-1 align-middle\">
-                  <input type=\"text\" name=\"skill_keywords_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white\" placeholder=\"Ej: Python, PostgreSQL, Supabase\" />
-                  <span class=\"block text-xs text-gray-500 mt-1\">Separa cada palabra clave con una coma (,)</span>
-                </td>
-                <td class=\"px-2 py-1 align-middle text-center\">
-                  <button type=\"button\" class=\"inline-flex justify-center items-center text-red-600 hover:text-red-800 remove-skill-btn p-1\" aria-label=\"Eliminar habilidad\">
-                    <svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-4 w-4\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M6 18L18 6M6 6l12 12\" /></svg>
-                  </button>
-                </td>
-              `;
-              skillsList.appendChild(row);
-            });
-          });
-        });
-        document.querySelectorAll('.skills-list').forEach(skillsList => {
-          skillsList.addEventListener('click', e => {
-            const target = e.target;
-            if (target && target.closest && target.closest('.remove-skill-btn')) {
-              const row = target.closest('.skill-row');
-              if (row) row.remove();
-              // Reindexar nombres
-              Array.from(skillsList.querySelectorAll('.skill-row')).forEach((row, idx, arr) => {
-                row.setAttribute('data-idx', idx);
-                const inputs = row.querySelectorAll('input, select');
-                if (inputs[0]) inputs[0].name = `skill_name_${idx}`;
-                if (inputs[1]) inputs[1].name = `skill_type_${idx}`;
-                if (inputs[2]) inputs[2].name = `skill_keywords_${idx}`;
-                // Redondear solo la última fila
-                if (idx === arr.length - 1) row.classList.add('rounded-b-lg');
-                else row.classList.remove('rounded-b-lg');
-              });
-            }
-          });
-        });
-        // PERFILES SOCIALES
-        document.querySelectorAll('.add-profile-btn').forEach(addBtn => {
-          addBtn.addEventListener('click', () => {
-            document.querySelectorAll('.profiles-list').forEach(profilesList => {
-              const idx = profilesList.querySelectorAll('.profile-row').length;
-              const row = document.createElement('tr');
-              row.className = 'profile-row';
-              row.setAttribute('data-idx', idx);
-              row.innerHTML = `
-                <td class=\"px-2 py-1 align-middle\"><input type=\"text\" name=\"profile_network_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white\" placeholder=\"Red\" /></td>
-                <td class=\"px-2 py-1 align-middle\"><input type=\"text\" name=\"profile_username_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white\" placeholder=\"Usuario\" /></td>
-                <td class=\"px-2 py-1 align-middle\"><input type=\"url\" name=\"profile_url_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white\" placeholder=\"URL\" /></td>
-                <td class=\"px-2 py-1 align-middle text-center\">
-                  <button type=\"button\" class=\"inline-flex justify-center items-center text-red-600 hover:text-red-800 remove-profile-btn p-1\" aria-label=\"Eliminar perfil\">
-                    <svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-4 w-4\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M6 18L18 6M6 6l12 12\" /></svg>
-                  </button>
-                </td>
-              `;
-              profilesList.appendChild(row);
-            });
-          });
-        });
-        document.querySelectorAll('.profiles-list').forEach(profilesList => {
-          profilesList.addEventListener('click', e => {
-            const target = e.target;
-            if (target && target.closest && target.closest('.remove-profile-btn')) {
-              const row = target.closest('.profile-row');
-              if (row) row.remove();
-              // Reindexar nombres
-              Array.from(profilesList.querySelectorAll('.profile-row')).forEach((row, idx, arr) => {
-                row.setAttribute('data-idx', idx);
-                const inputs = row.querySelectorAll('input');
-                if (inputs[0]) inputs[0].name = `profile_network_${idx}`;
-                if (inputs[1]) inputs[1].name = `profile_username_${idx}`;
-                if (inputs[2]) inputs[2].name = `profile_url_${idx}`;
-                // Redondear solo la última fila
-                if (idx === arr.length - 1) row.classList.add('rounded-b-lg');
-                else row.classList.remove('rounded-b-lg');
-              });
-            }
-          });
-        });
-      });
-    </script>
-    <script>
-      setTimeout(() => {
-        const msg = document.querySelector('.success-msg');
-        if (msg) msg.style.display = 'none';
-        // Limpiar el parámetro success de la URL sin recargar
-        const url = new URL(window.location);
-        url.searchParams.delete('success');
-        window.history.replaceState({}, document.title, url.pathname + url.search);
-      }, 3500);
-    </script>
+    <div class="mt-10 border-t pt-8">
+      <h2 class="text-lg font-bold text-red-700 mb-2 flex items-center gap-2">
+        <svg class="w-6 h-6 text-red-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        Eliminar cuenta
+      </h2>
+      <p class="mb-4 text-red-600">Esta acción es <strong>irreversible</strong>. Todos tus datos de perfil se eliminarán permanentemente. ¿Estás seguro?</p>
+      <form method="POST" action="/nrc-23731/profile/delete" onsubmit="return confirm('¿Seguro que deseas eliminar tu cuenta? Esta acción no se puede deshacer.')">
+        <button type="submit" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition">Eliminar mi cuenta</button>
+      </form>
+    </div>
   </div>
 </MainLayout>
+
+<script type="module">
+  // Desktop Tabs logic
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabSections = document.querySelectorAll('#tab-content .tab-section');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('text-blue-600', 'border-blue-600', 'active'));
+      tabBtns.forEach(b => b.classList.add('border-transparent'));
+      btn.classList.remove('border-transparent');
+      btn.classList.add('text-blue-600', 'border-blue-600', 'active');
+      const tab = btn.getAttribute('data-tab');
+      tabSections.forEach(section => {
+        if (section.getAttribute('data-content') === tab) {
+          section.classList.remove('hidden');
+        } else {
+          section.classList.add('hidden');
+        }
+      });
+    });
+  });
+  // Lógica para agregar/eliminar habilidades y perfiles sociales
+  document.addEventListener('DOMContentLoaded', () => {
+    // HABILIDADES
+    document.querySelectorAll('.add-skill-btn').forEach(addBtn => {
+      addBtn.addEventListener('click', () => {
+        document.querySelectorAll('.skills-list').forEach(skillsList => {
+          const idx = skillsList.querySelectorAll('.skill-row').length;
+          const row = document.createElement('tr');
+          row.className = 'skill-row';
+          row.setAttribute('data-idx', idx);
+          row.innerHTML = `
+            <td class=\"px-2 py-1 align-middle\"><input type=\"text\" name=\"skill_name_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white\" placeholder=\"Habilidad\" /></td>
+            <td class=\"px-2 py-1 align-middle\">
+              <select name=\"skill_type_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white\">
+                <option value=\"\">Selecciona tipo</option>
+                <option value=\"hard\">Hard</option>
+                <option value=\"soft\">Soft</option>
+              </select>
+            </td>
+            <td class=\"px-2 py-1 align-middle\">
+              <input type=\"text\" name=\"skill_keywords_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white\" placeholder=\"Ej: Python, PostgreSQL, Supabase\" />
+              <span class=\"block text-xs text-gray-500 mt-1\">Separa cada palabra clave con una coma (,)</span>
+            </td>
+            <td class=\"px-2 py-1 align-middle text-center\">
+              <button type=\"button\" class=\"inline-flex justify-center items-center text-red-600 hover:text-red-800 remove-skill-btn p-1\" aria-label=\"Eliminar habilidad\">
+                <svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-4 w-4\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M6 18L18 6M6 6l12 12\" /></svg>
+              </button>
+            </td>
+          `;
+          skillsList.appendChild(row);
+        });
+      });
+    });
+    document.querySelectorAll('.skills-list').forEach(skillsList => {
+      skillsList.addEventListener('click', e => {
+        const target = e.target;
+        if (target && target.closest && target.closest('.remove-skill-btn')) {
+          const row = target.closest('.skill-row');
+          if (row) row.remove();
+          // Reindexar nombres
+          Array.from(skillsList.querySelectorAll('.skill-row')).forEach((row, idx, arr) => {
+            row.setAttribute('data-idx', idx);
+            const inputs = row.querySelectorAll('input, select');
+            if (inputs[0]) inputs[0].name = `skill_name_${idx}`;
+            if (inputs[1]) inputs[1].name = `skill_type_${idx}`;
+            if (inputs[2]) inputs[2].name = `skill_keywords_${idx}`;
+            // Redondear solo la última fila
+            if (idx === arr.length - 1) row.classList.add('rounded-b-lg');
+            else row.classList.remove('rounded-b-lg');
+          });
+        }
+      });
+    });
+    // PERFILES SOCIALES
+    document.querySelectorAll('.add-profile-btn').forEach(addBtn => {
+      addBtn.addEventListener('click', () => {
+        document.querySelectorAll('.profiles-list').forEach(profilesList => {
+          const idx = profilesList.querySelectorAll('.profile-row').length;
+          const row = document.createElement('tr');
+          row.className = 'profile-row';
+          row.setAttribute('data-idx', idx);
+          row.innerHTML = `
+            <td class=\"px-2 py-1 align-middle\"><input type=\"text\" name=\"profile_network_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white\" placeholder=\"Red\" /></td>
+            <td class=\"px-2 py-1 align-middle\"><input type=\"text\" name=\"profile_username_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white\" placeholder=\"Usuario\" /></td>
+            <td class=\"px-2 py-1 align-middle\"><input type=\"url\" name=\"profile_url_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white\" placeholder=\"URL\" /></td>
+            <td class=\"px-2 py-1 align-middle text-center\">
+              <button type=\"button\" class=\"inline-flex justify-center items-center text-red-600 hover:text-red-800 remove-profile-btn p-1\" aria-label=\"Eliminar perfil\">
+                <svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-4 w-4\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M6 18L18 6M6 6l12 12\" /></svg>
+              </button>
+            </td>
+          `;
+          profilesList.appendChild(row);
+        });
+      });
+    });
+    document.querySelectorAll('.profiles-list').forEach(profilesList => {
+      profilesList.addEventListener('click', e => {
+        const target = e.target;
+        if (target && target.closest && target.closest('.remove-profile-btn')) {
+          const row = target.closest('.profile-row');
+          if (row) row.remove();
+          // Reindexar nombres
+          Array.from(profilesList.querySelectorAll('.profile-row')).forEach((row, idx, arr) => {
+            row.setAttribute('data-idx', idx);
+            const inputs = row.querySelectorAll('input');
+            if (inputs[0]) inputs[0].name = `profile_network_${idx}`;
+            if (inputs[1]) inputs[1].name = `profile_username_${idx}`;
+            if (inputs[2]) inputs[2].name = `profile_url_${idx}`;
+            // Redondear solo la última fila
+            if (idx === arr.length - 1) row.classList.add('rounded-b-lg');
+            else row.classList.remove('rounded-b-lg');
+          });
+        }
+      });
+    });
+  });
+</script>
+<script>
+  setTimeout(() => {
+    const msg = document.querySelector('.success-msg');
+    if (msg) msg.style.display = 'none';
+    // Limpiar el parámetro success de la URL sin recargar
+    const url = new URL(window.location);
+    url.searchParams.delete('success');
+    window.history.replaceState({}, document.title, url.pathname + url.search);
+  }, 3500);
+</script>
