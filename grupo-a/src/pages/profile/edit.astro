@@ -7,7 +7,7 @@ let userProfile = null;
 const token = Astro.cookies.get('auth_token')?.value;
 
 if (!token) {
-  return Astro.redirect('/nrc-23731/login', 303);
+  return Astro.redirect('/login', 303);
 }
 try {
   const authService = new AuthService();
@@ -15,10 +15,10 @@ try {
   if (verifyResult.valid && verifyResult.profileId) {
     userProfile = await (new ProfileORM()).findById(verifyResult.profileId);
   } else {
-    return Astro.redirect('/nrc-23731/login', 303);
+    return Astro.redirect('/login', 303);
   }
 } catch {
-  return Astro.redirect('/nrc-23731/login', 303);
+  return Astro.redirect('/login', 303);
 }
 
 const url = new URL(Astro.request.url);
@@ -83,7 +83,7 @@ if (Astro.request.method === 'POST') {
     const orm = new ProfileORM();
     await orm.save(userProfile);
     // Si todo sale bien, redirige usando PRG
-    return Astro.redirect('/nrc-23731/profile/edit?success=1', 303);
+    return Astro.redirect('/profile/edit?success=1', 303);
   } catch (e) {
     error = 'No se pudo actualizar el perfil.';
   }
@@ -96,7 +96,7 @@ if (Astro.request.method === 'POST') {
         <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 11l6 6M9 17H7a2 2 0 01-2-2v-2a2 2 0 012-2h2m0 0V7a2 2 0 012-2h2a2 2 0 012 2v2"/></svg>
         Editar perfil
       </h1>
-      <a href="/nrc-23731/profile" class="inline-flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-semibold text-sm transition">
+      <a href="/profile" class="inline-flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-semibold text-sm transition">
         Volver al perfil
       </a>
     </div>
@@ -280,7 +280,7 @@ if (Astro.request.method === 'POST') {
         <!-- Botones de acción globales -->
         <div class="flex gap-4 mt-8 justify-end">
           <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded font-semibold">Guardar cambios</button>
-          <a href="/nrc-23731/profile" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded font-semibold dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200">Cancelar</a>
+          <a href="/profile" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded font-semibold dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200">Cancelar</a>
         </div>
       </form>
     </div>
@@ -290,7 +290,7 @@ if (Astro.request.method === 'POST') {
         Eliminar cuenta
       </h2>
       <p class="mb-4 text-red-600">Esta acción es <strong>irreversible</strong>. Todos tus datos de perfil se eliminarán permanentemente. ¿Estás seguro?</p>
-      <form method="POST" action="/nrc-23731/profile/delete" onsubmit="return confirm('¿Seguro que deseas eliminar tu cuenta? Esta acción no se puede deshacer.')">
+      <form method="POST" action="/profile/delete" onsubmit="return confirm('¿Seguro que deseas eliminar tu cuenta? Esta acción no se puede deshacer.')">
         <button type="submit" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition">Eliminar mi cuenta</button>
       </form>
     </div>

@@ -9,14 +9,14 @@ let deleted = false;
 const token = Astro.cookies.get('auth_token')?.value;
 
 if (!token) {
-  return Astro.redirect('/nrc-23731/login', 303);
+  return Astro.redirect('/login', 303);
 }
 
 try {
   const authService = new AuthService();
   const verifyResult = await authService.verifyToken(token);
   if (!verifyResult.valid || !verifyResult.profileId) {
-    return Astro.redirect('/nrc-23731/login', 303);
+    return Astro.redirect('/login', 303);
   }
   if (Astro.request.method === 'POST') {
     const orm = ProfileORM.getInstance ? ProfileORM.getInstance() : new ProfileORM();
@@ -24,13 +24,13 @@ try {
     if (ok) {
       deleted = true;
       Astro.cookies.delete('auth_token', { path: '/' });
-      return Astro.redirect('/nrc-23731/', 303);
+      return Astro.redirect('/', 303);
     } else {
       errorMsg = 'No se pudo eliminar el perfil.';
     }
   }
 } catch (e) {
-  return Astro.redirect('/nrc-23731/login', 303);
+  return Astro.redirect('/login', 303);
 }
 ---
 <MainLayout title="Eliminar cuenta">

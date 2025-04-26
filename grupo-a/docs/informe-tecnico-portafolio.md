@@ -442,7 +442,7 @@ Componente de navegación que mejora la experiencia de usuario en secciones larg
 
 El portafolio se despliega en GitHub Pages con la siguiente configuración:
 
-- URL base: https://edwinwmendeze.github.io/nrc-23731/
+- URL base: https://edwinwmendeze.github.io/
 - Estructura de carpetas: el repositorio nrc-23731 contiene una carpeta grupo-a con el proyecto Astro
 - Configuración específica de Astro para compatibilidad con rutas de GitHub Pages
 

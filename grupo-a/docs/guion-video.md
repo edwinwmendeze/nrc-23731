@@ -50,7 +50,7 @@ Veamos cómo funciona el acceso a los portafolios individuales. Al hacer clic en
 
 ## Conclusión (15 segundos)
 
-En resumen, hemos desarrollado un portafolio grupal completamente funcional, altamente accesible y que conecta efectivamente con los portafolios individuales de cada miembro del equipo. El código está disponible en GitHub y el sitio está desplegado en GitHub Pages, donde puede ser visitado utilizando la URL: https://edwinwmendeze.github.io/nrc-23731/
+En resumen, hemos desarrollado un portafolio grupal completamente funcional, altamente accesible y que conecta efectivamente con los portafolios individuales de cada miembro del equipo. El código está disponible en GitHub y el sitio está desplegado en GitHub Pages, donde puede ser visitado utilizando la URL: https://edwinwmendeze.github.io/
 
 ## Agradecimiento (5 segundos)
 

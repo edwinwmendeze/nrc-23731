@@ -24,7 +24,7 @@ if (Astro.request.method === 'POST') {
         const result = await authService.register({ username, password });
         if (result.success) {
           // PRG: redirigir tras éxito
-          return Astro.redirect('/nrc-23731/register?success=1', 303);
+          return Astro.redirect('/register?success=1', 303);
         } else {
           error = result.message || 'No se pudo registrar el usuario';
         }

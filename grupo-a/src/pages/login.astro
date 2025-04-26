@@ -6,7 +6,7 @@ let success = false;
 // Redirección si ya está autenticado
 const authToken = Astro.cookies.get('auth_token')?.value;
 if (authToken) {
-  return Astro.redirect('/nrc-23731/profile', 303);
+  return Astro.redirect('/profile', 303);
 }
 
 const url = new URL(Astro.request.url);
@@ -37,19 +37,19 @@ if (Astro.request.method === 'POST') {
           !location.region ||
           !location.countryCode;
         if (needsCompletion) {
-          return Astro.redirect('/nrc-23731/profile/edit?complete_profile=1', 303);
+          return Astro.redirect('/profile/edit?complete_profile=1', 303);
         } else {
-          return Astro.redirect('/nrc-23731/profile');
+          return Astro.redirect('/profile');
         }
       } else {
         // PRG: redirigir con error
-        return Astro.redirect('/nrc-23731/login?error=' + encodeURIComponent(result.message || 'Credenciales incorrectas'), 303);
+        return Astro.redirect('/login?error=' + encodeURIComponent(result.message || 'Credenciales incorrectas'), 303);
       }
     } catch (e) {
-      return Astro.redirect('/nrc-23731/login?error=' + encodeURIComponent('Error interno al intentar iniciar sesión'), 303);
+      return Astro.redirect('/login?error=' + encodeURIComponent('Error interno al intentar iniciar sesión'), 303);
     }
   } catch (e) {
-    return Astro.redirect('/nrc-23731/login?error=' + encodeURIComponent('Error procesando el formulario.'), 303);
+    return Astro.redirect('/login?error=' + encodeURIComponent('Error procesando el formulario.'), 303);
   }
 }
 ---
@@ -64,7 +64,7 @@ if (Astro.request.method === 'POST') {
       <h1 class="text-3xl font-extrabold mb-6 text-center text-indigo-700">Iniciar Sesión</h1>
       {success && <div class="mb-4 text-green-600 font-semibold bg-green-50 border border-green-200 rounded px-3 py-2 text-center success-msg">¡Sesión iniciada correctamente!</div>}
       {error && <div class="mb-4 text-red-600 font-semibold bg-red-50 border border-red-200 rounded px-3 py-2 text-center error-msg">{error}</div>}
-      <form method="POST" action="/nrc-23731/login" autocomplete="off" class="space-y-5">
+      <form method="POST" action="/login" autocomplete="off" class="space-y-5">
         <input type="hidden" name="testfield" value="testvalue" />
         <div>
           <label class="block mb-1 font-semibold text-gray-700" for="username">Usuario</label>
@@ -77,9 +77,9 @@ if (Astro.request.method === 'POST') {
         <button type="submit" class="w-full py-2 px-4 bg-indigo-600 text-white rounded-lg font-bold text-lg hover:bg-indigo-700 transition">Entrar</button>
       </form>
       <div class="mt-6 text-center text-sm text-gray-600">
-        ¿No tienes cuenta? <a href="/nrc-23731/register" class="text-indigo-600 hover:underline font-semibold">Regístrate</a>
+        ¿No tienes cuenta? <a href="/register" class="text-indigo-600 hover:underline font-semibold">Regístrate</a>
         <br />
-        <a href="/nrc-23731/" class="text-indigo-500 hover:underline mt-2 inline-block">Volver a la página de inicio</a>
+        <a href="/" class="text-indigo-500 hover:underline mt-2 inline-block">Volver a la página de inicio</a>
       </div>
     </main>
     <script>

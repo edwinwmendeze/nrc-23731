@@ -189,7 +189,7 @@ Portafolio colaborativo desarrollado con Astro que muestra información del equi
 ## Despliegue
 
 El proyecto está desplegado en GitHub Pages:
-https://edwinwmendeze.github.io/nrc-23731/
+https://edwinwmendeze.github.io/
 
 ## Desarrollo
 
