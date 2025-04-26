@@ -5,6 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import compress from 'astro-compress';
 import icon from 'astro-icon';
 
+
 import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
@@ -12,7 +13,7 @@ export default defineConfig({
   site: 'https://edwinmendeze.github.io',
 
   // Base URL para GitHub Pages (sin /grupo-a)
-  base: '/nrc-23731',
+  base: '/',
 
   output: "server",
 
