@@ -3,17 +3,13 @@ name: Run Tests
 on:
   push:
     branches: ["main", "develop"]
-
+  pull_request:
+    branches: ["main"]
   workflow_dispatch:
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-  
+
 jobs:
   test:
-    name: Run Tests
+    name: Run Unit Tests (ORM Testing)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -33,10 +29,10 @@ jobs:
       - name: Run tests
         run: npm test
         working-directory: grupo-a
-
+        
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: grupo-a/vitest.output.json
+          path: grupo-a/test-results.json

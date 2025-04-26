@@ -9,7 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "vitest run --reporter=verbose"
+    "test": "vitest run --reporter=verbose --reporter=json"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.3.1",

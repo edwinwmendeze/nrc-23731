@@ -6,6 +6,6 @@ export default getViteConfig({
     globals: true,
     environment: 'node',
     reporters: ['default', 'json'],
-    outputFile: 'vitest.output.json'
+    outputFile: './test-results.json'
   }
 });
