@@ -1,11 +1,16 @@
 {
-    "basics": {
-      "name": "Saulo Jerson",
-      "last_name": "Soto Silvestre",
-      "label": "Desarrollador Backend",
-      "image": {
-        "local": "https://github.com/Saulo-pj.png",
-        "remote": ""
+  "id": "saulosotosilvestre",
+  "auth": {
+    "username": "saulosotosilvestre",
+    "passwordHash": "2360515c83ce8d1bc08ea67069a55232bd6fac5d672a5b7c8d55be09f51e06dd",
+    "lastLogin": "2024-04-25T12:00:00.000Z"
+  },
+  "basics": {
+    "name": "Saulo Jerson",
+    "last_name": "Soto Silvestre",
+    "occupation": "Desarrollador Backend",
+    "image": {
+      "remote": "https://github.com/Saulo-pj.png"
       },
       "email": "71840465@continental.edu.pe",
       "phone": "(51) 923-976-503",

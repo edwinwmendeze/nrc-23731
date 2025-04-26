@@ -1,10 +1,15 @@
 {
-    "basics": {
+  "id": "jorgealbertobaca",
+  "auth": {
+    "username": "jorgealbertobaca",
+    "passwordHash": "2360515c83ce8d1bc08ea67069a55232bd6fac5d672a5b7c8d55be09f51e06dd",
+    "lastLogin": "2024-04-25T12:00:00.000Z"
+  },  
+  "basics": {
       "name": "Jorge Alberto",
       "last_name":"Baca Lipe",
-      "label": "Desarrollador web",
+      "occupation": "Desarrollador web",
       "image": {
-        "local": "/images/team/pepe.png",
         "remote": "https://avatars.githubusercontent.com/u/205255421?v=4&size=64"
       },
       "email": "71205979@continetal.edu.pe",

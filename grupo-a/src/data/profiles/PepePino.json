@@ -1,10 +1,15 @@
 {
+  "id": "pepepino",
+  "auth": {
+    "username": "pepepino",
+    "passwordHash": "2360515c83ce8d1bc08ea67069a55232bd6fac5d672a5b7c8d55be09f51e06dd",
+    "lastLogin": "2024-04-25T12:00:00.000Z"
+  },
     "basics": {
       "name": "Pepe",
       "last_name":"Pino Huamani",
-      "label": "Desarrollador de Software",
+      "occupation": "Desarrollador de Software",
       "image": {
-        "local": "/images/team/pepe.png",
         "remote": "https://avatars.githubusercontent.com/u/205255268?s=400&u=4c987b057c9868c8733f3b7b37bd48547a2f994e&v=4"
       },
       "email": "70520575@continetal.edu.pe",

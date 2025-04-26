@@ -1,0 +1,426 @@
+---
+import { AuthService } from '../../lib/services/AuthService';
+import { ProfileORM } from '../../lib/orm/ProfileORM';
+import MainLayout from '../../layouts/MainLayout.astro';
+
+let userProfile = null;
+const token = Astro.cookies.get('auth_token')?.value;
+
+if (!token) {
+  return Astro.redirect('/nrc-23731/login', 303);
+}
+try {
+  const authService = new AuthService();
+  const verifyResult = await authService.verifyToken(token);
+  if (verifyResult.valid && verifyResult.profileId) {
+    userProfile = await (new ProfileORM()).findById(verifyResult.profileId);
+  } else {
+    return Astro.redirect('/nrc-23731/login', 303);
+  }
+} catch {
+  return Astro.redirect('/nrc-23731/login', 303);
+}
+
+const url = new URL(Astro.request.url);
+let success = url.searchParams.get('success') === '1';
+let error = null;
+let showCompleteProfileMsg = url.searchParams.get('complete_profile') === '1';
+if (Astro.request.method === 'POST') {
+  try {
+    const formData = await Astro.request.formData();
+    // Leer campos de location separados
+    const city = formData.get('city') ?? '';
+    const region = formData.get('region') ?? '';
+    const countryCode = formData.get('countryCode') ?? '';
+    // Leer resumen
+    const summary = formData.get('summary') ?? '';
+    // Leer perfiles sociales dinámicos
+    const profiles = [];
+    let i = 0;
+    while (formData.has(`profile_network_${i}`)) {
+      const network = formData.get(`profile_network_${i}`) ?? '';
+      const username = formData.get(`profile_username_${i}`) ?? '';
+      const url = formData.get(`profile_url_${i}`) ?? '';
+      if (network || username || url) {
+        profiles.push({ network, username, url });
+      }
+      i++;
+    }
+    // Leer habilidades dinámicas
+    const skills = [];
+    i = 0;
+    while (formData.has(`skill_name_${i}`)) {
+      const name = formData.get(`skill_name_${i}`) ?? '';
+      const type = formData.get(`skill_type_${i}`) ?? '';
+      const keywords = formData.get(`skill_keywords_${i}`) ?? '';
+      if (name || type) {
+        skills.push({ name, type, keywords: keywords.split(',').map(k => k.trim()) });
+      }
+      i++;
+    }
+    // Actualizar los datos básicos del perfil existente
+    userProfile.basics = {
+      ...userProfile.basics,
+      name: formData.get('name') ?? '',
+      last_name: formData.get('last_name') ?? '',
+      email: formData.get('email') ?? '',
+      phone: formData.get('phone') ?? '',
+      url: formData.get('url') ?? '',
+      image: {
+        ...(typeof userProfile.basics.image === 'object' ? userProfile.basics.image : {}),
+        remote: formData.get('image_remote') ?? ''
+      },
+      location: {
+        city,
+        region,
+        countryCode
+      },
+      summary,
+      profiles,
+      occupation: formData.get('occupation') ?? '',
+    };
+    userProfile.skills = skills;
+    const orm = new ProfileORM();
+    await orm.save(userProfile);
+    // Si todo sale bien, redirige usando PRG
+    return Astro.redirect('/nrc-23731/profile/edit?success=1', 303);
+  } catch (e) {
+    error = 'No se pudo actualizar el perfil.';
+  }
+}
+---
+<MainLayout title="Editar perfil">
+  <div class="max-w-2xl mx-auto py-12">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold flex items-center gap-4">
+        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 11l6 6M9 17H7a2 2 0 01-2-2v-2a2 2 0 012-2h2m0 0V7a2 2 0 012-2h2a2 2 0 012 2v2"/></svg>
+        Editar perfil
+      </h1>
+      <a href="/nrc-23731/profile" class="inline-flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-semibold text-sm transition">
+        Volver al perfil
+      </a>
+    </div>
+    {success && <div class="mb-4 p-3 rounded bg-green-100 text-green-800 success-msg">Perfil actualizado correctamente.</div>}
+    {showCompleteProfileMsg && (
+      <div class="mb-4 p-3 rounded bg-yellow-100 text-yellow-900 border border-yellow-300 font-semibold">
+        ¡Completa tu perfil! Por favor, ingresa tu ocupación, ubicación y una imagen de perfil para continuar usando la aplicación.
+      </div>
+    )}
+    {error && <div class="mb-4 p-3 rounded bg-red-100 text-red-800">{error}</div>}
+    <div class="max-w-3xl mx-auto">
+      <form method="POST" class="space-y-6" id="profile-form">
+        <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+          <ul class="flex flex-wrap -mb-px">
+            <li class="me-2">
+              <button type="button" data-tab="basic" class="tab-btn inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500">Perfil básico</button>
+            </li>
+            <li class="me-2">
+              <button type="button" data-tab="skills" class="tab-btn inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 dark:hover:border-gray-700">Habilidades</button>
+            </li>
+            <li class="me-2">
+              <button type="button" data-tab="education" class="tab-btn inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 dark:hover:border-gray-700">Educación</button>
+            </li>
+            <li>
+              <button type="button" data-tab="projects" class="tab-btn inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 dark:hover:border-gray-700">Proyectos</button>
+            </li>
+          </ul>
+        </div>
+        <div id="tab-content" class="mt-6">
+          <div data-content="basic" class="tab-section">
+            <div class="bg-white shadow rounded-lg p-8 dark:bg-gray-900 dark:shadow-none">
+              <div class="flex flex-col items-center mb-8">
+                {userProfile?.basics?.image && (
+                  <img src={typeof userProfile.basics.image === 'string' ? userProfile.basics.image : (userProfile.basics.image.local || userProfile.basics.image.remote)} alt="Avatar" class="w-24 h-24 rounded-full object-cover border-4 border-indigo-200 mb-2 dark:border-indigo-700" />
+                )}
+                <div class="text-lg font-semibold mt-2 dark:text-white">{userProfile?.basics?.name || 'Sin nombre'}</div>
+                <div class="text-sm text-gray-500 dark:text-gray-400">{userProfile?.basics?.email}</div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-sm font-medium mb-1 dark:text-gray-300">Nombre completo</label>
+                  <input type="text" name="name" required class="w-full rounded border border-gray-300 px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" value={userProfile?.basics?.name || ''} />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1 dark:text-gray-300">Apellido</label>
+                  <input type="text" name="last_name" required class="w-full rounded border border-gray-300 px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" value={userProfile?.basics?.last_name || ''} />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1 dark:text-gray-300">Correo electrónico</label>
+                  <input type="email" name="email" required class="w-full rounded border border-gray-300 px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" value={userProfile?.basics?.email || ''} />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1 dark:text-gray-300">Teléfono</label>
+                  <input type="text" name="phone" class="w-full rounded border border-gray-300 px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" value={userProfile?.basics?.phone || ''} />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1 dark:text-gray-300">Ocupación</label>
+                  <input type="text" name="occupation" required class="w-full rounded border border-gray-300 px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" value={userProfile?.basics?.occupation || ''} />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1 dark:text-gray-300">Ciudad</label>
+                  <input type="text" name="city" class="w-full rounded border border-gray-300 px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" value={userProfile?.basics?.location?.city || ''} />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1 dark:text-gray-300">Departamento</label>
+                  <input type="text" name="region" class="w-full rounded border border-gray-300 px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" value={userProfile?.basics?.location?.region || ''} />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1 dark:text-gray-300">País (código)</label>
+                  <input type="text" name="countryCode" class="w-full rounded border border-gray-300 px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" value={userProfile?.basics?.location?.countryCode || ''} />
+                </div>
+                <div class="md:col-span-2">
+                  <label class="block text-sm font-medium mb-1 dark:text-gray-300">Enlace personal</label>
+                  <input type="url" name="url" class="w-full rounded border border-gray-300 px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" value={userProfile?.basics?.url || ''} />
+                </div>
+                <div class="md:col-span-2">
+                  <label class="block text-sm font-medium mb-1 dark:text-gray-300">Avatar (URL de imagen)</label>
+                  <input type="url" name="image_remote" class="w-full rounded border border-gray-300 px-3 py-2 dark:bg-gray-800 dark:border-gray-700 dark:text-white" value={typeof userProfile.basics.image === 'string' ? userProfile.basics.image : userProfile?.basics?.image?.remote || ''} />
+                </div>
+              </div>
+              <div class="mt-8">
+                <label class="block text-sm font-medium mb-2 dark:text-gray-300">Perfiles sociales</label>
+                <div class="overflow-x-auto">
+                  <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead>
+                      <tr>
+                        <th class="px-2 py-1 text-left font-medium text-gray-700 bg-white rounded-t-lg border-b border-gray-200 dark:text-gray-300 dark:bg-gray-900 dark:border-gray-700">Red</th>
+                        <th class="px-2 py-1 text-left font-medium text-gray-700 bg-white border-b border-gray-200 dark:text-gray-300 dark:bg-gray-900 dark:border-gray-700">Usuario</th>
+                        <th class="px-2 py-1 text-left font-medium text-gray-700 bg-white border-b border-gray-200 dark:text-gray-300 dark:bg-gray-900 dark:border-gray-700">URL</th>
+                        <th class="px-2 py-1 bg-white rounded-tr-lg border-b border-gray-200 dark:bg-gray-900 dark:border-gray-700"></th>
+                      </tr>
+                    </thead>
+                    <tbody class="profiles-list">
+                      {(userProfile?.basics?.profiles || []).map((profile, idx, arr) => (
+                        <tr class={`profile-row ${idx === arr.length-1 ? 'rounded-b-lg' : ''}`} data-idx={idx}>
+                          <td class="px-2 py-1 align-middle"><input type="text" name={`profile_network_${idx}`} class="w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white" placeholder="Red" value={profile.network || ''} /></td>
+                          <td class="px-2 py-1 align-middle"><input type="text" name={`profile_username_${idx}`} class="w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white" placeholder="Usuario" value={profile.username || ''} /></td>
+                          <td class="px-2 py-1 align-middle"><input type="url" name={`profile_url_${idx}`} class="w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white" placeholder="URL" value={profile.url || ''} /></td>
+                          <td class="px-2 py-1 align-middle text-center">
+                            <button type="button" class="inline-flex justify-center items-center text-red-600 hover:text-red-800 remove-profile-btn p-1" aria-label="Eliminar perfil">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div class="flex justify-center mt-4">
+                  <button type="button" class="add-profile-btn bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded-full flex items-center gap-2 font-bold text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                    Agregar perfil
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div data-content="skills" class="tab-section hidden">
+            <div class="mt-8">
+              <label class="block text-sm font-medium mb-2 dark:text-gray-300">Habilidades</label>
+              <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                  <thead>
+                    <tr>
+                      <th class="px-2 py-1 text-left font-medium text-gray-700 bg-white rounded-t-lg border-b border-gray-200 dark:text-gray-300 dark:bg-gray-900 dark:border-gray-700">Nombre</th>
+                      <th class="px-2 py-1 text-left font-medium text-gray-700 bg-white border-b border-gray-200 dark:text-gray-300 dark:bg-gray-900 dark:border-gray-700">Tipo</th>
+                      <th class="px-2 py-1 text-left font-medium text-gray-700 bg-white border-b border-gray-200 dark:text-gray-300 dark:bg-gray-900 dark:border-gray-700">Palabras clave</th>
+                      <th class="px-2 py-1 bg-white rounded-tr-lg border-b border-gray-200 dark:bg-gray-900 dark:border-gray-700"></th>
+                    </tr>
+                  </thead>
+                  <tbody class="skills-list">
+                    {userProfile?.skills && userProfile.skills.length > 0 ? (
+                      userProfile.skills.map((skill, idx, arr) => (
+                        <tr class={`skill-row ${idx === arr.length-1 ? 'rounded-b-lg' : ''}`} data-idx={idx}>
+                          <td class="px-2 py-1 align-middle">
+                            <input type="text" name={`skill_name_${idx}`} class="w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white" placeholder="Habilidad" value={skill.name || ''} />
+                          </td>
+                          <td class="px-2 py-1 align-middle">
+                            <select name={`skill_type_${idx}`} class="w-full rounded border border-gray-300 px-2 py-1 text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white">
+                              <option value="">Selecciona tipo</option>
+                              <option value="hard" selected={skill.type === 'hard'}>Hard</option>
+                              <option value="soft" selected={skill.type === 'soft'}>Soft</option>
+                            </select>
+                          </td>
+                          <td class="px-2 py-1 align-middle">
+                            <input type="text" name={`skill_keywords_${idx}`} class="w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white" placeholder="Ej: Python, PostgreSQL, Supabase" value={skill.keywords ? skill.keywords.join(', ') : ''} />
+                            <span class="block text-xs text-gray-500 mt-1">Separa cada palabra clave con una coma (,)</span>
+                          </td>
+                          <td class="px-2 py-1 align-middle text-center">
+                            <button type="button" class="inline-flex justify-center items-center text-red-600 hover:text-red-800 remove-skill-btn p-1" aria-label="Eliminar habilidad">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr><td class="px-2 py-2 text-gray-500 dark:text-gray-400" colSpan="4">No hay habilidades registradas.</td></tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              <div class="flex justify-center mt-4">
+                <button type="button" class="add-skill-btn bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded-full flex items-center gap-2 font-bold text-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                  Agregar habilidad
+                </button>
+              </div>
+            </div>
+          </div>
+          <div data-content="education" class="tab-section hidden">
+            <div class="flex flex-col items-center justify-center min-h-[120px] text-gray-500 dark:text-gray-400 text-center">
+              <p class="italic">Esta sección estará disponible en una futura versión.</p>
+            </div>
+          </div>
+          <div data-content="projects" class="tab-section hidden">
+            <div class="flex flex-col items-center justify-center min-h-[120px] text-gray-500 dark:text-gray-400 text-center">
+              <p class="italic">Esta sección estará disponible en una futura versión.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Botones de acción globales -->
+        <div class="flex gap-4 mt-8 justify-end">
+          <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded font-semibold">Guardar cambios</button>
+          <a href="/nrc-23731/profile" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded font-semibold dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200">Cancelar</a>
+        </div>
+      </form>
+    </div>
+    <div class="mt-10 border-t pt-8">
+      <h2 class="text-lg font-bold text-red-700 mb-2 flex items-center gap-2">
+        <svg class="w-6 h-6 text-red-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        Eliminar cuenta
+      </h2>
+      <p class="mb-4 text-red-600">Esta acción es <strong>irreversible</strong>. Todos tus datos de perfil se eliminarán permanentemente. ¿Estás seguro?</p>
+      <form method="POST" action="/nrc-23731/profile/delete" onsubmit="return confirm('¿Seguro que deseas eliminar tu cuenta? Esta acción no se puede deshacer.')">
+        <button type="submit" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition">Eliminar mi cuenta</button>
+      </form>
+    </div>
+  </div>
+</MainLayout>
+
+<script type="module">
+  // Desktop Tabs logic
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabSections = document.querySelectorAll('#tab-content .tab-section');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('text-blue-600', 'border-blue-600', 'active'));
+      tabBtns.forEach(b => b.classList.add('border-transparent'));
+      btn.classList.remove('border-transparent');
+      btn.classList.add('text-blue-600', 'border-blue-600', 'active');
+      const tab = btn.getAttribute('data-tab');
+      tabSections.forEach(section => {
+        if (section.getAttribute('data-content') === tab) {
+          section.classList.remove('hidden');
+        } else {
+          section.classList.add('hidden');
+        }
+      });
+    });
+  });
+  // Lógica para agregar/eliminar habilidades y perfiles sociales
+  document.addEventListener('DOMContentLoaded', () => {
+    // HABILIDADES
+    document.querySelectorAll('.add-skill-btn').forEach(addBtn => {
+      addBtn.addEventListener('click', () => {
+        document.querySelectorAll('.skills-list').forEach(skillsList => {
+          const idx = skillsList.querySelectorAll('.skill-row').length;
+          const row = document.createElement('tr');
+          row.className = 'skill-row';
+          row.setAttribute('data-idx', idx);
+          row.innerHTML = `
+            <td class=\"px-2 py-1 align-middle\"><input type=\"text\" name=\"skill_name_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white\" placeholder=\"Habilidad\" /></td>
+            <td class=\"px-2 py-1 align-middle\">
+              <select name=\"skill_type_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-white\">
+                <option value=\"\">Selecciona tipo</option>
+                <option value=\"hard\">Hard</option>
+                <option value=\"soft\">Soft</option>
+              </select>
+            </td>
+            <td class=\"px-2 py-1 align-middle\">
+              <input type=\"text\" name=\"skill_keywords_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white\" placeholder=\"Ej: Python, PostgreSQL, Supabase\" />
+              <span class=\"block text-xs text-gray-500 mt-1\">Separa cada palabra clave con una coma (,)</span>
+            </td>
+            <td class=\"px-2 py-1 align-middle text-center\">
+              <button type=\"button\" class=\"inline-flex justify-center items-center text-red-600 hover:text-red-800 remove-skill-btn p-1\" aria-label=\"Eliminar habilidad\">
+                <svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-4 w-4\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M6 18L18 6M6 6l12 12\" /></svg>
+              </button>
+            </td>
+          `;
+          skillsList.appendChild(row);
+        });
+      });
+    });
+    document.querySelectorAll('.skills-list').forEach(skillsList => {
+      skillsList.addEventListener('click', e => {
+        const target = e.target;
+        if (target && target.closest && target.closest('.remove-skill-btn')) {
+          const row = target.closest('.skill-row');
+          if (row) row.remove();
+          // Reindexar nombres
+          Array.from(skillsList.querySelectorAll('.skill-row')).forEach((row, idx, arr) => {
+            row.setAttribute('data-idx', idx);
+            const inputs = row.querySelectorAll('input, select');
+            if (inputs[0]) inputs[0].name = `skill_name_${idx}`;
+            if (inputs[1]) inputs[1].name = `skill_type_${idx}`;
+            if (inputs[2]) inputs[2].name = `skill_keywords_${idx}`;
+            // Redondear solo la última fila
+            if (idx === arr.length - 1) row.classList.add('rounded-b-lg');
+            else row.classList.remove('rounded-b-lg');
+          });
+        }
+      });
+    });
+    // PERFILES SOCIALES
+    document.querySelectorAll('.add-profile-btn').forEach(addBtn => {
+      addBtn.addEventListener('click', () => {
+        document.querySelectorAll('.profiles-list').forEach(profilesList => {
+          const idx = profilesList.querySelectorAll('.profile-row').length;
+          const row = document.createElement('tr');
+          row.className = 'profile-row';
+          row.setAttribute('data-idx', idx);
+          row.innerHTML = `
+            <td class=\"px-2 py-1 align-middle\"><input type=\"text\" name=\"profile_network_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white\" placeholder=\"Red\" /></td>
+            <td class=\"px-2 py-1 align-middle\"><input type=\"text\" name=\"profile_username_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white\" placeholder=\"Usuario\" /></td>
+            <td class=\"px-2 py-1 align-middle\"><input type=\"url\" name=\"profile_url_${idx}\" class=\"w-full rounded border border-gray-300 px-2 py-1 text-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white\" placeholder=\"URL\" /></td>
+            <td class=\"px-2 py-1 align-middle text-center\">
+              <button type=\"button\" class=\"inline-flex justify-center items-center text-red-600 hover:text-red-800 remove-profile-btn p-1\" aria-label=\"Eliminar perfil\">
+                <svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-4 w-4\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M6 18L18 6M6 6l12 12\" /></svg>
+              </button>
+            </td>
+          `;
+          profilesList.appendChild(row);
+        });
+      });
+    });
+    document.querySelectorAll('.profiles-list').forEach(profilesList => {
+      profilesList.addEventListener('click', e => {
+        const target = e.target;
+        if (target && target.closest && target.closest('.remove-profile-btn')) {
+          const row = target.closest('.profile-row');
+          if (row) row.remove();
+          // Reindexar nombres
+          Array.from(profilesList.querySelectorAll('.profile-row')).forEach((row, idx, arr) => {
+            row.setAttribute('data-idx', idx);
+            const inputs = row.querySelectorAll('input');
+            if (inputs[0]) inputs[0].name = `profile_network_${idx}`;
+            if (inputs[1]) inputs[1].name = `profile_username_${idx}`;
+            if (inputs[2]) inputs[2].name = `profile_url_${idx}`;
+            // Redondear solo la última fila
+            if (idx === arr.length - 1) row.classList.add('rounded-b-lg');
+            else row.classList.remove('rounded-b-lg');
+          });
+        }
+      });
+    });
+  });
+</script>
+<script>
+  setTimeout(() => {
+    const msg = document.querySelector('.success-msg');
+    if (msg) msg.style.display = 'none';
+    // Limpiar el parámetro success de la URL sin recargar
+    const url = new URL(window.location);
+    url.searchParams.delete('success');
+    window.history.replaceState({}, document.title, url.pathname + url.search);
+  }, 3500);
+</script>

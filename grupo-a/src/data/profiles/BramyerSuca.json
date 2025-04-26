@@ -1,10 +1,15 @@
-{
+{ 
+  "id": "bramyersuca",
+    "auth": {
+      "username": "bramyersuca",
+      "passwordHash": "2360515c83ce8d1bc08ea67069a55232bd6fac5d672a5b7c8d55be09f51e06dd",
+      "lastLogin": "2024-04-25T12:00:00.000Z"
+    },
     "basics": {
       "name": "Bramyer",
       "last_name":"Suca Ccallo",
-      "label": "Estudiante",
+      "occupation": "Estudiante",
       "image": {
-        "local": "/images/team/pepe.png",
         "remote": "https://avatars.githubusercontent.com/u/205334107?v=4"
       },
       "email": "75961185@continetal.edu.pe",

@@ -1,0 +1,101 @@
+---
+import '../styles/global.css';
+let error = '';
+let success = false;
+
+// Redirección si ya está autenticado
+const authToken = Astro.cookies.get('auth_token')?.value;
+if (authToken) {
+  return Astro.redirect('/nrc-23731/profile', 303);
+}
+
+const url = new URL(Astro.request.url);
+if (url.searchParams.get('error')) error = decodeURIComponent(url.searchParams.get('error'));
+if (url.searchParams.get('success') === '1') success = true;
+
+if (Astro.request.method === 'POST') {
+  try {
+    const form = await Astro.request.formData();
+    const username = typeof form.get('username') === 'string' ? form.get('username') : '';
+    const password = typeof form.get('password') === 'string' ? form.get('password') : '';
+    const testfield = typeof form.get('testfield') === 'string' ? form.get('testfield') : '';
+    try {
+      const { AuthService } = await import('../lib/services/AuthService');
+      const authService = new AuthService();
+      const result = await authService.login(username, password);
+      if (result.success) {
+        success = true;
+        Astro.cookies.set('auth_token', result.token, { path: '/', httpOnly: true });
+        // Validar si el perfil está incompleto
+        const profile = result.profile;
+        const basics = profile?.basics || {};
+        const location = basics.location || {};
+        const needsCompletion =
+          !basics.occupation || basics.occupation === 'Ingresar ocupacion' ||
+          !basics.image?.remote || basics.image.remote === '' ||
+          !location.city ||
+          !location.region ||
+          !location.countryCode;
+        if (needsCompletion) {
+          return Astro.redirect('/nrc-23731/profile/edit?complete_profile=1', 303);
+        } else {
+          return Astro.redirect('/nrc-23731/profile');
+        }
+      } else {
+        // PRG: redirigir con error
+        return Astro.redirect('/nrc-23731/login?error=' + encodeURIComponent(result.message || 'Credenciales incorrectas'), 303);
+      }
+    } catch (e) {
+      return Astro.redirect('/nrc-23731/login?error=' + encodeURIComponent('Error interno al intentar iniciar sesión'), 303);
+    }
+  } catch (e) {
+    return Astro.redirect('/nrc-23731/login?error=' + encodeURIComponent('Error procesando el formulario.'), 303);
+  }
+}
+---
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Iniciar Sesión</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body class="bg-gradient-to-br from-indigo-100 via-white to-indigo-200 min-h-screen flex items-center justify-center">
+    <main class="w-full max-w-sm p-8 bg-white rounded-2xl shadow-xl border border-gray-200">
+      <h1 class="text-3xl font-extrabold mb-6 text-center text-indigo-700">Iniciar Sesión</h1>
+      {success && <div class="mb-4 text-green-600 font-semibold bg-green-50 border border-green-200 rounded px-3 py-2 text-center success-msg">¡Sesión iniciada correctamente!</div>}
+      {error && <div class="mb-4 text-red-600 font-semibold bg-red-50 border border-red-200 rounded px-3 py-2 text-center error-msg">{error}</div>}
+      <form method="POST" action="/nrc-23731/login" autocomplete="off" class="space-y-5">
+        <input type="hidden" name="testfield" value="testvalue" />
+        <div>
+          <label class="block mb-1 font-semibold text-gray-700" for="username">Usuario</label>
+          <input type="text" id="username" name="username" required class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400 transition" />
+        </div>
+        <div>
+          <label class="block mb-1 font-semibold text-gray-700" for="password">Contraseña</label>
+          <input type="password" id="password" name="password" required class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-400 transition" />
+        </div>
+        <button type="submit" class="w-full py-2 px-4 bg-indigo-600 text-white rounded-lg font-bold text-lg hover:bg-indigo-700 transition">Entrar</button>
+      </form>
+      <div class="mt-6 text-center text-sm text-gray-600">
+        ¿No tienes cuenta? <a href="/nrc-23731/register" class="text-indigo-600 hover:underline font-semibold">Regístrate</a>
+        <br />
+        <a href="/nrc-23731/" class="text-indigo-500 hover:underline mt-2 inline-block">Volver a la página de inicio</a>
+      </div>
+    </main>
+    <script>
+      setTimeout(() => {
+        const msg = document.querySelector('.success-msg');
+        if (msg) msg.style.display = 'none';
+        // Limpiar success de la URL
+        const url = new URL(window.location);
+        url.searchParams.delete('success');
+        window.history.replaceState({}, document.title, url.pathname + url.search);
+        // Limpiar error de la URL
+        const err = document.querySelector('.error-msg');
+        if (err) err.style.display = 'none';
+        url.searchParams.delete('error');
+        window.history.replaceState({}, document.title, url.pathname + url.search);
+      }, 3500);
+    </script>
+  </body>
+</html>

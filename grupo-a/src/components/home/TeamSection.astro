@@ -1,34 +1,52 @@
 ---
 // src/components/home/TeamSection.astro
-import { getProfiles } from '../../services/profileService';
+import { getProfiles, getProfilesBySkill } from '../../lib/services/profileService';
 import type { Profile } from '../../types';
 import Button from '../ui/Button.astro';
 import SocialLink from '../ui/SocialLink.astro';
 
+// Opciones para la ordenación o filtrado (Usando nuevas capacidades del ORM)
+const sortOptions = { field: 'basics.name', order: 'asc' as const };
+
 // Obtener perfiles de manera segura con manejo de excepciones
 let profiles: Profile[] = [];
 try {
-  profiles = await getProfiles();
+  // Usando el ORM para obtener perfiles ordenados
+  profiles = await getProfiles({
+    sort: sortOptions,
+    limit: 10  // Limitar a 10 perfiles por ejemplo
+  });
+  
+  // Ejemplo de uso de búsqueda por habilidad (opcional)
+  // const profilesWithJS = await getProfilesBySkill('JavaScript');
+  // console.log(`Encontrados ${profilesWithJS.length} perfiles con habilidades en JavaScript`);
 } catch (error) {
   console.error('Error al cargar perfiles de equipo:', error);
   // Continuar con array vacío para evitar fallo de la aplicación
 }
 
-// Funciones auxiliares para procesar imágenes
+// Función mejorada para obtener imagen local y fallback remoto
 function getImageSrc(profile: Profile): string {
   if (!profile.basics?.image) return '';
-  // Verifica si es un objeto y accede a 'local' de forma segura
-  if (typeof profile.basics.image === 'object' && profile.basics.image.local) {
-    // Añadir el prefijo base para GitHub Pages si la ruta es relativa
+  if (typeof profile.basics.image === 'object') {
     const localPath = profile.basics.image.local;
-    if (localPath.startsWith('/')) {
-      // Usar el import.meta.env.BASE_URL para obtener la ruta base de Astro
-      return import.meta.env.BASE_URL + localPath;
+    const remotePath = profile.basics.image.remote;
+    if (localPath) {
+      // Probar si la imagen local existe usando import.meta.glob
+      try {
+        const images = import.meta.glob('/public/images/team/*');
+        // Si existe la local, usarla
+        if (images['/public' + localPath]) {
+          return import.meta.env.BASE_URL + localPath;
+        }
+      } catch {}
     }
-    return localPath;
+    // Si no existe la local, usar la remota
+    if (remotePath) {
+      return remotePath;
+    }
   }
-  // Si es una cadena (o no es objeto pero existe), devuélvela
-  return typeof profile.basics.image === 'string' ? profile.basics.image : ''; 
+  return typeof profile.basics.image === 'string' ? profile.basics.image : '';
 }
 
 function getImageFallback(profile: Profile): string {
@@ -53,507 +71,58 @@ const {
 } = Astro.props;
 ---
 
-<section id="integrantes" class="team-section">
-  <div class="team-section-inner">
-    <div class="section-header">
-      <h2 class="section-title">{title}</h2>
-      <div class="section-title-underline"></div>
-      <p class="section-description">{subtitle}</p>
+<section id="integrantes" class="py-20 bg-gray-50 dark:bg-gray-900 w-full">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">{title}</h2>
+      <div class="h-1 w-16 bg-indigo-600 mx-auto mb-4 rounded-full"></div>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">{subtitle}</p>
     </div>
-
     {profiles.length > 0 ? (
-      <div class="team-carousel">
-        <div class="team-grid">
-          {profiles.map((profile) => (
-            <div class="team-card">
-              <div class="team-image-container">
-                {(() => {
-                  const basics = profile.basics;
-                  // Check if basics and the image property exist
-                  if (basics && basics.image) {
-                    let imageUrl: string | undefined; // Explicitly type imageUrl
-
-                    // Determine the correct image URL string
-                    if (typeof basics.image === 'string') {
-                      imageUrl = basics.image; 
-                    } else if (typeof basics.image === 'object' && (basics.image.remote || basics.image.local)) {
-                      // Prioritize remote URL, fallback to local
-                      imageUrl = basics.image.remote || getImageSrc(profile);
-                    }
-
-                    // Only render the image if we successfully determined a URL
-                    if (imageUrl) {
-                      const fallbackUrl = getImageFallback(profile) || `${import.meta.env.BASE_URL}/images/default-avatar.svg`; 
-                      const altText = `Foto de ${basics.name || 'miembro del equipo'}`;
-                      
-                      return (
-                        <img 
-                          src={imageUrl}
-                          alt={altText} 
-                          class="team-image"
-                          data-fallback={fallbackUrl}
-                          onerror={`this.onerror=null; this.src='${fallbackUrl}';`}
-                        />
-                      );
-                    }
-                  } 
-                  
-                  // Render the placeholder if basics, basics.image, or a valid imageUrl is missing
-                  return (
-                    <div class="team-no-image">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                      </svg>
-                    </div>
-                  );
-                })()}
-              </div>
-              
-              <div class="team-info">
-                <h3 class="team-name">
-                  {profile.basics?.name || 'Sin nombre'} 
-                  {profile.basics?.last_name && <span class="team-lastname">{profile.basics.last_name}</span>}
-                </h3>
-                
-                <p class="team-role">{profile.basics?.label || 'Miembro del equipo'}</p>
-                <div class="team-contact-info">
-                  {profile.basics?.location && (
-                    <p class="team-location">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                        <circle cx="12" cy="10" r="3"></circle>
-                    </svg>
-                    {profile.basics.location.city}, {profile.basics.location.region}
-                  </p>
+      <div class="grid gap-8 grid-cols-1 md:grid-cols-3">
+        {profiles.map((profile) => (
+          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 overflow-hidden flex flex-col items-center p-0">
+            <img src={getImageSrc(profile)} alt={profile.basics?.name} class="w-32 h-32 object-cover object-center rounded-2xl mx-auto mt-6 shadow-md border-4 border-white dark:border-gray-700" loading="lazy" />
+            <div class="w-full flex-1 flex flex-col p-6">
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">{profile.basics?.name} {profile.basics?.last_name}</h3>
+              <p class="text-gray-700 dark:text-gray-200 text-base font-medium mb-1">{profile.basics?.label}</p>
+              <div class="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-2">
+                {profile.basics?.location?.city && (
+                  <>
+                    <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <span>{profile.basics.location.city}, {profile.basics.location.region}</span>
+                  </>
                 )}
                 {profile.basics?.email && (
-                  <div class="team-email" data-email={profile.basics.email}>
-                    <a href={`mailto:${profile.basics.email}`} title="Enviar correo">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                        <polyline points="22,6 12,13 2,6"></polyline>
-                      </svg>
-                    </a>
-                  </div>
+                  <a href={`mailto:${profile.basics.email}`} title="Enviar correo" class="hover:text-indigo-600 dark:hover:text-indigo-400">
+                    <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+                      <path d="M22 7l-10 5L2 7"></path>
+                    </svg>
+                  </a>
                 )}
-                </div>
-                
-                
-                {profile.basics?.summary && (
-                  <p class="team-bio">{profile.basics.summary}</p>
-                )}
-                
-                <div class="team-footer">
-                  {profile.basics?.profiles && profile.basics.profiles.length > 0 && (
-                    <div class="team-social">
-                      {profile.basics.profiles.map(social => (
-                        <SocialLink 
-                          network={social.network} 
-                          url={social.url} 
-                          username={social.username} 
-                        />
-                      ))}
-                    </div>
-                  )}
-                  
-                  {profile.basics?.url && (
-                    <div class="portfolio-link">
-                      <Button href={profile.basics.url} size="sm" variant="primary" target="_blank" rel="noopener">
-                        Ver portafolio
-                      </Button>
-                    </div>
-                  )}
-                </div>
               </div>
+              <p class="text-gray-600 dark:text-gray-300 text-sm mb-4 text-left line-clamp-2">{profile.basics?.summary}</p>
+              <div class="flex gap-2 mb-4">
+                {profile.basics?.profiles?.map((social) => (
+                  <SocialLink network={social.network} url={social.url} username={social.username} />
+                ))}
+              </div>
+              <Button href={profile.basics?.url} variant="secondary" class="mt-auto w-full bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-200 hover:bg-indigo-200 dark:hover:bg-indigo-800 transition-colors">Ver portafolio</Button>
             </div>
-          ))}
-        </div>
-        <div class="scroll-indicator">
-          <div class="indicator-dots">
-            {profiles.map((_, index) => (
-              <span class="indicator-dot" data-index={index}></span>
-            ))}
           </div>
-        </div>
+        ))}
       </div>
     ) : (
-      <div class="no-profiles-message">
-        <p>No se encontraron perfiles para mostrar.</p>
-      </div>
+      <p class="text-center text-gray-600 dark:text-gray-400 italic my-12">No hay integrantes disponibles actualmente.</p>
     )}
   </div>
 </section>
 
-<style>
-  .team-section {
-    padding: 4rem 0;
-    background-color: var(--color-background, #ffffff);
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .team-section-inner {
-    max-width: var(--container-width, 1200px);
-    margin: 0 auto;
-    padding: 0 var(--space-md, 1.5rem);
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .section-header {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-  
-  .section-title {
-    font-size: var(--font-size-2xl, 2rem);
-    color: var(--color-heading, #1a202c);
-    margin-bottom: 0.5rem;
-    font-weight: 700;
-  }
-  
-  .section-title-underline {
-    height: 3px;
-    width: 60px;
-    background-color: var(--color-accent, #4f46e5);
-    margin: 0 auto;
-    margin-bottom: 1rem;
-  }
-  
-  .section-description {
-    font-size: var(--font-size-md, 1.125rem);
-    max-width: 800px;
-    margin: 0 auto;
-    color: var(--color-text-lighter);
-    font-weight: 500;
-  }
-  
-  .team-carousel {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-  }
-  
-  .team-grid {
-    display: flex;
-    gap: 2rem;
-    margin-top: 2rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 1rem;
-    width: 100%;
-    /* Ajustar el ancho para mostrar exactamente el número de tarjetas deseado para cada breakpoint */
-    --cards-per-view: 3;
-    --card-width: calc((100% - (var(--cards-per-view) - 1) * 2rem) / var(--cards-per-view));
-  }
-  
-  .team-card {
-    flex: 0 0 var(--card-width);
-    width: var(--card-width);
-    min-width: 0; /* Para prevenir que se desborde */
-    scroll-snap-align: start;
-    background-color: var(--color-white, #ffffff);
-    border-radius: var(--radius-lg, 0.75rem);
-    box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06));
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box; /* Asegurar que el padding no afecte el ancho total */
-  }
-  
-  .team-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05));
-  }
-
-  /* Ocultar la barra de desplazamiento pero mantener la funcionalidad */
-  .team-grid::-webkit-scrollbar {
-    height: 8px;
-  }
-
-  .team-grid::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
-  }
-
-  .team-grid::-webkit-scrollbar-thumb {
-    background: var(--color-accent, #4f46e5);
-    border-radius: 4px;
-  }
-  
-  .team-image-container {
-    position: relative;
-    height: 200px;
-    overflow: hidden;
-  }
-  
-  .team-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-  
-  .team-card:hover .team-image {
-    transform: scale(1.05);
-  }
-  
-  .team-no-image {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--color-bg-alt, #f8fafc);
-    color: var(--color-text-muted, #718096);
-  }
-  
-  .team-info {
-    padding: 1.5rem;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 240px; /* Altura mínima para garantizar espacio */
-  }
-  
-  .team-name {
-    font-size: var(--font-size-lg, 1.25rem);
-    font-weight: 700;
-    margin: 0 0 0.25rem 0;
-    color: var(--color-heading, #121826);
-  }
-  
-  .team-lastname {
-    font-weight: 600;
-    color: var(--color-text, #2d3748);
-  }
-  
-  .team-role {
-    font-size: var(--font-size-sm, 0.875rem);
-    color: var(--color-text-light, #3730a3);
-    margin: 0 0 0.5rem 0;
-    font-weight: 600;
-  }
-  
-  .team-contact-info {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.team-location {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: var(--font-size-sm, 0.875rem);
-  color: var(--color-text-muted, #4b5563);
-  margin: 0;
-  font-weight: 500;
-}
-
-.team-email {
-  position: relative;
-  display: inline-block;
-}
-
-.team-email a {
-  color: var(--color-text-muted, #4b5563);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 500;
-}
-  
-  .team-bio {
-    font-size: var(--font-size-sm, 0.875rem);
-    color: var(--color-text, #2d3748);
-    margin-bottom: 1.5rem;
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    font-weight: 500;
-  }
-  
-  .team-footer {
-    margin-top: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    padding-top: 1rem;
-  }
-  
-  .team-social {
-    display: flex;
-    gap: 0.75rem;
-  }
-  
-  .portfolio-link {
-    width: auto;
-  }
-  
-  .portfolio-link :global(a) {
-    display: inline-flex;
-    width: auto;
-    text-decoration: none;
-    white-space: nowrap;
-  }
-  
-  .no-profiles-message {
-    text-align: center;
-    padding: 3rem;
-    background-color: var(--color-bg-alt, #f8fafc);
-    border-radius: var(--radius-md, 0.5rem);
-    color: var(--color-text-muted, #4b5563);
-    font-style: italic;
-    font-weight: 500;
-  }
-  
-  /* Indicador de scroll */
-  .scroll-indicator {
-    display: flex;
-    justify-content: center;
-    margin-top: 1.5rem;
-  }
-  
-  .indicator-dots {
-    display: flex;
-    gap: 0.5rem;
-  }
-  
-  .indicator-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: var(--color-text-muted, #718096);
-    opacity: 0.5;
-    transition: opacity 0.3s ease;
-    cursor: pointer;
-  }
-  
-  .indicator-dot.active {
-    opacity: 1;
-    background-color: var(--color-accent, #3730a3);
-  }
-  
-  /* Media queries para ajustar el número de tarjetas visibles */
-  @media (min-width: 1200px) {
-    .team-grid {
-      --cards-per-view: 3; /* 3 tarjetas en pantallas grandes */
-    }
-  }
-  
-  @media (min-width: 769px) and (max-width: 1199px) {
-    .team-grid {
-      --cards-per-view: 2; /* 2 tarjetas en tablets */
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .team-section {
-      padding: 3rem 0;
-    }
-    
-    .team-grid {
-      --cards-per-view: 1; /* 1 tarjeta en móviles */
-      padding: 0 0 1.5rem;
-    }
-    
-    .team-card {
-      flex: 0 0 100%;
-      width: 100%;
-      margin: 0;
-    }
-    
-    .team-info {
-      padding: 1.2rem;
-      min-height: 200px;
-    }
-    
-    .team-name {
-      font-size: 1.1rem;
-    }
-    
-    .team-role {
-      font-size: 0.85rem;
-    }
-    
-    .team-bio {
-      font-size: 0.85rem;
-      margin-bottom: 1.2rem;
-      -webkit-line-clamp: 2;
-    }
-    
-    .team-footer {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.8rem;
-      width: 100%;
-    }
-    
-    .portfolio-link {
-      width: 100%;
-      margin-bottom: 0.5rem;
-    }
-    
-    .portfolio-link :global(a) {
-      width: 100%;
-      justify-content: center;
-      padding: 0.7rem 1rem;
-      font-size: 0.9rem;
-      box-sizing: border-box;
-      white-space: nowrap;
-      display: inline-block;
-      text-align: center;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .team-image-container {
-      height: 180px;
-    }
-    
-    .team-info {
-      padding: 1rem;
-      min-height: 180px;
-    }
-    
-    .section-title {
-      font-size: 1.5rem;
-    }
-    
-    .section-description {
-      font-size: 0.9rem;
-    }
-    
-    .team-bio {
-      -webkit-line-clamp: 2;
-      margin-bottom: 1rem;
-    }
-    
-    .team-footer {
-      gap: 0.5rem;
-    }
-    
-    .portfolio-link :global(a) {
-      padding: 0.6rem 0.8rem;
-      font-size: 0.85rem;
-    }
-  }
-</style>
-
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     // Script para manejar errores de carga de imágenes
-    const images = document.querySelectorAll<HTMLImageElement>('.team-image');
+    const images = document.querySelectorAll<HTMLImageElement>('[data-fallback]');
     
     images.forEach(img => {
       img.addEventListener('error', function(this: HTMLImageElement) {
@@ -565,7 +134,7 @@ const {
           const parent = this.parentNode;
           if (parent) {
             const noImage = document.createElement('div');
-            noImage.className = 'team-no-image';
+            noImage.className = 'w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400';
             noImage.innerHTML = `
               <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -578,51 +147,5 @@ const {
         }
       });
     });
-    
-    // Script para manejar los indicadores de dots y el scroll
-    const teamGrid = document.querySelector('.team-grid');
-    const dots = document.querySelectorAll('.indicator-dot');
-    
-    if (teamGrid && dots.length > 0) {
-      // Marcar el primer dot como activo inicialmente
-      dots[0].classList.add('active');
-      
-      // Función para actualizar dots basado en el scroll
-      const updateActiveDot = () => {
-        if (!teamGrid) return;
-        
-        const scrollLeft = teamGrid.scrollLeft;
-        const cardWidth = teamGrid.querySelector('.team-card')?.clientWidth || 0;
-        const gap = 32; // 2rem
-        
-        const activeIndex = Math.round(scrollLeft / (cardWidth + gap));
-        
-        dots.forEach((dot, index) => {
-          if (index === activeIndex) {
-            dot.classList.add('active');
-          } else {
-            dot.classList.remove('active');
-          }
-        });
-      };
-      
-      // Escuchar eventos de scroll
-      teamGrid.addEventListener('scroll', updateActiveDot);
-      
-      // Permitir clic en dots para navegar
-      dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-          if (!teamGrid) return;
-          
-          const cardWidth = teamGrid.querySelector('.team-card')?.clientWidth || 0;
-          const gap = 32; // 2rem
-          
-          teamGrid.scrollTo({
-            left: index * (cardWidth + gap),
-            behavior: 'smooth'
-          });
-        });
-      });
-    }
   });
 </script>

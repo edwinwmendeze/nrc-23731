@@ -1,8 +1,14 @@
 {
+  "id": "juliocesarg",
+  "auth": {
+    "username": "juliocesarg",
+    "passwordHash": "2360515c83ce8d1bc08ea67069a55232bd6fac5d672a5b7c8d55be09f51e06dd",
+    "lastLogin": "2024-04-25T12:00:00.000Z"
+  },
   "basics": {
       "name": "Julio César",
       "last_name": "Guillermo Colca",
-      "label": "Jefe de Soporte Técnico y Redes",
+      "occupation": "Jefe de Soporte Técnico y Redes",
       "image": {
           "remote": "https://internetenperu2025.wordpress.com/wp-content/uploads/2025/03/pasaporte-02.jpg"
       },
