@@ -3,10 +3,14 @@ name: Run Tests
 on:
   push:
     branches: ["main", "develop"]
-  pull_request:
-    branches: ["main"]
-  workflow_dispatch:
 
+  workflow_dispatch:
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  
 jobs:
   test:
     name: Run Tests
@@ -32,7 +36,7 @@ jobs:
 
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: grupo-a/tests-results
+          path: grupo-a/vitest.output.json
