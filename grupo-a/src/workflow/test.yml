@@ -1,0 +1,38 @@
+name: Run Tests
+
+on:
+  push:
+    branches: ["main", "develop"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run Unit Tests (ORM Testing)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: 'npm'
+          cache-dependency-path: grupo-a/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: grupo-a
+
+      - name: Run tests
+        run: npm test
+        working-directory: grupo-a
+        
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: grupo-a/test-results.json

@@ -6,7 +6,7 @@
     "lastLogin": "2024-04-25T12:00:00.000Z"
   },
   "basics": {
-    "name": "Edwin Wilson",
+    "name": "Edwin Wilsonnn",
     "last_name": "Méndez Echevarría",
     "occupation": "Analista de datos con experiencia en Python y automatización.",
     "image": {
@@ -15,7 +15,7 @@
     "email": "45088035@continental.edu.pe",
     "phone": "(51) 948-924-822",
     "url": "https://edwinwmendeze.github.io/portfolio-personal/",
-    "summary": "",
+    "summary": "",  
     "location": {
       "city": "Atalaya",
       "region": "Ucayali",
@@ -38,7 +38,7 @@
         "url": "https://facebook/edwinwmendez"
       },
       {
-        "network": "prueba2",
+        "network": "Pruebaaaaa",
         "username": "aaa",
         "url": "https://facebook/edwinwmendez"
       }
@@ -97,13 +97,6 @@
         "Pensamiento crítico",
         "Adaptabilidad",
         "Aprendizaje continuo"
-      ]
-    },
-    {
-      "name": "Prueba",
-      "type": "soft",
-      "keywords": [
-        "aaa"
       ]
     }
   ],

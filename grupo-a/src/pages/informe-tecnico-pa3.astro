@@ -629,6 +629,115 @@ const progreso = [
       </div>
     </section>
 
+    <!-- SECCIÓN: USO DE ORM EN LOGIN Y REGISTRO (REESCRITA) -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Uso de ORM en Login y Registro</h2>
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
+        <h3 class="font-bold text-lg mt-2 mb-2 text-indigo-700 dark:text-indigo-300">¿Qué es un ORM y por qué lo usamos?</h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          Un <strong>ORM (Object-Relational Mapping)</strong> es una técnica que permite manipular datos de una base de datos utilizando objetos y métodos del lenguaje de programación. En nuestro proyecto, el ORM facilita la gestión de perfiles, autenticación y registro de usuarios, simplificando la interacción con los datos y permitiendo que el código sea más claro, reutilizable y fácil de mantener.
+        </p>
+        <h3 class="font-bold text-lg mt-4 mb-2 text-indigo-700 dark:text-indigo-300">Implementación en la lógica de login y registro</h3>
+        <ol class="list-decimal pl-8 space-y-3">
+          <li>
+            <strong>Definición y uso del ORM:</strong>
+            <ul class="list-disc pl-6">
+              <li>Se implementó la clase <code>ProfileORM</code> (<code>src/lib/orm/ProfileORM.ts</code>), que extiende una clase base genérica para gestionar operaciones CRUD sobre perfiles de usuario almacenados como archivos JSON.</li>
+              <li><code>ProfileORM</code> se utiliza como singleton en los servicios de la aplicación, garantizando acceso centralizado y eficiente a los datos de perfiles.</li>
+            </ul>
+            <CodeBlock 
+              title="Fragmento de ProfileORM"
+              filePath="/src/lib/orm/ProfileORM.ts"
+              basePath="root"
+              startLine={14}
+              endLine={46}
+              displayStartLine={14}
+              highlightLines={[14]}
+              lineNumbers={true}
+              lang="ts"
+            />
+          </li>
+          <li>
+            <strong>Servicio de autenticación (<code>AuthService</code>):</strong>
+            <ul class="list-disc pl-6">
+              <li>El archivo <code>src/lib/services/AuthService.ts</code> implementa la lógica de login y registro de usuarios, utilizando internamente los métodos de <code>ProfileORM</code> para buscar, validar y almacenar perfiles.</li>
+              <li>En el método <code>login</code>, se busca el usuario y se valida la contraseña usando el ORM.</li>
+              <li>En el método <code>register</code>, se valida que el usuario no exista, se hashea la contraseña y se guarda el nuevo perfil usando el ORM.</li>
+            </ul>
+            <CodeBlock 
+              title="Uso de ProfileORM en AuthService"
+              filePath="/src/lib/services/AuthService.ts"
+              basePath="root"
+              startLine={78}
+              endLine={169}
+              displayStartLine={78}
+              highlightLines={[78]}
+              lineNumbers={true}
+              lang="ts"
+            />
+          </li>
+          <li>
+            <strong>Integración con las páginas de Login y Registro:</strong>
+            <ul class="list-disc pl-6">
+              <li>En <code>/src/pages/login.astro</code> y <code>/src/pages/register.astro</code>, los formularios envían los datos al backend, donde <code>AuthService</code> y el ORM gestionan la autenticación y el registro de manera transparente para el usuario.</li>
+              <li>Esto permite que el acceso y la creación de usuarios sean seguros y eficientes, y que la lógica de datos esté desacoplada de la interfaz.</li>
+            </ul>
+            <CodeBlock 
+              title="Llamada a AuthService desde login.astro"
+              filePath="/src/pages/login.astro"
+              basePath="root"
+              startLine={17}
+              endLine={55}
+              displayStartLine={17}
+              highlightLines={[17]}
+              lineNumbers={true}
+              lang="astro"
+            />
+            <CodeBlock 
+              title="Llamada a AuthService desde register.astro"
+              filePath="/src/pages/register.astro"
+              basePath="root"
+              startLine={10}
+              endLine={38}
+              displayStartLine={10}
+              highlightLines={[10]}
+              lineNumbers={true}
+              lang="astro"
+            />
+          </li>
+          
+        </ol>
+        <h3 class="font-bold text-lg mt-6 mb-2 text-indigo-700 dark:text-indigo-300">Evidencia en video del uso real del ORM</h3>
+<p class="text-gray-600 dark:text-gray-300 mb-4">
+  A continuación se presentan videos demostrativos del uso real del ORM en el sistema, cubriendo procesos como inicio de sesión, registro de usuarios y consultas de perfiles.
+</p>
+
+<div class="space-y-8">
+  <!-- Video: Login exitoso -->
+  <figure class="flex flex-col items-center">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/TdphFLqgDuo" title="Video de inicio de sesión usando ORM" frameborder="0" allowfullscreen class="rounded shadow-md border max-w-lg"></iframe>
+    <figcaption class="text-sm text-gray-500 mt-2">Video 1. Inicio de sesión exitoso utilizando el ORM para validar credenciales.</figcaption>
+  </figure>
+
+  <!-- Video: Registro de usuario -->
+  <figure class="flex flex-col items-center">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/OiXVea8p0Hg" title="Video de registro usando ORM" frameborder="0" allowfullscreen class="rounded shadow-md border max-w-lg"></iframe>
+    <figcaption class="text-sm text-gray-500 mt-2">Video 2. Registro de un nuevo usuario, persistiendo el perfil mediante el ORM.</figcaption>
+  </figure>
+</div>
+
+        <h3 class="font-bold text-lg mt-4 mb-2 text-indigo-700 dark:text-indigo-300">Ventajas del enfoque ORM</h3>
+        <ul class="list-disc pl-8 mb-4">
+          <li>Permite separar la lógica de acceso a datos del resto de la aplicación.</li>
+          <li>Facilita la reutilización y el mantenimiento del código.</li>
+          <li>La arquitectura es fácilmente migrable a una base de datos real si se requiere escalar el sistema.</li>
+        </ul>
+        <p class="text-gray-600 dark:text-gray-300 mb-2">
+          <strong>Nota:</strong> Aunque aquí nos centramos en login y registro, el ORM también se utiliza para otras funcionalidades como la gestión de proyectos y habilidades en los perfiles.
+        </p>
+      </div>
+    </section>
+
     <!-- Integración de Pruebas en el Flujo Ágil -->
     <section class="mb-12">
       <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Integración de Pruebas en el Flujo Ágil</h2>
@@ -638,29 +747,22 @@ const progreso = [
         </p>
         <h3 class="font-bold text-lg mt-4 mb-2 text-indigo-700 dark:text-indigo-300">Implementación de CI/CD con GitHub Actions</h3>
         <p class="text-gray-600 dark:text-gray-300">Se configuró un pipeline de CI/CD que ejecuta automáticamente las pruebas en cada push o pull request:</p>
-        <pre class="bg-gray-100 rounded p-4 text-sm overflow-x-auto"><code>&lt;!-- .github/workflows/ci.yml --&gt;
-name: CI
+        <CodeBlock 
+              title="GitHub Workflow - CI Tests"
+              filePath="/src/workflow/test.yml"
+              basePath=""
+              startLine={1}
+              endLine={38}
+              displayStartLine={1}
+              highlightLines={[1]}
+              lineNumbers={true}
+              lang="yml"
+            />
+        
+            <h3>Imagen del workflow de pruebas funcionando en GitHub</h3>
+            <img src="/images/pa3/run_test_github.png" alt="Workflow de pruebas" class="w-full rounded-lg shadow-lg" />
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-      - name: Install dependencies
-        run: npm ci
-      - name: Run tests
-        run: npm test
-</code></pre>
+        
         <h3 class="font-bold text-lg mt-4 mb-2 text-indigo-700 dark:text-indigo-300">Beneficios observados:</h3>
         <ul class="list-disc pl-8 mb-3 space-y-1">
           <li>Detección temprana de errores</li>
@@ -697,12 +799,12 @@ jobs:
     </section>
 
     <!-- Entrega del Proyecto y Recursos -->
-    <section class="mb-12">
+    <section class="mb-12 text-gray-600 dark:text-gray-300">
       <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Entrega del Proyecto y Recursos</h2>
-      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none text-gray-600 dark:text-gray-300">
         <ul class="list-disc pl-8 mb-3 space-y-1">
           <li><strong>Repositorio en GitHub:</strong> <a href="https://github.com/edwinwmendeze/nrc-23731" class="text-indigo-600 dark:text-indigo-300 underline">https://github.com/edwinwmendeze/nrc-23731</a></li>
-          <li><strong>Aplicación desplegada:</strong> <a href="https://edwinwmendeze.github.io/nrc-23731/" class="text-indigo-600 dark:text-indigo-300 underline">https://edwinwmendeze.github.io/nrc-23731/</a></li>
+          <li><strong>Aplicación desplegada:</strong> <a href="https://edwinwmendez-grupo-a.vercel.app/" class="text-indigo-600 dark:text-indigo-300 underline">https://edwinwmendeze.github.io/nrc-23731/</a></li>
           <li><strong>Informe técnico:</strong> Este documento en formato .astro y .doc</li>
           <li><strong>Recursos adicionales:</strong>
             <ul class="list-disc pl-8">
@@ -711,10 +813,10 @@ jobs:
             </ul>
           </li>
         </ul>
-        <h3 class="font-bold text-lg mt-4 mb-2 text-indigo-700 dark:text-indigo-300">Instrucciones para ejecutar el proyecto localmente:</h3>
-        <pre class="bg-gray-100 rounded p-4 text-sm overflow-x-auto"><code>&lt;!-- Clonar el repositorio --&gt;
+        <h3 class="font-bold text-lg mt-4 mb-2 text-indigo-700 dark:text-indigo-300 mb-4 text-lg">Instrucciones para ejecutar el proyecto localmente:</h3>
+        <pre class="bg-gray-100 rounded p-4 text-sm overflow-x-auto text-gray-600 dark:text-gray-300 dark:bg-gray-800"><code>&lt;!-- Clonar el repositorio --&gt;
 git clone https://github.com/edwinwmendeze/nrc-23731.git
-cd nrc-23731/grupo-a
+cd grupo-a
 
 &lt;!-- Instalar dependencias --&gt;
 npm install
@@ -728,39 +830,6 @@ npm test
       </div>
     </section>
 
-    <!-- Anexos -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Anexos</h2>
-      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
-        <p class="text-gray-600 dark:text-gray-300">
-          A continuación, se presentan capturas de pantalla, fragmentos de código y resultados de pruebas relevantes para el desarrollo del proyecto.
-        </p>
-        <h3 class="font-bold text-lg mt-4 mb-2 text-indigo-700 dark:text-indigo-300">Capturas de pantalla de la aplicación</h3>
-        <!-- Espacio para capturas de pantalla -->
-        <!-- <img src="/ruta/a/tu/captura1.png" alt="Pantalla de login" class="my-4" /> -->
-        <!-- <img src="/ruta/a/tu/captura2.png" alt="Perfil de usuario" class="my-4" /> -->
-        
-        <h3 class="font-bold text-lg mt-4 mb-2 text-indigo-700 dark:text-indigo-300">Resultados de pruebas</h3>
-        <!-- Espacio para capturas de resultados de pruebas -->
-        <!-- <img src="/ruta/a/tu/resultados-tests.png" alt="Resultados de pruebas" class="my-4" /> -->
-        
-        <h3 class="font-bold text-lg mt-4 mb-2 text-indigo-700 dark:text-indigo-300">Diagrama de arquitectura</h3>
-        <!-- Espacio para diagrama de arquitectura -->
-        <!-- <img src="/ruta/a/tu/diagrama-arquitectura.png" alt="Diagrama de arquitectura" class="my-4" /> -->
-      </div>
-    </section>
-
-      <CodeBlock 
-      title="Implementacion"
-  filePath="/tests/lib/orm/AuthService.test.ts"
-  basePath="root"
-  startLine={1}
-  endLine={26}
-  displayStartLine={16}
-  highlightLines={[16]}
-  lineNumbers={true}
-  lang="ts"
-/>
     </div>  
 </Layout>
 

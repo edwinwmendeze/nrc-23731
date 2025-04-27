@@ -50,14 +50,14 @@ if (filePath) {
     }
     
     // Importar archivos de diversas ubicaciones comunes con literales estáticos
-    const srcFiles = import.meta.glob('/src/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,toml}', { as: 'raw' });
-    const rootFiles = import.meta.glob('/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,toml}', { as: 'raw' });
-    const publicFiles = import.meta.glob('/public/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,toml}', { as: 'raw' });
-    const componentsFiles = import.meta.glob('/components/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,toml}', { as: 'raw' });
-    const libFiles = import.meta.glob('/lib/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,toml}', { as: 'raw' });
-    const configFiles = import.meta.glob('/config/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,toml}', { as: 'raw' });
-    const uiFiles = import.meta.glob('/ui/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,toml}', { as: 'raw' });
-    const testsFiles = import.meta.glob('/tests/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,toml}', { as: 'raw' });
+    const srcFiles = import.meta.glob('/src/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { as: 'raw' });
+    const rootFiles = import.meta.glob('/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { as: 'raw' });
+    const publicFiles = import.meta.glob('/public/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { as: 'raw' });
+    const componentsFiles = import.meta.glob('/components/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { as: 'raw' });
+    const libFiles = import.meta.glob('/lib/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { as: 'raw' });
+    const configFiles = import.meta.glob('/config/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { as: 'raw' });
+    const uiFiles = import.meta.glob('/ui/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { as: 'raw' });
+    const testsFiles = import.meta.glob('/tests/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { as: 'raw' });
     
     // Seleccionar el conjunto de archivos correcto basado en basePath
     let files;
