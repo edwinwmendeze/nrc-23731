@@ -16,1131 +16,735 @@ const progreso = [
 
 <Layout title="Informe Técnico PA3">
   <main class="container mx-auto px-4 py-8 max-w-4xl">
-    <h1 class="text-4xl font-bold mb-8 pb-2 border-b-2 border-gray-300">Informe Técnico - Implementación ORM y TDD</h1>
-    
-    <div class="progress-tracker mb-10 bg-gray-100 p-6 rounded-lg shadow-sm">
-      <h2 class="text-2xl font-bold mb-5">Progreso del Desarrollo</h2>
-      <div class="steps">
-        {progreso.map((item, index) => (
-          <div class={`step flex items-center mb-3 ${item.completado ? 'completed' : 'pending'}`}>
-            <div class="step-number flex items-center justify-center w-8 h-8 rounded-full mr-3">
-              {index + 1}
-            </div>
-            <div class="step-text font-medium">{item.paso}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-    
+    <!-- Portada y Datos del Equipo -->
     <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Introducción</h2>
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Portada y Datos del Equipo</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <ul class="list-disc pl-8 mb-3 space-y-1">
+          <li><strong>Nombre del Proyecto:</strong> Sistema de Gestión de Perfiles Estudiantiles</li>
+          <li><strong>Integrantes:</strong>
+            <ul class="list-disc pl-8">
+              <li>Edwin Mendez — edwin.mendez@ejemplo.com</li>
+              <li>Integrante 2 — correo2@ejemplo.com</li>
+              <li>Integrante 3 — correo3@ejemplo.com</li>
+              <li>Integrante 4 — correo4@ejemplo.com</li>
+              <li>Integrante 5 — correo5@ejemplo.com</li>
+            </ul>
+          </li>
+          <li><strong>Fecha de entrega:</strong> 26/04/2025</li>
+          <li><strong>Docente:</strong> [Nombre del profesor]</li>
+        </ul>
+        <p class="mt-4 text-lg">
+          Este informe describe el proceso de desarrollo de un sistema web para la gestión de perfiles estudiantiles, implementando un ORM sobre archivos JSON y aplicando TDD, pruebas unitarias y CI/CD.
+        </p>
+      </div>
+    </section>
+
+    <!-- Formación de Equipos -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Formación de Equipos</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p>
+          El equipo se conformó considerando habilidades complementarias y experiencia previa en desarrollo web y testing. La comunicación se realizó mediante reuniones semanales y uso de herramientas colaborativas (GitHub, Discord).
+        </p>
+      </div>
+    </section>
+
+    <!-- Definición del Proyecto -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Definición del Proyecto</h2>
       <div class="bg-white p-6 rounded-lg shadow-sm">
         <p class="mb-4 text-lg">
-          Este informe documenta la implementación de un sistema ORM (Object-Relational Mapping) para 
-          archivos JSON en nuestro proyecto de portafolio grupal, siguiendo la metodología de 
-          Desarrollo Guiado por Pruebas (TDD).
+          El proyecto consiste en una plataforma web para la gestión de perfiles estudiantiles, permitiendo:
         </p>
-        <p class="text-lg">
-          El proyecto originalmente utiliza archivos JSON como fuente de datos para mostrar perfiles
-          de integrantes del equipo. Mediante esta implementación, abstraemos el acceso a estos datos
-          siguiendo los principios de ORM y garantizamos su correcto funcionamiento mediante pruebas unitarias.
-        </p>
-        <p class="text-lg mt-4">
-          El objetivo principal es demostrar la aplicación de técnicas TDD y ORM para la gestión eficiente
-          de datos, cumpliendo con los requisitos establecidos para el proyecto de Construcción de Software.
-        </p>
-      </div>
-    </section>
-    
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Estado Actual</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p class="mb-4">
-          Actualmente, el proyecto utiliza un sistema simple de importación de archivos JSON mediante
-          import.meta.glob para cargar datos de perfiles. Esta implementación funciona pero carece de:
-        </p>
-        <ul class="list-disc pl-8 mb-6 space-y-2">
-          <li>Abstracción para operaciones CRUD</li>
-          <li>Validación de datos consistente</li>
-          <li>Optimización para consultas frecuentes</li>
-          <li>Pruebas unitarias que garanticen su funcionamiento</li>
+        <ul class="list-disc pl-8 mb-3 space-y-1">
+          <li>Registro y autenticación de usuarios</li>
+          <li>Visualización y edición de información de perfil</li>
+          <li>Panel de administración para gestión de usuarios</li>
+          <li>Persistencia de datos mediante archivos JSON utilizando un ORM propio</li>
         </ul>
-        
-        <div class="mb-6">
-          <p class="font-bold mb-3 mt-3 text-lg">Código actual para cargar perfiles:</p>
-          <div class="border border-gray-300 rounded-lg overflow-hidden">
-            <img src="/images/pa3/obtener_perfiles.png" alt="Código actual para cargar perfiles" class="w-full">
-          </div>
-        </div>
+        <p class="mb-4 text-lg">
+          <strong>Objetivo General:</strong> Desarrollar un sistema robusto y seguro para la gestión de perfiles estudiantiles, aplicando buenas prácticas de ingeniería de software.
+        </p>
+        <p class="mb-4 text-lg">
+          <strong>Objetivos Específicos:</strong>
+        </p>
+        <ul class="list-disc pl-8 mb-3 space-y-1">
+          <li>Implementar un ORM personalizado sobre archivos JSON</li>
+          <li>Aplicar TDD y pruebas unitarias en las funcionalidades críticas</li>
+          <li>Automatizar el despliegue y pruebas con CI/CD</li>
+          <li>Documentar el proceso de desarrollo y resultados</li>
+        </ul>
+        <!-- Espacio para imagen de arquitectura -->
+        <!-- <img src="/ruta/a/tu/diagrama-arquitectura.png" alt="Diagrama de arquitectura" class="my-4" /> -->
       </div>
     </section>
-    
-    <section id="implementacion-tdd" class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Implementación con TDD</h2>
+
+    <!-- Índice -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Índice</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <ol class="list-decimal pl-8 mb-3 space-y-1">
+          <li>Progreso del Desarrollo</li>
+          <li>Introducción</li>
+          <li>Formación de Equipos</li>
+          <li>Definición del Proyecto</li>
+          <li>Diseño de Pruebas Unitarias</li>
+          <li>Aplicación de TDD</li>
+          <li>Uso de ORM</li>
+          <li>Integración de Pruebas en el Flujo Ágil</li>
+          <li>Documentación y Reporte</li>
+          <li>Entrega del Proyecto y Recursos</li>
+          <li>Anexos</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Diseño de Pruebas Unitarias -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Diseño de Pruebas Unitarias</h2>
       
+      <!-- Introducción general a las pruebas unitarias -->
       <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
         <p class="mb-4">
-          Seguimos el proceso de Test-Driven Development (TDD) para la implementación del ORM. Este enfoque
-          se basa en tres fases principales: RED (escribir pruebas que fallan), GREEN (implementar código mínimo
-          para que las pruebas pasen) y REFACTOR (mejorar el código manteniendo las pruebas).
+          Las pruebas unitarias son fundamentales en nuestro proyecto, ya que permiten verificar de manera aislada y sistemática el funcionamiento correcto de cada componente individual. Para nuestro sistema, diseñamos un conjunto de pruebas enfocadas en tres componentes principales: el BaseORM (operaciones básicas de persistencia), el AuthService (seguridad y autenticación) y el ProfileORM (gestión especializada de perfiles).
         </p>
-      </div>
-      
-      <div id="fase-red" class="mb-10">
-        <h3 class="text-xl font-bold mb-5 pl-4 border-l-4 border-red-500">Fase RED: Creando pruebas que fallan</h3>
-        <div class="bg-white p-6 rounded-lg shadow-sm">
-          <p class="mb-5">
-            En esta fase, escribimos pruebas para funcionalidades que aún no existen. Esto nos ayuda a
-            definir claramente el comportamiento esperado antes de implementar el código.
-          </p>
-          
-          <div class="mb-6">
-            <p class="font-bold mb-3 text-lg">Prueba inicial para BaseORM:</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="/images/pa3/prueba_inicial_baseORM.png" alt="Código de prueba inicial para BaseORM" class="w-full">
-            </div>
-          </div>
-          
-          <div class="mb-6 bg-red-50 p-5 rounded-lg border border-red-200">
-            <p class="font-bold mb-3 text-lg text-red-800">Error esperado en la fase RED:</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
-              <img src="/images/pa3/test_tdd_fase_red.png" alt="Resultado de prueba fallando (RED)" class="w-full">
-            </div>
-            <p class="text-red-700">
-              Este error es precisamente lo que esperamos en la fase RED del TDD: estamos probando una clase 
-              que aún no existe. Según la metodología TDD, debemos crear primero la prueba (que fallará) y 
-              luego implementar el código mínimo necesario para que pase.
-            </p>
-          </div>
-        </div>
-      </div>
-      
-      <div id="fase-green" class="mb-10">
-        <h3 class="text-xl font-bold mb-5 pl-4 border-l-4 border-green-500">Fase GREEN: Implementando código funcional</h3>
-        <div class="bg-white p-6 rounded-lg shadow-sm">
-          <p class="mb-5">
-            En esta fase, implementamos el código mínimo necesario para que las pruebas pasen, enfocándonos
-            solamente en la funcionalidad requerida.
-          </p>
-          
-          <div class="mb-6">
-            <p class="font-bold mb-3 text-lg">Implementación básica de BaseORM:</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="/images/pa3/baseorm_implementacion.png" alt="Implementación básica de BaseORM" class="w-full">
-            </div>
-          </div>
-          
-          <div class="mb-6 bg-green-50 p-5 rounded-lg border border-green-200">
-            <p class="font-bold mb-3 text-lg text-green-800">Resultado de la prueba (éxito):</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
-              <img src="/images/pa3/test_tdd_fase_green.png" alt="Resultado de prueba pasando (GREEN)" class="w-full">
-            </div>
-            <p class="text-green-700">
-              Las pruebas pasan, lo que confirma que nuestra implementación básica de la inicialización del ORM 
-              funciona correctamente. Este es un ejemplo perfecto del ciclo TDD: primero escribimos pruebas que 
-              fallan (RED), luego implementamos el código mínimo necesario para que pasen (GREEN).
-            </p>
-          </div>
-        </div>
-      </div>
-      
-      <div id="fase-refactor" class="mb-10">
-        <h3 class="text-xl font-bold mb-5 pl-4 border-l-4 border-blue-500">Fase REFACTOR: Mejorando el código</h3>
-        <div class="bg-white p-6 rounded-lg shadow-sm">
-          <p class="mb-5">
-            Ahora podemos añadir más funcionalidades y mejorar el código existente, siempre asegurándonos 
-            de que las pruebas sigan pasando. Implementamos el método findAll() y un sistema de caché.
-          </p>
-          
-          <div class="mb-6">
-            <p class="font-bold mb-3 text-lg">Pruebas para findAll():</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="/images/pa3/test_findall.png" alt="Pruebas para findAll()" class="w-full">
-            </div>
-          </div>
-          
-          <div class="mb-6">
-            <p class="font-bold mb-3 text-lg">Implementación refactorizada de BaseORM:</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="/images/pa3/baseorm_refactor.png" alt="BaseORM refactorizado" class="w-full">
-            </div>
-          </div>
-          
-          <p class="mt-5">En esta fase de refactorización, hemos mejorado significativamente nuestro ORM:</p>
-          <ul class="list-disc pl-8 mb-4 mt-3 space-y-2">
-            <li>Añadimos control de inicialización para evitar operaciones redundantes</li>
-            <li>Implementamos un sistema de caché para optimizar lecturas repetidas</li>
-            <li>Añadimos métodos findAll() y findById() con soporte para opciones</li>
-            <li>Mejoramos el manejo de errores para mayor robustez</li>
-          </ul>
-        </div>
-      </div>
-      
-      <div id="implementacion-completa" class="mb-10">
-        <h3 class="text-xl font-bold mb-5 pl-4 border-l-4 border-purple-500">Implementación Completa: Expandiendo funcionalidades</h3>
-        <div class="bg-white p-6 rounded-lg shadow-sm">
-          <p class="mb-5">
-            Una vez completado el ciclo TDD básico, hemos expandido la implementación para incluir
-            funcionalidades más avanzadas y específicas para nuestro proyecto.
-          </p>
-          
-          <div class="mb-6">
-            <p class="font-bold mb-3 text-lg">BaseORM completo:</p>
-            <pre class="text-xs bg-gray-100 p-4 rounded overflow-x-auto">
-import * as fs from 'fs/promises';
-import path from 'path';
-import &#123; AppError &#125; from '../../types/AppError';
-
-/**
- * BaseORM - Clase base para la implementación del ORM
- * Proporciona funcionalidades CRUD básicas para entidades JSON
- */
-export class BaseORM&lt;T extends Record&lt;string, any&gt;&gt; &#123;
-  private basePath: string;
-  private initialized: boolean = false;
-  private cache: Map&lt;string, T&gt; = new Map();
-  protected indexesBuilt: boolean = false;
-  private indexes: Map&lt;string, Map&lt;string, Set&lt;string&gt;&gt;&gt; = new Map();
-  
-  /**
-   * Constructor para BaseORM
-   * @param basePath Ruta base donde se almacenarán los archivos JSON
-   * @param idField Nombre del campo que se usará como identificador (por defecto 'id')
-   */
-  constructor(basePath: string, private idField: string = 'id') &#123;
-    this.basePath = basePath;
-  &#125;
-  
-  // ... más métodos ...
-  
-  /**
-   * Encuentra entidades por un campo específico
-   * @param field Campo por el que buscar
-   * @param value Valor a buscar
-   * @param options Opciones para la búsqueda
-   * @returns Lista de entidades que coinciden con la búsqueda
-   */
-  async findByField(field: string, value: any, options: &#123;
-    useIndex?: boolean,
-    useCache?: boolean,
-    exactMatch?: boolean
-  &#125; = &#123;&#125;): Promise&lt;T[]&gt; &#123;
-    // Implementación de búsqueda por campo
-  &#125;
-  
-  /**
-   * Cuenta el número total de entidades
-   * @param filter Filtro opcional
-   * @returns Número de entidades
-   */
-  async count(filter?: (entity: T) =&gt; boolean): Promise&lt;number&gt; &#123;
-    const entities = await this.findAll();
-    
-    if (filter) &#123;
-      return entities.filter(filter).length;
-    &#125;
-    
-    return entities.length;
-  &#125;
-  
-  // ... otros métodos avanzados ...
-&#125;</pre>
-          </div>
-          
-          <div class="mb-6">
-            <p class="font-bold mb-3 text-lg">ProfileORM especializado:</p>
-            <pre class="text-xs bg-gray-100 p-4 rounded overflow-x-auto">
-import &#123; BaseORM &#125; from './BaseORM';
-import path from 'path';
-import type &#123; Profile, Skill, Project &#125; from '../../types';
-import &#123; AppError &#125; from '../../types/AppError';
-
-/**
- * ProfileORM - Implementación específica de ORM para perfiles
- * Extiende BaseORM para añadir funcionalidades específicas para perfiles
- */
-export class ProfileORM extends BaseORM&lt;Profile&gt; &#123;
-  private static instance: ProfileORM | null = null;
-  
-  /**
-   * Constructor de ProfileORM
-   * @param basePath Ruta base para los archivos de perfil
-   */
-  constructor(basePath: string = path.join(process.cwd(), 'src/data/profiles')) &#123;
-    super(basePath, 'id');
-    this.buildProfileIndexes();
-  &#125;
-  
-  /**
-   * Obtiene una instancia singleton de ProfileORM
-   * @returns Instancia de ProfileORM
-   */
-  public static getInstance(): ProfileORM &#123;
-    if (!ProfileORM.instance) &#123;
-      ProfileORM.instance = new ProfileORM();
-    &#125;
-    return ProfileORM.instance;
-  &#125;
-  
-  // Métodos específicos para perfiles
-  
-  /**
-   * Encuentra perfiles por nombre con coincidencia parcial o exacta
-   * @param name Nombre a buscar
-   * @param options Opciones de búsqueda 
-   * @returns Lista de perfiles que coinciden
-   */
-  async findByName(name: string, options: &#123; exactMatch?: boolean &#125; = &#123;&#125;): Promise&lt;Profile[]&gt; &#123;
-    const &#123; exactMatch = false &#125; = options;
-    
-    // Si es búsqueda exacta, usar findByField
-    if (exactMatch) &#123;
-      return this.findByField('basics.name', name, &#123; 
-        useIndex: true,
-        exactMatch: true
-      &#125;);
-    &#125;
-    
-    // Para búsqueda parcial, cargar todos los perfiles y filtrar
-    const profiles = await this.findAll();
-    return profiles.filter(profile => 
-      profile.basics && 
-      profile.basics.name && 
-      profile.basics.name.toLowerCase().includes(name.toLowerCase())
-    );
-  &#125;
-  
-  /**
-   * Obtiene estadísticas sobre los perfiles
-   * @returns Estadísticas de perfiles
-   */
-  async getStats(): Promise&lt;&#123;
-    totalProfiles: number;
-    totalSkills: number;
-    totalProjects: number;
-    featuredProjects: number;
-    skillsByType: Record&lt;string, number&gt;;
-  &#125;&gt; &#123;
-    // Implementación de estadísticas
-  &#125;
-&#125;</pre>
-          </div>
-          
-          <div class="mb-6">
-            <p class="font-bold mb-3 text-lg">Pruebas avanzadas para ProfileORM:</p>
-            <pre class="text-xs bg-gray-100 p-4 rounded overflow-x-auto">
-// Tests para funcionalidades específicas de ProfileORM
-describe('findByName()', () => &#123;
-  it('debe encontrar perfiles por nombre con coincidencia exacta', async () => &#123;
-    const result = await profileORM.findByName('Test', &#123; exactMatch: true &#125;);
-    
-    expect(result).toHaveLength(1);
-    expect(result[0].id).toBe('testuser');
-    expect(result[0].basics.name).toBe('Test');
-  &#125;);
-  
-  it('debe encontrar perfiles por nombre con coincidencia parcial', async () => &#123;
-    const result = await profileORM.findByName('Test', &#123; exactMatch: false &#125;);
-    
-    expect(result).toHaveLength(2);
-    expect(result[0].id).toBe('testuser');
-    expect(result[1].id).toBe('anothertest');
-  &#125;);
-&#125;);</pre>
-          </div>
-          
-          <div class="mb-6 bg-green-50 p-5 rounded-lg border border-green-200">
-            <p class="font-bold mb-3 text-lg text-green-800">Resultado de todas las pruebas:</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
-              <img src="/images/pa3/test_all_passing.png" alt="Todas las pruebas pasando" class="w-full">
-            </div>
-            <p class="text-green-700">
-              Tras completar la implementación y resolver todos los problemas, todas las pruebas pasan exitosamente.
-              Esto confirma que nuestro ORM funciona correctamente y cumple con los requisitos establecidos.
-            </p>
-          </div>
-          
-          <p class="mt-5">La implementación completa de nuestro ORM incluye:</p>
-          <ul class="list-disc pl-8 mb-4 mt-3 space-y-2">
-            <li><strong>Operaciones CRUD completas:</strong> Create, Read, Update, Delete para entidades JSON</li>
-            <li><strong>Sistema de indexación:</strong> Optimiza búsquedas por campos frecuentes</li>
-            <li><strong>Validación robusta:</strong> Validación de datos específica para cada tipo de entidad</li>
-            <li><strong>Manejo de errores centralizado:</strong> Clase AppError para gestión consistente de errores</li>
-            <li><strong>Patrón Singleton:</strong> Evita instancias múltiples y optimiza recursos</li>
-            <li><strong>Consultas avanzadas:</strong> Filtrado, ordenamiento, paginación y búsqueda por campos específicos</li>
-            <li><strong>Estadísticas y análisis:</strong> Métodos para obtener información agregada sobre las entidades</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-    
-    <section id="orm" class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Implementación ORM</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p class="mb-6">
-          El ORM que hemos creado proporciona una capa de abstracción sobre los archivos JSON, tratándolos 
-          como si fueran tablas en una base de datos relacional:
-        </p>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
-            <h3 class="font-bold text-lg mb-3 text-indigo-700">Arquitectura del ORM</h3>
-            <p class="mb-3">Diseñamos una arquitectura en dos niveles:</p>
-            <ul class="list-disc pl-8 space-y-1">
-              <li><strong>BaseORM:</strong> Clase base genérica que maneja operaciones comunes</li>
-              <li><strong>ProfileORM:</strong> Clase específica para perfiles que extiende BaseORM</li>
-            </ul>
-          </div>
-          
-          <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
-            <h3 class="font-bold text-lg mb-3 text-indigo-700">Características principales</h3>
-            <ul class="list-disc pl-8 space-y-1">
-              <li>Operaciones CRUD básicas (Create, Read, Update, Delete)</li>
-              <li>Sistema de caché integrado para optimizar rendimiento</li>
-              <li>Manejo de errores robusto</li>
-              <li>Validación de datos</li>
-            </ul>
-          </div>
-        </div>
-        
-        <div class="mb-6">
-          <p class="font-bold mb-3 text-lg">Servicio de perfiles actualizado:</p>
-          <pre class="text-xs bg-gray-100 p-4 rounded overflow-x-auto">
-// src/services/profileService.ts
-import type &#123; Profile, ProfileModule, Project, ProjectWithAuthor &#125; from '../types';
-import &#123; ProfileORM &#125; from '../lib/orm/ProfileORM';
-import path from 'path';
-
-/**
- * Singleton para ProfileORM
- * Usamos una variable privada para mantener la instancia
- */
-let _profileORM: ProfileORM | null = null;
-
-/**
- * Obtiene la instancia de ProfileORM
- * @returns Instancia de ProfileORM
- */
-function getProfileORM(): ProfileORM &#123;
-  if (!_profileORM) &#123;
-    _profileORM = new ProfileORM(path.join(process.cwd(), 'src/data/profiles'));
-  &#125;
-  return _profileORM;
-&#125;
-
-/**
- * Obtiene todos los perfiles disponibles
- * @param options Opciones para la consulta
- * @returns Lista de perfiles
- */
-export async function getProfiles(options: &#123;
-  sort?: &#123; field: string, order: 'asc' | 'desc' &#125;,
-  limit?: number,
-  offset?: number,
-  useCache?: boolean
-&#125; = &#123;&#125;): Promise&lt;Profile[]&gt; &#123;
-  try &#123;
-    // Si estamos en un entorno de navegador donde fs no está disponible,
-    // usamos el método original con import.meta.glob
-    if (typeof window !== 'undefined') &#123;
-      const profilesFiles = import.meta.glob&lt;ProfileModule&gt;('../data/profiles/*.json', &#123; eager: true &#125;);
-      return Object.values(profilesFiles).map(profile => profile.default);
-    &#125;
-    
-    // En el servidor, usamos ProfileORM
-    const profileORM = getProfileORM();
-    return profileORM.findAll(options);
-  &#125; catch (error) &#123;
-    console.error('Error cargando perfiles:', error);
-    return [];
-  &#125;
-&#125;</pre>
-        </div>
-        
-        <p class="mb-4">Esta implementación nos permite manejar los perfiles de manera estructurada y eficiente, abriendo la puerta a futuras mejoras como:</p>
-        <ul class="list-disc pl-8 mb-4 space-y-2">
-          <li>Búsqueda avanzada por múltiples criterios</li>
-          <li>Ordenamiento y paginación</li>
-          <li>Validación más exhaustiva</li>
-          <li>Migración potencial a una base de datos real sin cambiar la API</li>
-        </ul>
-      </div>
-    </section>
-    
-    <section id="capacidades-orm" class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">¿Qué podemos hacer con nuestro ORM?</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p class="mb-4">
-          Nuestra implementación ORM ofrece numerosas capacidades que mejoran significativamente
-          la forma en que trabajamos con los datos en el proyecto. A continuación se detallan las principales
-          operaciones que podemos realizar:
-        </p>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
-          <div class="bg-indigo-50 p-5 rounded-lg shadow-sm">
-            <h3 class="font-bold text-lg mb-3 text-indigo-700">1. Operaciones CRUD completas</h3>
-            <ul class="list-disc pl-5 space-y-1">
-              <li><strong>Crear:</strong> <code>profileORM.save(newProfile)</code></li>
-              <li><strong>Leer:</strong> <code>profileORM.findById('123')</code></li>
-              <li><strong>Actualizar:</strong> <code>profileORM.update('123', &#123; updates &#125;)</code></li>
-              <li><strong>Eliminar:</strong> <code>profileORM.delete('123')</code></li>
-            </ul>
-          </div>
-          
-          <div class="bg-indigo-50 p-5 rounded-lg shadow-sm">
-            <h3 class="font-bold text-lg mb-3 text-indigo-700">2. Búsquedas avanzadas</h3>
-            <ul class="list-disc pl-5 space-y-1">
-              <li><strong>Por nombre:</strong> <code>profileORM.findByName('Juan')</code></li>
-              <li><strong>Por habilidad:</strong> <code>profileORM.findBySkill('JavaScript')</code></li>
-              <li><strong>Por tipo de habilidad:</strong> <code>profileORM.findBySkillType('hard')</code></li>
-              <li><strong>Por país:</strong> <code>profileORM.findByCountry('Peru')</code></li>
-            </ul>
-          </div>
-          
-          <div class="bg-indigo-50 p-5 rounded-lg shadow-sm">
-            <h3 class="font-bold text-lg mb-3 text-indigo-700">3. Gestión de habilidades y proyectos</h3>
-            <ul class="list-disc pl-5 space-y-1">
-              <li><strong>Añadir habilidad:</strong> <code>profileORM.addSkill('123', newSkill)</code></li>
-              <li><strong>Quitar habilidad:</strong> <code>profileORM.removeSkill('123', 'JavaScript')</code></li>
-              <li><strong>Añadir proyecto:</strong> <code>profileORM.addProject('123', newProject)</code></li>
-              <li><strong>Quitar proyecto:</strong> <code>profileORM.removeProject('123', 'Proyecto A')</code></li>
-            </ul>
-          </div>
-          
-          <div class="bg-indigo-50 p-5 rounded-lg shadow-sm">
-            <h3 class="font-bold text-lg mb-3 text-indigo-700">4. Consultas y estadísticas</h3>
-            <ul class="list-disc pl-5 space-y-1">
-              <li><strong>Proyectos destacados:</strong> <code>profileORM.getFeaturedProjects()</code></li>
-              <li><strong>Estadísticas:</strong> <code>profileORM.getStats()</code></li>
-              <li><strong>Filtrado avanzado:</strong> <code>profileORM.findAll(&#123; filter: f => f.skills.length > 2 &#125;)</code></li>
-              <li><strong>Conteo:</strong> <code>profileORM.count()</code></li>
-            </ul>
-          </div>
-        </div>
-        
-        <div class="mt-6 mb-4">
-          <h3 class="text-xl font-bold mb-4 text-indigo-700">Comparación: Antes vs Después</h3>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-red-50 p-5 rounded-lg shadow-sm">
-              <h4 class="font-bold mb-3">ANTES:</h4>
-              <pre class="text-xs bg-white p-3 rounded mb-3">
-export async function getProfiles(): Promise&lt;Profile[]&gt; &#123;
-  try &#123;
-    const profilesFiles = import.meta.glob&lt;ProfileModule&gt;(
-      '../data/profiles/*.json', 
-      &#123; eager: true &#125;
-    );
-    return Object.values(profilesFiles)
-      .map(profile => profile.default);
-  &#125; catch (error) &#123;
-    console.error('Error cargando perfiles:', error);
-    return [];
-  &#125;
-&#125;</pre>
-              <p class="text-sm">
-                Un único método simple, sin capacidad de filtrado,
-                ordenamiento o manipulación de datos. Sin validación
-                ni manejo robusto de errores.
-              </p>
-            </div>
-            
-            <div class="bg-green-50 p-5 rounded-lg shadow-sm">
-              <h4 class="font-bold mb-3">DESPUÉS:</h4>
-              <pre class="text-xs bg-white p-3 rounded mb-3">
-// Con ORM podemos hacer:
-const profiles = await profileORM.findAll(&#123;
-  sort: &#123; field: 'basics.name', order: 'asc' &#125;,
-  limit: 5,
-  offset: 10
-&#125;);
-
-const skilledProfiles = await profileORM.findBySkill('React');
-
-const profile = await profileORM.findById('user123');
-profile.skills.push(newSkill);
-await profileORM.save(profile);</pre>
-              <p class="text-sm">
-                Sistema completo con CRUD, búsquedas avanzadas,
-                filtrado, paginación, ordenamiento, validación y 
-                manejo de errores. Optimizado con caché e índices.
-              </p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="bg-gray-100 p-5 rounded-lg mt-6">
-          <h3 class="text-lg font-bold mb-3">Ventajas principales:</h3>
-          <ul class="list-disc pl-8 space-y-1">
-            <li><strong>Código más limpio y mantenible:</strong> Abstracción que facilita los cambios futuros</li>
-            <li><strong>Mayor robustez:</strong> Validación y manejo de errores integrados</li>
-            <li><strong>Mejor rendimiento:</strong> Sistema de caché e indexación para consultas frecuentes</li>
-            <li><strong>Funcionalidad extendida:</strong> Capacidades CRUD completas y búsquedas avanzadas</li>
-            <li><strong>Compatibilidad:</strong> Funciona tanto en el servidor como en el cliente</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-    
-    <section id="adaptacion-archivos" class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Adaptación para archivos sin ID</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p class="mb-5">
-          Durante la implementación, identificamos un problema importante: los archivos JSON de perfiles 
-          no contienen un campo ID explícito. Para solucionar este problema, adaptamos nuestro ORM para
-          que pueda trabajar con estos archivos sin modificarlos.
-        </p>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div class="bg-yellow-50 p-5 rounded-lg shadow-sm">
-            <h3 class="font-bold text-lg mb-3 text-yellow-700">Problema identificado</h3>
-            <p class="mb-3">Los archivos JSON no tienen un campo ID, pero nuestro ORM necesita identificar entidades de forma única.</p>
-            <pre class="text-xs bg-white p-3 rounded">
-// Ejemplo de un perfil sin campo ID:
-&#123;
-  "basics": &#123;
-    "name": "Edwin Wilson",
-    "last_name": "Méndez Echevarría",
-    "label": "Analista de datos...",
-    // ... resto del perfil sin ID
-  &#125;,
-  "skills": [...]
-&#125;</pre>
-          </div>
-          
-          <div class="bg-green-50 p-5 rounded-lg shadow-sm">
-            <h3 class="font-bold text-lg mb-3 text-green-700">Solución implementada</h3>
-            <p class="mb-3">Adaptamos el ORM para usar el nombre del archivo como ID, o generarlo a partir del nombre del perfil.</p>
-            <pre class="text-xs bg-white p-3 rounded">
-// Solución en getEntityId():
-private getEntityId(entity: T, filename?: string): string | null &#123;
-  // Si la entidad tiene un ID, usarlo
-  const id = entity[this.idField];
-  if (id) return String(id);
-  
-  // Si se proporcionó un nombre de archivo, usarlo
-  if (filename) return path.basename(filename, '.json');
-  
-  // Generar ID a partir del nombre
-  if (entity.basics && entity.basics.name) &#123;
-    return entity.basics.name
-      .toLowerCase()
-      .replace(/\s+/g, '')
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
-  &#125;
-  
-  return null;
-&#125;</pre>
-          </div>
-        </div>
-        
-        <p class="mb-4">Con esta adaptación, nuestro ORM:</p>
-        <ul class="list-disc pl-8 mb-4 space-y-2">
-          <li>Lee archivos JSON sin campo ID, usando el nombre del archivo como identificador</li>
-          <li>Al guardar un perfil sin ID, genera uno automáticamente a partir del nombre</li>
-          <li>Mantiene la compatibilidad con los archivos existentes sin necesidad de modificarlos</li>
-          <li>Funciona de manera transparente para el resto del código, que no necesita saber cómo se manejan los IDs</li>
-        </ul>
-        
-        <div class="bg-blue-50 p-5 rounded-lg">
-          <h3 class="font-bold text-lg mb-3 text-blue-700">Lección aprendida:</h3>
-          <p>
-            Este desafío nos enseñó la importancia de adaptar nuestras soluciones a los datos existentes, 
-            en lugar de forzar los datos a adaptarse a nuestras soluciones. Aplicando el principio KISS
-            (Keep It Simple, Stupid), logramos una implementación que funciona con los datos tal como están,
-            sin necesidad de migraciones o transformaciones complejas.
-          </p>
-        </div>
-      </div>
-    </section>
-    
-    <section id="optimizacion" class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Optimización de Consultas</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p class="mb-6">
-          Hemos implementado varias estrategias de optimización para mejorar el rendimiento:
-        </p>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
-            <h3 class="font-bold text-lg mb-3 text-indigo-700">1. Sistema de caché</h3>
-            <p class="mb-3">Almacenamos entidades leídas previamente en memoria para reducir accesos a disco:</p>
-            <pre class="text-xs bg-gray-100 p-4 rounded overflow-x-auto">
-private cache: Map&lt;string, T&gt; = new Map();
-
-// En findById
-if (useCache && this.cache.has(id)) &#123;
-  return this.cache.get(id) || null;
-&#125;
-
-// Después de leer
-if (useCache) &#123;
-  this.cache.set(id, entity);
-&#125;</pre>
-          </div>
-          
-          <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
-            <h3 class="font-bold text-lg mb-3 text-indigo-700">2. Inicialización perezosa</h3>
-            <p class="mb-3">Inicializamos recursos solo cuando es necesario:</p>
-            <pre class="text-xs bg-gray-100 p-4 rounded overflow-x-auto">
-async initialize(): Promise&lt;void&gt; &#123;
-  if (this.initialized) return;
-  
-  try &#123;
-    await fs.access(this.basePath);
-  &#125; catch (error) &#123;
-    // Directorio no existe, lo creamos
-    await fs.mkdir(this.basePath, &#123; recursive: true &#125;);
-  &#125;
-  
-  this.initialized = true;
-&#125;</pre>
-          </div>
-          
-          <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
-            <h3 class="font-bold text-lg mb-3 text-indigo-700">3. Sistema de indexación</h3>
-            <p class="mb-3">Creamos índices para campos frecuentemente consultados:</p>
-            <pre class="text-xs bg-gray-100 p-4 rounded overflow-x-auto">
-protected async buildIndexes(fields: string[]): Promise&lt;void&gt; &#123;
-  if (this.indexesBuilt) return;
-  
-  const entities = await this.findAll(&#123; useCache: false &#125;);
-  
-  // Inicializar índices
-  fields.forEach(field => &#123;
-    this.indexes.set(field, new Map());
-  &#125;);
-  
-  // Construir índices
-  for (const entity of entities) &#123;
-    const entityId = this.getEntityId(entity);
-    if (!entityId) continue;
-    
-    for (const field of fields) &#123;
-      // Indexar por campo
-    &#125;
-  &#125;
-  
-  this.indexesBuilt = true;
-&#125;</pre>
-          </div>
-          
-          <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
-            <h3 class="font-bold text-lg mb-3 text-indigo-700">4. Manejo inteligente de errores</h3>
-            <p class="mb-3">Sistema centralizado de gestión de errores con información específica:</p>
-            <pre class="text-xs bg-gray-100 p-4 rounded overflow-x-auto">
-export class AppError extends Error &#123;
-  /**
-   * Código de error específico
-   */
-  code: ErrorCode;
-  
-  /**
-   * Detalles adicionales sobre el error
-   */
-  details?: Record&lt;string, any&gt;;
-  
-  constructor(code: ErrorCode, message: string, details?: Record&lt;string, any&gt;) &#123;
-    super(message);
-    this.name = 'AppError';
-    this.code = code;
-    this.details = details;
-    
-    Object.setPrototypeOf(this, AppError.prototype);
-  &#125;
-&#125;</pre>
-          </div>
-        </div>
-        
-        <p class="mt-4">
-          Estas optimizaciones garantizan un funcionamiento eficiente incluso con conjuntos de datos grandes, 
-          manteniendo baja la latencia de las operaciones frecuentes.
-        </p>
-      </div>
-    </section>
-    
-    <section id="implementacion-autenticacion" class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Implementación de Autenticación con TDD</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p class="mb-4 text-lg">
-          Siguiendo la metodología TDD, hemos implementado un sistema de autenticación completo que permite
-          a los usuarios gestionar sus propios perfiles de manera segura. Este servicio extiende las
-          capacidades de nuestro ORM y demuestra la flexibilidad de nuestra arquitectura.
-        </p>
-        
-        <div id="fase-red-auth" class="mb-10">
-          <h3 class="text-xl font-bold mb-5 pl-4 border-l-4 border-red-500">Fase RED: Definiendo el comportamiento esperado</h3>
-          <div class="bg-white p-6 rounded-lg shadow-sm">
-            <p class="mb-5">
-              En esta fase, escribimos pruebas para un servicio de autenticación que aún no existía,
-              definiendo el comportamiento esperado para login, registro y verificación de tokens.
-            </p>
-            
-            <div class="mb-6">
-              <p class="font-bold mb-3 text-lg">Pruebas para AuthService:</p>
-              <div class="border border-gray-300 rounded-lg overflow-hidden">
-                <img src="/images/pa3/auth_service_test.png" alt="Código de pruebas para AuthService" class="w-full">
-                <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura del archivo de pruebas AuthService.test.ts</p>
-              </div>
-            </div>
-            
-            <div class="mb-6 bg-red-50 p-5 rounded-lg border border-red-200">
-              <p class="font-bold mb-3 text-lg text-red-800">Error esperado en la fase RED:</p>
-              <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
-                <img src="/images/pa3/red_phase_auth.png" alt="Resultado de pruebas fallando (RED)" class="w-full">
-                <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura del error de las pruebas de autenticación</p>
-              </div>
-              <p class="text-red-700">
-                Como se observa, todas las pruebas fallan porque el servicio AuthService no existe.
-                Este es precisamente el comportamiento esperado en la fase RED del TDD: definimos
-                primero qué esperamos del código antes de implementarlo.
-              </p>
-            </div>
-          </div>
-        </div>
-        
-        <div id="fase-green-auth" class="mb-10">
-          <h3 class="text-xl font-bold mb-5 pl-4 border-l-4 border-green-500">Fase GREEN: Implementación mínima funcional</h3>
-          <div class="bg-white p-6 rounded-lg shadow-sm">
-            <p class="mb-5">
-              Implementamos la mínima cantidad de código necesario para que las pruebas pasen,
-              sin preocuparnos demasiado por la elegancia o eficiencia del código.
-            </p>
-            
-            <div class="mb-6">
-              <p class="font-bold mb-3 text-lg">Implementación básica de AuthService:</p>
-              <div class="border border-gray-300 rounded-lg overflow-hidden">
-                <img src="/images/pa3/auth_service_impl.png" alt="Implementación básica de AuthService" class="w-full">
-                <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de la implementación inicial de AuthService</p>
-              </div>
-            </div>
-            
-            <div class="mb-6 bg-green-50 p-5 rounded-lg border border-green-200">
-              <p class="font-bold mb-3 text-lg text-green-800">Resultado de las pruebas (éxito):</p>
-              <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
-                <img src="/images/pa3/green_phase_auth.png" alt="Resultado de pruebas pasando (GREEN)" class="w-full">
-                <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de las pruebas pasando</p>
-              </div>
-              <p class="text-green-700">
-                Las pruebas pasan, confirmando que nuestra implementación mínima cumple con el comportamiento
-                esperado. Esta implementación se enfoca principalmente en pasar las pruebas, sin preocuparse
-                por la calidad o mantenibilidad del código todavía.
-              </p>
-            </div>
-          </div>
-        </div>
-        
-        <div id="fase-refactor-auth" class="mb-10">
-          <h3 class="text-xl font-bold mb-5 pl-4 border-l-4 border-blue-500">Fase REFACTOR: Mejorando la implementación</h3>
-          <div class="bg-white p-6 rounded-lg shadow-sm">
-            <p class="mb-5">
-              Una vez que las pruebas pasan, podemos mejorar el código sin miedo a romper la funcionalidad,
-              ya que las pruebas nos alertarán si algo deja de funcionar como se espera.
-            </p>
-            
-            <div class="mb-6">
-              <p class="font-bold mb-3 text-lg">Implementación refactorizada:</p>
-              <div class="border border-gray-300 rounded-lg overflow-hidden">
-                <img src="/images/pa3/auth_service_refactor.png" alt="Implementación refactorizada de AuthService" class="w-full">
-                <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de la implementación refactorizada de AuthService</p>
-              </div>
-              <p class="mt-4">
-                La implementación completa del AuthService utiliza técnicas avanzadas como hashing de contraseñas
-                con bcrypt, generación de tokens JWT, y validación robusta de datos. Todo esto se ha implementado
-                de manera incremental, asegurando siempre que las pruebas sigan pasando.
-              </p>
-            </div>
-            
-            <div class="mb-6 bg-blue-50 p-5 rounded-lg border border-blue-200">
-              <p class="font-bold mb-3 text-lg text-blue-800">Pruebas pasando con código refactorizado:</p>
-              <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
-                <img src="/images/pa3/refactor_phase_auth.png" alt="Pruebas pasando después de refactorizar" class="w-full">
-                <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de las pruebas pasando después del refactor</p>
-              </div>
-              
-              <p class="text-blue-700">
-                Las pruebas siguen pasando, lo que confirma que nuestras mejoras no han alterado el 
-                comportamiento esperado del código. Hemos mejorado la estructura, legibilidad y 
-                eficiencia sin cambiar la funcionalidad.
-              </p>
-            </div>
-            
-            <div class="mt-6">
-              <p class="font-bold mb-3 text-lg">Mejoras implementadas en la fase REFACTOR:</p>
-              <ul class="list-disc pl-8 mb-4 space-y-2">
-                <li>Reemplazo de respuestas codificadas con implementaciones reales</li>
-                <li>Mejora del manejo de errores con mensajes más específicos</li>
-                <li>Implementación de validación de datos más robusta</li>
-                <li>Optimización de la generación y verificación de tokens</li>
-                <li>Documentación completa del código con comentarios descriptivos</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    <section id="sistema-autenticacion" class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Sistema de Autenticación y Panel de Administración</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p class="mb-5">
-          Con nuestro ORM y servicios de autenticación implementados, desarrollamos un completo panel de administración
-          que permite a los usuarios gestionar sus propios perfiles. Veamos el flujo completo:
-        </p>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div>
-            <p class="font-bold mb-3 text-lg">Página de inicio de sesión:</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="/images/pa3/login_page.png" alt="Página de inicio de sesión" class="w-full">
-              <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de la página de login</p>
-            </div>
-          </div>
-          
-          <div>
-            <p class="font-bold mb-3 text-lg">Página de registro:</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="/images/pa3/register_page.png" alt="Página de registro" class="w-full">
-              <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de la página de registro</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div>
-            <p class="font-bold mb-3 text-lg">Panel de perfil de usuario:</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="/images/pa3/profile_dashboard.png" alt="Panel de perfil de usuario" class="w-full">
-              <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura del panel de perfil</p>
-            </div>
-          </div>
-          
-          <div>
-            <p class="font-bold mb-3 text-lg">Página de edición de perfil:</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="/images/pa3/profile_edit.png" alt="Página de edición de perfil" class="w-full">
-              <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de la página de edición de perfil</p>
-            </div>
-          </div>
-        </div>
-        
-        <p class="mt-5">
-          El panel de administración implementado permite a los usuarios:
-        </p>
-        <ul class="list-disc pl-8 mb-4 space-y-2">
-          <li>Ver un resumen completo de su perfil</li>
-          <li>Editar su información personal</li>
-          <li>Gestionar sus habilidades técnicas y blandas</li>
-          <li>Administrar sus proyectos destacados</li>
-          <li>Configurar sus redes sociales</li>
-          <li>Todo esto de manera segura gracias al sistema de autenticación</li>
-        </ul>
-        
-        <div class="mt-6 bg-gray-100 p-5 rounded-lg">
-          <h4 class="text-lg font-bold mb-3">Arquitectura del Sistema de Autenticación:</h4>
-          <p class="mb-3">El sistema de autenticación se ha diseñado siguiendo las mejores prácticas:</p>
-          <ul class="list-disc pl-8 mb-4 space-y-1">
-            <li><strong>JWT (JSON Web Tokens)</strong> para gestión de sesiones sin estado</li>
-            <li><strong>Bcrypt</strong> para hashing seguro de contraseñas</li>
-            <li><strong>Cookies HttpOnly</strong> para mayor seguridad contra ataques XSS</li>
-            <li><strong>Middleware de autenticación</strong> para proteger rutas sensibles</li>
-            <li><strong>Manejo de errores contextual</strong> con mensajes amigables para el usuario</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-    
-    <section id="testing-completo" class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Pruebas Unitarias y de Integración</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p class="mb-5">
-          Una parte fundamental de nuestro proyecto ha sido la implementación exhaustiva de pruebas unitarias
-          y de integración para asegurar el correcto funcionamiento de nuestro ORM y servicios.
-        </p>
-        
-        <div class="mb-6">
-          <p class="font-bold mb-3 text-lg">Estructura del directorio de tests:</p>
-          <div class="border border-gray-300 rounded-lg overflow-hidden">
-            <img src="/images/pa3/tests_structure.png" alt="Estructura del directorio de tests" class="w-full">
-            <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de la estructura de carpetas de tests</p>
-          </div>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div>
-            <p class="font-bold mb-3 text-lg">Tests para BaseORM:</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="/images/pa3/baseorm_tests.png" alt="Tests para BaseORM" class="w-full">
-              <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de los tests de BaseORM</p>
-            </div>
-          </div>
-          
-          <div>
-            <p class="font-bold mb-3 text-lg">Tests para ProfileORM:</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="/images/pa3/profileorm_tests.png" alt="Tests para ProfileORM" class="w-full">
-              <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de los tests de ProfileORM</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="mb-6">
-          <p class="font-bold mb-3 text-lg">Tests para AuthService:</p>
-          <div class="border border-gray-300 rounded-lg overflow-hidden">
-            <img src="/images/pa3/authservice_tests.png" alt="Tests para AuthService" class="w-full">
-            <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de los tests de AuthService</p>
-          </div>
-        </div>
-        
-        <div class="mb-6 bg-green-50 p-5 rounded-lg border border-green-200">
-          <p class="font-bold mb-3 text-lg text-green-800">Resumen de cobertura de pruebas:</p>
-          <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
-            <img src="/images/pa3/test_coverage.png" alt="Cobertura de pruebas" class="w-full">
-            <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de la cobertura de pruebas</p>
-          </div>
-          <p class="text-green-700">
-            Nuestros tests cubren todas las funcionalidades críticas de nuestro ORM y servicios, asegurando
-            que el código funcione correctamente y sea resistente a cambios futuros.
-          </p>
-        </div>
-        
-        <p class="mt-5">Estrategias de testing utilizadas:</p>
-        <ul class="list-disc pl-8 mb-4 space-y-2">
-          <li><strong>Mocking</strong> de sistemas externos como el sistema de archivos para aislamiento adecuado</li>
-          <li><strong>Tests paramétricos</strong> para probar múltiples escenarios con un solo test</li>
-          <li><strong>Fixtures y helpers</strong> para facilitar la creación de datos de prueba</li>
-          <li><strong>Tests de bordes</strong> para asegurar comportamiento correcto en casos límite</li>
-          <li><strong>Tests de integración</strong> para comprobar la interacción entre componentes</li>
-        </ul>
-      </div>
-    </section>
-    
-    <section id="ci-cd" class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Integración Continua con GitHub Actions</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p class="mb-5">
-          Para completar nuestro enfoque de desarrollo basado en pruebas, implementamos un pipeline de
-          integración continua con GitHub Actions que ejecuta nuestras pruebas automáticamente en cada push.
-        </p>
-        
-        <div class="mb-6">
-          <p class="font-bold mb-3 text-lg">Configuración del workflow de tests:</p>
-          <div class="border border-gray-300 rounded-lg overflow-hidden">
-            <img src="/images/pa3/github_workflow_config.png" alt="Configuración del workflow en GitHub Actions" class="w-full">
-            <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura del archivo YAML de GitHub Actions</p>
-          </div>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div>
-            <p class="font-bold mb-3 text-lg">Ejecución en GitHub Actions:</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="/images/pa3/github_actions_execution.png" alt="Ejecución de tests en GitHub Actions" class="w-full">
-              <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de la ejecución en GitHub Actions</p>
-            </div>
-          </div>
-          
-          <div>
-            <p class="font-bold mb-3 text-lg">Resultado detallado de los tests:</p>
-            <div class="border border-gray-300 rounded-lg overflow-hidden">
-              <img src="/images/pa3/github_actions_results.png" alt="Resultados detallados de los tests" class="w-full">
-              <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura de los resultados detallados</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="mb-6 bg-green-50 p-5 rounded-lg border border-green-200">
-          <p class="font-bold mb-3 text-lg text-green-800">Reporte de tests en GitHub:</p>
-          <div class="border border-gray-300 rounded-lg overflow-hidden mb-4">
-            <img src="/images/pa3/github_test_report.png" alt="Reporte de tests en GitHub" class="w-full">
-            <p class="text-xs text-gray-500 p-2">Es necesario colocar aquí una captura del reporte de tests en GitHub</p>
-          </div>
-          <p class="text-green-700">
-            El reporte muestra que todos los tests pasan correctamente, lo que confirma que nuestro ORM y 
-            servicios cumplen con los requisitos funcionales establecidos.
-          </p>
-        </div>
-        
-        <p class="mt-5">Beneficios de nuestro pipeline de CI/CD:</p>
-        <ul class="list-disc pl-8 mb-4 space-y-2">
-          <li><strong>Detección temprana de regresiones</strong> al ejecutar tests automáticamente en cada cambio</li>
-          <li><strong>Validación en entornos limpios</strong> para detectar problemas de configuración</li>
-          <li><strong>Feedback rápido</strong> sobre la calidad del código</li>
-          <li><strong>Informes detallados</strong> sobre la ejecución de los tests</li>
-          <li><strong>Integración con GitHub</strong> para visualizar resultados directamente en PRs</li>
-        </ul>
-      </div>
-    </section>
-    
-    <section id="conclusion" class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Conclusión</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p class="mb-5">
-          Mediante la implementación de un sistema ORM para archivos JSON siguiendo Test-Driven Development (TDD), 
-          hemos mejorado significativamente la calidad y mantenibilidad de nuestro código.
-        </p>
-        
-        <p class="mb-4 font-medium">Los beneficios principales que hemos obtenido son:</p>
-        <ul class="list-disc pl-8 mb-6 space-y-2">
-          <li><strong class="text-indigo-700">Mayor robustez:</strong> Las pruebas unitarias garantizan que el código funcione como se espera.</li>
-          <li><strong class="text-indigo-700">Código más mantenible:</strong> La abstracción proporcionada por el ORM facilita futuros cambios.</li>
-          <li><strong class="text-indigo-700">Mejor rendimiento:</strong> Las optimizaciones como caché e índices reducen la latencia.</li>
-          <li><strong class="text-indigo-700">Desarrollo metódico:</strong> El enfoque TDD nos obligó a pensar en la funcionalidad antes de implementarla.</li>
-          <li><strong class="text-indigo-700">Proceso de CI/CD robusto:</strong> La automatización de pruebas asegura calidad continua.</li>
-        </ul>
         
         <p>
-          Este proyecto demuestra la aplicación práctica de principios de ingeniería de software como 
-          DRY (Don't Repeat Yourself), KISS (Keep It Simple, Stupid) y YAGNI (You Aren't Gonna Need It), 
-          resultando en un código más limpio, eficiente y comprobable. A través de la implementación del ORM,
-          del servicio de autenticación y del panel de administración, hemos construido un sistema completo 
-          que satisface los requerimientos del proyecto y proporciona una base sólida para futuras extensiones.
+          Utilizamos <strong>Vitest</strong> como framework de testing por su compatibilidad con TypeScript y su integración con nuestro entorno de desarrollo basado en Vite. Además, implementamos técnicas de mocking para simular el sistema de archivos, permitiendo pruebas aisladas y reproducibles.
         </p>
+      </div>
+
+      <!-- BaseORM -->
+      <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+        <h3 class="text-xl font-semibold text-indigo-700 mb-4">BaseORM - Pruebas fundamentales de persistencia</h3>
         
-        <div class="bg-indigo-50 p-5 rounded-lg mt-6">
-          <h3 class="text-lg font-bold mb-3 text-indigo-800">Aplicación de los Principios de Desarrollo:</h3>
-          <div class="mb-4">
-            <h4 class="font-bold text-indigo-700">1. DRY (Don't Repeat Yourself)</h4>
-            <p class="mb-2">Aplicación en el proyecto:</p>
-            <ul class="list-disc pl-8 mb-3 space-y-1">
-              <li>Creamos componentes reutilizables para interfaces similares</li>
-              <li>Implementamos utilidades de autenticación centralizadas</li>
-              <li>Utilizamos layouts compartidos para mantener una estructura consistente</li>
-              <li>Creamos endpoints API reutilizables para operaciones comunes</li>
+        <p class="mb-4">El BaseORM constituye la columna vertebral de nuestro sistema de persistencia. Sus pruebas están diseñadas para garantizar operaciones fundamentales de manejo de datos:</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h4 class="font-semibold mb-2">Pruebas de Inicialización (initialize)</h4>
+            <p class="mb-2 text-sm"><strong>Propósito:</strong> Verificar la correcta creación y gestión del almacenamiento de datos.</p>
+            <p class="mb-2 text-sm"><strong>Escenarios probados:</strong></p>
+            <ul class="list-disc pl-6 text-xs space-y-1">
+              <li>Cuando el directorio no existe: debe crearlo automáticamente</li>
+              <li>Cuando el directorio ya existe: no debe intentar recrearlo</li>
             </ul>
           </div>
           
-          <div class="mb-4">
-            <h4 class="font-bold text-indigo-700">2. KISS (Keep It Simple, Stupid)</h4>
-            <p class="mb-2">Aplicación en el proyecto:</p>
-            <ul class="list-disc pl-8 mb-3 space-y-1">
-              <li>Diseñamos una interfaz de usuario intuitiva y directa</li>
-              <li>Implementamos formularios con validación clara y mensajes de error comprensibles</li>
-              <li>Utilizamos soluciones simples pero efectivas para la autenticación</li>
-              <li>Evitamos complicaciones innecesarias en la arquitectura</li>
-            </ul>
-          </div>
-          
-          <div>
-            <h4 class="font-bold text-indigo-700">3. YAGNI (You Aren't Gonna Need It)</h4>
-            <p class="mb-2">Aplicación en el proyecto:</p>
-            <ul class="list-disc pl-8 space-y-1">
-              <li>Nos centramos en implementar solo las funcionalidades necesarias</li>
-              <li>Evitamos agregar características especulativas o innecesarias</li>
-              <li>Implementamos el panel de administración con las funciones esenciales primero</li>
-              <li>Priorizamos la funcionalidad básica sobre características avanzadas</li>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h4 class="font-semibold mb-2">Pruebas de Lectura (findAll)</h4>
+            <p class="mb-2 text-sm"><strong>Propósito:</strong> Garantizar la recuperación correcta de datos almacenados.</p>
+            <p class="mb-2 text-sm"><strong>Escenarios probados:</strong></p>
+            <ul class="list-disc pl-6 text-xs space-y-1">
+              <li>Cuando no hay archivos: debe devolver un array vacío</li>
+              <li>Cuando hay archivos JSON: debe cargarlos y parsearlos correctamente</li>
             </ul>
           </div>
         </div>
         
-        <p class="mt-6 font-medium text-indigo-700">
-          La combinación de TDD con los principios de desarrollo nos ha permitido crear una solución robusta, mantenible
-          y orientada a las necesidades reales del usuario, demostrando las mejores prácticas de la ingeniería
-          de software moderna.
-        </p>
+        <img src="/images/pa3/baseorm-initialize.png" alt="Prueba de inicialización de BaseORM (líneas 36-56)" class="my-2"/>
+        <span class="text-xs">Referencia: <code>/tests/lib/orm/BaseORM.test.ts</code>, líneas 36-56</span>
+        
+        <img src="/images/pa3/baseorm-findall.png" alt="Prueba de lectura de BaseORM (líneas 58-87)" class="my-2"/>
+        <span class="text-xs">Referencia: <code>/tests/lib/orm/BaseORM.test.ts</code>, líneas 58-87</span>
+        
+        <div class="mt-4 bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+          <p class="text-sm mb-1">Para una revisión detallada del código de pruebas, se puede acceder al repositorio:</p>
+          <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/tests/lib/orm/BaseORM.test.ts" target="_blank" class="text-blue-700 font-semibold hover:text-blue-900 transition">Ver código completo de pruebas BaseORM en GitHub</a>
+        </div>
+      </div>
+      
+      <!-- AuthService -->
+      <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+        <h3 class="text-xl font-semibold text-indigo-700 mb-4">AuthService - Pruebas de seguridad y autenticación</h3>
+        
+        <p class="mb-4">El servicio de autenticación es crítico para la seguridad del sistema. Diseñamos pruebas exhaustivas para todos los aspectos de autenticación y autorización:</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h4 class="font-semibold mb-2">Pruebas de Login</h4>
+            <p class="mb-2 text-sm"><strong>Propósito:</strong> Verificar el proceso de autenticación de usuarios.</p>
+            <p class="mb-2 text-sm"><strong>Escenarios probados:</strong></p>
+            <ul class="list-disc pl-6 text-xs space-y-1">
+              <li>Con credenciales correctas: debe autenticar y generar token</li>
+              <li>Con contraseña incorrecta: debe rechazar el acceso</li>
+              <li>Con usuario inexistente: debe informar adecuadamente</li>
+            </ul>
+          </div>
+          
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h4 class="font-semibold mb-2">Pruebas de Registro</h4>
+            <p class="mb-2 text-sm"><strong>Propósito:</strong> Garantizar el registro seguro de nuevos usuarios.</p>
+            <p class="mb-2 text-sm"><strong>Escenarios probados:</strong></p>
+            <ul class="list-disc pl-6 text-xs space-y-1">
+              <li>Con datos nuevos válidos: debe registrar correctamente</li>
+              <li>Con username existente: debe rechazar para mantener unicidad</li>
+              <li>Verificar hash de contraseña: nunca almacenar en texto plano</li>
+            </ul>
+          </div>
+          
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h4 class="font-semibold mb-2">Pruebas de Verificación de Token</h4>
+            <p class="mb-2 text-sm"><strong>Propósito:</strong> Asegurar la validez de las sesiones mediante tokens JWT.</p>
+            <p class="mb-2 text-sm"><strong>Escenarios probados:</strong></p>
+            <ul class="list-disc pl-6 text-xs space-y-1">
+              <li>Con token válido: debe validar correctamente</li>
+              <li>Con token inválido: debe rechazar el acceso</li>
+              <li>Extracción de información: debe recuperar datos del usuario</li>
+            </ul>
+          </div>
+        </div>
+        
+        <img src="/images/pa3/authservice-login.png" alt="Pruebas de login en AuthService (líneas 50-74)" class="my-2"/>
+        <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 50-74</span>
+        
+        <img src="/images/pa3/authservice-register.png" alt="Pruebas de registro en AuthService (líneas 76-142)" class="my-2"/>
+        <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 76-142</span>
+        
+        <img src="/images/pa3/authservice-verifytoken.png" alt="Pruebas de verificación de token en AuthService (líneas 144-162)" class="my-2"/>
+        <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 144-162</span>
+        
+        <div class="mt-4 bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+          <p class="text-sm mb-1">Para evaluar la implementación completa de las pruebas de seguridad:</p>
+          <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/tests/lib/services/AuthService.test.ts" target="_blank" class="text-blue-700 font-semibold hover:text-blue-900 transition">Ver código completo de pruebas AuthService en GitHub</a>
+        </div>
+      </div>
+      
+      <!-- ProfileORM -->
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold text-indigo-700 mb-4">ProfileORM - Pruebas especializadas para gestión de perfiles</h3>
+        
+        <p class="mb-4">El ProfileORM extiende el BaseORM y agrega funcionalidades específicas para gestionar perfiles de usuario. Sus pruebas están organizadas por grupos funcionales:</p>
+        
+        <div class="mb-6">
+          <h4 class="font-semibold mb-2 text-indigo-600">1. Pruebas de búsqueda y filtrado</h4>
+          <p class="mb-3 text-sm">Estas pruebas verifican la capacidad del sistema para encontrar perfiles según diversos criterios, esencial para la funcionalidad de búsqueda de la aplicación.</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+            <div class="bg-gray-50 p-3 rounded-lg">
+              <h5 class="font-semibold text-sm">findByName</h5>
+              <p class="text-xs mb-1"><strong>Propósito:</strong> Búsqueda de perfiles por nombre.</p>
+              <p class="text-xs"><strong>Escenarios:</strong> Coincidencia exacta y parcial.</p>
+            </div>
+            
+            <div class="bg-gray-50 p-3 rounded-lg">
+              <h5 class="font-semibold text-sm">findBySkill</h5>
+              <p class="text-xs mb-1"><strong>Propósito:</strong> Búsqueda por habilidades.</p>
+              <p class="text-xs"><strong>Escenarios:</strong> Por nombre, palabra clave y sin coincidencias.</p>
+            </div>
+            
+            <div class="bg-gray-50 p-3 rounded-lg">
+              <h5 class="font-semibold text-sm">findBySkillType</h5>
+              <p class="text-xs mb-1"><strong>Propósito:</strong> Filtrado por tipo de habilidad.</p>
+              <p class="text-xs"><strong>Escenarios:</strong> Hard skills y soft skills.</p>
+            </div>
+          </div>
+          
+          <img src="/images/pa3/profileorm-findbyname.png" alt="Pruebas de búsqueda por nombre en ProfileORM (líneas 145-161)" class="my-2"/>
+          <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 145-161</span>
+          
+          <img src="/images/pa3/profileorm-findbyskill.png" alt="Pruebas de búsqueda por habilidad en ProfileORM (líneas 163-183)" class="my-2"/>
+          <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 163-183</span>
+          
+          <img src="/images/pa3/profileorm-findbyskilltype.png" alt="Pruebas de búsqueda por tipo de habilidad en ProfileORM (líneas 185-198)" class="my-2"/>
+          <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 185-198</span>
+        </div>
+        
+        <div class="mb-6">
+          <h4 class="font-semibold mb-2 text-indigo-600">2. Pruebas de gestión de habilidades</h4>
+          <p class="mb-3 text-sm">Estas pruebas validan las operaciones CRUD específicas para habilidades dentro de perfiles, fundamentales para mantener perfiles actualizados.</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+            <div class="bg-gray-50 p-3 rounded-lg">
+              <h5 class="font-semibold text-sm">addSkill</h5>
+              <p class="text-xs mb-1"><strong>Propósito:</strong> Añadir o actualizar habilidades en perfiles.</p>
+              <p class="text-xs"><strong>Escenarios:</strong> Habilidad nueva y actualización de existente.</p>
+            </div>
+            
+            <div class="bg-gray-50 p-3 rounded-lg">
+              <h5 class="font-semibold text-sm">removeSkill</h5>
+              <p class="text-xs mb-1"><strong>Propósito:</strong> Eliminar habilidades de perfiles.</p>
+              <p class="text-xs"><strong>Escenarios:</strong> Eliminación correcta y manejo de habilidad inexistente.</p>
+            </div>
+          </div>
+          
+          <img src="/images/pa3/profileorm-addskill.png" alt="Pruebas de añadir skill en ProfileORM (líneas 200-239)" class="my-2"/>
+          <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 200-239</span>
+          
+          <img src="/images/pa3/profileorm-removeskill.png" alt="Pruebas de eliminar skill en ProfileORM (líneas 241-264)" class="my-2"/>
+          <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 241-264</span>
+        </div>
+        
+        <div class="mb-6">
+          <h4 class="font-semibold mb-2 text-indigo-600">3. Pruebas de validación y funcionalidades avanzadas</h4>
+          <p class="mb-3 text-sm">Estas pruebas verifican tanto la integridad de los datos como características especializadas para el análisis de perfiles.</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+            <div class="bg-gray-50 p-3 rounded-lg">
+              <h5 class="font-semibold text-sm">validateProfile</h5>
+              <p class="text-xs mb-1"><strong>Propósito:</strong> Validar la integridad de los perfiles.</p>
+              <p class="text-xs"><strong>Escenarios:</strong> Perfil válido y detección de errores.</p>
+            </div>
+            
+            <div class="bg-gray-50 p-3 rounded-lg">
+              <h5 class="font-semibold text-sm">findWithFeaturedProjects</h5>
+              <p class="text-xs mb-1"><strong>Propósito:</strong> Filtrar perfiles con proyectos destacados.</p>
+              <p class="text-xs"><strong>Escenarios:</strong> Con destacados y sin destacados.</p>
+            </div>
+            
+            <div class="bg-gray-50 p-3 rounded-lg">
+              <h5 class="font-semibold text-sm">getStats</h5>
+              <p class="text-xs mb-1"><strong>Propósito:</strong> Generar estadísticas del sistema.</p>
+              <p class="text-xs"><strong>Escenarios:</strong> Conteo de perfiles, habilidades y proyectos.</p>
+            </div>
+          </div>
+          
+          <img src="/images/pa3/profileorm-validate.png" alt="Pruebas de validación de perfil en ProfileORM (líneas 266-291)" class="my-2"/>
+          <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 266-291</span>
+          
+          <img src="/images/pa3/profileorm-featuredprojects.png" alt="Pruebas de proyectos destacados en ProfileORM (líneas 293-320)" class="my-2"/>
+          <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 293-320</span>
+          
+          <img src="/images/pa3/profileorm-stats.png" alt="Pruebas de estadísticas en ProfileORM (líneas 322-3334)" class="my-2"/>
+          <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 322-3334</span>
+        </div>
+        
+        <div class="bg-indigo-50 p-4 rounded-lg mb-4">
+          <h4 class="font-semibold mb-2">Estrategia de cobertura</h4>
+          <p class="text-sm">Las pruebas del ProfileORM fueron diseñadas para cubrir tanto los casos de uso típicos como los escenarios límite, incluyendo:</p>
+          <ul class="list-disc pl-6 text-xs space-y-1 mt-2">
+            <li>Casos positivos donde todo funciona según lo esperado</li>
+            <li>Manejo de errores y excepciones</li>
+            <li>Casos límite (datos vacíos, búsquedas sin resultados)</li>
+            <li>Validación de integridad de datos</li>
+            <li>Funcionalidades específicas de dominio (estadísticas, filtros especializados)</li>
+          </ul>
+        </div>
+        
+        <div class="mt-4 bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+          <p class="text-sm mb-1">Para un análisis completo de las pruebas de gestión de perfiles:</p>
+          <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/tests/lib/orm/ProfileORM.test.ts" target="_blank" class="text-blue-700 font-semibold hover:text-blue-900 transition">Ver código completo de pruebas ProfileORM en GitHub</a>
+          <p class="text-xs mt-1 text-gray-600">Este enlace permite acceder al código fuente para revisar en detalle la implementación de todas las pruebas unitarias del componente.</p>
+        </div>
       </div>
     </section>
+
+    <!-- Aplicación de TDD -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Aplicación de TDD</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p class="mb-4">
+          La metodología TDD (Test-Driven Development) se aplicó sistemáticamente en el desarrollo de componentes clave del sistema. A continuación se muestra cómo implementamos el ciclo Red-Green-Refactor en el desarrollo del servicio de autenticación (AuthService).
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-white text-center font-semibold">
+          <div class="bg-red-500 p-3 rounded-lg">
+            <h3 class="text-lg mb-1">1. RED</h3>
+            <p class="text-sm">Escribir pruebas que inicialmente fallan, definiendo el comportamiento esperado.</p>
+          </div>
+          <div class="bg-green-500 p-3 rounded-lg">
+            <h3 class="text-lg mb-1">2. GREEN</h3>
+            <p class="text-sm">Implementar el código mínimo necesario para que las pruebas pasen.</p>
+          </div>
+          <div class="bg-blue-500 p-3 rounded-lg">
+            <h3 class="text-lg mb-1">3. REFACTOR</h3>
+            <p class="text-sm">Mejorar y optimizar el código manteniendo las pruebas en verde.</p>
+          </div>
+        </div>
+
+        <h3 class="text-xl font-bold mb-3 text-indigo-700">Desarrollo del Servicio de Autenticación</h3>
+        <p class="mb-4">A continuación se documenta el proceso iterativo que seguimos para el desarrollo del servicio de autenticación con TDD:</p>
+        
+        <!-- Iteración 1: Login básico -->
+        <div class="border border-gray-200 rounded-lg mb-6 overflow-hidden">
+          <div class="bg-gray-100 px-4 py-2 border-b border-gray-200">
+            <h4 class="font-semibold">Iteración 1: Implementación del Login Básico</h4>
+          </div>
+          <div class="p-4">
+            <div class="mb-4">
+              <h5 class="inline-block px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-semibold mb-2">RED</h5>
+              <p class="mb-2 text-sm">Escribimos pruebas para verificar el login con credenciales correctas.</p>
+              <img src="/images/pa3/tdd/auth-login-red.png" alt="Prueba de login inicial que falla" class="border rounded my-2" />
+              <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 50-58</span>
+            </div>
+            
+            <div class="mb-4">
+              <h5 class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-2">GREEN</h5>
+              <p class="mb-2 text-sm">Implementamos la función de login con el mínimo código necesario para pasar la prueba.</p>
+              <img src="/images/pa3/tdd/auth-login-green.png" alt="Implementación mínima de login" class="border rounded my-2" />
+              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 68-93</span>
+            </div>
+            
+            <div class="mb-2">
+              <h5 class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold mb-2">REFACTOR</h5>
+              <p class="mb-2 text-sm">Mejoramos la implementación añadiendo validaciones y manejo de errores.</p>
+              <img src="/images/pa3/tdd/auth-login-refactor.png" alt="Refactorización del login" class="border rounded my-2" />
+              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 75-110</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Iteración 2: Manejo de credenciales incorrectas -->
+        <div class="border border-gray-200 rounded-lg mb-6 overflow-hidden">
+          <div class="bg-gray-100 px-4 py-2 border-b border-gray-200">
+            <h4 class="font-semibold">Iteración 2: Manejo de Credenciales Incorrectas</h4>
+          </div>
+          <div class="p-4">
+            <div class="mb-4">
+              <h5 class="inline-block px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-semibold mb-2">RED</h5>
+              <p class="mb-2 text-sm">Añadimos pruebas para verificar el rechazo de credenciales incorrectas.</p>
+              <img src="/images/pa3/tdd/auth-invalid-red.png" alt="Prueba de credenciales incorrectas que falla" class="border rounded my-2" />
+              <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 60-66</span>
+            </div>
+            
+            <div class="mb-4">
+              <h5 class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-2">GREEN</h5>
+              <p class="mb-2 text-sm">Implementamos la validación de contraseñas para rechazar credenciales incorrectas.</p>
+              <img src="/images/pa3/tdd/auth-invalid-green.png" alt="Implementación de validación de credenciales" class="border rounded my-2" />
+              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 95-100</span>
+            </div>
+            
+            <div class="mb-2">
+              <h5 class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold mb-2">REFACTOR</h5>
+              <p class="mb-2 text-sm">Mejoramos el sistema de validación utilizando una función de hash segura.</p>
+              <img src="/images/pa3/tdd/auth-invalid-refactor.png" alt="Refactorización de la validación con hash" class="border rounded my-2" />
+              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 15-27 (SimpleHash class)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Iteración 3: Implementación del Registro de Usuarios -->
+        <div class="border border-gray-200 rounded-lg mb-6 overflow-hidden">
+          <div class="bg-gray-100 px-4 py-2 border-b border-gray-200">
+            <h4 class="font-semibold">Iteración 3: Implementación del Registro de Usuarios</h4>
+          </div>
+          <div class="p-4">
+            <div class="mb-4">
+              <h5 class="inline-block px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-semibold mb-2">RED</h5>
+              <p class="mb-2 text-sm">Escribimos pruebas para el registro de nuevos usuarios.</p>
+              <img src="/images/pa3/tdd/auth-register-red.png" alt="Prueba de registro que falla" class="border rounded my-2" />
+              <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 76-92</span>
+            </div>
+            
+            <div class="mb-4">
+              <h5 class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-2">GREEN</h5>
+              <p class="mb-2 text-sm">Implementamos la función de registro con validaciones básicas.</p>
+              <img src="/images/pa3/tdd/auth-register-green.png" alt="Implementación básica de registro" class="border rounded my-2" />
+              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 131-152</span>
+            </div>
+            
+            <div class="mb-2">
+              <h5 class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold mb-2">REFACTOR</h5>
+              <p class="mb-2 text-sm">Mejoramos la implementación con validaciones robustas y hash de contraseñas.</p>
+              <img src="/images/pa3/tdd/auth-register-refactor.png" alt="Refactorización del registro" class="border rounded my-2" />
+              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 156-175</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Iteración 4: Verificación de Token JWT -->
+        <div class="border border-gray-200 rounded-lg mb-6 overflow-hidden">
+          <div class="bg-gray-100 px-4 py-2 border-b border-gray-200">
+            <h4 class="font-semibold">Iteración 4: Verificación de Token JWT</h4>
+          </div>
+          <div class="p-4">
+            <div class="mb-4">
+              <h5 class="inline-block px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-semibold mb-2">RED</h5>
+              <p class="mb-2 text-sm">Escribimos pruebas para la verificación de tokens JWT válidos e inválidos.</p>
+              <img src="/images/pa3/tdd/auth-token-red.png" alt="Prueba de verificación de token que falla" class="border rounded my-2" />
+              <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 144-162</span>
+            </div>
+            
+            <div class="mb-4">
+              <h5 class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-2">GREEN</h5>
+              <p class="mb-2 text-sm">Implementamos la función de verificación con validaciones simples.</p>
+              <img src="/images/pa3/tdd/auth-token-green.png" alt="Implementación básica de verificación de token" class="border rounded my-2" />
+              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 217-244</span>
+            </div>
+            
+            <div class="mb-2">
+              <h5 class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold mb-2">REFACTOR</h5>
+              <p class="mb-2 text-sm">Mejoramos la implementación con verificación completa de tokens JWT.</p>
+              <img src="/images/pa3/tdd/auth-token-refactor.png" alt="Refactorización de la verificación de token" class="border rounded my-2" />
+              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 246-271</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Integración con las páginas del sistema -->
+        <div class="bg-indigo-50 p-4 rounded-lg mb-4">
+          <h3 class="font-bold text-lg mb-2">Integración con las Páginas del Sistema</h3>
+          <p class="mb-3 text-sm">Una vez completado el desarrollo del servicio de autenticación mediante TDD, se integró en las páginas de:</p>
+          <ul class="list-disc pl-8 mb-3 text-sm space-y-1">
+            <li><strong>Login:</strong> Implementación del formulario y procesamiento de credenciales</li>
+            <li><strong>Registro:</strong> Creación de nuevos usuarios con validaciones</li>
+            <li><strong>Perfil:</strong> Acceso protegido mediante verificación de token</li>
+          </ul>
+          <p class="text-sm">La integración se realizó manteniendo las pruebas existentes, garantizando que los cambios no afectaran la funcionalidad.</p>
+        </div>
+
+        <div class="mt-6">
+          <h3 class="font-bold text-lg mb-2">Beneficios observados con TDD:</h3>
+          <ul class="list-disc pl-8 mb-3 space-y-1">
+            <li>Mayor confianza en el código y detección temprana de errores</li>
+            <li>Diseño más modular y desacoplado, facilitando las pruebas</li>
+            <li>Documentación viva y actualizada a través de las pruebas</li>
+            <li>Facilidad para refactorizar sin introducir regresiones</li>
+            <li>Mejor comprensión de los requisitos al traducirlos a pruebas</li>
+          </ul>
+        </div>
+        
+        <div class="mt-4 bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+          <p class="text-sm mb-1">Para revisar la implementación completa del servicio de autenticación:</p>
+          <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/src/lib/services/AuthService.ts" target="_blank" class="text-blue-700 font-semibold hover:text-blue-900 transition">Ver código completo de AuthService en GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Uso de ORM -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Uso de ORM</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p>
+          Desarrollamos un sistema ORM (Object-Relational Mapping) personalizado para persistencia de datos usando archivos JSON, una alternativa ligera a bases de datos relacionales
+          que proporciona una estructura clara para gestionar perfiles de usuario y autenticaciu00f3n.
+        </p>
+
+        <h3 class="font-bold text-lg mt-5 mb-2">1. Arquitectura del ORM</h3>
+        <p class="mb-3">
+          El sistema se diseu00f1u00f3 con una arquitectura de dos capas:
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
+          <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
+            <h4 class="font-bold mb-2 text-indigo-700">BaseORM</h4>
+            <p class="mb-2">Capa base genu00e9rica con operaciones CRUD fundamentales:</p>
+            <ul class="list-disc pl-6 text-sm space-y-1">
+              <li>findAll(): Obtener todas las entidades</li>
+              <li>findById(): Buscar entidad por ID</li>
+              <li>save(): Guardar nueva entidad</li>
+              <li>update(): Actualizar entidad existente</li>
+              <li>delete(): Eliminar entidad</li>
+            </ul>
+          </div>
+          
+          <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
+            <h4 class="font-bold mb-2 text-indigo-700">ProfileORM</h4>
+            <p class="mb-2">Capa especializada para perfiles con operaciones especu00edficas:</p>
+            <ul class="list-disc pl-6 text-sm space-y-1">
+              <li>findByName(): Bu00basqueda por nombre</li>
+              <li>findBySkill(): Bu00basqueda por habilidad</li>
+              <li>findBySkillType(): Filtrar por tipo de habilidad</li>
+              <li>addSkill(): Au00f1adir habilidad a perfil</li>
+              <li>validateProfile(): Validar datos de perfil</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Implementaciu00f3n de BaseORM -->
+        <img src="/images/pa3/baseorm_implementacion.png" alt="Implementaciu00f3n de BaseORM" class="rounded shadow mb-2" />
+        <p class="text-xs text-gray-600 mb-5">Implementaciu00f3n de BaseORM mostrando mu00e9todos CRUD principales. Ubicaciu00f3n: <code>/src/lib/orm/BaseORM.ts</code>, lu00edneas 1-40.</p>
+
+        <h3 class="font-bold text-lg mt-6 mb-2">2. Ventajas del enfoque ORM sobre JSON</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+          <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+            <h4 class="font-bold mb-1">Ventajas</h4>
+            <ul class="list-disc pl-6 text-sm space-y-1">
+              <li>Bajo acoplamiento con la capa de persistencia</li>
+              <li>Fu00e1cil de entender y mantener</li>
+              <li>Sin dependencias externas de bases de datos</li>
+              <li>Ideal para proyectos pequeu00f1os o prototipos</li>
+              <li>Fu00e1cilmente desplegable en entornos serverless</li>
+            </ul>
+          </div>
+          
+          <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+            <h4 class="font-bold mb-1">Limitaciones</h4>
+            <ul class="list-disc pl-6 text-sm space-y-1">
+              <li>Rendimiento limitado para grandes volu00famenes</li>
+              <li>Sin soporte para transacciones complejas</li>
+              <li>Operaciones de bu00basqueda avanzada mu00e1s costosas</li>
+              <li>Sin soporte nativo para relaciones complejas</li>
+              <li>Problemas potenciales de concurrencia</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="font-bold text-lg mt-6 mb-2">3. Optimizaciones implementadas</h3>
+        <p class="mb-3">Para mejorar el rendimiento y la usabilidad del ORM, implementamos varias optimizaciones:</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+          <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+            <h4 class="font-bold text-indigo-700 mb-1">Cacheo en memoria</h4>
+            <p class="text-sm">Almacenamos resultados de operaciones frecuentes en memoria para reducir accesos a disco.</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+            <h4 class="font-bold text-indigo-700 mb-1">Indexaciu00f3n</h4>
+            <p class="text-sm">Creamos u00edndices para campos consultados frecuentemente como nombre o tipo de habilidad.</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+            <h4 class="font-bold text-indigo-700 mb-1">Patru00f3n Singleton</h4>
+            <p class="text-sm">Implementamos el patru00f3n Singleton para asegurar una sola instancia del ORM.</p>
+          </div>
+        </div>
+
+        <h3 class="font-bold text-lg mt-6 mb-2">4. Ejemplo de uso en el cu00f3digo</h3>
+        <p class="mb-2">Ejemplo del uso del ORM para gestionar perfiles de usuario:</p>
+        
+        <!-- Ejemplo de uso del ORM en el servicio de perfiles -->
+        <img src="/images/pa3/profileorm_usage.png" alt="Uso del ProfileORM en servicios de perfil" class="rounded shadow mb-2" />
+        <p class="text-xs text-gray-600 mb-4">Ubicaciu00f3n: <code>/src/lib/services/profileService.ts</code>, lu00edneas 20-45. Observe cu00f3mo se utiliza el patru00f3n Singleton para acceder al ORM y gestionar los perfiles.</p>
+        
+        <!-- Nota importante sobre el uso del ORM -->
+        <div class="bg-blue-50 p-3 rounded border border-blue-200 mb-5">
+          <p class="text-sm"><strong>Nota:</strong> El patru00f3n de diseu00f1o utilizado facilita el testing y el intercambio de implementaciones. Esto fue especialmente u00fatil durante la fase de desarrollo cuando necesitu00e1bamos probar diferentes estrategias de almacenamiento.</p>
+        </div>
+
+        <h3 class="font-bold text-lg mt-6 mb-2">5. Desafu00edo superado</h3>
+        <div class="bg-yellow-50 p-5 rounded-lg mb-5">
+          <h4 class="font-bold text-yellow-800 mb-2">Desafu00edo: IDs en archivos JSON</h4>
+          <p class="mb-2">Los archivos JSON no tenu00edan un campo ID consistente, lo que complicaba la bu00basqueda.</p>
+          <p class="font-semibold">Soluciu00f3n:</p>
+          <ul class="list-disc pl-6 space-y-1">
+            <li>Usamos los nombres de archivo como IDs</li>
+            <li>Implementamos generaciu00f3n automu00e1tica de IDs basada en slugify del nombre</li>
+            <li>Desarrollamos un sistema de validaciu00f3n de unicidad</li>
+          </ul>
+        </div>
+
+        <h3 class="font-bold text-lg mt-6 mb-2">6. Resultados y mu00e9tricas</h3>
+        <p class="mb-3">El ORM desarrollado ha demostrado ser efectivo para nuestra aplicaciu00f3n:</p>
+        <ul class="list-disc pl-8 mb-5 space-y-1">
+          <li><strong>Tiempo de respuesta:</strong> &lt;100ms para operaciones CRUD bu00e1sicas</li>
+          <li><strong>Cobertura de pruebas:</strong> &gt;90% para todas las clases del ORM</li>
+          <li><strong>Lu00edneas de cu00f3digo:</strong> ~350 lu00edneas para el ORM completo</li>
+          <li><strong>Operaciones soportadas:</strong> 15+ operaciones especializadas para perfiles</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Integración de Pruebas en el Flujo Ágil -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Integración de Pruebas en el Flujo Ágil</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p>
+          Las pruebas unitarias y de integración fueron incorporadas en el flujo de trabajo ágil del equipo, siguiendo los principios de Integración Continua (CI) y Entrega Continua (CD).
+        </p>
+        <h3 class="font-bold text-lg mt-4 mb-2">Implementación de CI/CD con GitHub Actions</h3>
+        <p>Se configuró un pipeline de CI/CD que ejecuta automáticamente las pruebas en cada push o pull request:</p>
+        <pre class="bg-gray-100 rounded p-4 text-sm overflow-x-auto"><code>&lt;!-- .github/workflows/ci.yml --&gt;
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm test
+</code></pre>
+        <h3 class="font-bold text-lg mt-4 mb-2">Beneficios observados:</h3>
+        <ul class="list-disc pl-8 mb-3 space-y-1">
+          <li>Detección temprana de errores</li>
+          <li>Mayor confianza en los cambios realizados</li>
+          <li>Reducción del tiempo de integración</li>
+          <li>Mejora en la calidad del código</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Documentación y Reporte -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Documentación y Reporte</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p>
+          La documentación del proyecto se realizó de manera continua y estructurada, utilizando diferentes herramientas y formatos:
+        </p>
+        <ul class="list-disc pl-8 mb-3 space-y-1">
+          <li><strong>Documentación de código:</strong> Comentarios descriptivos y JSDoc</li>
+          <li><strong>Documentación técnica:</strong> Este informe y diagramas de arquitectura</li>
+          <li><strong>Documentación de pruebas:</strong> Casos de prueba y resultados</li>
+        </ul>
+        <p class="mt-4">
+          El proceso de documentación siguió estas etapas:
+        </p>
+        <ol class="list-decimal pl-8 mb-3 space-y-1">
+          <li>Documentación inicial de requisitos y arquitectura</li>
+          <li>Documentación de pruebas durante el desarrollo con TDD</li>
+          <li>Documentación de la implementación del ORM</li>
+          <li>Documentación del proceso de CI/CD</li>
+          <li>Elaboración del informe técnico final</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Entrega del Proyecto y Recursos -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Entrega del Proyecto y Recursos</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <ul class="list-disc pl-8 mb-3 space-y-1">
+          <li><strong>Repositorio en GitHub:</strong> <a href="https://github.com/edwinwmendeze/nrc-23731" class="text-indigo-600 underline">https://github.com/edwinwmendeze/nrc-23731</a></li>
+          <li><strong>Aplicación desplegada:</strong> <a href="https://edwinwmendeze.github.io/nrc-23731/" class="text-indigo-600 underline">https://edwinwmendeze.github.io/nrc-23731/</a></li>
+          <li><strong>Informe técnico:</strong> Este documento en formato .astro y .doc</li>
+          <li><strong>Recursos adicionales:</strong>
+            <ul class="list-disc pl-8">
+              <li>GitHub Actions CI/CD: <a href="https://www.youtube.com/shorts/Kq28yBigDYw" class="text-indigo-600 underline">Video</a></li>
+              <li>Prototyping ORM model from JSON: <a href="https://medium.com/@piedjoustephane/prototyping-object-relational-mapping-orm-model-from-a-json-object-96eb0ea05ad4" class="text-indigo-600 underline">Artículo</a></li>
+            </ul>
+          </li>
+        </ul>
+        <h3 class="font-bold text-lg mt-4 mb-2">Instrucciones para ejecutar el proyecto localmente:</h3>
+        <pre class="bg-gray-100 rounded p-4 text-sm overflow-x-auto"><code>&lt;!-- Clonar el repositorio --&gt;
+git clone https://github.com/edwinwmendeze/nrc-23731.git
+cd nrc-23731/grupo-a
+
+&lt;!-- Instalar dependencias --&gt;
+npm install
+
+&lt;!-- Ejecutar en modo desarrollo --&gt;
+npm run dev
+
+&lt;!-- Ejecutar pruebas --&gt;
+npm test
+</code></pre>
+      </div>
+    </section>
+
+    <!-- Anexos -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Anexos</h2>
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p>
+          A continuación, se presentan capturas de pantalla, fragmentos de código y resultados de pruebas relevantes para el desarrollo del proyecto.
+        </p>
+        <h3 class="font-bold text-lg mt-4 mb-2">Capturas de pantalla de la aplicación</h3>
+        <!-- Espacio para capturas de pantalla -->
+        <!-- <img src="/ruta/a/tu/captura1.png" alt="Pantalla de login" class="my-4" /> -->
+        <!-- <img src="/ruta/a/tu/captura2.png" alt="Perfil de usuario" class="my-4" /> -->
+        
+        <h3 class="font-bold text-lg mt-4 mb-2">Resultados de pruebas</h3>
+        <!-- Espacio para capturas de resultados de pruebas -->
+        <!-- <img src="/ruta/a/tu/resultados-tests.png" alt="Resultados de pruebas" class="my-4" /> -->
+        
+        <h3 class="font-bold text-lg mt-4 mb-2">Diagrama de arquitectura</h3>
+        <!-- Espacio para diagrama de arquitectura -->
+        <!-- <img src="/ruta/a/tu/diagrama-arquitectura.png" alt="Diagrama de arquitectura" class="my-4" /> -->
+      </div>
+    </section>
+
   </main>
 </Layout>
 
