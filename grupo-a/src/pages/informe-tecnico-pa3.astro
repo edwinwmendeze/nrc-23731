@@ -484,16 +484,25 @@ const progreso = [
         </div>
         
         <h3 class="font-bold text-lg mt-5 mb-2 text-indigo-700 dark:text-indigo-300">Ciclo TDD - RED</h3>
-        <img src="/images/pa3/authormorm-red.png" alt="Ciclo TDD - RED" class="my-2"/>
-        <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 334-365</span>
+        <h5 class="font-bold mt-5 mb-2 text-indigo-700 dark:text-indigo-300">Ciclo TDD - RED Base ORM</h5>
+        <img src="/images/pa3/test_tdd_fase_red.png" alt="Ciclo TDD - RED" class="my-2"/>
+        <h5 class="font-bold mt-5 mb-2 text-indigo-700 dark:text-indigo-300">Ciclo TDD - RED AutORMService</h5>
+        <img src="/images/pa3/test_tdd_red_auth.png" alt="Ciclo TDD - RED" class="my-2"/>
+
         
         <h3 class="font-bold text-lg mt-5 mb-2 text-indigo-700 dark:text-indigo-300">Ciclo TDD - GREEN</h3>
-        <img src="/images/pa3/authormorm-green.png" alt="Ciclo TDD - GREEN" class="my-2"/>
-        <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 366-397</span>
+        <h5 class="font-bold mt-5 mb-2 text-indigo-700 dark:text-indigo-300">Ciclo TDD - GREEN Base ORM</h5>
+        <img src="/images/pa3/test_tdd_fase_green.png" alt="Ciclo TDD - GREEN" class="my-2"/>
+        <h5 class="font-bold mt-5 mb-2 text-indigo-700 dark:text-indigo-300">Ciclo TDD - GREEN AutORMService</h5>
+        <img src="/images/pa3/test_tdd_green_auth.png" alt="Ciclo TDD - GREEN" class="my-2"/>
+
         
         <h3 class="font-bold text-lg mt-5 mb-2 text-indigo-700 dark:text-indigo-300">Ciclo TDD - REFACTOR</h3>
-        <img src="/images/pa3/authormorm-refactor.png" alt="Ciclo TDD - REFACTOR" class="my-2"/>
-        <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 398-429</span>
+        <h5 class="font-bold mt-5 mb-2 text-indigo-700 dark:text-indigo-300">Ciclo TDD - REFACTOR Base ORM</h5>
+        <img src="/images/pa3/test_tdd_fase_refactor.png" alt="Ciclo TDD - REFACTOR" class="my-2"/>
+        <h5 class="font-bold mt-5 mb-2 text-indigo-700 dark:text-indigo-300">Ciclo TDD - REFACTOR AutORMService</h5>
+        <img src="/images/pa3/test_tdd_refactor_auth.png" alt="Ciclo TDD - REFACTOR" class="my-2"/>
+
       </div>
       
     </section>
@@ -515,7 +524,7 @@ const progreso = [
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
           <div class="bg-gray-50 dark:bg-gray-700 p-5 rounded-lg shadow-sm">
             <h4 class="font-bold mb-2 text-indigo-700 dark:text-indigo-300">BaseORM</h4>
-            <p class="mb-2 text-sm">Capa base genu00e9rica con operaciones CRUD fundamentales:</p>
+            <p class="mb-2 text-sm">Capa base genérica con operaciones CRUD fundamentales:</p>
             <ul class="list-disc pl-6 text-sm space-y-1">
               <li>findAll(): Obtener todas las entidades</li>
               <li>findById(): Buscar entidad por ID</li>
@@ -527,20 +536,20 @@ const progreso = [
           
           <div class="bg-gray-50 dark:bg-gray-700 p-5 rounded-lg shadow-sm">
             <h4 class="font-bold mb-2 text-indigo-700 dark:text-indigo-300">ProfileORM</h4>
-            <p class="mb-2 text-sm">Capa especializada para perfiles con operaciones especu00edficas:</p>
+            <p class="mb-2 text-sm">Capa especializada para perfiles con operaciones específicas:</p>
             <ul class="list-disc pl-6 text-sm space-y-1">
-              <li>findByName(): Bu00basqueda por nombre</li>
-              <li>findBySkill(): Bu00basqueda por habilidad</li>
+              <li>findByName(): Búsqueda por nombre</li>
+              <li>findBySkill(): Búsqueda por habilidad</li>
               <li>findBySkillType(): Filtrar por tipo de habilidad</li>
-              <li>addSkill(): Au00f1adir habilidad a perfil</li>
+              <li>addSkill(): Añadir habilidad a perfil</li>
               <li>validateProfile(): Validar datos de perfil</li>
             </ul>
           </div>
         </div>
 
-        <!-- Implementaciu00f3n de BaseORM -->
-        <img src="/images/pa3/baseorm_implementacion.png" alt="Implementaciu00f3n de BaseORM" class="rounded shadow mb-2" />
-        <p class="text-xs text-gray-600 dark:text-gray-400 mb-5">Implementaciu00f3n de BaseORM mostrando mu00e9todos CRUD principales. Ubicaciu00f3n: <code>/src/lib/orm/BaseORM.ts</code>, lu00edneas 1-40.</p>
+        <!-- Implementación de BaseORM -->
+        <img src="/images/pa3/baseorm_implementacion.png" alt="Implementación de BaseORM" class="rounded shadow mb-2" />
+        <p class="text-xs text-gray-600 dark:text-gray-400 mb-5">Implementación de BaseORM mostrando métodos CRUD principales. Ubicación: <code>/src/lib/orm/BaseORM.ts</code>, líneas 1-40.</p>
 
         <h3 class="font-bold text-lg mt-6 mb-2 text-indigo-700 dark:text-indigo-300">2. Ventajas del enfoque ORM sobre JSON</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
