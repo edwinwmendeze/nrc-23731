@@ -105,10 +105,10 @@ const progreso = [
 
     <!-- Diseño de Pruebas Unitarias -->
     <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Diseño de Pruebas Unitarias</h2>
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Diseño de Pruebas Unitarias</h2>
       
       <!-- Introducción general a las pruebas unitarias -->
-      <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm mb-8">
         <p class="mb-4">
           Las pruebas unitarias son fundamentales en nuestro proyecto, ya que permiten verificar de manera aislada y sistemática el funcionamiento correcto de cada componente individual. Para nuestro sistema, diseñamos un conjunto de pruebas enfocadas en tres componentes principales: el BaseORM (operaciones básicas de persistencia), el AuthService (seguridad y autenticación) y el ProfileORM (gestión especializada de perfiles).
         </p>
@@ -119,13 +119,13 @@ const progreso = [
       </div>
 
       <!-- BaseORM -->
-      <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
-        <h3 class="text-xl font-semibold text-indigo-700 mb-4">BaseORM - Pruebas fundamentales de persistencia</h3>
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm mb-8">
+        <h3 class="text-xl font-semibold text-indigo-700 dark:text-indigo-300 mb-4">BaseORM - Pruebas fundamentales de persistencia</h3>
         
         <p class="mb-4">El BaseORM constituye la columna vertebral de nuestro sistema de persistencia. Sus pruebas están diseñadas para garantizar operaciones fundamentales de manejo de datos:</p>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <div class="bg-gray-50 p-4 rounded-lg">
+          <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
             <h4 class="font-semibold mb-2">Pruebas de Inicialización (initialize)</h4>
             <p class="mb-2 text-sm"><strong>Propósito:</strong> Verificar la correcta creación y gestión del almacenamiento de datos.</p>
             <p class="mb-2 text-sm"><strong>Escenarios probados:</strong></p>
@@ -135,7 +135,7 @@ const progreso = [
             </ul>
           </div>
           
-          <div class="bg-gray-50 p-4 rounded-lg">
+          <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
             <h4 class="font-semibold mb-2">Pruebas de Lectura (findAll)</h4>
             <p class="mb-2 text-sm"><strong>Propósito:</strong> Garantizar la recuperación correcta de datos almacenados.</p>
             <p class="mb-2 text-sm"><strong>Escenarios probados:</strong></p>
@@ -169,20 +169,20 @@ const progreso = [
           lineNumbers={true}
           lang="ts"
         />
-        <div class="mt-4 bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+        <div class="mt-4 bg-blue-50 dark:bg-blue-900 p-3 rounded-lg border border-blue-200 dark:border-blue-700 text-center">
           <p class="text-sm mb-1">Para una revisión detallada del código de pruebas, se puede acceder al repositorio:</p>
-          <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/tests/lib/orm/BaseORM.test.ts" target="_blank" class="text-blue-700 font-semibold hover:text-blue-900 transition">Ver código completo de pruebas BaseORM en GitHub</a>
+          <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/tests/lib/orm/BaseORM.test.ts" target="_blank" class="text-blue-700 dark:text-blue-400 font-semibold hover:text-blue-900 dark:hover:text-blue-200 transition">Ver código completo de pruebas BaseORM en GitHub</a>
         </div>
       </div>
       
       <!-- AuthService -->
-      <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
-        <h3 class="text-xl font-semibold text-indigo-700 mb-4">AuthService - Pruebas de seguridad y autenticación</h3>
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm mb-8">
+        <h3 class="text-xl font-semibold text-indigo-700 dark:text-indigo-300 mb-4">AuthService - Pruebas de seguridad y autenticación</h3>
         
         <p class="mb-4">El servicio de autenticación es crítico para la seguridad del sistema. Diseñamos pruebas exhaustivas para todos los aspectos de autenticación y autorización:</p>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          <div class="bg-gray-50 p-4 rounded-lg">
+          <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
             <h4 class="font-semibold mb-2">Pruebas de Login</h4>
             <p class="mb-2 text-sm"><strong>Propósito:</strong> Verificar el proceso de autenticación de usuarios.</p>
             <p class="mb-2 text-sm"><strong>Escenarios probados:</strong></p>
@@ -193,7 +193,7 @@ const progreso = [
             </ul>
           </div>
           
-          <div class="bg-gray-50 p-4 rounded-lg">
+          <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
             <h4 class="font-semibold mb-2">Pruebas de Registro</h4>
             <p class="mb-2 text-sm"><strong>Propósito:</strong> Garantizar el registro seguro de nuevos usuarios.</p>
             <p class="mb-2 text-sm"><strong>Escenarios probados:</strong></p>
@@ -204,7 +204,7 @@ const progreso = [
             </ul>
           </div>
           
-          <div class="bg-gray-50 p-4 rounded-lg">
+          <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
             <h4 class="font-semibold mb-2">Pruebas de Verificación de Token</h4>
             <p class="mb-2 text-sm"><strong>Propósito:</strong> Asegurar la validez de las sesiones mediante tokens JWT.</p>
             <p class="mb-2 text-sm"><strong>Escenarios probados:</strong></p>
@@ -227,9 +227,9 @@ const progreso = [
           lineNumbers={true}
           lang="ts"
         />
-        <div class="mt-4 mb-4 bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+        <div class="mt-4 mb-4 bg-blue-50 dark:bg-blue-900 p-3 rounded-lg border border-blue-200 dark:border-blue-700 text-center">
           <p class="text-sm mb-1">Para una revisión detallada del código de pruebas, se puede acceder al repositorio:</p>
-          <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/tests/lib/services/AuthService.test.ts" target="_blank" class="text-blue-700 font-semibold hover:text-blue-900 transition">Ver código completo de pruebas AuthService en GitHub</a>
+          <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/tests/lib/services/AuthService.test.ts" target="_blank" class="text-blue-700 dark:text-blue-400 font-semibold hover:text-blue-900 dark:hover:text-blue-200 transition">Ver código completo de pruebas AuthService en GitHub</a>
         </div>
         
         <CodeBlock 
@@ -243,9 +243,9 @@ const progreso = [
           lineNumbers={true}
           lang="ts"
         />
-        <div class="mt-4 mb-4 bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+        <div class="mt-4 mb-4 bg-blue-50 dark:bg-blue-900 p-3 rounded-lg border border-blue-200 dark:border-blue-700 text-center">
           <p class="text-sm mb-1">Para una revisión detallada del código de pruebas, se puede acceder al repositorio:</p>
-          <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/tests/lib/services/AuthService.test.ts" target="_blank" class="text-blue-700 font-semibold hover:text-blue-900 transition">Ver código completo de pruebas AuthService en GitHub</a>
+          <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/tests/lib/services/AuthService.test.ts" target="_blank" class="text-blue-700 dark:text-blue-400 font-semibold hover:text-blue-900 dark:hover:text-blue-200 transition">Ver código completo de pruebas AuthService en GitHub</a>
         </div>
         
         <CodeBlock 
@@ -259,36 +259,36 @@ const progreso = [
           lineNumbers={true}
           lang="ts"
         />
-        <div class="mt-4 mb-4 bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+        <div class="mt-4 mb-4 bg-blue-50 dark:bg-blue-900 p-3 rounded-lg border border-blue-200 dark:border-blue-700 text-center">
           <p class="text-sm mb-1">Para evaluar la implementación completa de las pruebas de seguridad:</p>
-          <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/tests/lib/services/AuthService.test.ts" target="_blank" class="text-blue-700 font-semibold hover:text-blue-900 transition">Ver código completo de pruebas AuthService en GitHub</a>
+          <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/tests/lib/services/AuthService.test.ts" target="_blank" class="text-blue-700 dark:text-blue-400 font-semibold hover:text-blue-900 dark:hover:text-blue-200 transition">Ver código completo de pruebas AuthService en GitHub</a>
         </div>
       </div>
       
       <!-- ProfileORM -->
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <h3 class="text-xl font-semibold text-indigo-700 mb-4">ProfileORM - Pruebas especializadas para gestión de perfiles</h3>
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm">
+        <h3 class="text-xl font-semibold text-indigo-700 dark:text-indigo-300 mb-4">ProfileORM - Pruebas especializadas para gestión de perfiles</h3>
         
         <p class="mb-4">El ProfileORM extiende el BaseORM y agrega funcionalidades específicas para gestionar perfiles de usuario. Sus pruebas están organizadas por grupos funcionales:</p>
         
         <div class="mb-6">
-          <h4 class="font-semibold mb-2 text-indigo-600">1. Pruebas de búsqueda y filtrado</h4>
+          <h4 class="font-semibold mb-2 text-indigo-600 dark:text-indigo-300">1. Pruebas de búsqueda y filtrado</h4>
           <p class="mb-3 text-sm">Estas pruebas verifican la capacidad del sistema para encontrar perfiles según diversos criterios, esencial para la funcionalidad de búsqueda de la aplicación.</p>
           
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
-            <div class="bg-gray-50 p-3 rounded-lg">
+            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
               <h5 class="font-semibold text-sm">findByName</h5>
               <p class="text-xs mb-1"><strong>Propósito:</strong> Búsqueda de perfiles por nombre.</p>
               <p class="text-xs"><strong>Escenarios:</strong> Coincidencia exacta y parcial.</p>
             </div>
             
-            <div class="bg-gray-50 p-3 rounded-lg">
+            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
               <h5 class="font-semibold text-sm">findBySkill</h5>
               <p class="text-xs mb-1"><strong>Propósito:</strong> Búsqueda por habilidades.</p>
               <p class="text-xs"><strong>Escenarios:</strong> Por nombre, palabra clave y sin coincidencias.</p>
             </div>
             
-            <div class="bg-gray-50 p-3 rounded-lg">
+            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
               <h5 class="font-semibold text-sm">findBySkillType</h5>
               <p class="text-xs mb-1"><strong>Propósito:</strong> Filtrado por tipo de habilidad.</p>
               <p class="text-xs"><strong>Escenarios:</strong> Hard skills y soft skills.</p>
@@ -334,17 +334,17 @@ const progreso = [
         </div>
         
         <div class="mb-6">
-          <h4 class="font-semibold mb-2 text-indigo-600">2. Pruebas de gestión de habilidades</h4>
+          <h4 class="font-semibold mb-2 text-indigo-600 dark:text-indigo-300">2. Pruebas de gestión de habilidades</h4>
           <p class="mb-3 text-sm">Estas pruebas validan las operaciones CRUD específicas para habilidades dentro de perfiles, fundamentales para mantener perfiles actualizados.</p>
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
-            <div class="bg-gray-50 p-3 rounded-lg">
+            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
               <h5 class="font-semibold text-sm">addSkill</h5>
               <p class="text-xs mb-1"><strong>Propósito:</strong> Añadir o actualizar habilidades en perfiles.</p>
               <p class="text-xs"><strong>Escenarios:</strong> Habilidad nueva y actualización de existente.</p>
             </div>
             
-            <div class="bg-gray-50 p-3 rounded-lg">
+            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
               <h5 class="font-semibold text-sm">removeSkill</h5>
               <p class="text-xs mb-1"><strong>Propósito:</strong> Eliminar habilidades de perfiles.</p>
               <p class="text-xs"><strong>Escenarios:</strong> Eliminación correcta y manejo de habilidad inexistente.</p>
@@ -377,23 +377,23 @@ const progreso = [
         </div>
         
         <div class="mb-6">
-          <h4 class="font-semibold mb-2 text-indigo-600">3. Pruebas de validación y funcionalidades avanzadas</h4>
+          <h4 class="font-semibold mb-2 text-indigo-600 dark:text-indigo-300">3. Pruebas de validación y funcionalidades avanzadas</h4>
           <p class="mb-3 text-sm">Estas pruebas verifican tanto la integridad de los datos como características especializadas para el análisis de perfiles.</p>
           
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
-            <div class="bg-gray-50 p-3 rounded-lg">
+            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
               <h5 class="font-semibold text-sm">validateProfile</h5>
               <p class="text-xs mb-1"><strong>Propósito:</strong> Validar la integridad de los perfiles.</p>
               <p class="text-xs"><strong>Escenarios:</strong> Perfil válido y detección de errores.</p>
             </div>
             
-            <div class="bg-gray-50 p-3 rounded-lg">
+            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
               <h5 class="font-semibold text-sm">findWithFeaturedProjects</h5>
               <p class="text-xs mb-1"><strong>Propósito:</strong> Filtrar perfiles con proyectos destacados.</p>
               <p class="text-xs"><strong>Escenarios:</strong> Con destacados y sin destacados.</p>
             </div>
             
-            <div class="bg-gray-50 p-3 rounded-lg">
+            <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
               <h5 class="font-semibold text-sm">getStats</h5>
               <p class="text-xs mb-1"><strong>Propósito:</strong> Generar estadísticas del sistema.</p>
               <p class="text-xs"><strong>Escenarios:</strong> Conteo de perfiles, habilidades y proyectos.</p>
@@ -437,7 +437,7 @@ const progreso = [
           />
         </div>
         
-        <div class="bg-indigo-50 p-4 rounded-lg mb-4">
+        <div class="bg-indigo-50 dark:bg-indigo-900 p-4 rounded-lg mb-4">
           <h4 class="font-semibold mb-2">Estrategia de cobertura</h4>
           <p class="text-sm">Las pruebas del ProfileORM fueron diseñadas para cubrir tanto los casos de uso típicos como los escenarios límite, incluyendo:</p>
           <ul class="list-disc pl-6 text-xs space-y-1 mt-2">
@@ -449,46 +449,49 @@ const progreso = [
           </ul>
         </div>
         
-        <div class="mt-4 bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+        <div class="mt-4 bg-blue-50 dark:bg-blue-900 p-3 rounded-lg border border-blue-200 dark:border-blue-700 text-center">
           <p class="text-sm mb-1">Para un análisis completo de las pruebas de gestión de perfiles:</p>
-          <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/tests/lib/orm/ProfileORM.test.ts" target="_blank" class="text-blue-700 font-semibold hover:text-blue-900 transition">Ver código completo de pruebas ProfileORM en GitHub</a>
-          <p class="text-xs mt-1 text-gray-600">Este enlace permite acceder al código fuente para revisar en detalle la implementación de todas las pruebas unitarias del componente.</p>
+          <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/tests/lib/orm/ProfileORM.test.ts" target="_blank" class="text-blue-700 dark:text-blue-400 font-semibold hover:text-blue-900 dark:hover:text-blue-200 transition">Ver código completo de pruebas ProfileORM en GitHub</a>
+          <p class="text-xs mt-1 text-gray-600 dark:text-gray-400">Este enlace permite acceder al código fuente para revisar en detalle la implementación de todas las pruebas unitarias del componente.</p>
         </div>
       </div>
     </section>
 
     <!-- Aplicación de TDD -->
     <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Aplicación de TDD</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p>
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Aplicación de TDD</h2>
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
+        <p class="text-gray-600 dark:text-gray-300">
             La metodología TDD (Test-Driven Development) se aplicó rigurosamente en el desarrollo del sistema de autenticación, siguiendo el ciclo Red-Green-Refactor en cada iteración. A continuación se muestra cómo se implementó esta metodología en el desarrollo del servicio de autenticación.
         </p>
         
-        <div class="bg-indigo-50 p-4 rounded-lg mb-6">
-          <h3 class="font-semibold mb-2">El ciclo TDD aplicado</h3>
+        <div class="bg-indigo-50 dark:bg-indigo-900 p-4 rounded-lg mb-6">
+          <h3 class="font-semibold mb-2 text-indigo-700 dark:text-indigo-300">El ciclo TDD aplicado</h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-red-50 p-3 rounded-lg border border-red-100">
-              <h4 class="font-bold text-red-800 mb-1">1. RED</h4>
+            <div class="bg-red-50 dark:bg-red-900 p-3 rounded-lg border border-red-100 dark:border-red-700">
+              <h4 class="font-bold text-red-800 dark:text-red-300 mb-1">1. RED</h4>
               <p class="text-sm">Escribimos primero las pruebas que definían los requisitos y comportamientos esperados. Estas pruebas fallaban inicialmente porque aún no existía implementación.</p>
             </div>
-            <div class="bg-green-50 p-3 rounded-lg border border-green-100">
-              <h4 class="font-bold text-green-800 mb-1">2. GREEN</h4>
+            <div class="bg-green-50 dark:bg-green-900 p-3 rounded-lg border border-green-100 dark:border-green-700">
+              <h4 class="font-bold text-green-800 dark:text-green-300 mb-1">2. GREEN</h4>
               <p class="text-sm">Implementamos el código mínimo necesario para que las pruebas pasaran. Esta fase se centra en la funcionalidad, no en la optimización.</p>
             </div>
-            <div class="bg-blue-50 p-3 rounded-lg border border-blue-100">
-              <h4 class="font-bold text-blue-800 mb-1">3. REFACTOR</h4>
+            <div class="bg-blue-50 dark:bg-blue-900 p-3 rounded-lg border border-blue-100 dark:border-blue-700">
+              <h4 class="font-bold text-blue-800 dark:text-blue-300 mb-1">3. REFACTOR</h4>
               <p class="text-sm">Mejoramos el código manteniendo las pruebas en verde. Optimizamos, eliminamos duplicación y mejoramos la legibilidad.</p>
             </div>
           </div>
         </div>
         
+        <h3 class="font-bold text-lg mt-5 mb-2 text-indigo-700 dark:text-indigo-300">Ciclo TDD - RED</h3>
         <img src="/images/pa3/authormorm-red.png" alt="Ciclo TDD - RED" class="my-2"/>
         <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 334-365</span>
         
+        <h3 class="font-bold text-lg mt-5 mb-2 text-indigo-700 dark:text-indigo-300">Ciclo TDD - GREEN</h3>
         <img src="/images/pa3/authormorm-green.png" alt="Ciclo TDD - GREEN" class="my-2"/>
         <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 366-397</span>
         
+        <h3 class="font-bold text-lg mt-5 mb-2 text-indigo-700 dark:text-indigo-300">Ciclo TDD - REFACTOR</h3>
         <img src="/images/pa3/authormorm-refactor.png" alt="Ciclo TDD - REFACTOR" class="my-2"/>
         <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 398-429</span>
       </div>
@@ -497,22 +500,22 @@ const progreso = [
 
     <!-- Uso de ORM -->
     <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Uso de ORM</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p>
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Uso de ORM</h2>
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
+        <p class="text-gray-600 dark:text-gray-300">
           Desarrollamos un sistema ORM (Object-Relational Mapping) personalizado para persistencia de datos usando archivos JSON, una alternativa ligera a bases de datos relacionales
           que proporciona una estructura clara para gestionar perfiles de usuario y autenticaciu00f3n.
         </p>
 
-        <h3 class="font-bold text-lg mt-5 mb-2">1. Arquitectura del ORM</h3>
-        <p class="mb-3">
+        <h3 class="font-bold text-lg mt-5 mb-2 text-indigo-700 dark:text-indigo-300">1. Arquitectura del ORM</h3>
+        <p class="mb-3 text-gray-600 dark:text-gray-300">
           El sistema se diseu00f1u00f3 con una arquitectura de dos capas:
         </p>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
-          <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
-            <h4 class="font-bold mb-2 text-indigo-700">BaseORM</h4>
-            <p class="mb-2">Capa base genu00e9rica con operaciones CRUD fundamentales:</p>
+          <div class="bg-gray-50 dark:bg-gray-700 p-5 rounded-lg shadow-sm">
+            <h4 class="font-bold mb-2 text-indigo-700 dark:text-indigo-300">BaseORM</h4>
+            <p class="mb-2 text-sm">Capa base genu00e9rica con operaciones CRUD fundamentales:</p>
             <ul class="list-disc pl-6 text-sm space-y-1">
               <li>findAll(): Obtener todas las entidades</li>
               <li>findById(): Buscar entidad por ID</li>
@@ -522,9 +525,9 @@ const progreso = [
             </ul>
           </div>
           
-          <div class="bg-gray-50 p-5 rounded-lg shadow-sm">
-            <h4 class="font-bold mb-2 text-indigo-700">ProfileORM</h4>
-            <p class="mb-2">Capa especializada para perfiles con operaciones especu00edficas:</p>
+          <div class="bg-gray-50 dark:bg-gray-700 p-5 rounded-lg shadow-sm">
+            <h4 class="font-bold mb-2 text-indigo-700 dark:text-indigo-300">ProfileORM</h4>
+            <p class="mb-2 text-sm">Capa especializada para perfiles con operaciones especu00edficas:</p>
             <ul class="list-disc pl-6 text-sm space-y-1">
               <li>findByName(): Bu00basqueda por nombre</li>
               <li>findBySkill(): Bu00basqueda por habilidad</li>
@@ -537,11 +540,11 @@ const progreso = [
 
         <!-- Implementaciu00f3n de BaseORM -->
         <img src="/images/pa3/baseorm_implementacion.png" alt="Implementaciu00f3n de BaseORM" class="rounded shadow mb-2" />
-        <p class="text-xs text-gray-600 mb-5">Implementaciu00f3n de BaseORM mostrando mu00e9todos CRUD principales. Ubicaciu00f3n: <code>/src/lib/orm/BaseORM.ts</code>, lu00edneas 1-40.</p>
+        <p class="text-xs text-gray-600 dark:text-gray-400 mb-5">Implementaciu00f3n de BaseORM mostrando mu00e9todos CRUD principales. Ubicaciu00f3n: <code>/src/lib/orm/BaseORM.ts</code>, lu00edneas 1-40.</p>
 
-        <h3 class="font-bold text-lg mt-6 mb-2">2. Ventajas del enfoque ORM sobre JSON</h3>
+        <h3 class="font-bold text-lg mt-6 mb-2 text-indigo-700 dark:text-indigo-300">2. Ventajas del enfoque ORM sobre JSON</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
-          <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+          <div class="bg-green-50 dark:bg-green-900 p-4 rounded-lg border border-green-200 dark:border-green-700">
             <h4 class="font-bold mb-1">Ventajas</h4>
             <ul class="list-disc pl-6 text-sm space-y-1">
               <li>Bajo acoplamiento con la capa de persistencia</li>
@@ -552,7 +555,7 @@ const progreso = [
             </ul>
           </div>
           
-          <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+          <div class="bg-yellow-50 dark:bg-yellow-900 p-4 rounded-lg border border-yellow-200 dark:border-yellow-700">
             <h4 class="font-bold mb-1">Limitaciones</h4>
             <ul class="list-disc pl-6 text-sm space-y-1">
               <li>Rendimiento limitado para grandes volu00famenes</li>
@@ -564,40 +567,40 @@ const progreso = [
           </div>
         </div>
 
-        <h3 class="font-bold text-lg mt-6 mb-2">3. Optimizaciones implementadas</h3>
-        <p class="mb-3">Para mejorar el rendimiento y la usabilidad del ORM, implementamos varias optimizaciones:</p>
+        <h3 class="font-bold text-lg mt-6 mb-2 text-indigo-700 dark:text-indigo-300">3. Optimizaciones implementadas</h3>
+        <p class="mb-3 text-gray-600 dark:text-gray-300">Para mejorar el rendimiento y la usabilidad del ORM, implementamos varias optimizaciones:</p>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
-          <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-            <h4 class="font-bold text-indigo-700 mb-1">Cacheo en memoria</h4>
+          <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm">
+            <h4 class="font-bold text-indigo-700 dark:text-indigo-300 mb-1">Cacheo en memoria</h4>
             <p class="text-sm">Almacenamos resultados de operaciones frecuentes en memoria para reducir accesos a disco.</p>
           </div>
-          <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-            <h4 class="font-bold text-indigo-700 mb-1">Indexaciu00f3n</h4>
+          <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm">
+            <h4 class="font-bold text-indigo-700 dark:text-indigo-300 mb-1">Indexaciu00f3n</h4>
             <p class="text-sm">Creamos u00edndices para campos consultados frecuentemente como nombre o tipo de habilidad.</p>
           </div>
-          <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-            <h4 class="font-bold text-indigo-700 mb-1">Patru00f3n Singleton</h4>
+          <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow-sm">
+            <h4 class="font-bold text-indigo-700 dark:text-indigo-300 mb-1">Patru00f3n Singleton</h4>
             <p class="text-sm">Implementamos el patru00f3n Singleton para asegurar una sola instancia del ORM.</p>
           </div>
         </div>
 
-        <h3 class="font-bold text-lg mt-6 mb-2">4. Ejemplo de uso en el cu00f3digo</h3>
-        <p class="mb-2">Ejemplo del uso del ORM para gestionar perfiles de usuario:</p>
+        <h3 class="font-bold text-lg mt-6 mb-2 text-indigo-700 dark:text-indigo-300">4. Ejemplo de uso en el cu00f3digo</h3>
+        <p class="mb-2 text-gray-600 dark:text-gray-300">Ejemplo del uso del ORM para gestionar perfiles de usuario:</p>
         
         <!-- Ejemplo de uso del ORM en el servicio de perfiles -->
         <img src="/images/pa3/profileorm_usage.png" alt="Uso del ProfileORM en servicios de perfil" class="rounded shadow mb-2" />
-        <p class="text-xs text-gray-600 mb-4">Ubicaciu00f3n: <code>/src/lib/services/profileService.ts</code>, lu00edneas 20-45. Observe cu00f3mo se utiliza el patru00f3n Singleton para acceder al ORM y gestionar los perfiles.</p>
+        <p class="text-xs text-gray-600 dark:text-gray-400 mb-4">Ubicaciu00f3n: <code>/src/lib/services/profileService.ts</code>, lu00edneas 20-45. Observe cu00f3mo se utiliza el patru00f3n Singleton para acceder al ORM y gestionar los perfiles.</p>
         
         <!-- Nota importante sobre el uso del ORM -->
-        <div class="bg-blue-50 p-3 rounded border border-blue-200 mb-5">
+        <div class="bg-blue-50 dark:bg-blue-900 p-3 rounded border border-blue-200 dark:border-blue-700 mb-5">
           <p class="text-sm"><strong>Nota:</strong> El patru00f3n de diseu00f1o utilizado facilita el testing y el intercambio de implementaciones. Esto fue especialmente u00fatil durante la fase de desarrollo cuando necesitu00e1bamos probar diferentes estrategias de almacenamiento.</p>
         </div>
 
-        <h3 class="font-bold text-lg mt-6 mb-2">5. Desafu00edo superado</h3>
-        <div class="bg-yellow-50 p-5 rounded-lg mb-5">
-          <h4 class="font-bold text-yellow-800 mb-2">Desafu00edo: IDs en archivos JSON</h4>
-          <p class="mb-2">Los archivos JSON no tenu00edan un campo ID consistente, lo que complicaba la bu00basqueda.</p>
+        <h3 class="font-bold text-lg mt-6 mb-2 text-indigo-700 dark:text-indigo-300">5. Desafu00edo superado</h3>
+        <div class="bg-yellow-50 dark:bg-yellow-900 p-5 rounded-lg mb-5">
+          <h4 class="font-bold text-yellow-800 dark:text-yellow-300 mb-2">Desafu00edo: IDs en archivos JSON</h4>
+          <p class="mb-2 text-gray-600 dark:text-gray-400">Los archivos JSON no tenu00edan un campo ID consistente, lo que complicaba la bu00basqueda.</p>
           <p class="font-semibold">Soluciu00f3n:</p>
           <ul class="list-disc pl-6 space-y-1">
             <li>Usamos los nombres de archivo como IDs</li>
@@ -606,8 +609,8 @@ const progreso = [
           </ul>
         </div>
 
-        <h3 class="font-bold text-lg mt-6 mb-2">6. Resultados y mu00e9tricas</h3>
-        <p class="mb-3">El ORM desarrollado ha demostrado ser efectivo para nuestra aplicaciu00f3n:</p>
+        <h3 class="font-bold text-lg mt-6 mb-2 text-indigo-700 dark:text-indigo-300">6. Resultados y mu00e9tricas</h3>
+        <p class="mb-3 text-gray-600 dark:text-gray-300">El ORM desarrollado ha demostrado ser efectivo para nuestra aplicaciu00f3n:</p>
         <ul class="list-disc pl-8 mb-5 space-y-1">
           <li><strong>Tiempo de respuesta:</strong> &lt;100ms para operaciones CRUD bu00e1sicas</li>
           <li><strong>Cobertura de pruebas:</strong> &gt;90% para todas las clases del ORM</li>
@@ -619,13 +622,13 @@ const progreso = [
 
     <!-- Integración de Pruebas en el Flujo Ágil -->
     <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Integración de Pruebas en el Flujo Ágil</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p>
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Integración de Pruebas en el Flujo Ágil</h2>
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
+        <p class="text-gray-600 dark:text-gray-300">
           Las pruebas unitarias y de integración fueron incorporadas en el flujo de trabajo ágil del equipo, siguiendo los principios de Integración Continua (CI) y Entrega Continua (CD).
         </p>
-        <h3 class="font-bold text-lg mt-4 mb-2">Implementación de CI/CD con GitHub Actions</h3>
-        <p>Se configuró un pipeline de CI/CD que ejecuta automáticamente las pruebas en cada push o pull request:</p>
+        <h3 class="font-bold text-lg mt-4 mb-2 text-indigo-700 dark:text-indigo-300">Implementación de CI/CD con GitHub Actions</h3>
+        <p class="text-gray-600 dark:text-gray-300">Se configuró un pipeline de CI/CD que ejecuta automáticamente las pruebas en cada push o pull request:</p>
         <pre class="bg-gray-100 rounded p-4 text-sm overflow-x-auto"><code>&lt;!-- .github/workflows/ci.yml --&gt;
 name: CI
 
@@ -649,7 +652,7 @@ jobs:
       - name: Run tests
         run: npm test
 </code></pre>
-        <h3 class="font-bold text-lg mt-4 mb-2">Beneficios observados:</h3>
+        <h3 class="font-bold text-lg mt-4 mb-2 text-indigo-700 dark:text-indigo-300">Beneficios observados:</h3>
         <ul class="list-disc pl-8 mb-3 space-y-1">
           <li>Detección temprana de errores</li>
           <li>Mayor confianza en los cambios realizados</li>
@@ -661,9 +664,9 @@ jobs:
 
     <!-- Documentación y Reporte -->
     <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Documentación y Reporte</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p>
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Documentación y Reporte</h2>
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
+        <p class="text-gray-600 dark:text-gray-300">
           La documentación del proyecto se realizó de manera continua y estructurada, utilizando diferentes herramientas y formatos:
         </p>
         <ul class="list-disc pl-8 mb-3 space-y-1">
@@ -671,7 +674,7 @@ jobs:
           <li><strong>Documentación técnica:</strong> Este informe y diagramas de arquitectura</li>
           <li><strong>Documentación de pruebas:</strong> Casos de prueba y resultados</li>
         </ul>
-        <p class="mt-4">
+        <p class="mt-4 text-gray-600 dark:text-gray-300">
           El proceso de documentación siguió estas etapas:
         </p>
         <ol class="list-decimal pl-8 mb-3 space-y-1">
@@ -686,20 +689,20 @@ jobs:
 
     <!-- Entrega del Proyecto y Recursos -->
     <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Entrega del Proyecto y Recursos</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Entrega del Proyecto y Recursos</h2>
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
         <ul class="list-disc pl-8 mb-3 space-y-1">
-          <li><strong>Repositorio en GitHub:</strong> <a href="https://github.com/edwinwmendeze/nrc-23731" class="text-indigo-600 underline">https://github.com/edwinwmendeze/nrc-23731</a></li>
-          <li><strong>Aplicación desplegada:</strong> <a href="https://edwinwmendeze.github.io/nrc-23731/" class="text-indigo-600 underline">https://edwinwmendeze.github.io/nrc-23731/</a></li>
+          <li><strong>Repositorio en GitHub:</strong> <a href="https://github.com/edwinwmendeze/nrc-23731" class="text-indigo-600 dark:text-indigo-300 underline">https://github.com/edwinwmendeze/nrc-23731</a></li>
+          <li><strong>Aplicación desplegada:</strong> <a href="https://edwinwmendeze.github.io/nrc-23731/" class="text-indigo-600 dark:text-indigo-300 underline">https://edwinwmendeze.github.io/nrc-23731/</a></li>
           <li><strong>Informe técnico:</strong> Este documento en formato .astro y .doc</li>
           <li><strong>Recursos adicionales:</strong>
             <ul class="list-disc pl-8">
-              <li>GitHub Actions CI/CD: <a href="https://www.youtube.com/shorts/Kq28yBigDYw" class="text-indigo-600 underline">Video</a></li>
-              <li>Prototyping ORM model from JSON: <a href="https://medium.com/@piedjoustephane/prototyping-object-relational-mapping-orm-model-from-a-json-object-96eb0ea05ad4" class="text-indigo-600 underline">Artículo</a></li>
+              <li>GitHub Actions CI/CD: <a href="https://www.youtube.com/shorts/Kq28yBigDYw" class="text-indigo-600 dark:text-indigo-300 underline">Video</a></li>
+              <li>Prototyping ORM model from JSON: <a href="https://medium.com/@piedjoustephane/prototyping-object-relational-mapping-orm-model-from-a-json-object-96eb0ea05ad4" class="text-indigo-600 dark:text-indigo-300 underline">Artículo</a></li>
             </ul>
           </li>
         </ul>
-        <h3 class="font-bold text-lg mt-4 mb-2">Instrucciones para ejecutar el proyecto localmente:</h3>
+        <h3 class="font-bold text-lg mt-4 mb-2 text-indigo-700 dark:text-indigo-300">Instrucciones para ejecutar el proyecto localmente:</h3>
         <pre class="bg-gray-100 rounded p-4 text-sm overflow-x-auto"><code>&lt;!-- Clonar el repositorio --&gt;
 git clone https://github.com/edwinwmendeze/nrc-23731.git
 cd nrc-23731/grupo-a
@@ -718,21 +721,21 @@ npm test
 
     <!-- Anexos -->
     <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Anexos</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p>
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Anexos</h2>
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
+        <p class="text-gray-600 dark:text-gray-300">
           A continuación, se presentan capturas de pantalla, fragmentos de código y resultados de pruebas relevantes para el desarrollo del proyecto.
         </p>
-        <h3 class="font-bold text-lg mt-4 mb-2">Capturas de pantalla de la aplicación</h3>
+        <h3 class="font-bold text-lg mt-4 mb-2 text-indigo-700 dark:text-indigo-300">Capturas de pantalla de la aplicación</h3>
         <!-- Espacio para capturas de pantalla -->
         <!-- <img src="/ruta/a/tu/captura1.png" alt="Pantalla de login" class="my-4" /> -->
         <!-- <img src="/ruta/a/tu/captura2.png" alt="Perfil de usuario" class="my-4" /> -->
         
-        <h3 class="font-bold text-lg mt-4 mb-2">Resultados de pruebas</h3>
+        <h3 class="font-bold text-lg mt-4 mb-2 text-indigo-700 dark:text-indigo-300">Resultados de pruebas</h3>
         <!-- Espacio para capturas de resultados de pruebas -->
         <!-- <img src="/ruta/a/tu/resultados-tests.png" alt="Resultados de pruebas" class="my-4" /> -->
         
-        <h3 class="font-bold text-lg mt-4 mb-2">Diagrama de arquitectura</h3>
+        <h3 class="font-bold text-lg mt-4 mb-2 text-indigo-700 dark:text-indigo-300">Diagrama de arquitectura</h3>
         <!-- Espacio para diagrama de arquitectura -->
         <!-- <img src="/ruta/a/tu/diagrama-arquitectura.png" alt="Diagrama de arquitectura" class="my-4" /> -->
       </div>
