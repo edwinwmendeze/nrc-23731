@@ -335,7 +335,7 @@ const progreso = [
       <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Aplicación de TDD</h2>
       <div class="bg-white p-6 rounded-lg shadow-sm">
         <p class="mb-4">
-          La metodología TDD (Test-Driven Development) se aplicó sistemáticamente en el desarrollo de componentes clave del sistema. A continuación se muestra cómo implementamos el ciclo Red-Green-Refactor en el desarrollo del servicio de autenticación (AuthService).
+          La metodología TDD (Test-Driven Development) se aplicó sistemáticamente en el desarrollo de componentes clave del sistema, siguiendo el ciclo Red-Green-Refactor para garantizar un código robusto y mantenible.
         </p>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-white text-center font-semibold">
@@ -353,123 +353,90 @@ const progreso = [
           </div>
         </div>
 
-        <h3 class="text-xl font-bold mb-3 text-indigo-700">Desarrollo del Servicio de Autenticación</h3>
-        <p class="mb-4">A continuación se documenta el proceso iterativo que seguimos para el desarrollo del servicio de autenticación con TDD:</p>
+        <h3 class="text-xl font-bold mb-3 text-indigo-700">Servicio de Autenticación: Implementación con TDD</h3>
+        <p class="mb-4">El servicio de autenticación (AuthService) fue uno de los componentes clave desarrollados siguiendo el enfoque TDD. Este servicio maneja las operaciones críticas de login, registro y verificación de usuarios.</p>
         
-        <!-- Iteración 1: Login básico -->
+        <!-- Diagrama del proceso completo -->
         <div class="border border-gray-200 rounded-lg mb-6 overflow-hidden">
           <div class="bg-gray-100 px-4 py-2 border-b border-gray-200">
-            <h4 class="font-semibold">Iteración 1: Implementación del Login Básico</h4>
+            <h4 class="font-semibold">Proceso de desarrollo TDD aplicado al AuthService</h4>
           </div>
           <div class="p-4">
-            <div class="mb-4">
-              <h5 class="inline-block px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-semibold mb-2">RED</h5>
-              <p class="mb-2 text-sm">Escribimos pruebas para verificar el login con credenciales correctas.</p>
-              <img src="/images/pa3/tdd/auth-login-red.png" alt="Prueba de login inicial que falla" class="border rounded my-2" />
-              <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 50-58</span>
+            <img src="/images/pa3/tdd/tdd-proceso-completo.png" alt="Ciclo TDD completo" class="border rounded my-2 mx-auto" />
+            <p class="text-sm text-center mb-3">Resultados finales de la ejecución de pruebas para el servicio de autenticación</p>
+          </div>
+        </div>
+
+        <!-- Pruebas y código final -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div class="border border-gray-200 rounded-lg overflow-hidden">
+            <div class="bg-gray-100 px-4 py-2 border-b border-gray-200">
+              <h4 class="font-semibold">Pruebas de Autenticación</h4>
             </div>
-            
-            <div class="mb-4">
-              <h5 class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-2">GREEN</h5>
-              <p class="mb-2 text-sm">Implementamos la función de login con el mínimo código necesario para pasar la prueba.</p>
-              <img src="/images/pa3/tdd/auth-login-green.png" alt="Implementación mínima de login" class="border rounded my-2" />
-              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 68-93</span>
+            <div class="p-4">
+              <p class="text-sm mb-3">Siguiendo el enfoque TDD, comenzamos escribiendo pruebas para la funcionalidad de login:</p>
+              <img src="/images/pa3/tdd/auth-test-login.png" alt="Pruebas de login" class="border rounded my-2" />
+              <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 48-64</span>
+              
+              <p class="text-sm mt-4 mb-3">Luego agregamos pruebas para el registro de usuarios:</p>
+              <img src="/images/pa3/tdd/auth-test-register.png" alt="Pruebas de registro" class="border rounded my-2" />
+              <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 74-92</span>
             </div>
-            
-            <div class="mb-2">
-              <h5 class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold mb-2">REFACTOR</h5>
-              <p class="mb-2 text-sm">Mejoramos la implementación añadiendo validaciones y manejo de errores.</p>
-              <img src="/images/pa3/tdd/auth-login-refactor.png" alt="Refactorización del login" class="border rounded my-2" />
-              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 75-110</span>
+          </div>
+          
+          <div class="border border-gray-200 rounded-lg overflow-hidden">
+            <div class="bg-gray-100 px-4 py-2 border-b border-gray-200">
+              <h4 class="font-semibold">Implementación Final</h4>
+            </div>
+            <div class="p-4">
+              <p class="text-sm mb-3">La implementación del login siguió el ciclo TDD hasta llegar a:</p>
+              <img src="/images/pa3/tdd/auth-impl-login.png" alt="Implementación del login" class="border rounded my-2" />
+              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 68-110</span>
+              
+              <p class="text-sm mt-4 mb-3">El sistema de hash para seguridad desarrollado con TDD:</p>
+              <img src="/images/pa3/tdd/auth-impl-hash.png" alt="Implementación de hash de contraseñas" class="border rounded my-2" />
+              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 8-27</span>
             </div>
           </div>
         </div>
 
-        <!-- Iteración 2: Manejo de credenciales incorrectas -->
+        <!-- Aplicación del ciclo TDD en la verificación de token -->
         <div class="border border-gray-200 rounded-lg mb-6 overflow-hidden">
           <div class="bg-gray-100 px-4 py-2 border-b border-gray-200">
-            <h4 class="font-semibold">Iteración 2: Manejo de Credenciales Incorrectas</h4>
+            <h4 class="font-semibold">Ejemplo detallado: Ciclo TDD para la verificación de token</h4>
           </div>
           <div class="p-4">
-            <div class="mb-4">
-              <h5 class="inline-block px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-semibold mb-2">RED</h5>
-              <p class="mb-2 text-sm">Añadimos pruebas para verificar el rechazo de credenciales incorrectas.</p>
-              <img src="/images/pa3/tdd/auth-invalid-red.png" alt="Prueba de credenciales incorrectas que falla" class="border rounded my-2" />
-              <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 60-66</span>
-            </div>
-            
-            <div class="mb-4">
-              <h5 class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-2">GREEN</h5>
-              <p class="mb-2 text-sm">Implementamos la validación de contraseñas para rechazar credenciales incorrectas.</p>
-              <img src="/images/pa3/tdd/auth-invalid-green.png" alt="Implementación de validación de credenciales" class="border rounded my-2" />
-              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 95-100</span>
-            </div>
-            
-            <div class="mb-2">
-              <h5 class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold mb-2">REFACTOR</h5>
-              <p class="mb-2 text-sm">Mejoramos el sistema de validación utilizando una función de hash segura.</p>
-              <img src="/images/pa3/tdd/auth-invalid-refactor.png" alt="Refactorización de la validación con hash" class="border rounded my-2" />
-              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 15-27 (SimpleHash class)</span>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <h5 class="inline-block px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-semibold mb-2">Fase RED</h5>
+                <p class="text-sm mb-3">Primero escribimos las pruebas para la verificación de token antes de implementar la funcionalidad:</p>
+                <img src="/images/pa3/tdd/auth-test-token.png" alt="Pruebas de verificación de token" class="border rounded" />
+                <span class="text-xs block mt-1">Pruebas para tokens válidos e inválidos</span>
+              </div>
+              
+              <div>
+                <h5 class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-2">Fase GREEN</h5>
+                <p class="text-sm mb-3">Luego implementamos el código mínimo para pasar las pruebas:</p>
+                <img src="/images/pa3/tdd/auth-impl-token-minimal.png" alt="Implementación básica de verificación de token" class="border rounded" />
+                <span class="text-xs block mt-1">Implementación inicial funcional</span>
+              </div>
+              
+              <div>
+                <h5 class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold mb-2">Fase REFACTOR</h5>
+                <p class="text-sm mb-3">Finalmente mejoramos la implementación manteniendo las pruebas en verde:</p>
+                <img src="/images/pa3/tdd/auth-impl-token-final.png" alt="Implementación mejorada de verificación de token" class="border rounded" />
+                <span class="text-xs block mt-1">Código refactorizado con manejo de errores y validaciones completas</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Iteración 3: Implementación del Registro de Usuarios -->
-        <div class="border border-gray-200 rounded-lg mb-6 overflow-hidden">
-          <div class="bg-gray-100 px-4 py-2 border-b border-gray-200">
-            <h4 class="font-semibold">Iteración 3: Implementación del Registro de Usuarios</h4>
-          </div>
-          <div class="p-4">
-            <div class="mb-4">
-              <h5 class="inline-block px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-semibold mb-2">RED</h5>
-              <p class="mb-2 text-sm">Escribimos pruebas para el registro de nuevos usuarios.</p>
-              <img src="/images/pa3/tdd/auth-register-red.png" alt="Prueba de registro que falla" class="border rounded my-2" />
-              <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 76-92</span>
-            </div>
-            
-            <div class="mb-4">
-              <h5 class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-2">GREEN</h5>
-              <p class="mb-2 text-sm">Implementamos la función de registro con validaciones básicas.</p>
-              <img src="/images/pa3/tdd/auth-register-green.png" alt="Implementación básica de registro" class="border rounded my-2" />
-              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 131-152</span>
-            </div>
-            
-            <div class="mb-2">
-              <h5 class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold mb-2">REFACTOR</h5>
-              <p class="mb-2 text-sm">Mejoramos la implementación con validaciones robustas y hash de contraseñas.</p>
-              <img src="/images/pa3/tdd/auth-register-refactor.png" alt="Refactorización del registro" class="border rounded my-2" />
-              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 156-175</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Iteración 4: Verificación de Token JWT -->
-        <div class="border border-gray-200 rounded-lg mb-6 overflow-hidden">
-          <div class="bg-gray-100 px-4 py-2 border-b border-gray-200">
-            <h4 class="font-semibold">Iteración 4: Verificación de Token JWT</h4>
-          </div>
-          <div class="p-4">
-            <div class="mb-4">
-              <h5 class="inline-block px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-semibold mb-2">RED</h5>
-              <p class="mb-2 text-sm">Escribimos pruebas para la verificación de tokens JWT válidos e inválidos.</p>
-              <img src="/images/pa3/tdd/auth-token-red.png" alt="Prueba de verificación de token que falla" class="border rounded my-2" />
-              <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 144-162</span>
-            </div>
-            
-            <div class="mb-4">
-              <h5 class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-2">GREEN</h5>
-              <p class="mb-2 text-sm">Implementamos la función de verificación con validaciones simples.</p>
-              <img src="/images/pa3/tdd/auth-token-green.png" alt="Implementación básica de verificación de token" class="border rounded my-2" />
-              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 217-244</span>
-            </div>
-            
-            <div class="mb-2">
-              <h5 class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold mb-2">REFACTOR</h5>
-              <p class="mb-2 text-sm">Mejoramos la implementación con verificación completa de tokens JWT.</p>
-              <img src="/images/pa3/tdd/auth-token-refactor.png" alt="Refactorización de la verificación de token" class="border rounded my-2" />
-              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 246-271</span>
-            </div>
-          </div>
+        <!-- Resultados finales de pruebas -->
+        <div class="bg-green-50 p-4 rounded-lg mb-6 border border-green-200">
+          <h3 class="font-bold text-lg mb-2 text-green-800">Resultados de pruebas exitosas</h3>
+          <p class="mb-3">La ejecución completa de las pruebas muestra que todas las funcionalidades desarrolladas con TDD fueron implementadas correctamente:</p>
+          <img src="/images/pa3/tdd/resultados-test-completos.png" alt="Resultados de pruebas" class="border rounded my-2 mx-auto" />
+          <p class="text-sm">Ejecución de <code>npm run test</code> mostrando pruebas exitosas del servicio de autenticación</p>
         </div>
 
         <!-- Integración con las páginas del sistema -->
