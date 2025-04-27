@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/MainLayout.astro';
 
+import { Code } from 'astro:components';
+import CodeBlock from '../components/ui/CodeBlock.astro';
+
 const progreso = [
   { paso: "Configuración inicial", completado: true },
   { paso: "Fase RED del BaseORM", completado: true },
@@ -15,11 +18,11 @@ const progreso = [
 ---
 
 <Layout title="Informe Técnico PA3">
-  <main class="container mx-auto px-4 py-8 max-w-4xl">
+  <main class="container mx-auto px-4 py-8 max-w-4xl bg-white dark:bg-gray-900">
     <!-- Portada y Datos del Equipo -->
     <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Portada y Datos del Equipo</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Portada y Datos del Equipo</h2>
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
         <ul class="list-disc pl-8 mb-3 space-y-1">
           <li><strong>Nombre del Proyecto:</strong> Sistema de Gestión de Perfiles Estudiantiles</li>
           <li><strong>Integrantes:</strong>
@@ -34,7 +37,7 @@ const progreso = [
           <li><strong>Fecha de entrega:</strong> 26/04/2025</li>
           <li><strong>Docente:</strong> [Nombre del profesor]</li>
         </ul>
-        <p class="mt-4 text-lg">
+        <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
           Este informe describe el proceso de desarrollo de un sistema web para la gestión de perfiles estudiantiles, implementando un ORM sobre archivos JSON y aplicando TDD, pruebas unitarias y CI/CD.
         </p>
       </div>
@@ -42,9 +45,9 @@ const progreso = [
 
     <!-- Formación de Equipos -->
     <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Formación de Equipos</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p>
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Formación de Equipos</h2>
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
+        <p class="text-gray-600 dark:text-gray-300">
           El equipo se conformó considerando habilidades complementarias y experiencia previa en desarrollo web y testing. La comunicación se realizó mediante reuniones semanales y uso de herramientas colaborativas (GitHub, Discord).
         </p>
       </div>
@@ -52,9 +55,9 @@ const progreso = [
 
     <!-- Definición del Proyecto -->
     <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Definición del Proyecto</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p class="mb-4 text-lg">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Definición del Proyecto</h2>
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
+        <p class="mb-4 text-lg text-gray-600 dark:text-gray-300">
           El proyecto consiste en una plataforma web para la gestión de perfiles estudiantiles, permitiendo:
         </p>
         <ul class="list-disc pl-8 mb-3 space-y-1">
@@ -63,10 +66,10 @@ const progreso = [
           <li>Panel de administración para gestión de usuarios</li>
           <li>Persistencia de datos mediante archivos JSON utilizando un ORM propio</li>
         </ul>
-        <p class="mb-4 text-lg">
+        <p class="mb-4 text-lg text-gray-600 dark:text-gray-300">
           <strong>Objetivo General:</strong> Desarrollar un sistema robusto y seguro para la gestión de perfiles estudiantiles, aplicando buenas prácticas de ingeniería de software.
         </p>
-        <p class="mb-4 text-lg">
+        <p class="mb-4 text-lg text-gray-600 dark:text-gray-300">
           <strong>Objetivos Específicos:</strong>
         </p>
         <ul class="list-disc pl-8 mb-3 space-y-1">
@@ -82,8 +85,8 @@ const progreso = [
 
     <!-- Índice -->
     <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Índice</h2>
-      <div class="bg-white p-6 rounded-lg shadow-sm">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Índice</h2>
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
         <ol class="list-decimal pl-8 mb-3 space-y-1">
           <li>Progreso del Desarrollo</li>
           <li>Introducción</li>
@@ -143,12 +146,29 @@ const progreso = [
           </div>
         </div>
         
-        <img src="/images/pa3/baseorm-initialize.png" alt="Prueba de inicialización de BaseORM (líneas 36-56)" class="my-2"/>
-        <span class="text-xs">Referencia: <code>/tests/lib/orm/BaseORM.test.ts</code>, líneas 36-56</span>
-        
-        <img src="/images/pa3/baseorm-findall.png" alt="Prueba de lectura de BaseORM (líneas 58-87)" class="my-2"/>
-        <span class="text-xs">Referencia: <code>/tests/lib/orm/BaseORM.test.ts</code>, líneas 58-87</span>
-        
+        <CodeBlock 
+          title="Pruebas de Inicialización"
+          filePath="/tests/lib/orm/BaseORM.test.ts"
+          basePath="root"
+          startLine={36}
+          endLine={56}
+          displayStartLine={36}
+          highlightLines={[36]}
+          lineNumbers={true}
+          lang="ts"
+        />
+       
+        <CodeBlock 
+          title="Pruebas de Lectura(findAll)"
+          filePath="/tests/lib/orm/BaseORM.test.ts"
+          basePath="root"
+          startLine={58}
+          endLine={87}
+          displayStartLine={58}
+          highlightLines={[58]}
+          lineNumbers={true}
+          lang="ts"
+        />
         <div class="mt-4 bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
           <p class="text-sm mb-1">Para una revisión detallada del código de pruebas, se puede acceder al repositorio:</p>
           <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/tests/lib/orm/BaseORM.test.ts" target="_blank" class="text-blue-700 font-semibold hover:text-blue-900 transition">Ver código completo de pruebas BaseORM en GitHub</a>
@@ -196,16 +216,50 @@ const progreso = [
           </div>
         </div>
         
-        <img src="/images/pa3/authservice-login.png" alt="Pruebas de login en AuthService (líneas 50-74)" class="my-2"/>
-        <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 50-74</span>
+        <CodeBlock 
+          title="Pruebas de Login"
+          filePath="/tests/lib/orm/AuthService.test.ts"
+          basePath="root"
+          startLine={50}
+          endLine={74}
+          displayStartLine={50}
+          highlightLines={[50]}
+          lineNumbers={true}
+          lang="ts"
+        />
+        <div class="mt-4 mb-4 bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+          <p class="text-sm mb-1">Para una revisión detallada del código de pruebas, se puede acceder al repositorio:</p>
+          <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/tests/lib/services/AuthService.test.ts" target="_blank" class="text-blue-700 font-semibold hover:text-blue-900 transition">Ver código completo de pruebas AuthService en GitHub</a>
+        </div>
         
-        <img src="/images/pa3/authservice-register.png" alt="Pruebas de registro en AuthService (líneas 76-142)" class="my-2"/>
-        <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 76-142</span>
+        <CodeBlock 
+          title="Pruebas de Registro"
+          filePath="/tests/lib/orm/AuthService.test.ts"
+          basePath="root"
+          startLine={76}
+          endLine={142}
+          displayStartLine={76}
+          highlightLines={[76]}
+          lineNumbers={true}
+          lang="ts"
+        />
+        <div class="mt-4 mb-4 bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+          <p class="text-sm mb-1">Para una revisión detallada del código de pruebas, se puede acceder al repositorio:</p>
+          <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/tests/lib/services/AuthService.test.ts" target="_blank" class="text-blue-700 font-semibold hover:text-blue-900 transition">Ver código completo de pruebas AuthService en GitHub</a>
+        </div>
         
-        <img src="/images/pa3/authservice-verifytoken.png" alt="Pruebas de verificación de token en AuthService (líneas 144-162)" class="my-2"/>
-        <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 144-162</span>
-        
-        <div class="mt-4 bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+        <CodeBlock 
+          title="Pruebas de verificación de token"
+          filePath="/tests/lib/orm/AuthService.test.ts"
+          basePath="root"
+          startLine={144}
+          endLine={162}
+          displayStartLine={144}
+          highlightLines={[144]}
+          lineNumbers={true}
+          lang="ts"
+        />
+        <div class="mt-4 mb-4 bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
           <p class="text-sm mb-1">Para evaluar la implementación completa de las pruebas de seguridad:</p>
           <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/tests/lib/services/AuthService.test.ts" target="_blank" class="text-blue-700 font-semibold hover:text-blue-900 transition">Ver código completo de pruebas AuthService en GitHub</a>
         </div>
@@ -241,14 +295,42 @@ const progreso = [
             </div>
           </div>
           
-          <img src="/images/pa3/profileorm-findbyname.png" alt="Pruebas de búsqueda por nombre en ProfileORM (líneas 145-161)" class="my-2"/>
-          <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 145-161</span>
+          <CodeBlock 
+            title="Pruebas de búsqueda por nombre"
+            filePath="/tests/lib/orm/ProfileORM.test.ts"
+            basePath="root"
+            startLine={145}
+            endLine={161}
+            displayStartLine={145}
+            highlightLines={[145]}
+            lineNumbers={true}
+            lang="ts"
+          />
           
-          <img src="/images/pa3/profileorm-findbyskill.png" alt="Pruebas de búsqueda por habilidad en ProfileORM (líneas 163-183)" class="my-2"/>
-          <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 163-183</span>
+
+          <CodeBlock 
+            title="Pruebas de búsqueda por habilidad"
+            filePath="/tests/lib/orm/ProfileORM.test.ts"
+            basePath="root"
+            startLine={163}
+            endLine={183}
+            displayStartLine={163}
+            highlightLines={[163]}
+            lineNumbers={true}
+            lang="ts"
+          />
           
-          <img src="/images/pa3/profileorm-findbyskilltype.png" alt="Pruebas de búsqueda por tipo de habilidad en ProfileORM (líneas 185-198)" class="my-2"/>
-          <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 185-198</span>
+          <CodeBlock 
+            title="Pruebas de búsqueda por tipo de habilidad"
+            filePath="/tests/lib/orm/ProfileORM.test.ts"
+            basePath="root"
+            startLine={185}
+            endLine={198}
+            displayStartLine={185}
+            highlightLines={[185]}
+            lineNumbers={true}
+            lang="ts"
+          />
         </div>
         
         <div class="mb-6">
@@ -269,11 +351,29 @@ const progreso = [
             </div>
           </div>
           
-          <img src="/images/pa3/profileorm-addskill.png" alt="Pruebas de añadir skill en ProfileORM (líneas 200-239)" class="my-2"/>
-          <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 200-239</span>
+          <CodeBlock 
+            title="Pruebas de añadir skill en ProfileORM"
+            filePath="/tests/lib/orm/ProfileORM.test.ts"
+            basePath="root"
+            startLine={200}
+            endLine={239}
+            displayStartLine={200}
+            highlightLines={[200]}
+            lineNumbers={true}
+            lang="ts"
+          />
           
-          <img src="/images/pa3/profileorm-removeskill.png" alt="Pruebas de eliminar skill en ProfileORM (líneas 241-264)" class="my-2"/>
-          <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 241-264</span>
+          <CodeBlock 
+            title="Pruebas de eliminar skill en ProfileORM"
+            filePath="/tests/lib/orm/ProfileORM.test.ts"
+            basePath="root"
+            startLine={241}
+            endLine={264}
+            displayStartLine={241}
+            highlightLines={[241]}
+            lineNumbers={true}
+            lang="ts"
+          />
         </div>
         
         <div class="mb-6">
@@ -300,14 +400,41 @@ const progreso = [
             </div>
           </div>
           
-          <img src="/images/pa3/profileorm-validate.png" alt="Pruebas de validación de perfil en ProfileORM (líneas 266-291)" class="my-2"/>
-          <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 266-291</span>
+          <CodeBlock 
+            title="Pruebas de validación de perfil"
+            filePath="/tests/lib/orm/ProfileORM.test.ts"
+            basePath="root"
+            startLine={266}
+            endLine={291}
+            displayStartLine={266}
+            highlightLines={[266]}
+            lineNumbers={true}
+            lang="ts"
+          />
           
-          <img src="/images/pa3/profileorm-featuredprojects.png" alt="Pruebas de proyectos destacados en ProfileORM (líneas 293-320)" class="my-2"/>
-          <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 293-320</span>
+          <CodeBlock 
+            title="Pruebas de proyectos destacados"
+            filePath="/tests/lib/orm/ProfileORM.test.ts"
+            basePath="root"
+            startLine={293}
+            endLine={320}
+            displayStartLine={293}
+            highlightLines={[293]}
+            lineNumbers={true}
+            lang="ts"
+          />
           
-          <img src="/images/pa3/profileorm-stats.png" alt="Pruebas de estadísticas en ProfileORM (líneas 322-3334)" class="my-2"/>
-          <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 322-3334</span>
+          <CodeBlock 
+            title="Pruebas de estadísticas"
+            filePath="/tests/lib/orm/ProfileORM.test.ts"
+            basePath="root"
+            startLine={322}
+            endLine={334}
+            displayStartLine={322}
+            highlightLines={[322]}
+            lineNumbers={true}
+            lang="ts"
+          />
         </div>
         
         <div class="bg-indigo-50 p-4 rounded-lg mb-4">
@@ -334,139 +461,38 @@ const progreso = [
     <section class="mb-12">
       <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800">Aplicación de TDD</h2>
       <div class="bg-white p-6 rounded-lg shadow-sm">
-        <p class="mb-4">
-          La metodología TDD (Test-Driven Development) se aplicó sistemáticamente en el desarrollo de componentes clave del sistema, siguiendo el ciclo Red-Green-Refactor para garantizar un código robusto y mantenible.
+        <p>
+            La metodología TDD (Test-Driven Development) se aplicó rigurosamente en el desarrollo del sistema de autenticación, siguiendo el ciclo Red-Green-Refactor en cada iteración. A continuación se muestra cómo se implementó esta metodología en el desarrollo del servicio de autenticación.
         </p>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-white text-center font-semibold">
-          <div class="bg-red-500 p-3 rounded-lg">
-            <h3 class="text-lg mb-1">1. RED</h3>
-            <p class="text-sm">Escribir pruebas que inicialmente fallan, definiendo el comportamiento esperado.</p>
-          </div>
-          <div class="bg-green-500 p-3 rounded-lg">
-            <h3 class="text-lg mb-1">2. GREEN</h3>
-            <p class="text-sm">Implementar el código mínimo necesario para que las pruebas pasen.</p>
-          </div>
-          <div class="bg-blue-500 p-3 rounded-lg">
-            <h3 class="text-lg mb-1">3. REFACTOR</h3>
-            <p class="text-sm">Mejorar y optimizar el código manteniendo las pruebas en verde.</p>
-          </div>
-        </div>
-
-        <h3 class="text-xl font-bold mb-3 text-indigo-700">Servicio de Autenticación: Implementación con TDD</h3>
-        <p class="mb-4">El servicio de autenticación (AuthService) fue uno de los componentes clave desarrollados siguiendo el enfoque TDD. Este servicio maneja las operaciones críticas de login, registro y verificación de usuarios.</p>
-        
-        <!-- Diagrama del proceso completo -->
-        <div class="border border-gray-200 rounded-lg mb-6 overflow-hidden">
-          <div class="bg-gray-100 px-4 py-2 border-b border-gray-200">
-            <h4 class="font-semibold">Proceso de desarrollo TDD aplicado al AuthService</h4>
-          </div>
-          <div class="p-4">
-            <img src="/images/pa3/tdd/tdd-proceso-completo.png" alt="Ciclo TDD completo" class="border rounded my-2 mx-auto" />
-            <p class="text-sm text-center mb-3">Resultados finales de la ejecución de pruebas para el servicio de autenticación</p>
-          </div>
-        </div>
-
-        <!-- Pruebas y código final -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div class="border border-gray-200 rounded-lg overflow-hidden">
-            <div class="bg-gray-100 px-4 py-2 border-b border-gray-200">
-              <h4 class="font-semibold">Pruebas de Autenticación</h4>
+        <div class="bg-indigo-50 p-4 rounded-lg mb-6">
+          <h3 class="font-semibold mb-2">El ciclo TDD aplicado</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-red-50 p-3 rounded-lg border border-red-100">
+              <h4 class="font-bold text-red-800 mb-1">1. RED</h4>
+              <p class="text-sm">Escribimos primero las pruebas que definían los requisitos y comportamientos esperados. Estas pruebas fallaban inicialmente porque aún no existía implementación.</p>
             </div>
-            <div class="p-4">
-              <p class="text-sm mb-3">Siguiendo el enfoque TDD, comenzamos escribiendo pruebas para la funcionalidad de login:</p>
-              <img src="/images/pa3/tdd/auth-test-login.png" alt="Pruebas de login" class="border rounded my-2" />
-              <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 48-64</span>
-              
-              <p class="text-sm mt-4 mb-3">Luego agregamos pruebas para el registro de usuarios:</p>
-              <img src="/images/pa3/tdd/auth-test-register.png" alt="Pruebas de registro" class="border rounded my-2" />
-              <span class="text-xs">Referencia: <code>/tests/lib/services/AuthService.test.ts</code>, líneas 74-92</span>
+            <div class="bg-green-50 p-3 rounded-lg border border-green-100">
+              <h4 class="font-bold text-green-800 mb-1">2. GREEN</h4>
+              <p class="text-sm">Implementamos el código mínimo necesario para que las pruebas pasaran. Esta fase se centra en la funcionalidad, no en la optimización.</p>
+            </div>
+            <div class="bg-blue-50 p-3 rounded-lg border border-blue-100">
+              <h4 class="font-bold text-blue-800 mb-1">3. REFACTOR</h4>
+              <p class="text-sm">Mejoramos el código manteniendo las pruebas en verde. Optimizamos, eliminamos duplicación y mejoramos la legibilidad.</p>
             </div>
           </div>
-          
-          <div class="border border-gray-200 rounded-lg overflow-hidden">
-            <div class="bg-gray-100 px-4 py-2 border-b border-gray-200">
-              <h4 class="font-semibold">Implementación Final</h4>
-            </div>
-            <div class="p-4">
-              <p class="text-sm mb-3">La implementación del login siguió el ciclo TDD hasta llegar a:</p>
-              <img src="/images/pa3/tdd/auth-impl-login.png" alt="Implementación del login" class="border rounded my-2" />
-              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 68-110</span>
-              
-              <p class="text-sm mt-4 mb-3">El sistema de hash para seguridad desarrollado con TDD:</p>
-              <img src="/images/pa3/tdd/auth-impl-hash.png" alt="Implementación de hash de contraseñas" class="border rounded my-2" />
-              <span class="text-xs">Referencia: <code>/src/lib/services/AuthService.ts</code>, líneas 8-27</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Aplicación del ciclo TDD en la verificación de token -->
-        <div class="border border-gray-200 rounded-lg mb-6 overflow-hidden">
-          <div class="bg-gray-100 px-4 py-2 border-b border-gray-200">
-            <h4 class="font-semibold">Ejemplo detallado: Ciclo TDD para la verificación de token</h4>
-          </div>
-          <div class="p-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <h5 class="inline-block px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-semibold mb-2">Fase RED</h5>
-                <p class="text-sm mb-3">Primero escribimos las pruebas para la verificación de token antes de implementar la funcionalidad:</p>
-                <img src="/images/pa3/tdd/auth-test-token.png" alt="Pruebas de verificación de token" class="border rounded" />
-                <span class="text-xs block mt-1">Pruebas para tokens válidos e inválidos</span>
-              </div>
-              
-              <div>
-                <h5 class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-2">Fase GREEN</h5>
-                <p class="text-sm mb-3">Luego implementamos el código mínimo para pasar las pruebas:</p>
-                <img src="/images/pa3/tdd/auth-impl-token-minimal.png" alt="Implementación básica de verificación de token" class="border rounded" />
-                <span class="text-xs block mt-1">Implementación inicial funcional</span>
-              </div>
-              
-              <div>
-                <h5 class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold mb-2">Fase REFACTOR</h5>
-                <p class="text-sm mb-3">Finalmente mejoramos la implementación manteniendo las pruebas en verde:</p>
-                <img src="/images/pa3/tdd/auth-impl-token-final.png" alt="Implementación mejorada de verificación de token" class="border rounded" />
-                <span class="text-xs block mt-1">Código refactorizado con manejo de errores y validaciones completas</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Resultados finales de pruebas -->
-        <div class="bg-green-50 p-4 rounded-lg mb-6 border border-green-200">
-          <h3 class="font-bold text-lg mb-2 text-green-800">Resultados de pruebas exitosas</h3>
-          <p class="mb-3">La ejecución completa de las pruebas muestra que todas las funcionalidades desarrolladas con TDD fueron implementadas correctamente:</p>
-          <img src="/images/pa3/tdd/resultados-test-completos.png" alt="Resultados de pruebas" class="border rounded my-2 mx-auto" />
-          <p class="text-sm">Ejecución de <code>npm run test</code> mostrando pruebas exitosas del servicio de autenticación</p>
-        </div>
-
-        <!-- Integración con las páginas del sistema -->
-        <div class="bg-indigo-50 p-4 rounded-lg mb-4">
-          <h3 class="font-bold text-lg mb-2">Integración con las Páginas del Sistema</h3>
-          <p class="mb-3 text-sm">Una vez completado el desarrollo del servicio de autenticación mediante TDD, se integró en las páginas de:</p>
-          <ul class="list-disc pl-8 mb-3 text-sm space-y-1">
-            <li><strong>Login:</strong> Implementación del formulario y procesamiento de credenciales</li>
-            <li><strong>Registro:</strong> Creación de nuevos usuarios con validaciones</li>
-            <li><strong>Perfil:</strong> Acceso protegido mediante verificación de token</li>
-          </ul>
-          <p class="text-sm">La integración se realizó manteniendo las pruebas existentes, garantizando que los cambios no afectaran la funcionalidad.</p>
-        </div>
-
-        <div class="mt-6">
-          <h3 class="font-bold text-lg mb-2">Beneficios observados con TDD:</h3>
-          <ul class="list-disc pl-8 mb-3 space-y-1">
-            <li>Mayor confianza en el código y detección temprana de errores</li>
-            <li>Diseño más modular y desacoplado, facilitando las pruebas</li>
-            <li>Documentación viva y actualizada a través de las pruebas</li>
-            <li>Facilidad para refactorizar sin introducir regresiones</li>
-            <li>Mejor comprensión de los requisitos al traducirlos a pruebas</li>
-          </ul>
         </div>
         
-        <div class="mt-4 bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
-          <p class="text-sm mb-1">Para revisar la implementación completa del servicio de autenticación:</p>
-          <a href="https://github.com/edwinwmendeze/nrc-23731/blob/main/grupo-a/src/lib/services/AuthService.ts" target="_blank" class="text-blue-700 font-semibold hover:text-blue-900 transition">Ver código completo de AuthService en GitHub</a>
-        </div>
+        <img src="/images/pa3/authormorm-red.png" alt="Ciclo TDD - RED" class="my-2"/>
+        <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 334-365</span>
+        
+        <img src="/images/pa3/authormorm-green.png" alt="Ciclo TDD - GREEN" class="my-2"/>
+        <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 366-397</span>
+        
+        <img src="/images/pa3/authormorm-refactor.png" alt="Ciclo TDD - REFACTOR" class="my-2"/>
+        <span class="text-xs">Referencia: <code>/tests/lib/orm/ProfileORM.test.ts</code>, líneas 398-429</span>
       </div>
+      
     </section>
 
     <!-- Uso de ORM -->
@@ -712,7 +738,18 @@ npm test
       </div>
     </section>
 
-  </main>
+      <CodeBlock 
+      title="Implementacion"
+  filePath="/tests/lib/orm/AuthService.test.ts"
+  basePath="root"
+  startLine={1}
+  endLine={26}
+  displayStartLine={16}
+  highlightLines={[16]}
+  lineNumbers={true}
+  lang="ts"
+/>
+    </div>  
 </Layout>
 
 <style>
