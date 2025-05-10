@@ -1,143 +1,168 @@
-# Grupo A - Portafolio Grupal
+# Portafolio Grupal - Construcción de Software
 
-Este es el repositorio del portafolio grupal del Grupo A, desarrollado con Astro y CSS moderno.
+Repositorio: [edwinwmendeze/nrc-23731](https://github.com/edwinwmendeze/nrc-23731.git)
 
-## 🚀 Características
+---
 
-- 🚀 Rendimiento optimizado con Astro
-- 🎨 Diseño moderno y responsive con CSS puro
-- 🌙 Modo oscuro/claro
-- 🌐 Internacionalización
-- 📱 Optimización de imágenes
-- 🔍 SEO optimizado
-- ♿ Accesibilidad mejorada
-- 📊 Métricas de rendimiento
+## Descripción
 
-## 🛠️ Tecnologías
+Este proyecto es un **portafolio grupal** desarrollado para el curso de Construcción de Software. Permite enlazar y gestionar portafolios individuales de los integrantes del grupo, e incluye funcionalidades de autenticación (login y registro), pruebas unitarias, y despliegue portable mediante Docker.
 
-- [Astro](https://astro.build)
-- CSS Moderno
-- [TypeScript](https://www.typescriptlang.org)
-- [i18next](https://www.i18next.com)
-- [Sharp](https://sharp.pixelplumbing.com)
+---
 
-## 📦 Instalación
+## Estructura del repositorio
 
-1. Clona el repositorio:
-```bash
-git clone https://github.com/tu-usuario/grupo-a.git
-cd grupo-a
+```
+nrc-23731/
+└── grupo-a/
+    ├── src/
+    ├── dist/
+    ├── package.json
+    ├── astro.config.mjs
+    ├── dockerfile
+    └── ...
 ```
 
-2. Instala las dependencias:
-```bash
-npm install
-```
+---
 
-3. Inicia el servidor de desarrollo:
-```bash
-npm run dev
-```
+## Requisitos previos
 
-4. Abre http://localhost:4321 en tu navegador
+- [Node.js](https://nodejs.org/) (solo para desarrollo local)
+- [Docker](https://www.docker.com/) (para despliegue portable y pruebas en cualquier entorno)
+- [Git](https://git-scm.com/) (para clonar el repositorio)
 
-## 🏗️ Construcción
+---
 
-Para construir el proyecto para producción:
+## Clonar el repositorio
 
 ```bash
-npm run build
+git clone https://github.com/edwinwmendeze/nrc-23731.git
+cd nrc-23731/grupo-a
 ```
 
-## 📝 Scripts Disponibles
+---
 
-- `npm run dev` - Inicia el servidor de desarrollo
-- `npm run build` - Construye el proyecto para producción
-- `npm run preview` - Vista previa de la build de producción
-- `npm run lint` - Ejecuta el linter
-- `npm run format` - Formatea el código
+## Ejecución en desarrollo local
 
-## 📁 Estructura del Proyecto
+1. **Instala las dependencias:**
+   ```bash
+   npm install
+   ```
 
-```
-grupo-a/
-├── public/
-├── src/
-│   ├── components/
-│   ├── layouts/
-│   ├── pages/
-│   ├── styles/
-│   └── utils/
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
-```
+2. **Ejecuta el servidor en modo desarrollo:**
+   ```bash
+   npm run dev
+   ```
+   El proyecto estará disponible en [http://localhost:4321](http://localhost:4321) (o el puerto que indique la consola).
 
-## 🤝 Contribuir
+---
 
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+## Ejecución con Docker (recomendado para revisión/corrección)
 
-## 📄 Licencia
+> **¿Por qué Docker?**  
+> Docker garantiza que la aplicación funcione igual en cualquier entorno, sin importar el sistema operativo ni las versiones instaladas. Así, el profesor o cualquier evaluador puede probar el proyecto sin complicaciones ni dependencias adicionales.
 
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+### **Pasos:**
 
-## 👥 Autores
+1. **Construye la imagen Docker:**
+   ```bash
+   docker build -t portafolio-grupal .
+   ```
 
-- **Tu Nombre** - *Trabajo Inicial* - [TuUsuario](https://github.com/tu-usuario)
+2. **Ejecuta el contenedor:**
+   ```bash
+   docker run -p 4321:4321 portafolio-grupal
+   ```
 
-## 🙏 Agradecimientos
+3. **Abre en tu navegador:**
+   ```
+   http://localhost:4321
+   ```
 
-- [Astro](https://astro.build)
-- [TypeScript](https://www.typescriptlang.org)
-- [i18next](https://www.i18next.com)
+> Si el puerto 4321 está ocupado, puedes cambiar el primer número por otro disponible, por ejemplo:  
+> `docker run -p 8080:4321 portafolio-grupal`  
+> y abrir `http://localhost:8080`
 
-```sh
-npm create astro@latest -- --template basics
-```
+---
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Pruebas unitarias
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+El proyecto incluye pruebas unitarias usando [Vitest](https://vitest.dev/).
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+Para ejecutarlas:
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+```bash
+npm run test
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+---
 
-## 🧞 Commands
+## Estructura de ramas
 
-All commands are run from the root of the project, from a terminal:
+- `main`: Rama principal y estable.
+- `develop`: Rama de desarrollo.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+---
 
-## 👀 Want to learn more?
+## Importancia de Docker en este proyecto
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- **Portabilidad:** Permite ejecutar la aplicación en cualquier sistema operativo sin instalar dependencias adicionales.
+- **Reproducibilidad:** El entorno de ejecución es siempre el mismo, evitando problemas de "en mi máquina sí funciona".
+- **Facilita la corrección:** El profesor puede evaluar el proyecto de forma rápida y segura.
+
+---
+
+## Solución de problemas (FAQ)
+
+- **El puerto 4321 está ocupado:**  
+  Cambia el primer número en el comando `-p`, por ejemplo: `docker run -p 8080:4321 portafolio-grupal`.
+
+- **No se ve la app en el navegador:**  
+  Asegúrate de que el build de Docker fue exitoso y que abriste el puerto correcto.
+
+- **Error de permisos en Docker:**  
+  Ejecuta el comando con permisos de administrador o revisa la configuración de Docker Desktop.
+
+---
+
+## ¿Cómo contribuir?
+
+1. Haz un fork del repositorio.
+2. Crea una rama para tu feature o fix.
+3. Haz un pull request a la rama `develop`.
+
+---
+
+## Persistencia de datos (opcional)
+
+Para mantener los datos de usuarios entre reinicios del contenedor, puedes montar un volumen Docker:
+
+```bash
+docker run -p 4321:4321 -v $(pwd)/src/data:/app/src/data portafolio-grupal
+```
+
+---
+
+## Informe técnico
+
+El informe técnico se encuentra en `src/pages/informe-tecnico-pa3.astro` y describe el proceso de desarrollo, pruebas y despliegue del proyecto.
+
+---
+
+## Enlaces útiles
+
+- [Repositorio en GitHub](https://github.com/edwinwmendeze/nrc-23731.git)
+- [Documentación oficial de Astro](https://docs.astro.build/)
+- [Documentación oficial de Docker](https://docs.docker.com/)
+
+---
+
+## Autores
+
+- Edwin Mendez y equipo (ver sección de colaboradores en GitHub)
+
+---
+
+## Licencia
+
+Este proyecto es solo para fines educativos.
