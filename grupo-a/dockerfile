@@ -1,0 +1,34 @@
+# Etapa base para dependencias
+FROM node:lts-alpine AS base
+WORKDIR /app
+
+# Copia solo los archivos de dependencias primero
+COPY package.json package-lock.json ./
+
+# Instala solo dependencias de producción
+FROM base AS prod-deps
+RUN npm install --omit=dev
+
+# Instala todas las dependencias para build
+FROM base AS build-deps
+RUN npm install
+
+# Copia el resto del código y construye la app
+FROM build-deps AS build
+COPY . .
+RUN npm run build
+
+# Imagen final para producción
+FROM node:lts-alpine AS runtime
+WORKDIR /app
+
+# Copia node_modules de prod-deps y el build de la etapa build
+COPY --from=prod-deps /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/src/data ./src/data
+
+ENV HOST=0.0.0.0
+ENV PORT=4321
+EXPOSE 4321
+
+CMD ["node", "./dist/server/entry.mjs"]

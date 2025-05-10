@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import sitemap from '@astrojs/sitemap';
 import compress from 'astro-compress';
 import icon from 'astro-icon';
-
+import  node  from '@astrojs/node';
 
 import vercel from '@astrojs/vercel';
 
@@ -15,7 +15,11 @@ export default defineConfig({
   // Base URL para GitHub Pages (sin /grupo-a)
   base: '/',
 
-  output: "server",
+    output: "server",
+  adapter: node({
+    mode: "standalone"
+  }),
+//   output: "static",
 
   integrations: [
     sitemap(),
@@ -50,5 +54,5 @@ export default defineConfig({
     },
   },
 
-  adapter: vercel(),
+//   adapter: vercel(),
 });
