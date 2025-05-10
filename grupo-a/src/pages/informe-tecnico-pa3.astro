@@ -720,6 +720,55 @@ npm test
       </div>
     </section>
 
+    <!-- Implementación de Docker y Portabilidad -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Implementación de Docker y Portabilidad</h2>
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
+        <p class="mb-4 text-lg text-gray-600 dark:text-gray-300">
+          Para garantizar la portabilidad y reproducibilidad del sistema, se implementó un <strong>Dockerfile</strong> siguiendo las mejores prácticas recomendadas por la documentación oficial de Astro. Esto permite que cualquier persona pueda ejecutar el proyecto en cualquier sistema operativo, sin preocuparse por dependencias, versiones de Node.js o configuraciones locales.
+        </p>
+        <p class="mb-4 text-gray-600 dark:text-gray-300">
+          <strong>Ventajas de usar Docker en el proyecto:</strong>
+        </p>
+        <ul class="list-disc pl-8 mb-3 space-y-1">
+          <li><strong>Portabilidad:</strong> El entorno de ejecución es idéntico en cualquier máquina.</li>
+          <li><strong>Reproducibilidad:</strong> Se evitan los problemas de "en mi máquina sí funciona".</li>
+          <li><strong>Facilidad de corrección:</strong> El docente puede evaluar el proyecto rápidamente, sin instalar dependencias adicionales.</li>
+          <li><strong>Despliegue profesional:</strong> El proyecto está listo para ser desplegado en cualquier plataforma compatible con Docker.</li>
+        </ul>
+        <p class="mb-4 text-gray-600 dark:text-gray-300">
+          <strong>Instrucciones para ejecutar el proyecto con Docker:</strong>
+        </p>
+        <ol class="list-decimal pl-8 mb-3 space-y-1">
+          <li>Clonar el repositorio:
+            <CodeBlock lang="bash" code={`git clone https://github.com/edwinwmendeze/nrc-23731.git\ncd nrc-23731/grupo-a`} />
+          </li>
+          <li>Construir la imagen Docker:
+            <CodeBlock lang="bash" code={`docker build -t portafolio-grupal .`} />
+          </li>
+          <li>Ejecutar el contenedor:
+            <CodeBlock lang="bash" code={`docker run -p 4321:4321 portafolio-grupal`} />
+          </li>
+          <li>Abrir en el navegador: <span class="font-mono text-sm">http://localhost:4321</span></li>
+        </ol>
+        <p class="mb-4 text-gray-600 dark:text-gray-300">
+          Si el puerto 4321 está ocupado, se puede cambiar el primer número por otro disponible, por ejemplo:
+          <CodeBlock lang="bash" code={`docker run -p 8080:4321 portafolio-grupal`} />
+          y abrir <span class="font-mono text-sm">http://localhost:8080</span>
+        </p>
+        <p class="mb-4 text-gray-600 dark:text-gray-300">
+          <strong>Persistencia de datos:</strong> Para mantener los datos de usuarios entre reinicios del contenedor, se puede montar un volumen Docker:
+          <CodeBlock lang="bash" code={`docker run -p 4321:4321 -v $(pwd)/src/data:/app/src/data portafolio-grupal`} />
+        </p>
+        <p class="mb-4 text-gray-600 dark:text-gray-300">
+          Toda la configuración y el <strong>Dockerfile</strong> se encuentran en el repositorio, en la carpeta <span class="font-mono text-sm">grupo-a/</span>.
+        </p>
+        <p class="mb-4 text-gray-600 dark:text-gray-300">
+          <strong>Conclusión:</strong> La integración de Docker en el proyecto no solo facilita la entrega y revisión, sino que también demuestra el dominio de herramientas modernas de despliegue y portabilidad, alineándose con las mejores prácticas de la industria del software.
+        </p>
+      </div>
+    </section>
+
     </div>  
 </Layout>
 
