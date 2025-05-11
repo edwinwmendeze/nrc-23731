@@ -43,6 +43,25 @@ const progreso = [
       </div>
     </section>
 
+    <!-- Índice dinámico -->
+    <section id="indice" class="mb-12">
+      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Índice</h2>
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
+        <ol class="list-decimal pl-8 mb-3 space-y-1">
+          <li><a href="#progreso" class="text-blue-700 hover:underline">Progreso del Desarrollo</a></li>
+          <li><a href="#introduccion" class="text-blue-700 hover:underline">Introducción</a></li>
+          <li><a href="#definicion" class="text-blue-700 hover:underline">Definición del Proyecto</a></li>
+          <li><a href="#pruebas" class="text-blue-700 hover:underline">Diseño de Pruebas Unitarias</a></li>
+          <li><a href="#tdd" class="text-blue-700 hover:underline">Aplicación de TDD</a></li>
+          <li><a href="#orm" class="text-blue-700 hover:underline">Uso de ORM</a></li>
+          <li><a href="#ci" class="text-blue-700 hover:underline">Integración de Pruebas en el Flujo Ágil</a></li>
+          <li><a href="#docker" class="font-bold text-green-700 dark:text-green-400 hover:underline">Implementación de Docker y Portabilidad <span class="bg-green-200 text-green-900 px-2 py-1 rounded ml-2">NUEVO</span></a></li>
+          <li><a href="#documentacion" class="text-blue-700 hover:underline">Documentación y Reporte</a></li>
+          <li><a href="#entrega" class="text-blue-700 hover:underline">Entrega del Proyecto y Recursos</a></li>
+        </ol>
+      </div>
+    </section>
+
     <!-- Progreso del Desarrollo -->
     <section id="progreso" class="mb-12">
       <div class="flex items-center group relative">
@@ -106,26 +125,6 @@ const progreso = [
         </ul>
         <!-- Espacio para imagen de arquitectura -->
         <!-- <img src="/ruta/a/tu/diagrama-arquitectura.png" alt="Diagrama de arquitectura" class="my-4" /> -->
-      </div>
-    </section>
-
-    <!-- Índice dinámico -->
-    <section id="indice" class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Índice</h2>
-      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
-        <ol class="list-decimal pl-8 mb-3 space-y-1">
-          <li><a href="#progreso" class="text-blue-700 hover:underline">Progreso del Desarrollo</a></li>
-          <li><a href="#introduccion" class="text-blue-700 hover:underline">Introducción</a></li>
-          <li><a href="#definicion" class="text-blue-700 hover:underline">Definición del Proyecto</a></li>
-          <li><a href="#pruebas" class="text-blue-700 hover:underline">Diseño de Pruebas Unitarias</a></li>
-          <li><a href="#tdd" class="text-blue-700 hover:underline">Aplicación de TDD</a></li>
-          <li><a href="#orm" class="text-blue-700 hover:underline">Uso de ORM</a></li>
-          <li><a href="#ci" class="text-blue-700 hover:underline">Integración de Pruebas en el Flujo Ágil</a></li>
-          <li><a href="#documentacion" class="text-blue-700 hover:underline">Documentación y Reporte</a></li>
-          <li><a href="#entrega" class="text-blue-700 hover:underline">Entrega del Proyecto y Recursos</a></li>
-          <li><a href="#docker" class="font-bold text-green-700 dark:text-green-400 hover:underline">Implementación de Docker y Portabilidad <span class="bg-green-200 text-green-900 px-2 py-1 rounded ml-2">NUEVO</span></a></li>
-          <li><a href="#anexos" class="text-blue-700 hover:underline">Anexos</a></li>
-        </ol>
       </div>
     </section>
 
@@ -702,33 +701,6 @@ const progreso = [
     <figcaption class="text-sm text-gray-500 mt-2">Video. Presentación del avance de la página web del grupo A.</figcaption>
   </figure>
 </div>
-    <!-- Documentación y Reporte -->
-    <section id="documentacion" class="mb-12">
-      <div class="flex items-center group relative">
-        <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Documentación y Reporte</h2>
-        <a href="#indice" class="ml-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-indigo-500 text-sm font-semibold underline absolute right-0 top-1/2 -translate-y-1/2">⬅️ Volver al índice</a>
-      </div>
-      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
-        <p class="text-gray-600 dark:text-gray-300">
-          La documentación del proyecto se realizó de manera continua y estructurada, utilizando diferentes herramientas y formatos:
-        </p>
-        <ul class="list-disc pl-8 mb-3 space-y-1">
-          <li><strong>Documentación de código:</strong> Comentarios descriptivos y JSDoc</li>
-          <li><strong>Documentación técnica:</strong> Este informe y diagramas de arquitectura</li>
-          <li><strong>Documentación de pruebas:</strong> Casos de prueba y resultados</li>
-        </ul>
-        <p class="mt-4 text-gray-600 dark:text-gray-300">
-          El proceso de documentación siguió estas etapas:
-        </p>
-        <ol class="list-decimal pl-8 mb-3 space-y-1">
-          <li>Documentación inicial de requisitos y arquitectura</li>
-          <li>Documentación de pruebas durante el desarrollo con TDD</li>
-          <li>Documentación de la implementación del ORM</li>
-          <li>Documentación del proceso de CI/CD</li>
-          <li>Elaboración del informe técnico final</li>
-        </ol>
-      </div>
-    </section>
 
     <!-- Implementación de Docker y Portabilidad -->
     <section id="docker" class="mb-12 border-4 border-green-400 bg-green-50 dark:bg-green-900 rounded-xl shadow-lg">
@@ -786,6 +758,34 @@ const progreso = [
       </div>
     </section>
 
+    <!-- Documentación y Reporte -->
+    <section id="documentacion" class="mb-12">
+      <div class="flex items-center group relative">
+        <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Documentación y Reporte</h2>
+        <a href="#indice" class="ml-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-indigo-500 text-sm font-semibold underline absolute right-0 top-1/2 -translate-y-1/2">⬅️ Volver al índice</a>
+      </div>
+      <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
+        <p class="text-gray-600 dark:text-gray-300">
+          La documentación del proyecto se realizó de manera continua y estructurada, utilizando diferentes herramientas y formatos:
+        </p>
+        <ul class="list-disc pl-8 mb-3 space-y-1">
+          <li><strong>Documentación de código:</strong> Comentarios descriptivos y JSDoc</li>
+          <li><strong>Documentación técnica:</strong> Este informe y diagramas de arquitectura</li>
+          <li><strong>Documentación de pruebas:</strong> Casos de prueba y resultados</li>
+        </ul>
+        <p class="mt-4 text-gray-600 dark:text-gray-300">
+          El proceso de documentación siguió estas etapas:
+        </p>
+        <ol class="list-decimal pl-8 mb-3 space-y-1">
+          <li>Documentación inicial de requisitos y arquitectura</li>
+          <li>Documentación de pruebas durante el desarrollo con TDD</li>
+          <li>Documentación de la implementación del ORM</li>
+          <li>Documentación del proceso de CI/CD</li>
+          <li>Elaboración del informe técnico final</li>
+        </ol>
+      </div>
+    </section>
+
     <!-- Entrega del Proyecto y Recursos -->
     <section id="entrega" class="mb-12 text-gray-600 dark:text-gray-300">
       <div class="flex items-center group relative">
@@ -836,15 +836,6 @@ docker run -p 4321:4321 portafolio-grupal
           </p>
         </div>
       </div>
-    </section>
-
-    <!-- Anexos -->
-    <section id="anexos" class="mb-12">
-      <div class="flex items-center group relative">
-        <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Anexos</h2>
-        <a href="#indice" class="ml-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-indigo-500 text-sm font-semibold underline absolute right-0 top-1/2 -translate-y-1/2">⬅️ Volver al índice</a>
-      </div>
-      <!-- ...contenido existente... -->
     </section>
 
     </div>  
