@@ -16,9 +16,9 @@ export default defineConfig({
   base: '/',
 
     output: "server",
-  adapter: node({
-    mode: "standalone"
-  }),
+//   adapter: node({
+//     mode: "standalone"
+//   }),
 //   output: "static",
 
   integrations: [
@@ -54,5 +54,5 @@ export default defineConfig({
     },
   },
 
-//   adapter: vercel(),
+  adapter: vercel(),
 });
