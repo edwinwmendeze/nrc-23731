@@ -1,0 +1,75 @@
+1. Portada
+•	Universidad Continental
+•	Asignatura: Construcción de Software (ASUC00947)
+•	Título del Proyecto: [Nombre de la aplicación]
+•	Integrantes:
+1.	Nombre y apellidos - Rol
+2.	Nombre y apellidos - Rol
+3.	Nombre y apellidos - Rol
+•	Fecha de entrega: [DD/MM/AAAA]
+ 
+2. Resumen Ejecutivo
+•	Problema abordado.
+•	Objetivos del proyecto.
+•	Tecnologías/metodologías utilizadas.
+•	Resultados clave.
+ 
+3. Desarrollo del Proyecto
+3.1 Diseño del Proyecto
+•	Necesidades identificadas: [Describir el problema a resolver]
+•	Objetivos:
+1. Objetivo 1  
+2. Objetivo 2  
+•	Diagrama de arquitectura y/o estructura del proyecto : [Insertar imagen]
+3.2 Planificación
+•	Cronograma:
+Actividad	Responsable	Tiempo estimado	Recursos necesarios
+Desarrollo de pruebas	[Nombre]	8 horas	IDE, Framework de pruebas
+Implementación Docker	[Nombre]	4 horas	Docker, Documentación
+3.3 Experimentación 
+•	Pruebas unitarias:
+python
+Copy
+# Ejemplo de prueba (Python)
+def test_suma():
+    assert suma(2, 3) == 5  # Objetivo: Validar función aritmética
+o	Principios/procedimientos: [Explicar cómo se diseñaron las pruebas]
+o	Resultados:
+markdown
+- Prueba 1: Pasó ✅ (Cobertura: 90%)  
+- Prueba 2: Falló ❌ (Error: [describir])  
+3.4 Uso de Herramientas Modernas
+•	Metodologías comparadas:
+- TDD vs Desarrollo tradicional:  
+  Ventajas: Detección temprana de errores.  
+  Desventajas: Mayor tiempo inicial.  
+•	Herramientas implementadas:
+o	Docker:
+dockerfile
+# Dockerfile
+FROM python:3.8-slim
+COPY . /app
+RUN pip install -r requirements.txt
+o	Git:
+bash
+git checkout -b develop  # Rama para desarrollo
+ 
+4. Análisis de Resultados
+•	Validación de pruebas:
+markdown
+- 80% de cobertura alcanzada.  
+- Error en Prueba 2 corregido mediante refactorización.  
+•	Problemas y soluciones:
+markdown
+1. Problema: Configuración de Docker falló.  
+   Solución: Revisión de dependencias en requirements.txt.  
+ 
+5. Conclusiones y Recomendaciones
+•	Logros:
+markdown
+- Aplicación funcional contenerizada.  
+- Pruebas unitarias implementadas.  
+•	Mejoras futuras:
+markdown
+- Integrar GitHub Actions para CI/CD.  
+- Aumentar cobertura de pruebas al 95%.  
