@@ -82,29 +82,29 @@ const progreso = [
       </div>
     </section>
 
-    <!-- Índice -->
-    <section class="mb-12">
+    <!-- Índice dinámico -->
+    <section id="indice" class="mb-12">
       <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Índice</h2>
       <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
         <ol class="list-decimal pl-8 mb-3 space-y-1">
-          <li>Progreso del Desarrollo</li>
-          <li>Introducción</li>
-          <li>Formación de Equipos</li>
-          <li>Definición del Proyecto</li>
-          <li>Diseño de Pruebas Unitarias</li>
-          <li>Aplicación de TDD</li>
-          <li>Uso de ORM</li>
-          <li>Integración de Pruebas en el Flujo Ágil</li>
-          <li>Documentación y Reporte</li>
-          <li>Entrega del Proyecto y Recursos</li>
-          <li><span class="font-bold text-green-700 dark:text-green-400">Implementación de Docker y Portabilidad <span class="bg-green-200 text-green-900 px-2 py-1 rounded ml-2">NUEVO</span></span></li>
-          <li>Anexos</li>
+          <li><a href="#progreso" class="text-blue-700 hover:underline">Progreso del Desarrollo</a></li>
+          <li><a href="#introduccion" class="text-blue-700 hover:underline">Introducción</a></li>
+          <li><a href="#formacion" class="text-blue-700 hover:underline">Formación de Equipos</a></li>
+          <li><a href="#definicion" class="text-blue-700 hover:underline">Definición del Proyecto</a></li>
+          <li><a href="#pruebas" class="text-blue-700 hover:underline">Diseño de Pruebas Unitarias</a></li>
+          <li><a href="#tdd" class="text-blue-700 hover:underline">Aplicación de TDD</a></li>
+          <li><a href="#orm" class="text-blue-700 hover:underline">Uso de ORM</a></li>
+          <li><a href="#ci" class="text-blue-700 hover:underline">Integración de Pruebas en el Flujo Ágil</a></li>
+          <li><a href="#documentacion" class="text-blue-700 hover:underline">Documentación y Reporte</a></li>
+          <li><a href="#entrega" class="text-blue-700 hover:underline">Entrega del Proyecto y Recursos</a></li>
+          <li><a href="#docker" class="font-bold text-green-700 dark:text-green-400 hover:underline">Implementación de Docker y Portabilidad <span class="bg-green-200 text-green-900 px-2 py-1 rounded ml-2">NUEVO</span></a></li>
+          <li><a href="#anexos" class="text-blue-700 hover:underline">Anexos</a></li>
         </ol>
       </div>
     </section>
 
     <!-- Diseño de Pruebas Unitarias -->
-    <section class="mb-12">
+    <section id="pruebas" class="mb-12">
       <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Diseño de Pruebas Unitarias</h2>
       
       <!-- Introducción general a las pruebas unitarias -->
@@ -458,7 +458,7 @@ const progreso = [
     </section>
 
     <!-- Aplicación de TDD -->
-    <section class="mb-12">
+    <section id="tdd" class="mb-12">
       <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Aplicación de TDD</h2>
       <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
         <p class="text-gray-600 dark:text-gray-300">
@@ -510,7 +510,7 @@ const progreso = [
     
 
     <!-- SECCIÓN: USO DE ORM EN LOGIN Y REGISTRO (REESCRITA) -->
-    <section class="mb-12">
+    <section id="orm" class="mb-12">
       <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Uso de ORM en Login y Registro</h2>
       <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
         <h3 class="font-bold text-lg mt-2 mb-2 text-indigo-700 dark:text-indigo-300">¿Qué es un ORM y por qué lo usamos?</h3>
@@ -619,7 +619,7 @@ const progreso = [
     </section>
 
     <!-- Integración de Pruebas en el Flujo Ágil -->
-    <section class="mb-12">
+    <section id="ci" class="mb-12">
       <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Integración de Pruebas en el Flujo Ágil</h2>
       <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
         <p class="text-gray-600 dark:text-gray-300">
@@ -665,7 +665,7 @@ const progreso = [
   </figure>
 </div>
     <!-- Documentación y Reporte -->
-    <section class="mb-12">
+    <section id="documentacion" class="mb-12">
       <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Documentación y Reporte</h2>
       <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
         <p class="text-gray-600 dark:text-gray-300">
@@ -690,7 +690,7 @@ const progreso = [
     </section>
 
     <!-- Implementación de Docker y Portabilidad -->
-    <section class="mb-12 border-4 border-green-400 bg-green-50 dark:bg-green-900 rounded-xl shadow-lg">
+    <section id="docker" class="mb-12 border-8 border-green-600 bg-green-200 dark:bg-green-900 rounded-2xl shadow-2xl p-10">
       <h2 class="text-3xl font-extrabold mb-5 pt-2 text-green-800 dark:text-green-300 flex items-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-2 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h4v4H3v-4zm0 6h4v4H3v-4zm6-6h4v4h-4v-4zm0 6h4v4h-4v-4zm6-6h4v4h-4v-4zm0 6h4v4h-4v-4z" /></svg>
         Implementación de Docker y Portabilidad <span class="bg-green-200 text-green-900 px-2 py-1 rounded ml-4">Última entrega</span>
@@ -742,7 +742,7 @@ const progreso = [
     </section>
 
     <!-- Entrega del Proyecto y Recursos -->
-    <section class="mb-12 text-gray-600 dark:text-gray-300">
+    <section id="entrega" class="mb-12 text-gray-600 dark:text-gray-300">
       <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Entrega del Proyecto y Recursos</h2>
       <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none text-gray-600 dark:text-gray-300">
         <ul class="list-disc pl-8 mb-3 space-y-1">
