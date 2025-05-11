@@ -731,13 +731,14 @@ const progreso = [
     </section>
 
     <!-- Implementación de Docker y Portabilidad -->
-    <section id="docker" class="mb-12 border-8 border-green-600 bg-green-200 dark:bg-green-900 rounded-2xl shadow-2xl p-10">
-      <div class="flex items-center group relative">
-        <h2 class="text-3xl font-extrabold mb-5 pt-2 text-green-800 dark:text-green-300 flex items-center">
+    <section id="docker" class="mb-12 border-4 border-green-400 bg-green-50 dark:bg-green-900 rounded-xl shadow-lg">
+      <div class="flex items-center group relative mb-2">
+        <h2 class="text-2xl font-bold mb-5 pt-2 text-green-800 dark:text-green-300 flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-2 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h4v4H3v-4zm0 6h4v4H3v-4zm6-6h4v4h-4v-4zm0 6h4v4h-4v-4zm6-6h4v4h-4v-4zm0 6h4v4h-4v-4z" /></svg>
-          Implementación de Docker y Portabilidad <span class="bg-green-200 text-green-900 px-2 py-1 rounded ml-4">Última entrega</span>
+          Implementación de Docker y Portabilidad
+          <span class="ml-3 px-2 py-1 text-xs bg-green-100 text-green-800 rounded">Última entrega</span>
         </h2>
-        <a href="#indice" class="ml-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-green-900 dark:text-green-200 text-sm font-bold underline absolute right-0 top-1/2 -translate-y-1/2">⬅️ Volver al índice</a>
+        <a href="#indice" class="ml-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-indigo-500 dark:text-indigo-300 text-sm underline absolute right-0 top-1/2 -translate-y-1/2">⬅️ Volver al índice</a>
       </div>
       <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
         <p class="mb-4 text-lg text-gray-600 dark:text-gray-300">
@@ -882,6 +883,15 @@ docker run -p 4321:4321 portafolio-grupal
   @media (max-width: 768px) {
     .grid {
       grid-template-columns: 1fr;
+    }
+    .group .absolute.right-0 {
+      position: static !important;
+      display: block;
+      margin-left: 0.5rem;
+      margin-top: 0.5rem;
+      top: auto;
+      right: auto;
+      transform: none;
     }
   }
 
