@@ -97,6 +97,7 @@ const progreso = [
           <li>Integración de Pruebas en el Flujo Ágil</li>
           <li>Documentación y Reporte</li>
           <li>Entrega del Proyecto y Recursos</li>
+          <li><span class="font-bold text-green-700 dark:text-green-400">Implementación de Docker y Portabilidad <span class="bg-green-200 text-green-900 px-2 py-1 rounded ml-2">NUEVO</span></span></li>
           <li>Anexos</li>
         </ol>
       </div>
@@ -689,8 +690,11 @@ const progreso = [
     </section>
 
     <!-- Implementación de Docker y Portabilidad -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Implementación de Docker y Portabilidad</h2>
+    <section class="mb-12 border-4 border-green-400 bg-green-50 dark:bg-green-900 rounded-xl shadow-lg">
+      <h2 class="text-3xl font-extrabold mb-5 pt-2 text-green-800 dark:text-green-300 flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-2 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h4v4H3v-4zm0 6h4v4H3v-4zm6-6h4v4h-4v-4zm0 6h4v4h-4v-4zm6-6h4v4h-4v-4zm0 6h4v4h-4v-4z" /></svg>
+        Implementación de Docker y Portabilidad <span class="bg-green-200 text-green-900 px-2 py-1 rounded ml-4">Última entrega</span>
+      </h2>
       <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none">
         <p class="mb-4 text-lg text-gray-600 dark:text-gray-300">
           Para garantizar la portabilidad y reproducibilidad del sistema, se implementó un <strong>Dockerfile</strong> siguiendo las mejores prácticas recomendadas por la documentación oficial de Astro. Esto permite que cualquier persona pueda ejecutar el proyecto en cualquier sistema operativo, sin preocuparse por dependencias, versiones de Node.js o configuraciones locales.
@@ -736,7 +740,8 @@ const progreso = [
         </p>
       </div>
     </section>
-       <!-- Entrega del Proyecto y Recursos -->
+
+    <!-- Entrega del Proyecto y Recursos -->
     <section class="mb-12 text-gray-600 dark:text-gray-300">
       <h2 class="text-2xl font-bold mb-5 pt-2 text-indigo-800 dark:text-indigo-300">Entrega del Proyecto y Recursos</h2>
       <div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm dark:shadow-none text-gray-600 dark:text-gray-300">
@@ -765,6 +770,23 @@ npm run dev
 &lt;!-- Ejecutar pruebas --&gt;
 npm test
 </code></pre>
+        <div class="mt-6 p-4 bg-green-100 dark:bg-green-900 border-l-4 border-green-500 rounded">
+          <h3 class="font-bold text-lg mb-2 text-green-800 dark:text-green-300 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h4v4H3v-4zm0 6h4v4H3v-4zm6-6h4v4h-4v-4zm0 6h4v4h-4v-4zm6-6h4v4h-4v-4zm0 6h4v4h-4v-4z" /></svg>
+            <span>Instrucciones para ejecutar el proyecto con Docker (Última entrega)</span>
+          </h3>
+          <pre class="bg-green-50 dark:bg-green-800 rounded p-4 text-sm overflow-x-auto text-green-900 dark:text-green-100"><code>git clone https://github.com/edwinwmendeze/nrc-23731.git
+cd nrc-23731/grupo-a
+
+docker build -t portafolio-grupal .
+docker run -p 4321:4321 portafolio-grupal
+
+# Abrir en el navegador: http://localhost:4321
+</code></pre>
+          <p class="mt-2 text-green-900 dark:text-green-100 text-sm">
+            <strong>Nota:</strong> Se recomienda utilizar Docker para garantizar la portabilidad y reproducibilidad del entorno, evitando problemas de dependencias o configuración local.
+          </p>
+        </div>
       </div>
     </section>
 
