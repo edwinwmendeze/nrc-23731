@@ -1,11 +1,21 @@
 ---
 // CodeBlock.astro
-import { createHighlighter } from 'shiki/bundle/web';
+// Refactor: Singleton highlighter, imports, globs, null checks
+import { createHighlighter } from 'shiki';
+
+// Singleton para el highlighter (se crea una sola vez y se reutiliza)
+let highlighterPromise: Promise<any> | null = null;
+function getHighlighterSingleton(themes: string[], langs: string[]) {
+  if (!highlighterPromise) {
+    highlighterPromise = createHighlighter({ themes, langs });
+  }
+  return highlighterPromise;
+}
 
 interface Props {
   code?: string;
   filePath?: string;
-  basePath?: string; // Para seleccionar la ubicación principal (no se usa directamente en glob)
+  basePath?: string;
   startLine?: number;
   endLine?: number;
   highlightLines?: number[];
@@ -19,169 +29,100 @@ interface Props {
   title?: string;
 }
 
-let { 
+let {
   code,
   filePath,
-  basePath = 'src', // Sin barra inicial
+  basePath = 'src',
   startLine,
   endLine,
   highlightLines = [],
   displayStartLine,
   lang,
-  lightTheme = 'github-light', 
-  darkTheme = 'github-dark', 
+  lightTheme = 'github-light',
+  darkTheme = 'github-dark',
   lineNumbers = false,
   wrap = false,
   showLanguage = true,
   title
 } = Astro.props;
 
-// Eliminar la barra inicial de basePath si existe
-if (basePath.startsWith('/')) {
-  basePath = basePath.substring(1);
-}
+if (basePath.startsWith('/')) basePath = basePath.substring(1);
 
 // Cargar código desde archivo si se proporciona filePath
 if (filePath) {
   try {
-    // Eliminar la barra inicial de filePath si existe
-    if (filePath.startsWith('/')) {
-      filePath = filePath.substring(1);
-    }
-    
-    // Importar archivos de diversas ubicaciones comunes con literales estáticos
-    const srcFiles = import.meta.glob('/src/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { as: 'raw' });
-    const rootFiles = import.meta.glob('/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { as: 'raw' });
-    const publicFiles = import.meta.glob('/public/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { as: 'raw' });
-    const componentsFiles = import.meta.glob('/components/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { as: 'raw' });
-    const libFiles = import.meta.glob('/lib/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { as: 'raw' });
-    const configFiles = import.meta.glob('/config/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { as: 'raw' });
-    const uiFiles = import.meta.glob('/ui/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { as: 'raw' });
-    const testsFiles = import.meta.glob('/tests/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { as: 'raw' });
-    
-    // Seleccionar el conjunto de archivos correcto basado en basePath
+    if (filePath.startsWith('/')) filePath = filePath.substring(1);
+    // Globs actualizados a la sintaxis recomendada
+    const srcFiles = import.meta.glob('/src/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { query: '?raw', import: 'default' });
+    const rootFiles = import.meta.glob('/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { query: '?raw', import: 'default' });
+    const publicFiles = import.meta.glob('/public/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { query: '?raw', import: 'default' });
+    const componentsFiles = import.meta.glob('/components/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { query: '?raw', import: 'default' });
+    const libFiles = import.meta.glob('/lib/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { query: '?raw', import: 'default' });
+    const configFiles = import.meta.glob('/config/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { query: '?raw', import: 'default' });
+    const uiFiles = import.meta.glob('/ui/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { query: '?raw', import: 'default' });
+    const testsFiles = import.meta.glob('/tests/**/*.{js,ts,jsx,tsx,astro,vue,svelte,md,mdx,css,scss,html,json,yaml,yml,toml}', { query: '?raw', import: 'default' });
     let files;
     switch (basePath) {
       case '':
       case '.':
-      case 'root':
-        files = rootFiles;
-        break;
-      case 'public':
-        files = publicFiles;
-        break;
-      case 'components':
-        files = componentsFiles;
-        break;
-      case 'lib':
-        files = libFiles;
-        break;
-      case 'config':
-        files = configFiles;
-        break;
-      case 'ui':
-        files = uiFiles;
-        break;
-      case 'tests':
-        files = testsFiles;
-        break;
-      case 'src':
-      default:
-        files = srcFiles;
-        break;
+      case 'root': files = rootFiles; break;
+      case 'public': files = publicFiles; break;
+      case 'components': files = componentsFiles; break;
+      case 'lib': files = libFiles; break;
+      case 'config': files = configFiles; break;
+      case 'ui': files = uiFiles; break;
+      case 'tests': files = testsFiles; break;
+      case 'src': default: files = srcFiles; break;
     }
-    
-    // Construir la ruta completa del archivo
     let fullPath = '';
     if (basePath === '' || basePath === '.' || basePath === 'root') {
       fullPath = `/${filePath}`;
     } else {
       fullPath = `/${basePath}/${filePath}`;
     }
-    
-    // Verificar si el archivo existe en el mapa de archivos
     if (files[fullPath]) {
-      // Cargar el contenido del archivo
-      const fileContent = await files[fullPath]();
-      
-      // Extraer el fragmento de código si se especifican líneas de inicio y fin
+      const fileContentRaw = await files[fullPath]();
+      const fileContent = typeof fileContentRaw === 'string' ? fileContentRaw : String(fileContentRaw);
       if (startLine || endLine) {
         const lines = fileContent.split('\n');
         const start = startLine ? Math.max(0, startLine - 1) : 0;
         const end = endLine ? Math.min(lines.length, endLine) : lines.length;
         code = lines.slice(start, end).join('\n');
-        
-        // Importante: Si no se especificó displayStartLine, usar startLine como valor por defecto
-        if (displayStartLine === undefined && startLine) {
-          displayStartLine = startLine;
-        }
+        if (displayStartLine === undefined && startLine) displayStartLine = startLine;
       } else {
         code = fileContent;
       }
-      
-      // Determinar el lenguaje basado en la extensión del archivo si no se especificó
       if (!lang) {
         const extension = fullPath.split('.').pop()?.toLowerCase();
-        if (extension) {
-          lang = extension;
-        }
+        if (extension) lang = extension;
       }
     } else {
-      // Si no se encuentra, intentar buscar en otras ubicaciones
-      const allFiles = {
-        ...srcFiles,
-        ...rootFiles,
-        ...publicFiles,
-        ...componentsFiles,
-        ...libFiles,
-        ...configFiles,
-        ...uiFiles,
-        ...testsFiles
-      };
-      
-      // Intentar encontrar el archivo con nombre sin prefijar ruta
-      const possiblePaths = [
-        fullPath,
-        `/src/${filePath}`,
-        `/${filePath}`
-      ];
-      
-      let foundContent = null;
+      const allFiles = { ...srcFiles, ...rootFiles, ...publicFiles, ...componentsFiles, ...libFiles, ...configFiles, ...uiFiles, ...testsFiles };
+      const possiblePaths = [fullPath, `/src/${filePath}`, `/${filePath}`];
+      let foundContentRaw = null;
       let foundPath = null;
-      
       for (const path of possiblePaths) {
         if (allFiles[path]) {
-          foundContent = await allFiles[path]();
+          foundContentRaw = await allFiles[path]();
           foundPath = path;
           break;
         }
       }
-      
-      if (foundContent) {
-        // Procesar el contenido encontrado
+      if (foundContentRaw && foundPath) {
+        const foundContent = typeof foundContentRaw === 'string' ? foundContentRaw : String(foundContentRaw);
         if (startLine || endLine) {
           const lines = foundContent.split('\n');
           const start = startLine ? Math.max(0, startLine - 1) : 0;
           const end = endLine ? Math.min(lines.length, endLine) : lines.length;
           code = lines.slice(start, end).join('\n');
-          
-          if (displayStartLine === undefined && startLine) {
-            displayStartLine = startLine;
-          }
+          if (displayStartLine === undefined && startLine) displayStartLine = startLine;
         } else {
           code = foundContent;
         }
-        
-        if (!lang) {
-          const extension = foundPath.split('.').pop()?.toLowerCase();
-          if (extension) {
-            lang = extension;
-          }
-        }
+        const extension = foundPath ? foundPath.split('.').pop()?.toLowerCase() : undefined;
+        if (!lang && extension) lang = extension;
       } else {
-        code = `// Error: No se pudo encontrar el archivo: ${filePath}
-// Ruta intentada: ${fullPath}
-// Intente con basePath: "src", "public", "root", etc.`;
+        code = `// Error: No se pudo encontrar el archivo: ${filePath}\n// Ruta intentada: ${fullPath}\n// Intente con basePath: \"src\", \"public\", \"root\", etc.`;
         lang = 'text';
       }
     }
@@ -191,76 +132,26 @@ if (filePath) {
     lang = 'text';
   }
 }
+if (displayStartLine === undefined) displayStartLine = 1;
+if (!code) code = '// No se proporcionó código';
 
-// Si displayStartLine sigue sin definirse, establecer a 1 por defecto
-if (displayStartLine === undefined) {
-  displayStartLine = 1;
-}
-
-// Establecer código por defecto si no se proporciona
-if (!code) {
-  code = '// No se proporcionó código';
-}
-
-// Función para obtener un nombre más amigable del lenguaje
 function getLanguageLabel(lang: string) {
   const labels: Record<string, string> = {
-    'js': 'JavaScript',
-    'ts': 'TypeScript',
-    'jsx': 'React JSX',
-    'tsx': 'React TSX',
-    'html': 'HTML',
-    'css': 'CSS',
-    'python': 'Python',
-    'java': 'Java',
-    'php': 'PHP',
-    'go': 'Go',
-    'rust': 'Rust',
-    'c': 'C',
-    'cpp': 'C++',
-    'csharp': 'C#',
-    'ruby': 'Ruby',
-    'swift': 'Swift',
-    'kotlin': 'Kotlin',
-    'bash': 'Bash',
-    'shell': 'Shell',
-    'sql': 'SQL',
-    'json': 'JSON',
-    'yaml': 'YAML',
-    'markdown': 'Markdown',
-    'md': 'Markdown',
-    'xml': 'XML',
-    'astro': 'Astro',
-    'vue': 'Vue',
-    'svelte': 'Svelte',
-    'scss': 'SCSS',
-    'less': 'Less',
-    'graphql': 'GraphQL',
-    'dockerfile': 'Dockerfile',
-    'text': 'Text'
+    'js': 'JavaScript', 'ts': 'TypeScript', 'jsx': 'React JSX', 'tsx': 'React TSX', 'html': 'HTML', 'css': 'CSS', 'python': 'Python', 'java': 'Java', 'php': 'PHP', 'go': 'Go', 'rust': 'Rust', 'c': 'C', 'cpp': 'C++', 'csharp': 'C#', 'ruby': 'Ruby', 'swift': 'Swift', 'kotlin': 'Kotlin', 'bash': 'Bash', 'shell': 'Shell', 'sql': 'SQL', 'json': 'JSON', 'yaml': 'YAML', 'markdown': 'Markdown', 'md': 'Markdown', 'xml': 'XML', 'astro': 'Astro', 'vue': 'Vue', 'svelte': 'Svelte', 'scss': 'SCSS', 'less': 'Less', 'graphql': 'GraphQL', 'dockerfile': 'Dockerfile', 'text': 'Text'
   };
-  
   return labels[lang || 'text'] || (lang ? lang.charAt(0).toUpperCase() + lang.slice(1) : 'Text');
 }
-
 const languageLabel = getLanguageLabel(lang || 'text');
 
-// Configurar resaltador y generar HTML
-const highlighter = await createHighlighter({
-  langs: [lang || 'text'],
-  themes: [lightTheme, darkTheme],
-});
+// Usar singleton para el highlighter
+const highlighter = await getHighlighterSingleton([lightTheme, darkTheme], [lang || 'text']);
 
-// Función para transformar el código y resaltar líneas específicas
 function addLineHighlights(html: string, highlightLines: number[]) {
   if (highlightLines.length === 0) return html;
-  
-  // Ajustar highlightLines si startLine no es 1
   let adjustedHighlightLines = [...highlightLines];
   if (startLine && startLine > 1) {
     adjustedHighlightLines = highlightLines.map(line => line - startLine + 1);
   }
-  
   let lineCount = 0;
   return html.replace(/<span class="line">(.*?)<\/span>/g, (match, content) => {
     lineCount++;
@@ -271,21 +162,10 @@ function addLineHighlights(html: string, highlightLines: number[]) {
   });
 }
 
-// Generar HTML para ambos temas
-const lightHtml = addLineHighlights(highlighter.codeToHtml(code, {
-  lang: lang || 'text',
-  theme: lightTheme,
-}), highlightLines);
-
-const darkHtml = addLineHighlights(highlighter.codeToHtml(code, {
-  lang: lang || 'text',
-  theme: darkTheme,
-}), highlightLines);
-
+const lightHtml = addLineHighlights(highlighter.codeToHtml(code, { lang: lang || 'text', theme: lightTheme }), highlightLines);
+const darkHtml = addLineHighlights(highlighter.codeToHtml(code, { lang: lang || 'text', theme: darkTheme }), highlightLines);
 let wrapClass = wrap ? 'whitespace-pre-wrap break-words' : '';
 let lineNumbersClass = lineNumbers ? 'line-numbers' : '';
-
-// Si se proporcionó un filePath, extraer solo el nombre del archivo para mostrar
 const displayFilePath = filePath ? filePath.split('/').pop() : null;
 ---
 
@@ -385,8 +265,9 @@ const displayFilePath = filePath ? filePath.split('/').pop() : null;
     const codeBlocks = document.querySelectorAll('.code-block.line-numbers');
     codeBlocks.forEach(block => {
       const startLine = parseInt(block.getAttribute('data-start-line') || '1', 10);
-      // Restamos 1 porque CSS counter-reset inicia en ese valor pero muestra startLine
-      block.style.setProperty('--start-line', (startLine - 1).toString());
+      if (block instanceof HTMLElement) {
+        block.style.setProperty('--start-line', (startLine - 1).toString());
+      }
     });
 
     // Funcionalidad de copiar código
@@ -395,8 +276,7 @@ const displayFilePath = filePath ? filePath.split('/').pop() : null;
       button.addEventListener('click', () => {
         const code = button.getAttribute('data-code');
         const copyText = button.querySelector('.copy-text');
-        
-        if (code) {
+        if (code && copyText) {
           navigator.clipboard.writeText(code).then(() => {
             copyText.innerHTML = `
               <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -404,35 +284,40 @@ const displayFilePath = filePath ? filePath.split('/').pop() : null;
               </svg>
               ¡Copiado!
             `;
-            
             setTimeout(() => {
-              copyText.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                </svg>
-                Copiar
-              `;
+              if (copyText) {
+                copyText.innerHTML = `
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  Copiar
+                `;
+              }
             }, 2000);
           }).catch(err => {
             console.error('Error al copiar: ', err);
-            copyText.innerHTML = `
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="12"></line>
-                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-              </svg>
-              Error
-            `;
-            setTimeout(() => {
+            if (copyText) {
               copyText.innerHTML = `
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
                 </svg>
-                Copiar
+                Error
               `;
-            }, 2000);
+              setTimeout(() => {
+                if (copyText) {
+                  copyText.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    Copiar
+                  `;
+                }
+              }, 2000);
+            }
           });
         }
       });
