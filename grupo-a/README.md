@@ -1,5 +1,24 @@
 # Portafolio Grupal - Construcción de Software
 
+## Ramas y despliegue
+
+Este repositorio utiliza dos ramas principales para facilitar la entrega académica y el despliegue público:
+
+- **main**: Rama oficial para la entrega del curso. Incluye configuración para Docker y portabilidad, sin adaptador de Vercel. Es la rama que se debe usar para evaluar el proyecto con Docker.
+- **vercel**: Rama para despliegue público en [Vercel](https://vercel.com/). Incluye el adaptador `@astrojs/vercel` en la configuración de Astro para que la web esté siempre online.
+
+### Cambiar de rama
+
+```bash
+git checkout main   # Para entorno Docker y entrega oficial
+git checkout vercel # Para entorno Vercel y demo online
+```
+
+> **Nota para el profesor:**
+> La entrega oficial y la evaluación deben realizarse usando la rama `main` y Docker, siguiendo las instrucciones de este README. La rama `vercel` es solo para fines de demostración pública.
+
+---
+
 Repositorio: [edwinwmendeze/nrc-23731](https://github.com/edwinwmendeze/nrc-23731.git)
 
 ---
